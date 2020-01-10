@@ -55,4 +55,4 @@ sequelize.sync({force: process.env.ERASE_DATABASE}).then(async () => {
 	});
 });
 
-export default app;
+export default app; 
