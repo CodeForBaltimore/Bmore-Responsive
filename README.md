@@ -1,4 +1,4 @@
-#  [![NPM version][npm-image]][npm-url] [![Build Status][build-status]][build-url] [![codecov][codecov]][codecov-url] [![dependencies Status][dependencies-status]][dependencies-url] [![devDependencies Status][devDependencies-status]][devDependencies-url]
+[![Build Status][build-status]][https://travis-ci.org/CodeForBaltimore/Bmore-Responsive.svg?branch=master] [![codecov](https://codecov.io/gh/CodeForBaltimore/Bmore-Responsive/branch/master/graph/badge.svg)](https://codecov.io/gh/CodeForBaltimore/Bmore-Responsive)
 
 # Bmore Responsive
 An API to drive disaster and emergency response systems.
