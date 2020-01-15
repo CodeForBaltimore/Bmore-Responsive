@@ -1,17 +1,14 @@
 import {Router} from 'express';
+import services from '../services';
 
 const router = Router();
-router.get('/', async (req, res) => {
-	const users = await req.context.models.User.findAll();
 
-	return res.send(users);
+router.get('/', async (req, res) => {
+	return res.send(await services.user.getAll(req));
 });
 
 router.get('/:userId', async (req, res) => {
-	const user = await req.context.models.User.findByPk(
-		req.params.userId
-	);
-
-	return res.send(user);
+	return res.send(await services.user.getUser(req));
 });
+
 export default router;

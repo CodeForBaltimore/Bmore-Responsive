@@ -47,7 +47,7 @@ sequelize.sync({force: process.env.ERASE_DATABASE}).then(async () => {
 		utils.seedUsers();
 	}
 
-	app.listen(process.env.PORT | 3000, () => {
+	app.listen(process.env.PORT || 3000, () => {
 		console.log(`Bmore Responsive listening on port ${process.env.PORT || 3000}!`);
 		if (process.env.PORT > 9000) {
 			console.log('IT\'S OVER 9000!');
@@ -55,4 +55,4 @@ sequelize.sync({force: process.env.ERASE_DATABASE}).then(async () => {
 	});
 });
 
-export default app; 
+export default app;

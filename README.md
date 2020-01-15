@@ -1,33 +1,56 @@
-![Code for Baltimore](/docs/img/CfB.png)
-
-# ProjectTemplate
-The project template for Code for Baltimore github projects.  This project will help your project get started by giving you:
-* A standard issues template
-* A standard pull request
-* A standard docs folder with example documentation.
-* A big thumbs up :thumbsup:
+# Bmore Responsive
+An API to drive disaster and emergency response systems.
 
 ## Documentation
 We've included a `docs` folder with a template [Tech Spec](/docs/Tech_Spec.md) and [Best Practices](/docs/Best_Practices.md) document, though using Github's Wiki capabilities is also a good idea. This will get you started with documenting your project.  Other documents and relevant information that has no other place can live in the `docs` folder.  Replace this paragraph with a brief breakdown of what you've included in your `docs` folder.
 
 ## Setup
-What does someone need to do to get started with your project? Do they need to:
-* install software?
-* run some commands?
-* do something else?
+A `Dockerfile` and `docker-compose` file have been included for convenience, however this may not be the best local setup for this project. To work on this project you should have:
+-   NodeJS
+-   PostgreSQL (can be in Docker)
+-   Docker (optional)
+Once you have the prerequisite software installed you can proceed to setup this application.
 
-In this section of the `README` you should include any information a new contributor or user of the project needs to know to get running locally and setup.
+### PostgreSQL
+You will need a PostgreSQL database running locally to run this application locally. You may setup PostgreSQL however you wish, however we recommend using Docker using the instructions found here: https://hub.docker.com/_/postgres
+
+If you are using the Docker method you may spin up your database layer by running this command:
+```
+docker run -d -p 5432:5432 postgres
+```
+If you're running a database in another way then we trust you can sort it out on your own because you're awesome :sunglasses:
+
+### Node and Express setup
+This application is designed to work as an API driven by Express. To setup your environment first you must install all required dependencies by running the following command from the root of your project directory:
+```
+npm install
+```
+Once all dependencies are installed you will need to setup some environment variables to interact with your database and application. To do that you may run:
+```
+touch .env
+echo 'NODE_ENV=local
+PORT=<your port>
+ERASE_DATABASE=true
+DATABASE=<your database name>
+DATABASE_USER=<your database user>
+DATABASE_PASSWORD=<your database password>' >> ./.env
+```
 
 ## Using this product
-How would someone use this product? Give a few examples here.
+You may use this product to create and manage users for your front-end. More to come! 
+To run the application--after the above steps are completed--run `npm start`.
 
 ## Testing
-What does someone need to do to test their work? Have you included a specific testing framework or guideline (hint: you should)? Any information about testing should be added here.
+To test your code you may write test cases to `./index.spec.js` and then run the tests with `npm test`.
+
+To check your linting you may run `npm run lint` and to format and automatically fix your formatting run `npm run format`.
 
 ## Sources and Links
-If referencing any third party service, code, etc, cite it here.
+We are also building a front-end application called [Healthcare Rollcall](https://github.com/CodeForBaltimore/Healthcare-Rollcall) to interact with this backend API. To view that project, or to contribute to it, please visit the repo here: https://github.com/CodeForBaltimore/Healthcare-Rollcall
 
-This template is in use on a number of other Code for Baltimore projects. For examples of use in various ways, please see the followings examples:
+We will be including multi-repo build processes with the front-end that will reference this project.
 
-* *NodeJs* = [JuryInstructions](https://github.com/CodeForBaltimore/JuryInstructions)
-* *Python* = [ProjectTemplate-Python](https://github.com/CodeForBaltimore/ProjectTemplate-Python)
+<p align="center">
+    <img src="docs/img/CfB.png" width="400">
+</p>
+

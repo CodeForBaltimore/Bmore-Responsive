@@ -1,3 +1,5 @@
+'use strict';
+
 import models from '../models';
 
 const formatTime = seconds => {
