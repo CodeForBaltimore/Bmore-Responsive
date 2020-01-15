@@ -1,3 +1,5 @@
+#  [![NPM version][npm-image]][npm-url] [![Build Status][build-status]][build-url] [![codecov][codecov]][codecov-url] [![dependencies Status][dependencies-status]][dependencies-url] [![devDependencies Status][devDependencies-status]][devDependencies-url]
+
 # Bmore Responsive
 An API to drive disaster and emergency response systems.
 
