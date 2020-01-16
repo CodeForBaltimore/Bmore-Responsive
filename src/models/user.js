@@ -7,6 +7,10 @@ const user = (sequelize, DataTypes) => {
 		password: {
 			type: DataTypes.STRING
 		}
+	},
+	{
+		schema: process.env.DATABASE_SCHEMA,
+		tableName: 'user'
 	});
 
 	User.findByLogin = async login => {
