@@ -43,7 +43,7 @@ app.use('/user', routes.user);
 
 // Starting Express and PostgreSQL
 sequelize.sync({force: process.env.ERASE_DATABASE}).then(async () => {
-	if (process.env.ERASE_DATABASE) {
+	if (process.env.SEED_DATABASE || process.env.ERASE_DATABASE) {
 		utils.seedUsers();
 	}
 
