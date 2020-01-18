@@ -1,19 +1,19 @@
 language: node_js
-node_js: 
-    - 12
-
+node_js:
+- 12
 install:
-    - npm install
-    - npm install -g codecov
-    - npm install -g nyc
-
+- npm install
+- npm install -g codecov
+- npm install -g nyc
 services:
-    - postgresql
-
+- postgresql
 before_script:
-    - psql -c 'create database travis_ci_test;' -U postgres
+- psql -c 'create database travis_ci_test;' -U postgres
 script:
-    - npm test 
+- npm test
 after_script:
-    - nyc --reporter=text-lcov npm test > coverage.lcov
-    - codecov
+- nyc --reporter=text-lcov npm test > coverage.lcov
+- codecov -f **/*.spec.js
+notifications:
+  slack:
+    secure: U4+tEb6IRX5XHNoX/cCBr0jxEbCINpWbhX3D4kHf2YOPEKtdGeZFZh/hqAwXSRRdQIXiEvmrRTD42IEZwWK4HgZ6ZTeLF2C17afg7o0kvxHbVhp+1PS9/BFUx0+5KrYB8Ew4US8f/qq6myCx7gtI9dZImH2m5EpgmTHTumEWkGK5PHJBbwL/0GYsO551eT2QimaBvUvAIe++rB5fK0MveCaT2T1ZmprQTQWLRY2tLXbKyBTpiIgC73lbXWCadO2MbBCx7dFSIJVfFWWa86E7dXBfK1Nk4EClMYaAdnqM+mFLx01NINOrpYuzXt8RQivP9OAitTdDpqwIqJcmn+uE3r48w6Hf9onojZfqbytOMIvybgPlLPOhZGwRFFa9xZWUG4JT6X747t/RcrEQXl8wbbm7QaRKLk60zgLH0ysvUFLr6cl+CCzZqTmRbWgGh5NiNS1U6XrjiQR4GVZkKPwLjx9+1ZgaayPkzaFReOETgc72X1WJClkm108R2lLfqvn9iF4C19EmuQpLehzXFXIDN5kHHvKFhbG4jiZwYwMQH0R1OqYhrwB3QWO1Scco6Z7zUcrN9S0KDu4p46sUoLsrk6+DP8VbHDMpiPt0wPOJnvzSeoqYgSYYMuCITr/VMvz6VS7E65swNHMJEWsz+SDsLUnamhUHanMPJzGrk7zmnBY=
