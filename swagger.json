@@ -3,9 +3,6 @@
   "servers" : [ {
     "description" : "SwaggerHub API Auto Mocking",
     "url" : "https://virtserver.swaggerhub.com/codeforbaltimore/bmoreResponsive/1.0.0"
-  }, {
-    "description" : "SwaggerHub API Auto Mocking",
-    "url" : "https://virtserver.swaggerhub.com/codeforbaltimore/bmoreResponsive/0.0.1"
   } ],
   "info" : {
     "description" : "An emergency response and contact management API.",
@@ -31,7 +28,7 @@
       "get" : {
         "tags" : [ "developers" ],
         "summary" : "returns a healthcheck",
-        "operationId" : "searchInventory",
+        "operationId" : "healthcheck",
         "description" : "This returns simple system information\n",
         "responses" : {
           "200" : {
@@ -46,6 +43,93 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/user" : {
+      "get" : {
+        "tags" : [ "developers" ],
+        "summary" : "returns all system users",
+        "operationId" : "searchUsers",
+        "description" : "By passing in the appropriate options, you can search for\navailable users in the system\n",
+        "parameters" : [ {
+          "in" : "query",
+          "name" : "searchString",
+          "description" : "pass an optional search string for looking up users",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "query",
+          "name" : "skip",
+          "description" : "number of records to skip for pagination",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32",
+            "minimum" : 0
+          }
+        }, {
+          "in" : "query",
+          "name" : "limit",
+          "description" : "maximum number of records to return",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32",
+            "minimum" : 0,
+            "maximum" : 50
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "search results matching criteria",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/UserItem"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameter"
+          }
+        }
+      }
+    },
+    "/user/{userId}" : {
+      "get" : {
+        "tags" : [ "developers" ],
+        "summary" : "returns a single system user",
+        "operationId" : "getUser",
+        "description" : "By passing the user id, you can lookup a user.",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "userId",
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          },
+          "required" : true,
+          "description" : "uuid of the user"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "the user object",
+            "content" : {
+              "session/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/UserItem"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameter"
           }
         }
       }
@@ -78,6 +162,31 @@
             "type" : "string",
             "format" : "uuid",
             "example" : "602e1bd9-3eb1-4a26-a0d1-6bf08e8c0a66"
+          }
+        }
+      },
+      "UserItem" : {
+        "type" : "object",
+        "required" : [ "id", "username" ],
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "format" : "uuid",
+            "example" : "a08b11ad-a9ec-4a42-8813-0915aa6533ed"
+          },
+          "username" : {
+            "type" : "string",
+            "example" : "goku"
+          },
+          "createdAt" : {
+            "type" : "string",
+            "format" : "date-time",
+            "example" : "2020-01-21T13:45:52.348Z"
+          },
+          "updatedAt" : {
+            "type" : "string",
+            "format" : "date-time",
+            "example" : "2020-01-21T13:45:52.348Z"
           }
         }
       }
