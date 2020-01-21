@@ -1,0 +1,86 @@
+{
+  "openapi" : "3.0.0",
+  "servers" : [ {
+    "description" : "SwaggerHub API Auto Mocking",
+    "url" : "https://virtserver.swaggerhub.com/codeforbaltimore/bmoreResponsive/1.0.0"
+  }, {
+    "description" : "SwaggerHub API Auto Mocking",
+    "url" : "https://virtserver.swaggerhub.com/codeforbaltimore/bmoreResponsive/0.0.1"
+  } ],
+  "info" : {
+    "description" : "An emergency response and contact management API.",
+    "version" : "1.0.0",
+    "title" : "Bmore Responsive",
+    "contact" : {
+      "email" : "hello@codeforbaltimore.org"
+    },
+    "license" : {
+      "name" : "Apache 2.0",
+      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "tags" : [ {
+    "name" : "admins",
+    "description" : "Secured Admin-only calls"
+  }, {
+    "name" : "developers",
+    "description" : "Operations available to regular developers"
+  } ],
+  "paths" : {
+    "/_healthcheck" : {
+      "get" : {
+        "tags" : [ "developers" ],
+        "summary" : "returns a healthcheck",
+        "operationId" : "searchInventory",
+        "description" : "This returns simple system information\n",
+        "responses" : {
+          "200" : {
+            "description" : "the system healthcheck",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/HealthcheckItem"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "HealthcheckItem" : {
+        "type" : "object",
+        "required" : [ "uptime", "environment", "version", "requestId" ],
+        "properties" : {
+          "uptime" : {
+            "type" : "string",
+            "example" : "42:42:42"
+          },
+          "environment" : {
+            "type" : "string",
+            "example" : "dev"
+          },
+          "version" : {
+            "type" : "string",
+            "example" : "0.0.1"
+          },
+          "userId" : {
+            "type" : "string",
+            "format" : "uuid",
+            "example" : "a08b11ad-a9ec-4a42-8813-0915aa6533ed"
+          },
+          "requestId" : {
+            "type" : "string",
+            "format" : "uuid",
+            "example" : "602e1bd9-3eb1-4a26-a0d1-6bf08e8c0a66"
+          }
+        }
+      }
+    }
+  }
+}
