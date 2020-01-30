@@ -17,8 +17,7 @@ const user = (sequelize, DataTypes) => {
 			type: DataTypes.STRING
 		},
 		token: {
-			type: DataTypes.STRING,
-			required: true
+			type: DataTypes.STRING
 		}
 	},
 	{
@@ -87,7 +86,6 @@ const user = (sequelize, DataTypes) => {
 	}
 
 	User.beforeCreate(setSaltAndPassword);
-	User.beforeCreate(setToken);
 	User.beforeUpdate(setSaltAndPassword);
 	User.beforeUpdate(setToken);
 

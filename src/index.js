@@ -33,7 +33,7 @@ app.use(async (req, res, next) => {
 
 // Helper endpoints
 app.get('/', (req, res) => res.send(`For instructions on use, please visit ${process.env.npm_package_homepage}`));
-app.use('/_healthcheck', (_req, res) => {
+app.use('/health', (_req, res) => {
 	res.status(200).json({
 		uptime: utils.formatTime(process.uptime()),
 		environment: process.env.NODE_ENV || 'n/a',
