@@ -27,5 +27,6 @@ const seedUsers = async () => {
 
 export default {
 	formatTime,
+	withStatusCode,
 	seedUsers
 };

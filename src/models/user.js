@@ -46,6 +46,16 @@ const user = (sequelize, DataTypes) => {
 		return "Invalid credentials";
 	};
 
+	User.validateToken = async (token) => {
+		const valid = await User.findOne({
+			where: {token: token}
+		});
+
+		if (valid) return true;
+
+		return false;
+	}
+
 	// User Helpers
 	User.generateSalt = () => {
 		return crypto.randomBytes(16).toString('base64');
