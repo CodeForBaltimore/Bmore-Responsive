@@ -1,14 +1,13 @@
 import chai from 'chai';
 import request from 'supertest';
-import app from '.';
-import utils from './utils';
+import app from '..';
 
 const {expect} = chai;
 
 describe('API Integration Tests', () => {
 	it('should return uptime', done => {
 		request(app)
-			.get('/_healthcheck')
+			.get('/health')
 			.end((err, res) => {
 				if (err) {
 					console.error(`IT uptime error: ${err}`);
@@ -21,7 +20,7 @@ describe('API Integration Tests', () => {
 	});
 	it('should return environment', done => {
 		request(app)
-			.get('/_healthcheck')
+			.get('/health')
 			.end((err, res) => {
 				if (err) {
 					console.error(`IT environment error: ${err}`);
@@ -34,7 +33,7 @@ describe('API Integration Tests', () => {
 	});
 	it('should return version number', done => {
 		request(app)
-			.get('/_healthcheck')
+			.get('/health')
 			.end((err, res) => {
 				if (err) {
 					console.error(`IT version error: ${err}`);
@@ -47,7 +46,7 @@ describe('API Integration Tests', () => {
 	});
 	it('should return request id', done => {
 		request(app)
-			.get('/_healthcheck')
+			.get('/health')
 			.end((err, res) => {
 				if (err) {
 					console.error(`IT version error: ${err}`);
@@ -58,11 +57,4 @@ describe('API Integration Tests', () => {
 				done();
 			});
 	});
-});
-
-describe('Utils Tests', () => {
-    it('formatTime', done => {
-        expect(utils.formatTime(1)).to.equal('00:00:01');
-        done();
-    });
 });

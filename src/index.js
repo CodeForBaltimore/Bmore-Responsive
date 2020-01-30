@@ -33,13 +33,13 @@ app.use(async (req, res, next) => {
 
 // Helper endpoints
 app.get('/', (req, res) => res.send(`For instructions on use, please visit ${process.env.npm_package_homepage}`));
-app.use('/health', (_req, res) => {
+app.use('/health', (req, res) => {
 	res.status(200).json({
 		uptime: utils.formatTime(process.uptime()),
 		environment: process.env.NODE_ENV || 'n/a',
 		version: process.env.npm_package_version || 'n/a',
-		userId: _req.context.me.id,
-		requestId: _req.id
+		userId: req.context.me.id,
+		requestId: req.id
 	});
 });
 

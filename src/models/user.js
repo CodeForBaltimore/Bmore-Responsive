@@ -21,13 +21,6 @@ const user = (sequelize, DataTypes) => {
 		}
 	},
 	{
-		getterMethods: {
-			getPassword() {
-				return this.password;
-			}
-		}
-	},
-	{
 		schema: process.env.DATABASE_SCHEMA
 	});
 
@@ -45,18 +38,15 @@ const user = (sequelize, DataTypes) => {
 			const pw = User.encryptPassword(password,user.salt);
 	
 			if(pw === user.password) {
-				console.log(user.token)
 				await user.update();
-				console.log(user.token)
 				return user.token;
 			}
 		}
 
-		return {
-			"error": "Invalid credentials"
-		};
+		return "Invalid credentials";
 	};
 
+	// User Helpers
 	User.generateSalt = () => {
 		return crypto.randomBytes(16).toString('base64');
 	};
@@ -69,6 +59,7 @@ const user = (sequelize, DataTypes) => {
 			.digest('hex');
 	};
 
+	// Setters
 	const setSaltAndPassword = (user) => {
 		if (user.changed('password')) {
 			user.salt = User.generateSalt();
@@ -81,10 +72,7 @@ const user = (sequelize, DataTypes) => {
 		user.token = token;
 	}
 
-	const getToken = (user) => {
-		return user.token;
-	}
-
+	// Prep actions
 	User.beforeCreate(setSaltAndPassword);
 	User.beforeUpdate(setSaltAndPassword);
 	User.beforeUpdate(setToken);
