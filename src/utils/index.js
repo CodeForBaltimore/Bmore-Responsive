@@ -18,7 +18,8 @@ const seedUsers = async () => {
 	await models.User.create(
 		{
 			username: 'goku',
-			password: process.env.SEED_DATA_PASSWORD
+			password: process.env.SEED_DATA_PASSWORD,
+			email: "saiyensarerad@gmail.com"
 		}
 	);
 
@@ -27,6 +28,5 @@ const seedUsers = async () => {
 
 export default {
 	formatTime,
-	withStatusCode,
 	seedUsers
 };

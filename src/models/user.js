@@ -18,14 +18,20 @@ const user = (sequelize, DataTypes) => {
 		},
 		token: {
 			type: DataTypes.STRING
+		},
+		email: {
+			type: DataTypes.STRING
+		},
+		phone: {
+			type: DataTypes.STRING
 		}
 	},
 	{
 		schema: process.env.DATABASE_SCHEMA
 	});
 
-	User.findByLogin = async (login,password) => {
-		const user = await User.findOne({
+	User.findByLogin = async (login, password) => {
+		let user = await User.findOne({
 			where: {username: login}
 		});
 		if (!user) {
@@ -35,26 +41,28 @@ const user = (sequelize, DataTypes) => {
 		}
 
 		if (user) {
-			const pw = User.encryptPassword(password,user.salt);
-	
-			if(pw === user.password) {
+			const pw = User.encryptPassword(password, user.salt);
+
+			if (pw === user.password) {
 				await user.update();
 				return user.token;
 			}
 		}
 
-		return "Invalid credentials";
+		return 'Invalid credentials';
 	};
 
-	User.validateToken = async (token) => {
+	User.validateToken = async token => {
 		const valid = await User.findOne({
-			where: {token: token}
+			where: {token}
 		});
 
-		if (valid) return true;
+		if (valid) {
+			return true;
+		}
 
 		return false;
-	}
+	};
 
 	// User Helpers
 	User.generateSalt = () => {
@@ -70,20 +78,35 @@ const user = (sequelize, DataTypes) => {
 	};
 
 	// Setters
-	const setSaltAndPassword = (user) => {
+	const setSaltAndPassword = user => {
 		if (user.changed('password')) {
 			user.salt = User.generateSalt();
 			user.password = User.encryptPassword(user.password, user.salt);
 		}
 	};
 
-	const setToken = (user) => {
+	const setToken = user => {
 		const token = jwt.sign({_id: user.id}, process.env.JWT_KEY);
 		user.token = token;
-	}
+	};
 
-	// Prep actions
+	// Other Helpers
+	const validateContactInfo = user => {
+		let valid = true;
+
+		if (!validator.isEmail(validator.normalizeEmail(user.email))) {
+			valid = false;
+		}
+
+		return valid;
+	};
+
+	// Create prep actions
+	User.beforeCreate(validateContactInfo);
 	User.beforeCreate(setSaltAndPassword);
+
+	// Update prep actions
+	User.beforeUpdate(validateContactInfo);
 	User.beforeUpdate(setSaltAndPassword);
 	User.beforeUpdate(setToken);
 
