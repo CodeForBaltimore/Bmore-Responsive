@@ -1,24 +1,7 @@
 import {Router} from 'express';
+import utils from '../utils';
 
 const router = Router();
-
-/**
- * Validates a user login token.
- *
- * This validates a user token. If the token is invalid the request will immediately be rejected back with a 401.
- *
- * @param {*} req The request object.
- * @param {*} res The response object.
- *
- * @return {Boolean}
- */
-const validateToken = async (req, res) => {
-	if (await req.context.models.User.validateToken(req.headers.token) || process.env.BYPASS_LOGIN) {
-		return true;
-	}
-
-	return res.status(401).send('Unauthorized');
-};
 
 // User login.
 router.post('/login', async (req, res) => {
@@ -38,7 +21,7 @@ router.post('/login', async (req, res) => {
 // Gets all users.
 router.get('/', async (req, res) => {
 	try {
-		if (await validateToken(req, res)) {
+		if (await utils.validateToken(req, res)) {
 			const users = await req.context.models.User.findAll({
 				attributes: ['username', 'email', 'phone']
 			});
@@ -53,7 +36,7 @@ router.get('/', async (req, res) => {
 // Gets a specific user.
 router.get('/:username', async (req, res) => {
 	try {
-		if (await validateToken(req, res)) {
+		if (await utils.validateToken(req, res)) {
 			const user = await req.context.models.User.findOne({
 				where: {
 					username: req.params.username
@@ -71,7 +54,7 @@ router.get('/:username', async (req, res) => {
 // Creates a new user.
 router.post('/', async (req, res) => {
 	try {
-		if (await validateToken(req, res)) {
+		if (await utils.validateToken(req, res)) {
 			const {username, password} = req.body;
 
 			const user = await req.context.models.User.create({username, password});
@@ -107,7 +90,7 @@ router.put('/', async (req, res) => {
 // Deletes a user.
 router.delete('/', async (req, res) => {
 	try {
-		if (await validateToken(req, res)) {
+		if (await utils.validateToken(req, res)) {
 			const {username} = req.body;
 
 			const user = await req.context.models.User.findOne({
