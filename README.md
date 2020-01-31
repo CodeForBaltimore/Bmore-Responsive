@@ -35,8 +35,26 @@ PORT=<your port>
 ERASE_DATABASE=true
 DATABASE=<your database name>
 DATABASE_USER=<your database user>
-DATABASE_PASSWORD=<your database password>' >> ./.env
+DATABASE_PASSWORD=<your database password>
+DATABASE_SCHEMA=<your database schema>
+SEED_DATA_PASSWORD=<a password for your seed user(s)>
+JWT_KEY=<your secret JWT seed phrase or key>
+' >> ./.env
 ```
+
+The various variables are defined:
+- `PORT` = The local port you wish to run on. Defaults to `3000`.
+- `ERASE_DATABASE`= _optional_  Do you wish to drop your entire db each time you restart the app? If so, set this flag to `true`. _You should only use this or `SEED_DATABASE` but not both_
+- `SEED_DATABASE` = _optional_  Run the seeding script without dropping the existing values in the database. To use, set to `true`. _You should only use this or `ERASE_DATABASE` but not both_
+- `DATABASE` = Your database name. Postgres default is `postgres`.
+- `DATABASE_USER` = Your local database login username. Postgres default is `postgres`.
+- `DATABASE_PASSWORD` = Your local database login password. Postgres default is `postgres`.
+- `DATABASE_SCHEMA` = Your local database schema. Postgres default is `public`.
+- `SEED_DATA_PASSWORD` = A password for your seed user(s).
+- `JWT_KEY` = A secret value to generate JWT's locally. 
+- `BYPASS_LOGIN` = _optional_  Allows you to hit the endpoints locally without having to login. If you wish to bypass the login process during local dev, set this to `true`.
+
+_We do not recommend using the default options for PostgreSQL. The above values are provided as examples. It is more secure to create your own credentials._
 
 ## Using this product
 You may use this product to create and manage users for your front-end. More to come! 

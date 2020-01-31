@@ -2,6 +2,13 @@
 
 import models from '../models';
 
+/**
+ * Formats a timestamp to something readable by humans.
+ *
+ * @param {Number} seconds
+ *
+ * @return {String}
+ */
 const formatTime = seconds => {
 	function pad(s) {
 		return (s < 10 ? '0' : '') + s;
@@ -14,12 +21,15 @@ const formatTime = seconds => {
 	return pad(hours) + ':' + pad(minutes) + ':' + pad(secs);
 };
 
+/**
+ * Creates a dummy user for development purposes.
+ */
 const seedUsers = async () => {
 	await models.User.create(
 		{
 			username: 'goku',
 			password: process.env.SEED_DATA_PASSWORD,
-			email: "saiyensarerad@gmail.com"
+			email: 'saiyensarerad@gmail.com'
 		}
 	);
 

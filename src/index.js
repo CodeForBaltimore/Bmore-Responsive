@@ -24,9 +24,9 @@ app.use(async (req, res, next) => {
 	};
 
 	/** @todo add some checks for auth tokens, etc */
-	req.context.me = {
-		id: 'abc-123'
-	};
+	// req.context.me = {
+	// 	id: 'abc-123'
+	// };
 
 	next();
 });
@@ -38,8 +38,8 @@ app.use('/health', (req, res) => {
 		uptime: utils.formatTime(process.uptime()),
 		environment: process.env.NODE_ENV || 'n/a',
 		version: process.env.npm_package_version || 'n/a',
-		userId: req.context.me.id,
-		requestId: req.id
+		requestId: req.id,
+		// userId: req.context.me.id
 	});
 });
 

@@ -3,6 +3,7 @@ import validator from 'validator';
 import jwt from 'jsonwebtoken';
 
 const user = (sequelize, DataTypes) => {
+	// Defining our user table and setting User object.
 	const User = sequelize.define('user', {
 		username: {
 			type: DataTypes.STRING,
@@ -30,6 +31,14 @@ const user = (sequelize, DataTypes) => {
 		schema: process.env.DATABASE_SCHEMA
 	});
 
+	/**
+	 * Looks up and validates a user by username and password.
+	 *
+	 * @param {String} login The username or email of the user.
+	 * @param {String} password The password of the user.
+	 *
+	 * @return {String} returns either the valid login token or an error message.
+	 */
 	User.findByLogin = async (login, password) => {
 		let user = await User.findOne({
 			where: {username: login}
@@ -52,23 +61,51 @@ const user = (sequelize, DataTypes) => {
 		return 'Invalid credentials';
 	};
 
+	/**
+	 * Validates a login token.
+	 *
+	 * @param {String} token The login token from the user.
+	 *
+	 * @return {Boolean}
+	 */
 	User.validateToken = async token => {
-		const valid = await User.findOne({
-			where: {token}
-		});
+		const expiry = jwt.decode(token).exp;
+		const now = new Date();
 
-		if (valid) {
-			return true;
+		if (now.getTime() < expiry * 1000) {
+			const user = await User.findOne({
+				where: {token}
+			});
+
+			if (user) {
+				try {
+					return jwt.verify(user.token, process.env.JWT_KEY, {username: user.username});
+				} catch {
+					return false;
+				}
+			}
 		}
 
 		return false;
 	};
 
-	// User Helpers
+	/**
+	 * Generates a random salt for password security.
+	 *
+	 * @return {String} The password salt.
+	 */
 	User.generateSalt = () => {
 		return crypto.randomBytes(16).toString('base64');
 	};
 
+	/**
+	 * Salts and hashes a password.
+	 *
+	 * @param {String} plainText The unhashed or salted password.
+	 * @param {String} salt The password salt for this user.
+	 *
+	 * @return {String} The secured password.
+	 */
 	User.encryptPassword = (plainText, salt) => {
 		return crypto
 			.createHash('RSA-SHA256')
@@ -86,7 +123,12 @@ const user = (sequelize, DataTypes) => {
 	};
 
 	const setToken = user => {
-		const token = jwt.sign({_id: user.id}, process.env.JWT_KEY);
+		const token = jwt.sign(
+			{username: user.username},
+			process.env.JWT_KEY,
+			{expiresIn: '1d'}
+		);
+
 		user.token = token;
 	};
 
@@ -98,15 +140,17 @@ const user = (sequelize, DataTypes) => {
 			valid = false;
 		}
 
+		/** @todo Add more validations for all contact info. */
+
 		return valid;
 	};
 
 	// Create prep actions
-	User.beforeCreate(validateContactInfo);
+	// User.beforeCreate(validateContactInfo);
 	User.beforeCreate(setSaltAndPassword);
 
 	// Update prep actions
-	User.beforeUpdate(validateContactInfo);
+	// User.beforeUpdate(validateContactInfo);
 	User.beforeUpdate(setSaltAndPassword);
 	User.beforeUpdate(setToken);
 
