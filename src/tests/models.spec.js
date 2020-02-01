@@ -61,8 +61,7 @@ describe('User positive tests', () => {
         it('should delete a user', function(done) {
             user.password = randomWords();
             request(app)
-              .delete('/user')
-              .send(user)
+              .delete(`/user/${user.username}`)
               .set('Accept', 'application/json')
               .expect('Content-Type', 'text/html; charset=utf-8')
               .expect(200)
@@ -116,8 +115,7 @@ describe('User negative tests', () => {
         it('should not delete a user', function(done) {
             user.password = randomWords();
             request(app)
-              .delete('/user')
-              .send(user)
+              .delete(`/user/${user.username}`)
               .set('Accept', 'application/json')
               .expect('Content-Type', 'text/html; charset=utf-8')
               .expect(400)
