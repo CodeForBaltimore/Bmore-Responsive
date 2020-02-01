@@ -19,6 +19,7 @@ app.use(express.urlencoded({extended: true}));
 
 // Custom middleware
 app.use(async (req, res, next) => {
+	// Making our models available in the request.
 	req.context = {
 		models
 	};
@@ -33,13 +34,14 @@ app.use(async (req, res, next) => {
 
 // Helper endpoints
 app.get('/', (req, res) => res.send(`For instructions on use, please visit ${process.env.npm_package_homepage}`));
+app.get('/teapot', (req, res) => res.status(418).send('I\'m a teapot!'));
 app.use('/health', (req, res) => {
 	res.status(200).json({
 		uptime: utils.formatTime(process.uptime()),
 		environment: process.env.NODE_ENV || 'n/a',
 		version: process.env.npm_package_version || 'n/a',
-		requestId: req.id,
-		// userId: req.context.me.id
+		requestId: req.id
+		// UserId: req.context.me.id
 	});
 });
 
@@ -53,7 +55,8 @@ sequelize.sync({force: process.env.ERASE_DATABASE}).then(async () => {
 	}
 
 	app.listen(process.env.PORT || 3000, () => {
-		console.log(`Bmore Responsive listening on port ${process.env.PORT || 3000}!`);
+		const message = (process.env.PORT > 9000) ? `IT'S OVER 9000! Bmore Responsive listening on port ${process.env.PORT || 3000}!` : `Bmore Responsive listening on port ${process.env.PORT || 3000}!`;
+		console.log(message);
 	});
 });
 

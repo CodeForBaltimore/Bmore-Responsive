@@ -1,6 +1,6 @@
 import crypto from 'crypto';
-import validator from 'validator';
 import jwt from 'jsonwebtoken';
+// Import validator from 'validator';
 
 const user = (sequelize, DataTypes) => {
 	// Defining our user table and setting User object.
@@ -133,17 +133,17 @@ const user = (sequelize, DataTypes) => {
 	};
 
 	// Other Helpers
-	const validateContactInfo = user => {
-		let valid = true;
+	// const validateContactInfo = user => {
+	// 	let valid = true;
 
-		if (!validator.isEmail(validator.normalizeEmail(user.email))) {
-			valid = false;
-		}
+	// 	if (!validator.isEmail(validator.normalizeEmail(user.email))) {
+	// 		valid = false;
+	// 	}
 
-		/** @todo Add more validations for all contact info. */
+	// 	/** @todo Add more validations for all contact info. */
 
-		return valid;
-	};
+	// 	return valid;
+	// };
 
 	// Create prep actions
 	// User.beforeCreate(validateContactInfo);

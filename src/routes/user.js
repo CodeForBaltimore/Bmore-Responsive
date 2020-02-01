@@ -23,7 +23,7 @@ router.get('/', async (req, res) => {
 	try {
 		if (await utils.validateToken(req, res)) {
 			const users = await req.context.models.User.findAll({
-				attributes: ['username', 'email', 'phone']
+				attributes: ['username', 'email', 'phone', 'createdAt', 'updatedAt']
 			});
 
 			return res.send(users);
@@ -65,7 +65,7 @@ router.post('/', async (req, res) => {
 	}
 });
 
-// Updates a user.
+// Updates any user.
 router.put('/', async (req, res) => {
 	try {
 		/** @todo add email and phone update options */
@@ -77,10 +77,9 @@ router.put('/', async (req, res) => {
 			}
 		});
 
-		console.log(password);
 		user.password = password;
-		console.log(user);
 		await user.save();
+
 		return res.send(user.username + ' updated');
 	} catch {
 		return res.status(400).send('Invalid input');
@@ -88,18 +87,17 @@ router.put('/', async (req, res) => {
 });
 
 // Deletes a user.
-router.delete('/', async (req, res) => {
+router.delete('/:username', async (req, res) => {
 	try {
 		if (await utils.validateToken(req, res)) {
-			const {username} = req.body;
-
+			console.log(req.params.username)
 			const user = await req.context.models.User.findOne({
 				where: {
-					username
+					username: req.params.username
 				}
 			});
 			await user.destroy();
-			return res.send(username + ' deleted');
+			return res.send(req.params.username + ' deleted');
 		}
 	} catch {
 		return res.status(400).send('Invalid input');

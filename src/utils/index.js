@@ -47,8 +47,13 @@ const seedUsers = async () => {
  * @return {Boolean}
  */
 const validateToken = async (req, res) => {
-	if (process.env.BYPASS_LOGIN) return true;
-	if (await req.context.models.User.validateToken(req.headers.token)) return true;
+	if (process.env.BYPASS_LOGIN) {
+		return true;
+	}
+
+	if (await req.context.models.User.validateToken(req.headers.token)) {
+		return true;
+	}
 
 	return res.status(401).send('Unauthorized');
 };
