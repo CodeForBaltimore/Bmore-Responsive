@@ -54,12 +54,10 @@ router.get('/:username', async (req, res) => {
 // Creates a new user.
 router.post('/', async (req, res) => {
 	try {
-		if (await utils.validateToken(req, res)) {
-			const {username, password} = req.body;
+		const {username, password} = req.body;
 
-			const user = await req.context.models.User.create({username, password});
-			return res.send(user.username + ' created');
-		}
+		const user = await req.context.models.User.create({username, password});
+		return res.send(user.username + ' created');
 	} catch {
 		return res.status(400).send('Invalid input');
 	}
@@ -90,7 +88,7 @@ router.put('/', async (req, res) => {
 router.delete('/:username', async (req, res) => {
 	try {
 		if (await utils.validateToken(req, res)) {
-			console.log(req.params.username)
+			console.log(req.params.username);
 			const user = await req.context.models.User.findOne({
 				where: {
 					username: req.params.username
