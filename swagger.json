@@ -17,18 +17,17 @@
     }
   },
   "tags" : [ {
-    "name" : "admins",
-    "description" : "Secured Admin-only calls"
-  }, {
     "name" : "developers",
     "description" : "Operations available to regular developers"
+  }, {
+    "name" : "users",
+    "description" : "Operations available for system users"
   } ],
   "paths" : {
-    "/_healthcheck" : {
+    "/health" : {
       "get" : {
         "tags" : [ "developers" ],
         "summary" : "returns a healthcheck",
-        "operationId" : "healthcheck",
         "description" : "This returns simple system information\n",
         "responses" : {
           "200" : {
@@ -36,10 +35,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "type" : "array",
-                  "items" : {
-                    "$ref" : "#/components/schemas/HealthcheckItem"
-                  }
+                  "$ref" : "#/components/schemas/HealthcheckItem"
                 }
               }
             }
@@ -47,40 +43,37 @@
         }
       }
     },
+    "/login" : {
+      "post" : {
+        "tags" : [ "users" ],
+        "summary" : "logs in a system user",
+        "description" : "The system login endpoint.",
+        "requestBody" : {
+          "description" : "The body of the payload",
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/LoginUserItem"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "login token"
+          },
+          "400" : {
+            "description" : "Invalid credentials"
+          }
+        }
+      }
+    },
     "/user" : {
       "get" : {
-        "tags" : [ "developers" ],
+        "tags" : [ "users" ],
         "summary" : "returns all system users",
-        "operationId" : "searchUsers",
         "description" : "By passing in the appropriate options, you can search for\navailable users in the system\n",
-        "parameters" : [ {
-          "in" : "query",
-          "name" : "searchString",
-          "description" : "pass an optional search string for looking up users",
-          "required" : false,
-          "schema" : {
-            "type" : "string"
-          }
-        }, {
-          "in" : "query",
-          "name" : "skip",
-          "description" : "number of records to skip for pagination",
-          "schema" : {
-            "type" : "integer",
-            "format" : "int32",
-            "minimum" : 0
-          }
-        }, {
-          "in" : "query",
-          "name" : "limit",
-          "description" : "maximum number of records to return",
-          "schema" : {
-            "type" : "integer",
-            "format" : "int32",
-            "minimum" : 0,
-            "maximum" : 50
-          }
-        } ],
         "responses" : {
           "200" : {
             "description" : "search results matching criteria",
@@ -89,33 +82,73 @@
                 "schema" : {
                   "type" : "array",
                   "items" : {
-                    "$ref" : "#/components/schemas/UserItem"
+                    "$ref" : "#/components/schemas/SystemUserItem"
                   }
                 }
               }
             }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "users" ],
+        "summary" : "creates a single system user",
+        "description" : "By sending a valid payload you can create a new user.",
+        "requestBody" : {
+          "description" : "The body of the payload.",
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/NewUserItem"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "user created"
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "users" ],
+        "summary" : "updates a single system user",
+        "description" : "By sending a valid payload you can update a user.",
+        "requestBody" : {
+          "description" : "The body of the payload.",
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/NewUserItem"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "user updated"
           },
           "400" : {
-            "description" : "bad input parameter"
+            "description" : "Invalid input"
           }
         }
       }
     },
-    "/user/{userId}" : {
+    "/user/{username}" : {
       "get" : {
-        "tags" : [ "developers" ],
+        "tags" : [ "users" ],
         "summary" : "returns a single system user",
-        "operationId" : "getUser",
-        "description" : "By passing the user id, you can lookup a user.",
+        "description" : "By passing the username, you can lookup a user.",
         "parameters" : [ {
           "in" : "path",
-          "name" : "userId",
+          "name" : "username",
           "schema" : {
-            "type" : "string",
-            "format" : "uuid"
+            "type" : "string"
           },
           "required" : true,
-          "description" : "uuid of the user"
+          "description" : "username of the user"
         } ],
         "responses" : {
           "200" : {
@@ -123,13 +156,32 @@
             "content" : {
               "session/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/UserItem"
+                  "$ref" : "#/components/schemas/SystemUserItem"
                 }
               }
             }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "users" ],
+        "summary" : "deletes a single system user",
+        "description" : "By sending a valid payload you can delete a user.",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "username",
+          "schema" : {
+            "type" : "string"
+          },
+          "required" : true,
+          "description" : "the username of the user to delete."
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "user deleted"
           },
           "400" : {
-            "description" : "bad input parameter"
+            "description" : "Invalid input"
           }
         }
       }
@@ -153,11 +205,6 @@
             "type" : "string",
             "example" : "0.0.1"
           },
-          "userId" : {
-            "type" : "string",
-            "format" : "uuid",
-            "example" : "a08b11ad-a9ec-4a42-8813-0915aa6533ed"
-          },
           "requestId" : {
             "type" : "string",
             "format" : "uuid",
@@ -165,18 +212,49 @@
           }
         }
       },
-      "UserItem" : {
+      "LoginUserItem" : {
         "type" : "object",
-        "required" : [ "id", "username" ],
+        "required" : [ "username", "password" ],
         "properties" : {
-          "id" : {
+          "username" : {
             "type" : "string",
-            "format" : "uuid",
-            "example" : "a08b11ad-a9ec-4a42-8813-0915aa6533ed"
+            "example" : "test"
           },
+          "password" : {
+            "type" : "string",
+            "example" : "test"
+          }
+        }
+      },
+      "NewUserItem" : {
+        "type" : "object",
+        "required" : [ "username", "password" ],
+        "properties" : {
+          "username" : {
+            "type" : "string",
+            "example" : "test"
+          },
+          "password" : {
+            "type" : "string",
+            "example" : "test"
+          }
+        }
+      },
+      "SystemUserItem" : {
+        "type" : "object",
+        "required" : [ "username" ],
+        "properties" : {
           "username" : {
             "type" : "string",
             "example" : "goku"
+          },
+          "email" : {
+            "type" : "string",
+            "example" : "goku@test.com"
+          },
+          "phone" : {
+            "type" : "string",
+            "example" : "123456789"
           },
           "createdAt" : {
             "type" : "string",
