@@ -14,7 +14,7 @@ A `Dockerfile` and `docker-compose` file have been included for convenience, how
 Once you have the prerequisite software installed you can proceed to setup this application.
 
 ### PostgreSQL
-You will need a PostgreSQL database running locally to run this application locally. You may setup PostgreSQL however you wish, however we recommend using Docker using the instructions found here: https://hub.docker.com/_/postgres
+***You will need a PostgreSQL database running locally to run this application locally.*** You may setup PostgreSQL however you wish, however we recommend using Docker using the instructions found here: https://hub.docker.com/_/postgres
 
 If you are using the Docker method you may spin up your database layer by running this command:
 ```
