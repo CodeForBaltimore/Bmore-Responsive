@@ -6,6 +6,12 @@ An API to drive disaster and emergency response systems.
 ## Documentation
 We've included a `docs` folder with a template [Tech Spec](/docs/Tech_Spec.md) and [Best Practices](/docs/Best_Practices.md) document, though using Github's Wiki capabilities is also a good idea. This will get you started with documenting your project.  Other documents and relevant information that has no other place can live in the `docs` folder.  Replace this paragraph with a brief breakdown of what you've included in your `docs` folder.
 
+### API Spec
+Our API spec is on Swagger. You can view it here https://app.swaggerhub.com/apis/codeforbaltimore/bmoreResponsive/1.0.0#/ or you can find the `swagger.json` file in our `docs` folder.  
+
+### Database Documentation
+Our database documentation can be found in our `docs` folder under `database.csv`. This documentation was created using SchemaSpy. Instructions for use can be found here https://github.com/bcgov/schemaspy
+
 ## Setup
 A `Dockerfile` and `docker-compose` file have been included for convenience, however this may not be the best local setup for this project. To work on this project you should have:
 -   NodeJS
