@@ -48,7 +48,7 @@ const user = (sequelize, DataTypes) => {
 				where: {email: login}
 			});
 		}
-
+		console.log(user.salt)
 		if (user) {
 			const pw = User.encryptPassword(password, user.salt);
 

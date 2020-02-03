@@ -55,7 +55,8 @@ const validateToken = async (req, res) => {
 		return true;
 	}
 
-	return res.status(401).send('Unauthorized');
+	res.status(401).send('Unauthorized');
+	return;
 };
 
 export default {

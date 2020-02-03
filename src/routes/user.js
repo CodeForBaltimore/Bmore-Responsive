@@ -14,7 +14,8 @@ router.post('/login', async (req, res) => {
 			return res.send(token);
 		}
 	} catch {
-		return res.status(400).send('Invalid input');
+		res.status(400).send('Invalid input');
+		return;
 	}
 });
 
@@ -29,7 +30,8 @@ router.get('/', async (req, res) => {
 			return res.send(users);
 		}
 	} catch (error) {
-		res.status(500).send(error);
+		res.status(400).send('Invalid input');
+		return;
 	}
 });
 
@@ -47,7 +49,8 @@ router.get('/:username', async (req, res) => {
 			return res.send(user);
 		}
 	} catch {
-		return res.status(400).send('Invalid payload');
+		res.status(400).send('Invalid payload');
+		return;
 	}
 });
 
@@ -66,21 +69,24 @@ router.post('/', async (req, res) => {
 // Updates any user.
 router.put('/', async (req, res) => {
 	try {
-		/** @todo add email and phone update options */
-		const {username, password} = req.body;
+		if (await utils.validateToken(req, res)) {
+			/** @todo add email and phone update options */
+			const {username, password} = req.body;
 
-		const user = await req.context.models.User.findOne({
-			where: {
-				username
-			}
-		});
+			const user = await req.context.models.User.findOne({
+				where: {
+					username
+				}
+			});
 
-		user.password = password;
-		await user.save();
+			user.password = password;
+			await user.save();
 
-		return res.send(user.username + ' updated');
+			return res.send(user.username + ' updated');
+		}
 	} catch {
-		return res.status(400).send('Invalid input');
+		res.status(400).send('Invalid input');
+		return;
 	}
 });
 
@@ -98,7 +104,8 @@ router.delete('/:username', async (req, res) => {
 			return res.send(req.params.username + ' deleted');
 		}
 	} catch {
-		return res.status(400).send('Invalid input');
+		res.status(400).send('Invalid input');
+		return;
 	}
 });
 
