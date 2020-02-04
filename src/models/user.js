@@ -1,11 +1,10 @@
 import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
-// Import validator from 'validator';
 
 const user = (sequelize, DataTypes) => {
 	// Defining our user table and setting User object.
 	const User = sequelize.define('user', {
-		username: {
+		email: {
 			type: DataTypes.STRING,
 			unique: true,
 			required: true
@@ -20,7 +19,7 @@ const user = (sequelize, DataTypes) => {
 		token: {
 			type: DataTypes.STRING
 		},
-		email: {
+		displayName: {
 			type: DataTypes.STRING
 		},
 		phone: {
@@ -32,23 +31,18 @@ const user = (sequelize, DataTypes) => {
 	});
 
 	/**
-	 * Looks up and validates a user by username and password.
+	 * Looks up and validates a user by email and password.
 	 *
-	 * @param {String} login The username or email of the user.
+	 * @param {String} login The email or email of the user.
 	 * @param {String} password The password of the user.
 	 *
 	 * @return {String} returns either the valid login token or an error message.
 	 */
-	User.findByLogin = async (login, password) => {
-		let user = await User.findOne({
-			where: {username: login}
+	User.findByLogin = async (email, password) => {
+		const user = await User.findOne({
+			where: {email}
 		});
-		if (!user) {
-			user = await User.findOne({
-				where: {email: login}
-			});
-		}
-		
+
 		if (user) {
 			const pw = User.encryptPassword(password, user.salt);
 
@@ -79,7 +73,7 @@ const user = (sequelize, DataTypes) => {
 
 			if (user) {
 				try {
-					return jwt.verify(user.token, process.env.JWT_KEY, {username: user.username});
+					return jwt.verify(user.token, process.env.JWT_KEY, {email: user.email});
 				} catch {
 					return false;
 				}
@@ -124,7 +118,7 @@ const user = (sequelize, DataTypes) => {
 
 	const setToken = user => {
 		const token = jwt.sign(
-			{username: user.username},
+			{email: user.email},
 			process.env.JWT_KEY,
 			{expiresIn: '1d'}
 		);

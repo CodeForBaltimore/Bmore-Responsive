@@ -54,8 +54,7 @@ sequelize.sync({force: process.env.ERASE_DATABASE}).then(async () => {
 	}
 
 	app.listen(process.env.PORT || 3000, () => {
-		const message = (process.env.PORT > 9000) ? `IT'S OVER 9000! Bmore Responsive listening on port ${process.env.PORT || 3000}!` : `Bmore Responsive listening on port ${process.env.PORT || 3000}!`;
-		console.log(message);
+		console.log(`Bmore Responsive listening on port ${process.env.PORT || 3000}!`);
 	});
 });
 

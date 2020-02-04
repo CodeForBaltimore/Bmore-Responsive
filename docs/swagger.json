@@ -46,7 +46,7 @@
         }
       }
     },
-    "/login" : {
+    "/user/login" : {
       "post" : {
         "tags" : [ "users" ],
         "summary" : "logs in a system user",

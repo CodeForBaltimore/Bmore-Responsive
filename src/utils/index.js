@@ -27,9 +27,8 @@ const formatTime = seconds => {
 const seedUsers = async () => {
 	await models.User.create(
 		{
-			username: 'goku',
-			password: process.env.SEED_DATA_PASSWORD,
-			email: 'saiyensarerad@gmail.com'
+			email: 'saiyensarerad@gmail.com',
+			password: process.env.SEED_DATA_PASSWORD
 		}
 	);
 
@@ -56,7 +55,6 @@ const validateToken = async (req, res) => {
 	}
 
 	res.status(401).send('Unauthorized');
-	return;
 };
 
 export default {
