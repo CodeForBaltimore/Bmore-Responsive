@@ -74,6 +74,19 @@ describe('User positive tests', () => {
 });
 
 describe('User negative tests', () => {
+  it('should not create a user', function(done) {
+      request(app)
+        .post('/user')
+        .send({email: randomWords(), password: randomWords()})
+        .set('Accept', 'application/json')
+        .expect('Content-Type', 'text/html; charset=utf-8')
+        .expect(400)
+        .end(function(err, res) {
+          if (err) return done(err);
+          expect(res.text).to.equal('Invalid input')
+          done();
+        });
+    });
     it('should not create a user', function(done) {
         request(app)
           .post('/user')
