@@ -4,7 +4,7 @@ import randomWords from 'random-words';
 import app from '..';
 
 const {expect} = chai;
-const user = {username: randomWords(),password: randomWords()};
+const user = {email: `${randomWords()}@test.test`,password: randomWords()};
 
 describe('User positive tests', () => {
     it('should create a user', function(done) {
@@ -16,7 +16,7 @@ describe('User positive tests', () => {
           .expect(200)
           .end(function(err, res) {
             if (err) return done(err);
-            expect(res.text).to.equal(`${user.username} created`);
+            expect(res.text).to.equal(`${user.email} created`);
             done();
           });
       });
@@ -34,13 +34,13 @@ describe('User positive tests', () => {
         });
         it('should get a single user', function(done) {
             request(app)
-              .get(`/user/${user.username}`)
+              .get(`/user/${user.email}`)
               .set('Accept', 'application/json')
               .expect('Content-Type', 'application/json; charset=utf-8')
               .expect(200)
               .end(function(err, res) {
                 if (err) return done(err);
-                expect(res.body.username).to.equal(user.username);
+                expect(res.body.email).to.equal(user.email);
                 done();
               });
           });
@@ -54,20 +54,20 @@ describe('User positive tests', () => {
             .expect(200)
             .end(function(err, res) {
               if (err) return done(err);
-              expect(res.text).to.equal(`${user.username} updated`);
+              expect(res.text).to.equal(`${user.email} updated`);
               done();
             });
         });
         it('should delete a user', function(done) {
             user.password = randomWords();
             request(app)
-              .delete(`/user/${user.username}`)
+              .delete(`/user/${user.email}`)
               .set('Accept', 'application/json')
               .expect('Content-Type', 'text/html; charset=utf-8')
               .expect(200)
               .end(function(err, res) {
                 if (err) return done(err);
-                expect(res.text).to.equal(`${user.username} deleted`);
+                expect(res.text).to.equal(`${user.email} deleted`);
                 done();
               });
           });
@@ -89,12 +89,12 @@ describe('User negative tests', () => {
       });
         it('should not get a single user', function(done) {
             request(app)
-              .get(`/user/${user.username}`)
+              .get(`/user/${user.email}`)
               .set('Accept', 'application/json')
               .expect(200)
               .end(function(err, res) {
                 if (err) return done(err);
-                expect(res.body.username).to.be.an('undefined');
+                expect(res.body.email).to.be.an('undefined');
                 done();
               });
           });
