@@ -27,6 +27,11 @@ If you are running your own database, but want to use the `Dockerfile` you will 
 docker build -t bmoreres .
 docker run -d -p 3000:3000 -e DATABASE_HOST=docker.for.mac.host.internal bmoreres
 ```
+On Windows you would run:
+```
+docker build -t bmoreres .
+docker run -d -p 3000:3000 -e DATABASE_HOST=docker.for.win.host.internal bmoreres
+```
 
 ### PostgreSQL
 ***You will need a PostgreSQL database running locally to run this application locally.*** You may setup PostgreSQL however you wish, however we recommend using Docker using the instructions found here: https://hub.docker.com/_/postgres
