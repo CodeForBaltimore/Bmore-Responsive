@@ -19,6 +19,15 @@ A `Dockerfile` and `docker-compose` file have been included for convenience, how
 -   Docker (optional)
 Once you have the prerequisite software installed you can proceed to setup this application.
 
+### Docker
+To use the `docker-compose.yml` file included you will first need to set [environment variables](#environment_variables). You **MUST** set your `DATABASE_HOST` to `db` to use the `docker-compose` solution. 
+
+If you are running your own database, but want to use the `Dockerfile` you will need to run that this way on a Mac:
+```
+docker build -t bmoreres .
+docker run -d -p 3000:3000 -e DATABASE_HOST=docker.for.mac.host.internal bmoreres
+```
+
 ### PostgreSQL
 ***You will need a PostgreSQL database running locally to run this application locally.*** You may setup PostgreSQL however you wish, however we recommend using Docker using the instructions found here: https://hub.docker.com/_/postgres
 
@@ -33,30 +42,31 @@ This application is designed to work as an API driven by Express. To setup your 
 ```
 npm install
 ```
-Once all dependencies are installed you will need to setup some environment variables to interact with your database and application. To do that you may run:
+Once all dependencies are installed you will need to setup some environment variables to interact with your database and application. 
+
+### Environment variables
+You will need to set some local environment variables to run this application. This is true even if you're using Docker.
 ```
 touch .env
 echo 'NODE_ENV=local
 PORT=<your port>
-ERASE_DATABASE=true
+DATABASE_HOST=<your database host>
 DATABASE=<your database name>
 DATABASE_USER=<your database user>
 DATABASE_PASSWORD=<your database password>
 DATABASE_SCHEMA=<your database schema>
-SEED_DATA_PASSWORD=<a password for your seed user(s)>
 JWT_KEY=<your secret JWT seed phrase or key>
 ' >> ./.env
 ```
 
-The various variables are defined:
+The various variables are defined as follows:
+- `NODE_ENV` = The label for your environment. 
 - `PORT` = The local port you wish to run on. Defaults to `3000`.
-- `ERASE_DATABASE`= _optional_  Do you wish to drop your entire db each time you restart the app? If so, set this flag to `true`. _You should only use this or `SEED_DATABASE` but not both_
-- `SEED_DATABASE` = _optional_  Run the seeding script without dropping the existing values in the database. To use, set to `true`. _You should only use this or `ERASE_DATABASE` but not both_
+- `DATABASE_HOST` = The hostname of your db. _Probably_ `localhost` but if you're using our `docker-compose.yml` set it to `db`.
 - `DATABASE` = Your database name. Postgres default is `postgres`.
 - `DATABASE_USER` = Your local database login username. Postgres default is `postgres`.
 - `DATABASE_PASSWORD` = Your local database login password. Postgres default is `postgres`.
 - `DATABASE_SCHEMA` = Your local database schema. Postgres default is `public`.
-- `SEED_DATA_PASSWORD` = A password for your seed user(s).
 - `JWT_KEY` = A secret value to generate JWT's locally. 
 - `BYPASS_LOGIN` = _optional_  Allows you to hit the endpoints locally without having to login. If you wish to bypass the login process during local dev, set this to `true`.
 
