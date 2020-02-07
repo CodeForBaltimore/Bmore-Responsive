@@ -19,27 +19,28 @@ app.use(express.urlencoded({extended: true}));
 
 // Custom middleware
 app.use(async (req, res, next) => {
+	// Making our models available in the request.
 	req.context = {
 		models
 	};
 
 	/** @todo add some checks for auth tokens, etc */
-	req.context.me = {
-		id: 'abc-123'
-	};
+	// req.context.me = {
+	// 	id: 'abc-123'
+	// };
 
 	next();
 });
 
 // Helper endpoints
 app.get('/', (req, res) => res.send(`For instructions on use, please visit ${process.env.npm_package_homepage}`));
-app.use('/_healthcheck', (_req, res) => {
+app.use('/health', (req, res) => {
 	res.status(200).json({
 		uptime: utils.formatTime(process.uptime()),
 		environment: process.env.NODE_ENV || 'n/a',
 		version: process.env.npm_package_version || 'n/a',
-		userId: _req.context.me.id,
-		requestId: _req.id
+		requestId: req.id
+		// UserId: req.context.me.id
 	});
 });
 

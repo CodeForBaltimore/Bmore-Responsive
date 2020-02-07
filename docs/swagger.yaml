@@ -1,0 +1,285 @@
+openapi: 3.0.0
+# Added by API Auto Mocking Plugin
+servers:
+# Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/codeforbaltimore/bmoreResponsive/1.0.0
+info:
+  description: An emergency response and contact management API.  
+  version: "1.0.0"
+  title: Bmore Responsive
+  contact:
+    email: hello@codeforbaltimore.org
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+tags:
+  - name: developers
+    description: Operations available to regular developers
+  - name: users
+    description: Operations available for system users
+paths:
+  /health:
+    get:
+      tags:
+        - developers
+      summary: returns a healthcheck
+      description: |
+        This returns simple system information
+      responses:
+        '200':
+          description: the system healthcheck
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthcheckItem'
+        '500':
+          description: System error
+  /user/login:
+    post:
+      tags:
+        - users
+      summary: logs in a system user
+      description: The system login endpoint.
+      requestBody:
+        description: The body of the payload
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginUserItem'
+      responses:
+        '200':
+          description: login token
+        '400':
+          description: Invalid credentials
+  /user:
+    get:
+      tags:
+        - users
+      summary: returns all system users
+      description: |
+        By passing in the appropriate options, you can search for
+        available users in the system
+      parameters:
+        - in: header
+          name: token
+          required: true
+          schema:
+            type: string
+            example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M
+      #   - in: query
+      #     name: searchString
+      #     description: pass an optional search string for looking up users
+      #     required: false
+      #     schema:
+      #       type: string
+      #   - in: query
+      #     name: skip
+      #     description: number of records to skip for pagination
+      #     schema:
+      #       type: integer
+      #       format: int32
+      #       minimum: 0
+      #   - in: query
+      #     name: limit
+      #     description: maximum number of records to return
+      #     schema:
+      #       type: integer
+      #       format: int32
+      #       minimum: 0
+      #       maximum: 50
+      responses:
+        '200':
+          description: search results matching criteria
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SystemUserItem'
+        '400':
+          description: Invalid input
+        '401':
+          description: Unauthorized
+    post:
+      tags:
+        - users
+      summary: creates a single system user
+      description: By sending a valid payload you can create a new user.
+      requestBody:
+        description: The body of the payload.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewUserItem'
+      responses:
+        '200':
+          description: user created
+        '400':
+          description: Invalid input
+    put:
+      tags:
+        - users
+      summary: updates a single system user
+      description: By sending a valid payload you can update a user.
+      parameters:
+        - in: header
+          name: token
+          required: true
+          schema:
+            type: string
+            example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M
+      requestBody:
+        description: The body of the payload.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewUserItem'
+      responses:
+        '200':
+          description: user updated
+        '400':
+          description: Invalid input
+        '401':
+          description: Unauthorized
+  /user/{email}:
+    get:
+      tags:
+        - users
+      summary: returns a single system user
+      description: By passing the username, you can lookup a user.
+      parameters:
+        - in: path
+          name: email
+          schema:
+            type: string
+            format: email
+          required: true
+          description: email of the user
+        - in: header
+          name: token
+          required: true
+          schema:
+            type: string
+            example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M
+      responses:
+        '200':
+          description: the user object
+          content:
+            session/json:
+              schema:
+                $ref: '#/components/schemas/SystemUserItem'
+        '400':
+          description: Invalid input
+        '401':
+          description: Unauthorized
+    delete:
+      tags:
+        - users
+      summary: deletes a single system user
+      description: By sending a valid payload you can delete a user.
+      parameters:
+        - in: path
+          name: email
+          schema:
+            type: string
+            format: email
+          required: true
+          description: the email of the user to delete.
+        - in: header
+          name: token
+          required: true
+          schema:
+            type: string
+            example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M
+      responses:
+        '200':
+          description: user deleted
+        '400':
+          description: Invalid input
+        '401':
+          description: Unauthorized
+          
+components:
+  schemas:
+    HealthcheckItem:
+      type: object
+      required:
+        - uptime
+        - environment
+        - version
+        - requestId
+      properties:
+        uptime:
+          type: string
+          example: '42:42:42'
+        environment:
+          type: string
+          example: dev
+        version:
+          type: string
+          example: '0.0.1'
+        requestId:
+          type: string
+          format: uuid
+          example: '602e1bd9-3eb1-4a26-a0d1-6bf08e8c0a66'
+    LoginUserItem:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+          example: test@test.test
+        password:
+          type: string
+          example: test
+    NewUserItem:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+          example: "test@test.test"
+        password:
+          type: string
+          format: password
+          example: "test"
+        # displayName:
+        #   type: string
+        #   format: email
+        #   example: "test@test.com"
+        # phone:
+        #   type: string
+        #   example: "123456789"
+    SystemUserItem:
+      type: object
+      required: 
+        - email
+      properties:
+        email:
+          type: string
+          format: email
+          example: 'goku@example.test'
+        displayNamme:
+          type: string
+          example: 'goku'
+        phone:
+          type: string
+          example: "123456789"
+        createdAt:
+          type: string
+          format: date-time
+          example: '2020-01-21T13:45:52.348Z'
+        updatedAt:
+          type: string
+          format: date-time
+          example: '2020-01-21T13:45:52.348Z'
