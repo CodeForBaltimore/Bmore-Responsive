@@ -10,14 +10,6 @@ List related PRs against other branches:
 | --------------- | -------- |
 | other_pr_description | # |
 
-## Related Issues
-
-List related Issues:
-
-| link |
-| ---- |
-|  #  |
-
 ## Todos
 
 - [ ] Tests

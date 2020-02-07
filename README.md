@@ -6,15 +6,58 @@ An API to drive disaster and emergency response systems.
 ## Documentation
 We've included a `docs` folder with a template [Tech Spec](/docs/Tech_Spec.md) and [Best Practices](/docs/Best_Practices.md) document, though using Github's Wiki capabilities is also a good idea. This will get you started with documenting your project.  Other documents and relevant information that has no other place can live in the `docs` folder.  Replace this paragraph with a brief breakdown of what you've included in your `docs` folder.
 
+### API Spec
+Our API spec is on Swagger. You can view it here https://app.swaggerhub.com/apis/codeforbaltimore/bmoreResponsive/1.0.0#/ or you can find the `swagger.json` file in our `docs` folder.  
+
+### Database Documentation
+Our database documentation can be found in our `docs` folder under `database.csv`. This documentation was created using SchemaSpy. Instructions for use can be found here https://github.com/bcgov/schemaspy
+
 ## Setup
-A `Dockerfile` and `docker-compose` file have been included for convenience, however this may not be the best local setup for this project. To work on this project you should have:
+A `Dockerfile` and `docker-compose` file have been included for convenience, however this may not be the best local setup for this project. For more information on how to use Docker with this project, please see the [docker section](#docker).
+
+To work on this project you should have:
 -   NodeJS
 -   PostgreSQL (can be in Docker)
 -   Docker (optional)
 Once you have the prerequisite software installed you can proceed to setup this application.
 
+### Node and Express setup
+This application is designed to work as an API driven by Express. To setup your environment first you must install all required dependencies by running the following command from the root of your project directory:
+```
+npm install
+```
+Once all dependencies are installed you will need to setup some environment variables to interact with your database and application. 
+
+### Environment variables
+You will need to set some local environment variables to run this application. This is true even if you're using Docker.
+```
+touch .env
+echo 'NODE_ENV=local
+PORT=<your port>
+DATABASE_HOST=<your database host>
+DATABASE=<your database name>
+DATABASE_USER=<your database user>
+DATABASE_PASSWORD=<your database password>
+DATABASE_SCHEMA=<your database schema>
+JWT_KEY=<your secret JWT seed phrase or key>
+' >> ./.env
+```
+
+The various variables are defined as follows:
+- `NODE_ENV` = The label for your environment. 
+- `PORT` = The local port you wish to run on. Defaults to `3000`.
+- `DATABASE_HOST` = The hostname of your db. _Probably_ `localhost` but if you're using our `docker-compose.yml` set it to `db`.
+- `DATABASE` = Your database name. Postgres default is `postgres`.
+- `DATABASE_USER` = Your local database login username. Postgres default is `postgres`.
+- `DATABASE_PASSWORD` = Your local database login password. Postgres default is `postgres`.
+- `DATABASE_SCHEMA` = Your local database schema. Postgres default is `public`.
+- `JWT_KEY` = A secret value to generate JWT's locally. 
+- `BYPASS_LOGIN` = _optional_  Allows you to hit the endpoints locally without having to login. If you wish to bypass the login process during local dev, set this to `true`.
+
+_We do not recommend using the default options for PostgreSQL. The above values are provided as examples. It is more secure to create your own credentials._
+
 ### PostgreSQL
-You will need a PostgreSQL database running locally to run this application locally. You may setup PostgreSQL however you wish, however we recommend using Docker using the instructions found here: https://hub.docker.com/_/postgres
+***You will need a PostgreSQL database running locally to run this application locally.*** You may setup PostgreSQL however you wish, however we recommend using Docker using the instructions found here: https://hub.docker.com/_/postgres
 
 If you are using the Docker method you may spin up your database layer by running this command:
 ```
@@ -22,20 +65,18 @@ docker run -d -p 5432:5432 postgres
 ```
 If you're running a database in another way then we trust you can sort it out on your own because you're awesome :sunglasses:
 
-### Node and Express setup
-This application is designed to work as an API driven by Express. To setup your environment first you must install all required dependencies by running the following command from the root of your project directory:
+### Docker
+To use the `docker-compose.yml` file included you will first need to set [environment variables](#environment-variables). You **MUST** set your `DATABASE_HOST` to `db` to use the `docker-compose` solution. 
+
+If you are running your own database, but want to use the `Dockerfile` you will need to run that this way on a Mac:
 ```
-npm install
+docker build -t bmoreres .
+docker run -d -p 3000:3000 -e DATABASE_HOST=docker.for.mac.host.internal bmoreres
 ```
-Once all dependencies are installed you will need to setup some environment variables to interact with your database and application. To do that you may run:
+On Windows you would run:
 ```
-touch .env
-echo 'NODE_ENV=local
-PORT=<your port>
-ERASE_DATABASE=true
-DATABASE=<your database name>
-DATABASE_USER=<your database user>
-DATABASE_PASSWORD=<your database password>' >> ./.env
+docker build -t bmoreres .
+docker run -d -p 3000:3000 -e DATABASE_HOST=docker.for.win.host.internal bmoreres
 ```
 
 ## Using this product
