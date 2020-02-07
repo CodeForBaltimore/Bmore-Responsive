@@ -16,6 +16,7 @@ after_script:
 - nyc --reporter=text-lcov npm test > coverage.lcov
 - codecov
 - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+- docker build -t codeforbaltimore/bmore-responsive .
 - docker push codeforbaltimore/bmore-responsive
 notifications:
   slack:
