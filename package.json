@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "nodemon --exec babel-node src/index.js",
-    "test": "mocha --require @babel/register --require @babel/polyfill **/*.spec.js --exit",
+    "test": "mocha --require @babel/register --require @babel/polyfill \"src/tests/**/*.spec.js\" --exit",
     "lint": "xo --ignore **/*.spec.js",
     "format": "xo --fix --ignore **/*.spec.js"
   },
@@ -29,8 +29,6 @@
   "dependencies": {
     "@babel/core": "7.8.4",
     "@babel/node": "7.8.4",
-    "bcrypt-nodejs": "0.0.3",
-    "bcryptjs": "2.4.3",
     "chai": "4.2.0",
     "cors": "2.8.5",
     "crypto": "1.0.1",
@@ -42,15 +40,15 @@
     "morgan": "1.9.1",
     "nodemon": "2.0.2",
     "pg": "7.18.1",
+    "random-words": "1.1.0",
     "sequelize": "5.21.3",
     "supertest": "4.0.2",
-    "uuid": "3.4.0",
     "validator": "12.2.0"
   },
   "devDependencies": {
-    "@babel/polyfill": "7.8.3",
+    "@babel/polyfill": "7.8.4",
     "@babel/preset-env": "7.8.4",
-    "codecov": "3.6.1",
+    "codecov": "3.6.3",
     "nyc": "15.0.0",
     "xo": "0.25.3"
   },
