@@ -19,29 +19,6 @@ A `Dockerfile` and `docker-compose` file have been included for convenience, how
 -   Docker (optional)
 Once you have the prerequisite software installed you can proceed to setup this application.
 
-### Docker
-To use the `docker-compose.yml` file included you will first need to set [environment variables](#environment_variables). You **MUST** set your `DATABASE_HOST` to `db` to use the `docker-compose` solution. 
-
-If you are running your own database, but want to use the `Dockerfile` you will need to run that this way on a Mac:
-```
-docker build -t bmoreres .
-docker run -d -p 3000:3000 -e DATABASE_HOST=docker.for.mac.host.internal bmoreres
-```
-On Windows you would run:
-```
-docker build -t bmoreres .
-docker run -d -p 3000:3000 -e DATABASE_HOST=docker.for.win.host.internal bmoreres
-```
-
-### PostgreSQL
-***You will need a PostgreSQL database running locally to run this application locally.*** You may setup PostgreSQL however you wish, however we recommend using Docker using the instructions found here: https://hub.docker.com/_/postgres
-
-If you are using the Docker method you may spin up your database layer by running this command:
-```
-docker run -d -p 5432:5432 postgres
-```
-If you're running a database in another way then we trust you can sort it out on your own because you're awesome :sunglasses:
-
 ### Node and Express setup
 This application is designed to work as an API driven by Express. To setup your environment first you must install all required dependencies by running the following command from the root of your project directory:
 ```
@@ -76,6 +53,29 @@ The various variables are defined as follows:
 - `BYPASS_LOGIN` = _optional_  Allows you to hit the endpoints locally without having to login. If you wish to bypass the login process during local dev, set this to `true`.
 
 _We do not recommend using the default options for PostgreSQL. The above values are provided as examples. It is more secure to create your own credentials._
+
+### PostgreSQL
+***You will need a PostgreSQL database running locally to run this application locally.*** You may setup PostgreSQL however you wish, however we recommend using Docker using the instructions found here: https://hub.docker.com/_/postgres
+
+If you are using the Docker method you may spin up your database layer by running this command:
+```
+docker run -d -p 5432:5432 postgres
+```
+If you're running a database in another way then we trust you can sort it out on your own because you're awesome :sunglasses:
+
+### Docker
+To use the `docker-compose.yml` file included you will first need to set [environment variables](#environment_variables). You **MUST** set your `DATABASE_HOST` to `db` to use the `docker-compose` solution. 
+
+If you are running your own database, but want to use the `Dockerfile` you will need to run that this way on a Mac:
+```
+docker build -t bmoreres .
+docker run -d -p 3000:3000 -e DATABASE_HOST=docker.for.mac.host.internal bmoreres
+```
+On Windows you would run:
+```
+docker build -t bmoreres .
+docker run -d -p 3000:3000 -e DATABASE_HOST=docker.for.win.host.internal bmoreres
+```
 
 ## Using this product
 You may use this product to create and manage users for your front-end. More to come! 
