@@ -13,7 +13,9 @@ Our API spec is on Swagger. You can view it here https://app.swaggerhub.com/apis
 Our database documentation can be found in our `docs` folder under `database.csv`. This documentation was created using SchemaSpy. Instructions for use can be found here https://github.com/bcgov/schemaspy
 
 ## Setup
-A `Dockerfile` and `docker-compose` file have been included for convenience, however this may not be the best local setup for this project. To work on this project you should have:
+A `Dockerfile` and `docker-compose` file have been included for convenience, however this may not be the best local setup for this project. For more information on how to use Docker with this project, please see the [docker section](#docker).
+
+To work on this project you should have:
 -   NodeJS
 -   PostgreSQL (can be in Docker)
 -   Docker (optional)
@@ -64,7 +66,7 @@ docker run -d -p 5432:5432 postgres
 If you're running a database in another way then we trust you can sort it out on your own because you're awesome :sunglasses:
 
 ### Docker
-To use the `docker-compose.yml` file included you will first need to set [environment variables](#environment_variables). You **MUST** set your `DATABASE_HOST` to `db` to use the `docker-compose` solution. 
+To use the `docker-compose.yml` file included you will first need to set [environment variables](#environment-variables). You **MUST** set your `DATABASE_HOST` to `db` to use the `docker-compose` solution. 
 
 If you are running your own database, but want to use the `Dockerfile` you will need to run that this way on a Mac:
 ```
