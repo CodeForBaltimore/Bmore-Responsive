@@ -27,8 +27,8 @@
   },
   "homepage": "https://github.com/CodeForBaltimore/Bmore-Responsive#readme",
   "dependencies": {
-    "@babel/core": "7.8.3",
-    "@babel/node": "7.8.3",
+    "@babel/core": "7.8.4",
+    "@babel/node": "7.8.4",
     "chai": "4.2.0",
     "cors": "2.8.5",
     "crypto": "1.0.1",
@@ -41,13 +41,13 @@
     "nodemon": "2.0.2",
     "pg": "7.18.1",
     "random-words": "1.1.0",
-    "sequelize": "5.21.3",
+    "sequelize": "5.21.4",
     "supertest": "4.0.2",
     "validator": "12.2.0"
   },
   "devDependencies": {
     "@babel/polyfill": "7.8.3",
-    "@babel/preset-env": "7.8.3",
+    "@babel/preset-env": "7.8.4",
     "codecov": "3.6.5",
     "nyc": "15.0.0",
     "xo": "0.25.3"
