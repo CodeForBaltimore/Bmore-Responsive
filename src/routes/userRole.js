@@ -10,7 +10,7 @@ router.get('/', async (req, res) => {
 	try {
 		if (await utils.validateToken(req, res)) {
 			const roles = await req.context.models.UserRole.findAll({
-				attributes: ['id', 'role', 'description']
+				attributes: ['id', 'role', 'description', 'createdAt', 'updatedAt']
 			});
 
 			return res.send(roles);

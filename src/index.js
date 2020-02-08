@@ -3,11 +3,13 @@ import cors from 'cors';
 import express from 'express';
 import requestId from 'express-request-id';
 import morgan from 'morgan';
+import swaggerUi from 'swagger-ui-express';
 
 import models, {sequelize} from './models';
 import routes from './routes';
 import utils from './utils';
 
+const swaggerDocument = './docs/swagger.json';
 const app = express();
 
 // Third-party middleware
@@ -16,6 +18,7 @@ app.use(morgan('tiny'));
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Custom middleware
 app.use(async (req, res, next) => {
