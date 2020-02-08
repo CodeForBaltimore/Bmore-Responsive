@@ -46,11 +46,13 @@ app.use('/health', (req, res) => {
 
 // Routes
 app.use('/user', routes.user);
+app.use('/userRole', routes.userRole);
 
 // Starting Express and PostgreSQL
 sequelize.sync({force: process.env.ERASE_DATABASE}).then(async () => {
 	if (process.env.SEED_DATABASE || process.env.ERASE_DATABASE) {
 		utils.seedUsers();
+		utils.seedUserRoles();
 	}
 
 	app.listen(process.env.PORT || 3000, () => {

@@ -22,7 +22,8 @@ sequelize.authenticate().then(e => {
 
 // Defines our models. Add to the model object if you're defining new tables, etc.
 const models = {
-	User: sequelize.import('./user')
+	User: sequelize.import('./user'),
+	UserRole: sequelize.import('./userRole')
 };
 
 // Bringing it all together easily for use.

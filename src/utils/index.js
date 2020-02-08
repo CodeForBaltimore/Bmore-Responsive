@@ -27,13 +27,26 @@ const formatTime = seconds => {
 const seedUsers = async () => {
 	await models.User.create(
 		{
-			email: 'saiyensarerad@gmail.com',
+			email: 'test@test.test',
 			password: process.env.SEED_DATA_PASSWORD
 		}
 	);
 
-	console.log('Database seeding finished!');
+	console.log('Database user seeding finished!');
 };
+
+/**
+ * Creates a dummy user role for development purposes.
+ */
+const seedUserRoles = async () => {
+	await models.UserRole.create(
+		{
+			role: "test",
+			description: "This is a test role."
+		}
+	);
+	console.log('Database user roles seeding finished!');
+}
 
 /**
  * Validates a user login token.
@@ -60,5 +73,6 @@ const validateToken = async (req, res) => {
 export default {
 	formatTime,
 	seedUsers,
+	seedUserRoles,
 	validateToken
 };
