@@ -31,8 +31,6 @@ const seedUsers = async () => {
 			password: process.env.SEED_DATA_PASSWORD
 		}
 	);
-
-	console.log('Database user seeding finished!');
 };
 
 /**
@@ -45,7 +43,6 @@ const seedUserRoles = async () => {
 			description: "This is a test role."
 		}
 	);
-	console.log('Database user roles seeding finished!');
 }
 
 /**
