@@ -72,3 +72,43 @@ describe('User roles positive tests', () => {
         });
     });
 });
+
+describe('User role negative tests', () => {
+    it('should not get a single user role', (done) => {
+      request(app)
+        .get(`/userRole/${role.role}`)
+        .set('Accept', 'application/json')
+        .expect(200)
+        .end((err, res) => {
+          if (err) return done(err);
+          expect(res.body.role).to.be.an('undefined');
+          done();
+        });
+    });
+    it('should not update a user role', (done) => {
+      role.description = randomWords();
+      request(app)
+        .put('/userRole')
+        .send(role)
+        .set('Accept', 'application/json')
+        .expect('Content-Type', 'text/html; charset=utf-8')
+        .expect(400)
+        .end((err, res) => {
+          if (err) return done(err);
+          expect(res.text).to.equal(`Invalid input`);
+          done();
+        });
+    });
+    it('should not delete a user', (done) => {
+      request(app)
+        .delete(`/userRole/${role.role}`)
+        .set('Accept', 'application/json')
+        .expect('Content-Type', 'text/html; charset=utf-8')
+        .expect(400)
+        .end((err, res) => {
+          if (err) return done(err);
+          expect(res.text).to.equal(`Invalid input`);
+          done();
+        });
+    });
+  });
