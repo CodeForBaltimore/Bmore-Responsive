@@ -74,6 +74,19 @@ describe('User roles positive tests', () => {
 });
 
 describe('User role negative tests', () => {
+    it('should not create a user role', (done) => {
+      request(app)
+        .post('/userRole')
+        .send({ role: '', description: randomWords() })
+        .set('Accept', 'application/json')
+        .expect('Content-Type', 'text/html; charset=utf-8')
+        .expect(400)
+        .end((err, res) => {
+          if (err) return done(err);
+          expect(res.text).to.equal('Invalid input')
+          done();
+        });
+    });
     it('should not get a single user role', (done) => {
       request(app)
         .get(`/userRole/${role.role}`)

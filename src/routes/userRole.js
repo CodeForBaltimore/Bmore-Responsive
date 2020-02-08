@@ -1,4 +1,5 @@
 import {Router} from 'express';
+import validator from 'validator';
 import utils from '../utils';
 
 const router = Router();
@@ -44,8 +45,8 @@ router.get('/:role', async (req, res) => {
 // Creates a new role.
 router.post('/', async (req, res) => {
 	try {
-		if(await utils.validateToken(req, res)) {
-			const {role, description} = req.body;
+		const {role, description} = req.body;
+		if(await utils.validateToken(req, res) && validator.isAlphanumeric(role)) {
 
 			const newRole = await req.context.models.UserRole.create({role, description});
 			return res.send(newRole.role + ' created');
@@ -60,9 +61,8 @@ router.post('/', async (req, res) => {
 // Updates any role.
 router.put('/', async (req, res) => {
 	try {
-		if (await utils.validateToken(req, res)) {
-			/** @todo add email and phone update options */
-			const {id, role, description} = req.body;
+		const {id, role, description} = req.body;
+		if (await utils.validateToken(req, res) && validator.isAlphanumeric(role)) {
 
 			const updatedRole = await req.context.models.UserRole.findOne({
 				where: {
