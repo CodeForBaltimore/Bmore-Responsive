@@ -1,21 +1,21 @@
 {
   "openapi" : "3.0.0",
+  "servers" : [ {
+    "description" : "SwaggerHub API Auto Mocking",
+    "url" : "https://virtserver.swaggerhub.com/codeforbaltimore/bmoreResponsive/1.0.0"
+  } ],
   "info" : {
-    "title" : "Bmore Responsive",
     "description" : "An emergency response and contact management API.",
+    "version" : "1.0.0",
+    "title" : "Bmore Responsive",
     "contact" : {
       "email" : "hello@codeforbaltimore.org"
     },
     "license" : {
       "name" : "Apache 2.0",
       "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
-    },
-    "version" : "1.0.0"
+    }
   },
-  "servers" : [ {
-    "url" : "https://virtserver.swaggerhub.com/codeforbaltimore/bmoreResponsive/1.0.0",
-    "description" : "SwaggerHub API Auto Mocking"
-  } ],
   "tags" : [ {
     "name" : "developer",
     "description" : "Operations available to regular developers"
@@ -56,14 +56,14 @@
         "description" : "The system login endpoint.",
         "requestBody" : {
           "description" : "The body of the payload",
+          "required" : true,
           "content" : {
             "application/json" : {
               "schema" : {
                 "$ref" : "#/components/schemas/LoginUserItem"
               }
             }
-          },
-          "required" : true
+          }
         },
         "responses" : {
           "200" : {
@@ -81,11 +81,9 @@
         "summary" : "returns all system users",
         "description" : "By passing in the appropriate options, you can search for\navailable users in the system\n",
         "parameters" : [ {
-          "name" : "token",
           "in" : "header",
+          "name" : "token",
           "required" : true,
-          "style" : "simple",
-          "explode" : false,
           "schema" : {
             "type" : "string",
             "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
@@ -113,16 +111,38 @@
           }
         }
       },
+      "post" : {
+        "tags" : [ "user" ],
+        "summary" : "creates a single system user",
+        "description" : "By sending a valid payload you can create a new user.",
+        "requestBody" : {
+          "description" : "The body of the payload.",
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/NewUserItem"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "user created"
+          },
+          "400" : {
+            "description" : "Invalid input"
+          }
+        }
+      },
       "put" : {
         "tags" : [ "user" ],
         "summary" : "updates a single system user",
         "description" : "By sending a valid payload you can update a user.",
         "parameters" : [ {
-          "name" : "token",
           "in" : "header",
+          "name" : "token",
           "required" : true,
-          "style" : "simple",
-          "explode" : false,
           "schema" : {
             "type" : "string",
             "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
@@ -130,14 +150,14 @@
         } ],
         "requestBody" : {
           "description" : "The body of the payload.",
+          "required" : true,
           "content" : {
             "application/json" : {
               "schema" : {
                 "$ref" : "#/components/schemas/NewUserItem"
               }
             }
-          },
-          "required" : true
+          }
         },
         "responses" : {
           "200" : {
@@ -150,30 +170,6 @@
             "description" : "Unauthorized"
           }
         }
-      },
-      "post" : {
-        "tags" : [ "user" ],
-        "summary" : "creates a single system user",
-        "description" : "By sending a valid payload you can create a new user.",
-        "requestBody" : {
-          "description" : "The body of the payload.",
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/NewUserItem"
-              }
-            }
-          },
-          "required" : true
-        },
-        "responses" : {
-          "200" : {
-            "description" : "user created"
-          },
-          "400" : {
-            "description" : "Invalid input"
-          }
-        }
       }
     },
     "/user/{email}" : {
@@ -182,22 +178,18 @@
         "summary" : "returns a single system user",
         "description" : "By passing the username, you can lookup a user.",
         "parameters" : [ {
-          "name" : "email",
           "in" : "path",
-          "description" : "email of the user",
-          "required" : true,
-          "style" : "simple",
-          "explode" : false,
+          "name" : "email",
           "schema" : {
             "type" : "string",
             "format" : "email"
-          }
-        }, {
-          "name" : "token",
-          "in" : "header",
+          },
           "required" : true,
-          "style" : "simple",
-          "explode" : false,
+          "description" : "email of the user"
+        }, {
+          "in" : "header",
+          "name" : "token",
+          "required" : true,
           "schema" : {
             "type" : "string",
             "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
@@ -227,22 +219,18 @@
         "summary" : "deletes a single system user",
         "description" : "By sending a valid payload you can delete a user.",
         "parameters" : [ {
-          "name" : "email",
           "in" : "path",
-          "description" : "the email of the user to delete.",
-          "required" : true,
-          "style" : "simple",
-          "explode" : false,
+          "name" : "email",
           "schema" : {
             "type" : "string",
             "format" : "email"
-          }
-        }, {
-          "name" : "token",
-          "in" : "header",
+          },
           "required" : true,
-          "style" : "simple",
-          "explode" : false,
+          "description" : "the email of the user to delete."
+        }, {
+          "in" : "header",
+          "name" : "token",
+          "required" : true,
           "schema" : {
             "type" : "string",
             "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
@@ -265,8 +253,8 @@
   "components" : {
     "schemas" : {
       "HealthcheckItem" : {
-        "required" : [ "environment", "requestId", "uptime", "version" ],
         "type" : "object",
+        "required" : [ "uptime", "environment", "version", "requestId" ],
         "properties" : {
           "uptime" : {
             "type" : "string",
@@ -288,8 +276,8 @@
         }
       },
       "LoginUserItem" : {
-        "required" : [ "email", "password" ],
         "type" : "object",
+        "required" : [ "email", "password" ],
         "properties" : {
           "email" : {
             "type" : "string",
@@ -303,8 +291,8 @@
         }
       },
       "NewUserItem" : {
-        "required" : [ "email", "password" ],
         "type" : "object",
+        "required" : [ "email", "password" ],
         "properties" : {
           "email" : {
             "type" : "string",
@@ -319,8 +307,8 @@
         }
       },
       "SystemUserItem" : {
-        "required" : [ "email" ],
         "type" : "object",
+        "required" : [ "email" ],
         "properties" : {
           "email" : {
             "type" : "string",
@@ -348,8 +336,8 @@
         }
       },
       "UserRoleItem" : {
-        "required" : [ "id", "role" ],
         "type" : "object",
+        "required" : [ "id", "role" ],
         "properties" : {
           "id" : {
             "type" : "integer",
