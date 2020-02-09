@@ -1,8 +1,8 @@
 {
   "openapi" : "3.0.0",
   "servers" : [ {
-    "description" : "SwaggerHub API Auto Mocking",
-    "url" : "https://virtserver.swaggerhub.com/codeforbaltimore/bmoreResponsive/1.0.0"
+    "description" : "Localhost",
+    "url" : "http://localhost:3000"
   } ],
   "info" : {
     "description" : "An emergency response and contact management API.",

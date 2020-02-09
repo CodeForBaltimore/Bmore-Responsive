@@ -9,8 +9,15 @@ import models, {sequelize} from './models';
 import routes from './routes';
 import utils from './utils';
 
-const swaggerDocument = './docs/swagger.json';
+import swaggerDocument from '../docs/swagger.json';
+
 const app = express();
+ 
+var options = {
+	swaggerOptions: {
+	  url: 'http://petstore.swagger.io/v2/swagger.json'
+	}
+  }
 
 // Third-party middleware
 app.use(requestId());
@@ -18,7 +25,6 @@ app.use(morgan('tiny'));
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Custom middleware
 app.use(async (req, res, next) => {
@@ -46,6 +52,8 @@ app.use('/health', (req, res) => {
 		// UserId: req.context.me.id
 	});
 });
+console.log(swaggerDocument)
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Routes
 app.use('/user', routes.user);
