@@ -42,7 +42,7 @@ app.use(async (req, res, next) => {
 });
 
 // Helper endpoints
-app.get('/', (req, res) => res.send(`For instructions on use, please visit ${process.env.npm_package_homepage}`));
+app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/health', (req, res) => {
 	res.status(200).json({
 		uptime: utils.formatTime(process.uptime()),
@@ -52,8 +52,6 @@ app.use('/health', (req, res) => {
 		// UserId: req.context.me.id
 	});
 });
-console.log(swaggerDocument)
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Routes
 app.use('/user', routes.user);
