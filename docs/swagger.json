@@ -23,7 +23,7 @@
     "name" : "user",
     "description" : "Operations related to system users"
   }, {
-    "name" : "userRoles",
+    "name" : "userRole",
     "description" : "Operations related to user roles"
   } ],
   "paths" : {
@@ -60,7 +60,19 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/LoginUserItem"
+                "type" : "object",
+                "required" : [ "email", "password" ],
+                "properties" : {
+                  "email" : {
+                    "type" : "string",
+                    "format" : "email",
+                    "example" : "test@test.test"
+                  },
+                  "password" : {
+                    "type" : "string",
+                    "example" : "test"
+                  }
+                }
               }
             }
           }
@@ -76,6 +88,43 @@
       }
     },
     "/user" : {
+      "post" : {
+        "tags" : [ "user" ],
+        "summary" : "creates a new user",
+        "description" : "The new user endpoint.",
+        "requestBody" : {
+          "description" : "The body of the payload",
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "email", "password" ],
+                "properties" : {
+                  "email" : {
+                    "type" : "string",
+                    "format" : "email",
+                    "example" : "test@test.test"
+                  },
+                  "password" : {
+                    "type" : "string",
+                    "format" : "password",
+                    "example" : "test"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "user created"
+          },
+          "400" : {
+            "description" : "Invalid input"
+          }
+        }
+      },
       "get" : {
         "tags" : [ "user" ],
         "summary" : "returns all system users",
@@ -97,7 +146,7 @@
                 "schema" : {
                   "type" : "array",
                   "items" : {
-                    "$ref" : "#/components/schemas/SystemUserItem"
+                    "$ref" : "#/components/schemas/UserItem"
                   }
                 }
               }
@@ -111,33 +160,9 @@
           }
         }
       },
-      "post" : {
-        "tags" : [ "user" ],
-        "summary" : "creates a single system user",
-        "description" : "By sending a valid payload you can create a new user.",
-        "requestBody" : {
-          "description" : "The body of the payload.",
-          "required" : true,
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/NewUserItem"
-              }
-            }
-          }
-        },
-        "responses" : {
-          "200" : {
-            "description" : "user created"
-          },
-          "400" : {
-            "description" : "Invalid input"
-          }
-        }
-      },
       "put" : {
         "tags" : [ "user" ],
-        "summary" : "updates a single system user",
+        "summary" : "updates any single system user",
         "description" : "By sending a valid payload you can update a user.",
         "parameters" : [ {
           "in" : "header",
@@ -154,7 +179,20 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/NewUserItem"
+                "type" : "object",
+                "required" : [ "email", "password" ],
+                "properties" : {
+                  "email" : {
+                    "type" : "string",
+                    "format" : "email",
+                    "example" : "test@test.test"
+                  },
+                  "password" : {
+                    "type" : "string",
+                    "format" : "password",
+                    "example" : "test"
+                  }
+                }
               }
             }
           }
@@ -201,7 +239,7 @@
             "content" : {
               "session/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/SystemUserItem"
+                  "$ref" : "#/components/schemas/UserItem"
                 }
               }
             }
@@ -227,6 +265,204 @@
           },
           "required" : true,
           "description" : "the email of the user to delete."
+        }, {
+          "in" : "header",
+          "name" : "token",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "user deleted"
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          }
+        }
+      }
+    },
+    "/userRole" : {
+      "post" : {
+        "tags" : [ "userRole" ],
+        "summary" : "creates a new user role",
+        "description" : "The new user role endpoint.",
+        "requestBody" : {
+          "description" : "The body of the payload",
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "role" ],
+                "properties" : {
+                  "role" : {
+                    "type" : "string",
+                    "example" : "test"
+                  },
+                  "description" : {
+                    "type" : "string",
+                    "example" : "This is a test"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "user role created"
+          },
+          "400" : {
+            "description" : "Invalid input"
+          }
+        }
+      },
+      "get" : {
+        "tags" : [ "userRole" ],
+        "summary" : "returns all system user roles",
+        "description" : "By passing in the appropriate options, you can search for\navailable user roles in the system\n",
+        "parameters" : [ {
+          "in" : "header",
+          "name" : "token",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "search results matching criteria",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/UserRoleItem"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "userRole" ],
+        "summary" : "updates any single system user role",
+        "description" : "By sending a valid payload you can update a user role.",
+        "parameters" : [ {
+          "in" : "header",
+          "name" : "token",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "The body of the payload.",
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "id", "role" ],
+                "properties" : {
+                  "id" : {
+                    "type" : "number",
+                    "example" : 42
+                  },
+                  "email" : {
+                    "type" : "string",
+                    "example" : "test"
+                  },
+                  "description" : {
+                    "type" : "string",
+                    "example" : "This is a test"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "user updated"
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          }
+        }
+      }
+    },
+    "/userRole/{role}" : {
+      "get" : {
+        "tags" : [ "userRole" ],
+        "summary" : "returns a single system user",
+        "description" : "By passing the username, you can lookup a user.",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "role",
+          "schema" : {
+            "type" : "string"
+          },
+          "required" : true,
+          "description" : "the role to get"
+        }, {
+          "in" : "header",
+          "name" : "token",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "the user object",
+            "content" : {
+              "session/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/UserRoleItem"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "userRole" ],
+        "summary" : "deletes a single system user role",
+        "description" : "By sending a valid payload you can delete a user role.",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "role",
+          "schema" : {
+            "type" : "string"
+          },
+          "required" : true,
+          "description" : "the user role to delete."
         }, {
           "in" : "header",
           "name" : "token",
@@ -275,38 +511,7 @@
           }
         }
       },
-      "LoginUserItem" : {
-        "type" : "object",
-        "required" : [ "email", "password" ],
-        "properties" : {
-          "email" : {
-            "type" : "string",
-            "format" : "email",
-            "example" : "test@test.test"
-          },
-          "password" : {
-            "type" : "string",
-            "example" : "test"
-          }
-        }
-      },
-      "NewUserItem" : {
-        "type" : "object",
-        "required" : [ "email", "password" ],
-        "properties" : {
-          "email" : {
-            "type" : "string",
-            "format" : "email",
-            "example" : "test@test.test"
-          },
-          "password" : {
-            "type" : "string",
-            "format" : "password",
-            "example" : "test"
-          }
-        }
-      },
-      "SystemUserItem" : {
+      "UserItem" : {
         "type" : "object",
         "required" : [ "email" ],
         "properties" : {
