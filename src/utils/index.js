@@ -17,7 +17,6 @@ const formatTime = seconds => {
 	const hours = Math.floor(seconds / (60 * 60));
 	const minutes = Math.floor(seconds % (60 * 60) / 60);
 	const secs = Math.floor(seconds % 60);
-
 	return pad(hours) + ':' + pad(minutes) + ':' + pad(secs);
 };
 
@@ -39,11 +38,11 @@ const seedUsers = async () => {
 const seedUserRoles = async () => {
 	await models.UserRole.create(
 		{
-			role: "test",
-			description: "This is a test role."
+			role: 'test',
+			description: 'This is a test role.'
 		}
 	);
-}
+};
 
 /**
  * Validates a user login token.

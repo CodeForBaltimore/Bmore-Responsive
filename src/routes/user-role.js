@@ -2,8 +2,7 @@ import {Router} from 'express';
 import validator from 'validator';
 import utils from '../utils';
 
-const router = Router();
-
+const router = new Router();
 
 // Gets all roles.
 router.get('/', async (req, res) => {
@@ -12,11 +11,10 @@ router.get('/', async (req, res) => {
 			const roles = await req.context.models.UserRole.findAll({
 				attributes: ['id', 'role', 'description', 'createdAt', 'updatedAt']
 			});
-
 			return res.send(roles);
 		}
 
-		throw 'Invalid input';
+		throw new Error('Invalid input');
 	} catch {
 		res.status(400).send('Invalid input');
 	}
@@ -32,11 +30,10 @@ router.get('/:role', async (req, res) => {
 				},
 				attributes: ['id', 'role', 'description']
 			});
-
 			return res.send(user);
 		}
 
-		throw 'Invalid input';
+		throw new Error('Invalid input');
 	} catch {
 		res.status(400).send('Invalid payload');
 	}
@@ -46,13 +43,12 @@ router.get('/:role', async (req, res) => {
 router.post('/', async (req, res) => {
 	try {
 		const {role, description} = req.body;
-		if(await utils.validateToken(req, res) && validator.isAlphanumeric(role)) {
-
+		if (await utils.validateToken(req, res) && validator.isAlphanumeric(role)) {
 			const newRole = await req.context.models.UserRole.create({role, description});
 			return res.send(newRole.role + ' created');
-		}  
+		}
 
-		throw 'Invalid input';
+		throw new Error('Invalid input');
 	} catch {
 		return res.status(400).send('Invalid input');
 	}
@@ -63,21 +59,18 @@ router.put('/', async (req, res) => {
 	try {
 		const {id, role, description} = req.body;
 		if (await utils.validateToken(req, res) && validator.isAlphanumeric(role)) {
-
 			const updatedRole = await req.context.models.UserRole.findOne({
 				where: {
 					id
 				}
 			});
-
-            updatedRole.role = role;
-            updatedRole.description = description;
+			updatedRole.role = role;
+			updatedRole.description = description;
 			await updatedRole.save();
-
 			return res.send(updatedRole.role + ' updated');
 		}
 
-		throw 'Invalid input';
+		throw new Error('Invalid input');
 	} catch {
 		res.status(400).send('Invalid input');
 	}
@@ -96,7 +89,7 @@ router.delete('/:role', async (req, res) => {
 			return res.send(req.params.role + ' deleted');
 		}
 
-		throw 'Invalid input';
+		throw new Error('Invalid input');
 	} catch {
 		res.status(400).send('Invalid input');
 	}

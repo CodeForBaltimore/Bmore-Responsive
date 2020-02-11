@@ -4,20 +4,13 @@ import express from 'express';
 import requestId from 'express-request-id';
 import morgan from 'morgan';
 import swaggerUi from 'swagger-ui-express';
+import swaggerDocument from '../docs/swagger.json';
 
 import models, {sequelize} from './models';
 import routes from './routes';
 import utils from './utils';
 
-import swaggerDocument from '../docs/swagger.json';
-
 const app = express();
- 
-var options = {
-	swaggerOptions: {
-	  url: 'http://petstore.swagger.io/v2/swagger.json'
-	}
-  }
 
 // Third-party middleware
 app.use(requestId());
@@ -42,7 +35,9 @@ app.use(async (req, res, next) => {
 });
 
 // Helper endpoints
-app.get('/', (req, res) => {res.redirect('/api-docs')});
+app.get('/', (req, res) => {
+	res.redirect('/api-docs');
+});
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/health', (req, res) => {
 	res.status(200).json({

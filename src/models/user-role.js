@@ -7,7 +7,7 @@ const userRole = (sequelize, DataTypes) => {
 			required: true
 		},
 		description: {
-			type: DataTypes.STRING,
+			type: DataTypes.STRING
 		}
 	},
 	{
