@@ -42,17 +42,13 @@ const user = (sequelize, DataTypes) => {
 		const user = await User.findOne({
 			where: {email}
 		});
-
 		if (user) {
 			const pw = User.encryptPassword(password, user.salt);
-
 			if (pw === user.password) {
 				await user.update();
 				return user.token;
 			}
 		}
-
-		return 'Invalid credentials';
 	};
 
 	/**
@@ -70,7 +66,6 @@ const user = (sequelize, DataTypes) => {
 			const user = await User.findOne({
 				where: {token}
 			});
-
 			if (user) {
 				try {
 					return jwt.verify(user.token, process.env.JWT_KEY, {email: user.email});
@@ -122,7 +117,6 @@ const user = (sequelize, DataTypes) => {
 			process.env.JWT_KEY,
 			{expiresIn: '1d'}
 		);
-
 		user.token = token;
 	};
 

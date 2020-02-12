@@ -73,7 +73,6 @@ describe('User positive tests', () => {
       });
   });
   it('should delete a user', (done) => {
-    user.password = randomWords();
     request(app)
       .delete(`/user/${user.email}`)
       .set('Accept', 'application/json')
