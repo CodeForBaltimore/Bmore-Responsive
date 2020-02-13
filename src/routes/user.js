@@ -2,22 +2,21 @@ import {Router} from 'express';
 import validator from 'validator';
 import utils from '../utils';
 
-const router = Router();
+const router = new Router();
 
 // User login.
 router.post('/login', async (req, res) => {
 	try {
 		const {email, password} = req.body;
-
-		if(validator.isEmail(email)) {
+		if (validator.isEmail(email)) {
 			const token = await req.context.models.User.findByLogin(email, password);
-
-			if (token.length > 0) {
+			if (token) {
+				console.log(token);
 				return res.send(token);
 			}
 		}
 
-		throw 'Invalid input';
+		throw new Error('Invalid input');
 	} catch {
 		res.status(400).send('Invalid input');
 	}
@@ -30,11 +29,10 @@ router.get('/', async (req, res) => {
 			const users = await req.context.models.User.findAll({
 				attributes: ['email', 'displayName', 'phone', 'createdAt', 'updatedAt']
 			});
-
 			return res.send(users);
 		}
 
-		throw 'Invalid input';
+		throw new Error('Invalid input');
 	} catch {
 		res.status(400).send('Invalid input');
 	}
@@ -50,11 +48,10 @@ router.get('/:email', async (req, res) => {
 				},
 				attributes: ['email', 'displayName', 'phone', 'createdAt', 'updatedAt']
 			});
-
 			return res.send(user);
 		}
 
-		throw 'Invalid input';
+		throw new Error('Invalid input');
 	} catch {
 		res.status(400).send('Invalid payload');
 	}
@@ -63,14 +60,13 @@ router.get('/:email', async (req, res) => {
 // Creates a new user.
 router.post('/', async (req, res) => {
 	try {
-		if(validator.isEmail(req.body.email)) {
+		if (validator.isEmail(req.body.email)) {
 			const {email, password} = req.body;
-
 			const user = await req.context.models.User.create({email, password});
 			return res.send(user.email + ' created');
-		} 
+		}
 
-		throw 'Invalid input';
+		throw new Error('Invalid input');
 	} catch {
 		return res.status(400).send('Invalid input');
 	}
@@ -82,20 +78,17 @@ router.put('/', async (req, res) => {
 		if (validator.isEmail(req.body.email) && await utils.validateToken(req, res)) {
 			/** @todo add email and phone update options */
 			const {email, password} = req.body;
-
 			const user = await req.context.models.User.findOne({
 				where: {
 					email
 				}
 			});
-
 			user.password = password;
 			await user.save();
-
 			return res.send(user.email + ' updated');
 		}
 
-		throw 'Invalid input';
+		throw new Error('Invalid input');
 	} catch {
 		res.status(400).send('Invalid input');
 	}
@@ -114,7 +107,7 @@ router.delete('/:email', async (req, res) => {
 			return res.send(req.params.email + ' deleted');
 		}
 
-		throw 'Invalid input';
+		throw new Error('Invalid input');
 	} catch {
 		res.status(400).send('Invalid input');
 	}

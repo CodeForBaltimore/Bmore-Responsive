@@ -3,6 +3,8 @@ import cors from 'cors';
 import express from 'express';
 import requestId from 'express-request-id';
 import morgan from 'morgan';
+import swaggerUi from 'swagger-ui-express';
+import swaggerDocument from '../docs/swagger.json';
 
 import models, {sequelize} from './models';
 import routes from './routes';
@@ -33,7 +35,10 @@ app.use(async (req, res, next) => {
 });
 
 // Helper endpoints
-app.get('/', (req, res) => res.send(`For instructions on use, please visit ${process.env.npm_package_homepage}`));
+app.get('/', (req, res) => {
+	res.redirect('/api-docs');
+});
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/health', (req, res) => {
 	res.status(200).json({
 		uptime: utils.formatTime(process.uptime()),
@@ -46,15 +51,17 @@ app.use('/health', (req, res) => {
 
 // Routes
 app.use('/user', routes.user);
+app.use('/userRole', routes.userRole);
 
 // Starting Express and PostgreSQL
 sequelize.sync({force: process.env.ERASE_DATABASE}).then(async () => {
 	if (process.env.SEED_DATABASE || process.env.ERASE_DATABASE) {
 		utils.seedUsers();
+		utils.seedUserRoles();
 	}
 
 	app.listen(process.env.PORT || 3000, () => {
-		console.log(`Bmore Responsive listening on port ${process.env.PORT || 3000}!`);
+		console.log(`Bmore Responsive is available at http://localhost:${process.env.PORT || 3000}`);
 	});
 });
 
