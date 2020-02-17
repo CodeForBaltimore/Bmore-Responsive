@@ -54,12 +54,7 @@ app.use('/user', routes.user);
 app.use('/userRole', routes.userRole);
 
 // Starting Express and PostgreSQL
-sequelize.sync({force: process.env.ERASE_DATABASE}).then(async () => {
-	if (process.env.SEED_DATABASE || process.env.ERASE_DATABASE) {
-		utils.seedUsers();
-		utils.seedUserRoles();
-	}
-
+sequelize.sync().then(async () => {
 	app.listen(process.env.PORT || 3000, () => {
 		console.log(`Bmore Responsive is available at http://localhost:${process.env.PORT || 3000}`);
 	});
