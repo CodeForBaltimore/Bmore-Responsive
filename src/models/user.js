@@ -104,6 +104,13 @@ const user = (sequelize, DataTypes) => {
 			.digest('hex');
 	};
 
+	User.associate = (models) => {
+		User.hasMany(models.UserRole, {
+			foreignKey: 'id',
+			as: 'roleId'
+		});
+	}
+
 	// Setters
 	const setSaltAndPassword = user => {
 		if (user.changed('password')) {
