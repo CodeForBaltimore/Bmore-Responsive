@@ -10,7 +10,11 @@
     "start": "nodemon --exec babel-node src/index.js",
     "test": "nyc mocha --require @babel/register --require @babel/polyfill \"src/tests/**/*.spec.js\" --exit",
     "lint": "xo --ignore **/*.spec.js",
-    "format": "xo --fix --ignore **/*.spec.js"
+    "format": "xo --fix --ignore **/*.spec.js",
+    "db-create": "sequelize db:migrate",
+    "db-delete": "sequelize db:migrate:undo:all",
+    "db-seed": "sequelize db:seed:all",
+    "db-unseed": "sequelize db:seed:undo:all"
   },
   "repository": {
     "type": "git",
@@ -36,6 +40,7 @@
     "express": "4.17.1",
     "express-request-id": "1.4.1",
     "jsonwebtoken": "8.5.1",
+    "lodash": "^4.17.15",
     "mocha": "7.0.1",
     "morgan": "1.9.1",
     "nodemon": "2.0.2",
@@ -49,7 +54,7 @@
   "devDependencies": {
     "@babel/polyfill": "7.8.3",
     "@babel/preset-env": "7.8.4",
-    "babel-register": "6.26.0",
+    "@babel/register": "7.8.3",
     "codecov": "3.6.5",
     "nyc": "15.0.0",
     "sequelize-cli": "5.5.1",

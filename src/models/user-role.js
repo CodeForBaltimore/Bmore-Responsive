@@ -1,6 +1,6 @@
 const userRole = (sequelize, DataTypes) => {
 	// Defining our userRole table and setting UserRole object.
-	const UserRole = sequelize.define('userRole', {
+	const UserRole = sequelize.define('UserRole', {
 		role: {
 			type: DataTypes.STRING,
 			unique: true,

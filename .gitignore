@@ -108,3 +108,7 @@ dist
 
 # Mac stupid DS_Store files
 *.DS_Store
+
+# sequelize files
+sequelize/data/*.json
+sequelize/config.js

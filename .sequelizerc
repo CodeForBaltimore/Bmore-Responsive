@@ -1,10 +1,11 @@
 // .sequelizerc
-require("babel-register");
+require("@babel/register");
+require("@babel/polyfill");
 const path = require('path');
 
 module.exports = {
-  'config': path.resolve('config', 'config.js'),
+  'config': path.resolve('sequelize', 'config.js'),
   'models-path': path.resolve('src', 'models'),
-  'seeders-path': path.resolve('src', 'seeders'),
-  'migrations-path': path.resolve('src', 'migrations')
+  'seeders-path': path.resolve('sequelize', 'seeders'),
+  'migrations-path': path.resolve('sequelize', 'migrations')
 };

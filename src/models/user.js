@@ -1,9 +1,10 @@
 import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
+import utils from '../utils';
 
 const user = (sequelize, DataTypes) => {
 	// Defining our user table and setting User object.
-	const User = sequelize.define('user', {
+	const User = sequelize.define('User', {
 		email: {
 			type: DataTypes.STRING,
 			unique: true,
@@ -107,7 +108,8 @@ const user = (sequelize, DataTypes) => {
 	const setSaltAndPassword = user => {
 		if (user.changed('password')) {
 			user.salt = User.generateSalt();
-			user.password = User.encryptPassword(user.password, user.salt);
+			// User.password = User.encryptPassword(user.password, user.salt);
+			user.password = utils.encryptPassword(user.password, user.salt);
 		}
 	};
 
