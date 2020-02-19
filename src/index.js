@@ -52,6 +52,7 @@ app.use('/health', (req, res) => {
 // Routes
 app.use('/user', routes.user);
 app.use('/userRole', routes.userRole);
+app.use('/contact', routes.contact);
 
 // Starting Express and PostgreSQL
 sequelize.sync({force: process.env.ERASE_DATABASE}).then(async () => {
