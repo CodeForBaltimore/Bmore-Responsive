@@ -8,10 +8,10 @@ const router = new Router();
 router.get('/', async (req, res) => {
 	try {
 		if (await utils.validateToken(req, res)) {
-			const contacts = await req.context.models.User.findAll({
-				attributes: ['email', 'displayName', 'phone', 'createdAt', 'updatedAt']
+			const contacts = await req.context.models.Contact.findAll({
+				attributes: ['email', 'name', 'phone', 'createdAt', 'updatedAt']
 			});
-			return res.send(users);
+			return res.send(contacts);
 		}
 
 		throw new Error('Invalid input');
@@ -21,16 +21,16 @@ router.get('/', async (req, res) => {
 });
 
 // Gets a specific contact.
-router.get('/:email', async (req, res) => {
+router.get('/:contact_id', async (req, res) => {
 	try {
-		if (validator.isEmail(req.params.email) && await utils.validateToken(req, res)) {
-			const user = await req.context.models.User.findOne({
+		if (await utils.validateToken(req, res)) {
+			const contact = await req.context.models.Contact.findOne({
 				where: {
-					email: req.params.email
+					contact_id: req.params.contact_id
 				},
-				attributes: ['email', 'displayName', 'phone', 'createdAt', 'updatedAt']
+				attributes: ['email', 'name', 'phone', 'createdAt', 'updatedAt']
 			});
-			return res.send(user);
+			return res.send(contact);
 		}
 
 		throw new Error('Invalid input');
@@ -50,26 +50,25 @@ router.post('/', async (req, res) => {
 
 		throw new Error('Invalid input');
 	} catch {
-		return res.status(400).send('Invalid input');
+	    return res.status(400).send('Invalid input');
 	}
 });
 
 // Updates any contact.
-router.put('/', async (req, res) => {
+router.put('/:contact_id', async (req, res) => {
 	try {
 		if (validator.isMobilePhone(req.body.phone) && await utils.validateToken(req, res)) {
-            console.log('yeeto');
 			const {name, phone, email} = req.body;
 			const contact = await req.context.models.Contact.findOne({
 				where: {
-					phone
+					contact_id: req.params.contact_id
 				}
             });
             contact.name = name;
             contact.phone = phone;
             contact.email = email;
 
-			await contact.save();
+		 	await contact.save();
 			return res.send(contact.name + ' updated');
         }
 
@@ -80,37 +79,17 @@ router.put('/', async (req, res) => {
 });
 
 // Deletes a contact.
-router.delete('/:phone', async (req, res) => {
+router.delete('/:contact_id', async (req, res) => {
 	try {
-		if (validator.isMobilePhone(req.params.phone) && await utils.validateToken(req, res)) {
-			const user = await req.context.models.User.findOne({
+		if (await utils.validateToken(req, res)) {
+			const contact = await req.context.models.Contact.findOne({
 				where: {
-					email: req.params.email
+					contact_id: req.params.contact_id
 				}
 			});
-			await user.destroy();
-			return res.send(req.params.email + ' deleted');
-		}
-
-		throw new Error('Invalid input');
-	} catch {
-		res.status(400).send('Invalid input');
-	}
-});
-
-// Deletes a user.
-router.delete('/:phone', async (req, res) => {
-	try {
-		if (validator.isMobilePhone(req.params.phone) && await utils.validateToken(req, res)) {
-			const user = await req.context.models.User.findOne({
-				where: {
-					email: req.params.email
-				}
-			});
-			await user.destroy();
-			return res.send(req.params.phone + ' deleted');
-		}
-
+            await contact.destroy();
+			return res.send(req.params.contact_id + ' deleted');
+        }
 		throw new Error('Invalid input');
 	} catch {
 		res.status(400).send('Invalid input');
