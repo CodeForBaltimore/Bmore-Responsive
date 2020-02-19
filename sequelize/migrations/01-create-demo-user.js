@@ -3,10 +3,10 @@ module.exports = {
 	up: (queryInterface, Sequelize) => {
 		return queryInterface.createTable('Users', {
 			id: {
-				allowNull: false,
-				autoIncrement: true,
-				primaryKey: true,
-				type: Sequelize.INTEGER
+			  type: Sequelize.UUID,
+			  primaryKey: true,
+			  allowNull: false,
+			  autoIncrement: false,
 			},
 			email: {
 				allowNull: false,
@@ -22,6 +22,10 @@ module.exports = {
 			},
 			token: {
 				type: Sequelize.STRING
+			},
+			roles: {
+				type: Sequelize.JSON,
+				allowNull: false
 			},
 			displayName: {
 				type: Sequelize.STRING

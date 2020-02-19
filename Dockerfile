@@ -34,4 +34,4 @@ COPY . .
 EXPOSE $port
 
 # Run app
-CMD ["sh","./scripts/dockerrun.sh"]
+CMD ["npm","start"]

@@ -5,6 +5,13 @@ import utils from '../utils';
 const user = (sequelize, DataTypes) => {
 	// Defining our user table and setting User object.
 	const User = sequelize.define('User', {
+		id: {
+		  type: DataTypes.UUID,
+		  primaryKey: true,
+		  defaultValue: DataTypes.UUIDV4,
+		  allowNull: false,
+		  autoIncrement: false,
+		},
 		email: {
 			type: DataTypes.STRING,
 			unique: true,
@@ -19,6 +26,10 @@ const user = (sequelize, DataTypes) => {
 		},
 		token: {
 			type: DataTypes.STRING
+		},
+		roles: {
+			type: DataTypes.JSON,
+			allowNull: false
 		},
 		displayName: {
 			type: DataTypes.STRING
@@ -103,13 +114,6 @@ const user = (sequelize, DataTypes) => {
 			.update(salt)
 			.digest('hex');
 	};
-
-	User.associate = (models) => {
-		User.hasMany(models.UserRole, {
-			foreignKey: 'id',
-			as: 'roleId'
-		});
-	}
 
 	// Setters
 	const setSaltAndPassword = user => {
