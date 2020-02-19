@@ -3,7 +3,7 @@ import { UUIDV4 } from "sequelize";
 const contact = (sequelize, DataTypes) => {
     // Defining our contact table and setting Contact object.
     const Contact = sequelize.define('contact', {
-        contact_id: {
+        id: {
             type: DataTypes.UUID,
             unique: true,
             primaryKey: true,

@@ -26,7 +26,7 @@ router.get('/:contact_id', async (req, res) => {
 		if (await utils.validateToken(req, res)) {
 			const contact = await req.context.models.Contact.findOne({
 				where: {
-					contact_id: req.params.contact_id
+					id: req.params.contact_id
 				},
 				attributes: ['email', 'name', 'phone', 'createdAt', 'updatedAt']
 			});
@@ -61,7 +61,7 @@ router.put('/:contact_id', async (req, res) => {
 			const {name, phone, email} = req.body;
 			const contact = await req.context.models.Contact.findOne({
 				where: {
-					contact_id: req.params.contact_id
+					id: req.params.contact_id
 				}
             });
             contact.name = name;
@@ -69,7 +69,7 @@ router.put('/:contact_id', async (req, res) => {
             contact.email = email;
 
 		 	await contact.save();
-			return res.send(contact.name + ' updated');
+			return res.send(contact.id + ' updated');
         }
 
 		throw new Error('Invalid input');
@@ -84,7 +84,7 @@ router.delete('/:contact_id', async (req, res) => {
 		if (await utils.validateToken(req, res)) {
 			const contact = await req.context.models.Contact.findOne({
 				where: {
-					contact_id: req.params.contact_id
+					id: req.params.contact_id
 				}
 			});
             await contact.destroy();
