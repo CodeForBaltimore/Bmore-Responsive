@@ -65,6 +65,39 @@ docker run -d -p 5432:5432 postgres
 ```
 If you're running a database in another way then we trust you can sort it out on your own because you're awesome :sunglasses:
 
+### Sequelize _<optional>_
+You can run the application without doing anything and it will create the tables needed to operate automatically. It will not, however, create users. If you would like to seed your database with users you will need to follow a few steps.
+1. You will need to create a `config.js` file in the `/sequelize` directory. Here is an example:
+```
+module.exports = {
+  development: {
+    username: <your postgres username>,
+    password: <your postgres password>,
+    database: <your postgres database name>,
+    host: <your postgres host>,
+    port: <your postgres port>,
+    dialect: 'postgres'
+  }
+};
+```
+2. After you set your config options you may create your database tables without running the application by running `npm run db-create`.
+3. To use the provided example seeder scripts you will need to create JSON data under the `/data` directory. You will have to match required fields of your table model. Here is an example of a `user-role.json` file:
+```
+[
+    {
+        "role": "Test",
+        "description": "This is a test."
+    }
+]
+```
+4. You can now seed your database by running `npm run db-seed`. 
+
+Example `/migrations` and `/seeders` scripts have been supplied. You can rollback your all seeded data at any time by running `npm run db-unseed` and delete all created tables with `npm run db-delete`.
+
+To create new models, migrations, and seeders you _must_ use the Sequelize CLI commands. Full documentation is here https://sequelize.org/master/manual/migrations.html but here are a few useful commands:
+- `npx sequelize-cli model:generate --name User --attributes firstName:string,lastName:string,email:string` - Creates a model under `/src/models` and a migration script.
+- `npx sequelize-cli seed:generate --name demo-user` - Creates a seeder for the `User` model and migration previously setup.
+
 ### Docker
 To use the `docker-compose.yml` file included you will first need to set [environment variables](#environment-variables). You **MUST** set your `DATABASE_HOST` to `db` to use the `docker-compose` solution. 
 

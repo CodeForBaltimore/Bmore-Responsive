@@ -1,11 +1,12 @@
 import 'dotenv/config';
+
 import cors from 'cors';
 import express from 'express';
 import requestId from 'express-request-id';
 import morgan from 'morgan';
 import swaggerUi from 'swagger-ui-express';
-import swaggerDocument from '../docs/swagger.json';
 
+import swaggerDocument from '../docs/swagger.json';
 import models, {sequelize} from './models';
 import routes from './routes';
 import utils from './utils';
@@ -45,21 +46,16 @@ app.use('/health', (req, res) => {
 		environment: process.env.NODE_ENV || 'n/a',
 		version: process.env.npm_package_version || 'n/a',
 		requestId: req.id
-		// UserId: req.context.me.id
 	});
 });
 
 // Routes
-app.use('/user', routes.user);
-app.use('/userRole', routes.userRole);
+Object.entries(routes).forEach(([key, value]) => {
+	app.use(`/${key}`,value);
+});
 
-// Starting Express and PostgreSQL
-sequelize.sync({force: process.env.ERASE_DATABASE}).then(async () => {
-	if (process.env.SEED_DATABASE || process.env.ERASE_DATABASE) {
-		utils.seedUsers();
-		utils.seedUserRoles();
-	}
-
+// Starting Express and connecting to PostgreSQL
+sequelize.sync().then(async () => {
 	app.listen(process.env.PORT || 3000, () => {
 		console.log(`Bmore Responsive is available at http://localhost:${process.env.PORT || 3000}`);
 	});

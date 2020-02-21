@@ -1,6 +1,6 @@
 'use strict';
 
-import models from '../models';
+import crypto from 'crypto';
 
 /**
  * Formats a timestamp to something readable by humans.
@@ -18,30 +18,6 @@ const formatTime = seconds => {
 	const minutes = Math.floor(seconds % (60 * 60) / 60);
 	const secs = Math.floor(seconds % 60);
 	return pad(hours) + ':' + pad(minutes) + ':' + pad(secs);
-};
-
-/**
- * Creates a dummy user for development purposes.
- */
-const seedUsers = async () => {
-	await models.User.create(
-		{
-			email: 'test@test.test',
-			password: process.env.SEED_DATA_PASSWORD
-		}
-	);
-};
-
-/**
- * Creates a dummy user role for development purposes.
- */
-const seedUserRoles = async () => {
-	await models.UserRole.create(
-		{
-			role: 'test',
-			description: 'This is a test role.'
-		}
-	);
 };
 
 /**
@@ -66,9 +42,24 @@ const validateToken = async (req, res) => {
 	res.status(401).send('Unauthorized');
 };
 
+/**
+	 * Salts and hashes a password.
+	 *
+	 * @param {String} password The unhashed or salted password.
+	 * @param {String} salt The password salt for this user.
+	 *
+	 * @return {String} The secured password.
+	 */
+const encryptPassword = (password, salt) => {
+	return crypto
+		.createHash('RSA-SHA256')
+		.update(password)
+		.update(salt)
+		.digest('hex');
+};
+
 export default {
 	formatTime,
-	seedUsers,
-	seedUserRoles,
-	validateToken
+	validateToken,
+	encryptPassword
 };
