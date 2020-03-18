@@ -44,7 +44,7 @@
     "mocha": "7.0.1",
     "morgan": "1.9.1",
     "nodemon": "2.0.2",
-    "pg": "7.18.1",
+    "pg": "7.18.2",
     "random-words": "1.1.0",
     "sequelize": "5.21.5",
     "supertest": "4.0.2",
