@@ -33,6 +33,7 @@
   "dependencies": {
     "@babel/core": "7.8.4",
     "@babel/node": "7.8.4",
+    "aws-sdk": "2.641.0",
     "chai": "4.2.0",
     "cors": "2.8.5",
     "crypto": "1.0.1",
@@ -57,6 +58,7 @@
     "@babel/polyfill": "7.8.3",
     "@babel/preset-env": "7.8.4",
     "@babel/register": "7.8.3",
+    "babel-loader": "8.0.6",
     "codecov": "3.6.5",
     "nyc": "15.0.0",
     "sequelize-cli": "5.5.1",
@@ -64,8 +66,11 @@
     "serverless-dotenv-plugin": "^2.3.2",
     "serverless-offline": "^5.12.1",
     "serverless-prune-plugin": "^1.4.2",
-    "serverless-s3-local": "^0.5.4",
     "serverless-stage-manager": "^1.0.5",
+    "serverless-webpack": "5.3.1",
+    "webpack": "^4.2.0",
+    "webpack-cli": "3.3.11",
+    "webpack-node-externals": "1.7.2",
     "xo": "0.26.0"
   },
   "nyc": {

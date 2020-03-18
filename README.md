@@ -1,18 +1,18 @@
 [![Build Status](https://travis-ci.org/CodeForBaltimore/Bmore-Responsive.svg?branch=master)](https://travis-ci.org/CodeForBaltimore/Bmore-Responsive) [![codecov](https://codecov.io/gh/CodeForBaltimore/Bmore-Responsive/branch/master/graph/badge.svg)](https://codecov.io/gh/CodeForBaltimore/Bmore-Responsive)
 
-# Bmore Responsive
+# 1. Bmore Responsive
 An API to drive disaster and emergency response systems.
 
-## Documentation
+## 1.1. Documentation
 We've included a `docs` folder with a template [Tech Spec](/docs/Tech_Spec.md) and [Best Practices](/docs/Best_Practices.md) document, though using Github's Wiki capabilities is also a good idea. This will get you started with documenting your project.  Other documents and relevant information that has no other place can live in the `docs` folder.  Replace this paragraph with a brief breakdown of what you've included in your `docs` folder.
 
-### API Spec
+### 1.1.1. API Spec
 Our API spec is on Swagger. You can view it here https://app.swaggerhub.com/apis/codeforbaltimore/bmoreResponsive/1.0.0#/ or you can find the `swagger.json` file in our `docs` folder.  
 
-### Database Documentation
+### 1.1.2. Database Documentation
 Our database documentation can be found in our `docs` folder under `database.csv`. This documentation was created using SchemaSpy. Instructions for use can be found here https://github.com/bcgov/schemaspy
 
-## Setup
+# 2. Setup
 A `Dockerfile` and `docker-compose` file have been included for convenience, however this may not be the best local setup for this project. For more information on how to use Docker with this project, please see the [docker section](#docker).
 
 To work on this project you should have:
@@ -21,14 +21,14 @@ To work on this project you should have:
 -   Docker (optional)
 Once you have the prerequisite software installed you can proceed to setup this application.
 
-### Node and Express setup
+## 2.1. Node and Express setup
 This application is designed to work as an API driven by Express. To setup your environment first you must install all required dependencies by running the following command from the root of your project directory:
 ```
 npm install
 ```
 Once all dependencies are installed you will need to setup some environment variables to interact with your database and application. 
 
-### Environment variables
+## 2.2. Environment variables
 You will need to set some local environment variables to run this application. This is true even if you're using Docker.
 ```
 touch .env
@@ -56,7 +56,7 @@ The various variables are defined as follows:
 
 _We do not recommend using the default options for PostgreSQL. The above values are provided as examples. It is more secure to create your own credentials._
 
-### PostgreSQL
+## 2.3. PostgreSQL
 ***You will need a PostgreSQL database running locally to run this application locally.*** You may setup PostgreSQL however you wish, however we recommend using Docker using the instructions found here: https://hub.docker.com/_/postgres
 
 If you are using the Docker method you may spin up your database layer by running this command:
@@ -65,7 +65,7 @@ docker run -d -p 5432:5432 postgres
 ```
 If you're running a database in another way then we trust you can sort it out on your own because you're awesome :sunglasses:
 
-### Sequelize _<optional>_
+## 2.4. Sequelize _<optional>_
 You can run the application without doing anything and it will create the tables needed to operate automatically. It will not, however, create users. If you would like to seed your database with users you will need to follow a few steps.
 1. You will need to create a `config.js` file in the `/sequelize` directory. Here is an example:
 ```
@@ -98,7 +98,13 @@ To create new models, migrations, and seeders you _must_ use the Sequelize CLI c
 - `npx sequelize-cli model:generate --name User --attributes firstName:string,lastName:string,email:string` - Creates a model under `/src/models` and a migration script.
 - `npx sequelize-cli seed:generate --name demo-user` - Creates a seeder for the `User` model and migration previously setup.
 
-### Docker
+## 2.5. serverless
+Using `serverless-offline`, allows us to emulate local 'simulator' for the AWS option. To use `serverless offline`:
+```bash
+ IS_OFFLINE=true sls offline start --stage local --apiKey 123
+```
+
+## 2.6. Docker
 To use the `docker-compose.yml` file included you will first need to set [environment variables](#environment-variables). You **MUST** set your `DATABASE_HOST` to `db` to use the `docker-compose` solution. 
 
 If you are running your own database, but want to use the `Dockerfile` you will need to run that this way on a Mac:
@@ -112,16 +118,16 @@ docker build -t bmoreres .
 docker run -d -p 3000:3000 -e DATABASE_HOST=docker.for.win.host.internal bmoreres
 ```
 
-## Using this product
+# 3. Using this product
 You may use this product to create and manage users for your front-end. More to come! 
 To run the application--after the above steps are completed--run `npm start`.
 
-## Testing
+## 3.1. Testing
 To test your code you may write test cases to `./index.spec.js` and then run the tests with `npm test`.
 
 To check your linting you may run `npm run lint` and to format and automatically fix your formatting run `npm run format`.
 
-## Sources and Links
+# 4. Sources and Links
 We are also building a front-end application called [Healthcare Rollcall](https://github.com/CodeForBaltimore/Healthcare-Rollcall) to interact with this backend API. To view that project, or to contribute to it, please visit the repo here: https://github.com/CodeForBaltimore/Healthcare-Rollcall
 
 We will be including multi-repo build processes with the front-end that will reference this project.

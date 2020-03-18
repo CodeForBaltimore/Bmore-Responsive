@@ -1,0 +1,45 @@
+
+service: bmore-responsive
+custom:
+  region: ${opt:region,'us-east-1'}
+  stage: ${opt:stage, 'dev'}
+  prune:
+    automatic: true
+    number: 3
+  stages:
+    - local
+    - dev
+    - staging
+    - prod
+  serverless-offline:
+    port: 3000
+  webpack:
+    webpackConfig: ./webpack.config.js
+    includeModules: true
+    forceInclude:
+      - pg
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: ${self:custom.stage}
+  region: ${self:custom.region}
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "s3:PutObject"
+      Resource:
+        Fn::Join:
+          - ""
+          - - "arn:aws:s3:::"
+            - "Ref": "ServerlessDeploymentBucket"
+functions:
+  - '${file(./src/routes/lambda.serverless.yml)}'
+plugins:
+    - serverless-domain-manager
+    - serverless-dotenv-plugin
+    - serverless-offline
+    - serverless-prune-plugin
+    - serverless-stage-manager
+    - serverless-webpack
+package: 
+  individually: true
