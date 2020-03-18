@@ -4,7 +4,7 @@ import randomWords from 'random-words';
 import app from '..';
 
 const { expect } = chai;
-const user = { email: `${randomWords()}@test.test`, password: randomWords() };
+const user = { email: `${randomWords()}@test.test`, password: randomWords(), roles: [1] };
 
 /** @todo add JWT validation tests */
 

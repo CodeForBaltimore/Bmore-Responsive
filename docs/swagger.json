@@ -110,6 +110,10 @@
                     "type" : "string",
                     "format" : "password",
                     "example" : "test"
+                  },
+                  "roles" : {
+                    "type" : "array",
+                    "example" : [1]
                   }
                 }
               }
@@ -531,6 +535,14 @@
             "type" : "string",
             "format" : "email",
             "example" : "test@test.test"
+          },
+          "roles": {
+            "type" : "array",
+            "example" : [{
+              "id" : 1,
+              "role" : "Test",
+              "description" : "This is a test."
+            }]
           },
           "displayNamme" : {
             "type" : "string",

@@ -24,13 +24,13 @@ router.get('/', async (req, res) => {
 router.get('/:role', async (req, res) => {
 	try {
 		if (await utils.validateToken(req, res)) {
-			const user = await req.context.models.UserRole.findOne({
+			const role = await req.context.models.UserRole.findOne({
 				where: {
 					role: req.params.role
 				},
 				attributes: ['id', 'role', 'description']
 			});
-			return res.send(user);
+			return res.send(role);
 		}
 
 		throw new Error('Invalid input');

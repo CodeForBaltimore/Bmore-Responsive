@@ -1,4 +1,7 @@
 import Sequelize from 'sequelize';
+import path from 'path';
+import fs from 'fs';
+import _ from 'lodash';
 
 // Initializes the database.
 const sequelize = new Sequelize(
@@ -10,6 +13,8 @@ const sequelize = new Sequelize(
 		dialect: 'postgres'
 	}
 );
+const basename = path.basename(__filename);
+const models = {};
 
 // Ensuring our database is connected. If not, the application will not run...
 sequelize.authenticate().then(e => {
@@ -20,12 +25,15 @@ sequelize.authenticate().then(e => {
 	console.log('Connection to database successful');
 });
 
-// Defines our models. Add to the model object if you're defining new tables, etc.
-const models = {
-	User: sequelize.import('./user'),
-	UserRole: sequelize.import('./user-role'),
-	Contact: sequelize.import('./contact')
-};
+// Defines our models.
+fs
+	.readdirSync(__dirname)
+	.filter(file => {
+		return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
+	})
+	.forEach(file => {
+		models[_.upperFirst(_.camelCase(file.replace('.js', '')))] = sequelize.import(`./${file.replace('.js', '')}`);
+	});
 
 // Bringing it all together easily for use.
 Object.keys(models).forEach(key => {

@@ -27,8 +27,13 @@ router.get('/', async (req, res) => {
 	try {
 		if (await utils.validateToken(req, res)) {
 			const users = await req.context.models.User.findAll({
-				attributes: ['email', 'displayName', 'phone', 'createdAt', 'updatedAt']
+				attributes: ['email', 'roles', 'displayName', 'phone', 'createdAt', 'updatedAt']
 			});
+
+			for (const user of users) {
+				user.roles = await req.context.models.UserRole.findRoles(user.roles);
+			}
+
 			return res.send(users);
 		}
 
@@ -46,8 +51,9 @@ router.get('/:email', async (req, res) => {
 				where: {
 					email: req.params.email
 				},
-				attributes: ['email', 'displayName', 'phone', 'createdAt', 'updatedAt']
+				attributes: ['email', 'roles', 'displayName', 'phone', 'createdAt', 'updatedAt']
 			});
+			if (user) user.roles = await req.context.models.UserRole.findRoles(user.roles);
 			return res.send(user);
 		}
 
@@ -61,8 +67,8 @@ router.get('/:email', async (req, res) => {
 router.post('/', async (req, res) => {
 	try {
 		if (validator.isEmail(req.body.email)) {
-			const {email, password} = req.body;
-			const user = await req.context.models.User.create({email, password});
+			const {email, password, roles} = req.body;
+			const user = await req.context.models.User.create({email, password, roles});
 			return res.send(user.email + ' created');
 		}
 
