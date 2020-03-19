@@ -14,3 +14,7 @@ getUser:
           parameters:
             paths:
               email: true
+createUser:
+    handler: src/lambda/user.createUser
+    events:
+      - http: POST /user

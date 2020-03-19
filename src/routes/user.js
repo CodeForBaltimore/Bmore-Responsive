@@ -45,15 +45,15 @@ router.get('/:email', async (req, res) => {
 router.post('/', async (req, res) => {
   try {
     if (validator.isEmail(req.body.email)) {
-      const { email, password, roles } = req.body;
-      const user = await req.context.models.User.create({ email, password, roles });
-      return res.send(user.email + ' created');
+      const user = await controller.createUser(req.body);
+      if (user !== false) {
+        return res.send(user);
+      }
     }
-
-    throw new Error('Invalid input');
-  } catch {
-    return res.status(400).send('Invalid input');
+  } catch (e) {
+    console.error(e);
   }
+  return res.status(400).send('Invalid input');
 });
 
 // Updates any user.

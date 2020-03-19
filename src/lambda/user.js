@@ -49,5 +49,17 @@ module.exports = {
       console.error(e);
       return error;
     }
+  },
+  createUser: async event => {
+    try {
+      const res = await controller.createUser(JSON.parse(event.body));
+      return {
+        statusCode: 200,
+        body: res
+      };
+    } catch (e) {
+      console.error(e);
+      return error;
+    }
   }
 }

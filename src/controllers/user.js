@@ -54,11 +54,21 @@ module.exports = {
         if (user) user.roles = await UserRole.findRoles(user.roles);
         return user;
       }
-
-      throw new Error('Invalid input');
-      return email;
     } catch (e) {
       console.error(e);
+    }
+
+    return false;
+  },
+  createUser: async body => {
+    try {
+      if (validator.isEmail(body.email)) {
+        const { email, password, roles } = body;
+        const user = await User.create({ email, password, roles });
+        return `${user.email} created`;
+      }
+    } catch (e) {
+      console.error(e)
     }
 
     return false;
