@@ -31,12 +31,12 @@ module.exports = {
 	 *
 	 * @return {Boolean}
 	 */
-	validateToken: async (req, res) => {
+	validateToken: async (token, res) => {
 		if (process.env.BYPASS_LOGIN) {
 			return true;
 		}
 
-		if (await req.context.models.User.validateToken(req.headers.token)) {
+		if (await req.context.models.User.validateToken(token)) {
 			return true;
 		}
 

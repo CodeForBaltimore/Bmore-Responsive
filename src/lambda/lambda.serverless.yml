@@ -1,3 +1,7 @@
+login:
+    handler: src/lambda/user.login
+    events:
+      - http: POST /user/login
 getUsers:
     handler: src/lambda/user.getUsers
     events:

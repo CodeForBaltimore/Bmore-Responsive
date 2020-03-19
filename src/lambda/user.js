@@ -1,16 +1,38 @@
 'use strict';
-// const db = require('./db');
-// const User = require('../models/user')(db.sequelize, db.Sequelize);
-// const UserRole = require('../models/user-role')(db.sequelize, db.Sequelize);
+const utils = require('../utils');
 const controller = require('../controllers/user');
 
-module.exports = {
-  getUsers: async event => {
-    const users = await controller.getUsers();
+const error = {
+  statusCode: 500,
+  body: 'There was an error.'
+};
 
-    return {
-      statusCode: 200,
-      body: JSON.stringify(users)
-    };
+module.exports = {
+  login: async event => {
+    try {
+      const token = await controller.login(JSON.parse(event.body));
+      return {
+        statusCode: 200,
+        body: token
+      };
+    } catch (e) {
+      console.error(e);
+      return error;
+    }
+  },
+  getUsers: async event => {
+    try {
+      if (await utils.validateToken(event.headers.token)) {
+        const users = await controller.getUsers();
+
+        return {
+          statusCode: 200,
+          body: JSON.stringify(users)
+        };
+      }
+    } catch (e) {
+      console.error(e);
+      return error;
+    }
   }
 }

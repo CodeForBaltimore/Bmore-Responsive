@@ -21,7 +21,7 @@ To work on this project you should have:
 -   Docker (optional)
 Once you have the prerequisite software installed you can proceed to setup this application.
 
-## 2.1. Node and Express setup
+## 2.1. Node and Express/serverless setup
 This application is designed to work as an API driven by Express. To setup your environment first you must install all required dependencies by running the following command from the root of your project directory:
 ```
 npm install
@@ -65,7 +65,7 @@ docker run -d -p 5432:5432 postgres
 ```
 If you're running a database in another way then we trust you can sort it out on your own because you're awesome :sunglasses:
 
-## 2.4. Sequelize _<optional>_
+### 2.3.1. Sequelize _<optional>_
 You can run the application without doing anything and it will create the tables needed to operate automatically. It will not, however, create users. If you would like to seed your database with users you will need to follow a few steps.
 1. You will need to create a `config.js` file in the `/sequelize` directory. Here is an example:
 ```
@@ -98,13 +98,13 @@ To create new models, migrations, and seeders you _must_ use the Sequelize CLI c
 - `npx sequelize-cli model:generate --name User --attributes firstName:string,lastName:string,email:string` - Creates a model under `/src/models` and a migration script.
 - `npx sequelize-cli seed:generate --name demo-user` - Creates a seeder for the `User` model and migration previously setup.
 
-## 2.5. serverless
+## 2.4. serverless
 Using `serverless-offline`, allows us to emulate local 'simulator' for the AWS option. To use `serverless offline`:
 ```bash
- IS_OFFLINE=true sls offline start --stage local --apiKey 123
+sls offline start --stage local
 ```
 
-## 2.6. Docker
+## 2.5. Docker
 To use the `docker-compose.yml` file included you will first need to set [environment variables](#environment-variables). You **MUST** set your `DATABASE_HOST` to `db` to use the `docker-compose` solution. 
 
 If you are running your own database, but want to use the `Dockerfile` you will need to run that this way on a Mac:

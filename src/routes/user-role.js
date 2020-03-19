@@ -7,7 +7,7 @@ const router = new Router();
 // Gets all roles.
 router.get('/', async (req, res) => {
 	try {
-		if (await utils.validateToken(req, res)) {
+		if (await utils.validateToken(req.headers.token,res)) {
 			const roles = await req.context.models.UserRole.findAll({
 				attributes: ['id', 'role', 'description', 'createdAt', 'updatedAt']
 			});
@@ -23,7 +23,7 @@ router.get('/', async (req, res) => {
 // Gets a specific role.
 router.get('/:role', async (req, res) => {
 	try {
-		if (await utils.validateToken(req, res)) {
+		if (await utils.validateToken(req.headers.token,res)) {
 			const role = await req.context.models.UserRole.findOne({
 				where: {
 					role: req.params.role
@@ -43,7 +43,7 @@ router.get('/:role', async (req, res) => {
 router.post('/', async (req, res) => {
 	try {
 		const {role, description} = req.body;
-		if (await utils.validateToken(req, res) && validator.isAlphanumeric(role)) {
+		if (await utils.validateToken(req.headers.token,res) && validator.isAlphanumeric(role)) {
 			const newRole = await req.context.models.UserRole.create({role, description});
 			return res.send(newRole.role + ' created');
 		}
@@ -58,7 +58,7 @@ router.post('/', async (req, res) => {
 router.put('/', async (req, res) => {
 	try {
 		const {id, role, description} = req.body;
-		if (await utils.validateToken(req, res) && validator.isAlphanumeric(role)) {
+		if (await utils.validateToken(req.headers.token,res) && validator.isAlphanumeric(role)) {
 			const updatedRole = await req.context.models.UserRole.findOne({
 				where: {
 					id
@@ -79,7 +79,7 @@ router.put('/', async (req, res) => {
 // Deletes a role.
 router.delete('/:role', async (req, res) => {
 	try {
-		if (await utils.validateToken(req, res)) {
+		if (await utils.validateToken(req.headers.token,res)) {
 			const role = await req.context.models.UserRole.findOne({
 				where: {
 					role: req.params.role

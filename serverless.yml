@@ -13,11 +13,12 @@ custom:
     - prod
   serverless-offline:
     port: 3000
-  # webpack:
-  #   webpackConfig: ./webpack.config.js
-  #   includeModules: true
-  #   forceInclude:
-  #     - pg
+  webpack:
+    webpackConfig: ./webpack.config.js
+    includeModules: true
+    forceInclude:
+      - pg
+      - pg-native
 provider:
   name: aws
   runtime: nodejs12.x
@@ -40,6 +41,6 @@ plugins:
     - serverless-offline
     - serverless-prune-plugin
     - serverless-stage-manager
-    # - serverless-webpack
-package: 
+    - serverless-webpack
+package:
   individually: true
