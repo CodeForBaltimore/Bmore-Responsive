@@ -2,7 +2,7 @@ import { UUIDV4 } from "sequelize";
 
 const contact = (sequelize, DataTypes) => {
     // Defining our contact table and setting Contact object.
-    const Contact = sequelize.define('contact', {
+    const Contact = sequelize.define('Contact', {
         id: {
             type: DataTypes.UUID,
             unique: true,
@@ -12,8 +12,8 @@ const contact = (sequelize, DataTypes) => {
         user_id: {
             type: DataTypes.STRING,
             references: {
-                model: 'users', // 'users' refers to table name
-                key: 'email', // 'id' refers to column email in persons table
+                model: 'User', // 'users' refers to table name
+                key: 'id', // 'id' refers to column email in persons table
             }
         },
         name : {
@@ -26,9 +26,6 @@ const contact = (sequelize, DataTypes) => {
             unique: true,
             required: true
         },
-        entity_id: {
-            type: DataTypes.UUID,
-        },
         email: {
             type: DataTypes.STRING,
         }
@@ -36,6 +33,10 @@ const contact = (sequelize, DataTypes) => {
     {
         schema: process.env.DATABASE_SCHEMA
     });
+
+    Contact.associate = models => {
+        Contact.belongsTo(models.User);
+    }
 
     Contact.findById = async (id) => {
         const contact = await Contact.findOne({
