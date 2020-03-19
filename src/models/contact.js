@@ -12,19 +12,16 @@ const contact = (sequelize, DataTypes) => {
         user_id: {
             type: DataTypes.STRING,
             references: {
-                model: 'User', // 'users' refers to table name
-                key: 'id', // 'id' refers to column email in persons table
+                model: 'User',
+                key: 'id', 
             }
         },
         name : {
             type: DataTypes.STRING,
-            unique: true,
             required: true
         },
         phone: {
             type: DataTypes.STRING,
-            unique: true,
-            required: true
         },
         email: {
             type: DataTypes.STRING,

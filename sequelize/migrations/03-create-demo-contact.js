@@ -10,13 +10,10 @@ module.exports = {
 			},
             name : {
                 type: Sequelize.STRING,
-                unique: true,
                 required: true
             },
             phone: {
                 type: Sequelize.STRING,
-                unique: true,
-                required: true
             },
             email: {
                 type: Sequelize.STRING,
