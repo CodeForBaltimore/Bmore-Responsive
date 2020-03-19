@@ -55,13 +55,13 @@ router.post('/', async (req, res) => {
 });
 
 // Updates any contact.
-router.put('/:contact_id', async (req, res) => {
+router.put('/', async (req, res) => {
 	try {
 		if (validator.isMobilePhone(req.body.phone) && await utils.validateToken(req, res)) {
-			const {name, phone, email} = req.body;
+			const {id, name, phone, email} = req.body;
 			const contact = await req.context.models.Contact.findOne({
 				where: {
-					id: req.params.contact_id
+					id: id
 				}
             });
             contact.name = name;
