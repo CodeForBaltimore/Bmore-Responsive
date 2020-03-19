@@ -13,10 +13,10 @@ module.exports = {
                 required: true
             },
             phone: {
-                type: Sequelize.STRING,
+                type: Sequelize.JSON,
             },
             email: {
-                type: Sequelize.STRING,
+                type: Sequelize.JSON,
             },
 			createdAt: {
 				allowNull: false,

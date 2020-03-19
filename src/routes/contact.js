@@ -1,4 +1,4 @@
-import {Router} from 'express';
+import { Router } from 'express';
 import validator from 'validator';
 import utils from '../utils';
 
@@ -42,35 +42,36 @@ router.get('/:contact_id', async (req, res) => {
 // Creates a new contact.
 router.post('/', async (req, res) => {
 	try {
-		if (validator.isMobilePhone(req.body.phone)) {
-			const { name, phone } = req.body;
-			const contact = await req.context.models.Contact.create({name, phone});
+		if (req.body.name !== undefined) {
+			const { name, phone, email } = req.body;
+			const contact = await req.context.models.Contact.create({ name, email, phone });
 			return res.send(contact.name + ' created');
 		}
 
 		throw new Error('Invalid input');
-	} catch {
-	    return res.status(400).send('Invalid input');
+	} catch (e) {
+		console.error(e);
+		return res.status(400).send('Invalid input');
 	}
 });
 
 // Updates any contact.
 router.put('/', async (req, res) => {
 	try {
-		if (validator.isMobilePhone(req.body.phone) && await utils.validateToken(req, res)) {
-			const {id, name, phone, email} = req.body;
+		if (await utils.validateToken(req, res)) {
+			const { id, name, phone, email } = req.body;
 			const contact = await req.context.models.Contact.findOne({
 				where: {
 					id: id
 				}
-            });
-            contact.name = name;
-            contact.phone = phone;
-            contact.email = email;
+			});
+			contact.name = name;
+			contact.phone = phone;
+			contact.email = email;
 
-		 	await contact.save();
+			await contact.save();
 			return res.send(contact.id + ' updated');
-        }
+		}
 
 		throw new Error('Invalid input');
 	} catch {
@@ -87,9 +88,9 @@ router.delete('/:contact_id', async (req, res) => {
 					id: req.params.contact_id
 				}
 			});
-            await contact.destroy();
+			await contact.destroy();
 			return res.send(req.params.contact_id + ' deleted');
-        }
+		}
 		throw new Error('Invalid input');
 	} catch {
 		res.status(400).send('Invalid input');

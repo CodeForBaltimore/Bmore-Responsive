@@ -21,10 +21,10 @@ const contact = (sequelize, DataTypes) => {
             required: true
         },
         phone: {
-            type: DataTypes.STRING,
+            type: DataTypes.JSON,
         },
         email: {
-            type: DataTypes.STRING,
+            type: DataTypes.JSON,
         }
     },
     {
@@ -51,13 +51,13 @@ const contact = (sequelize, DataTypes) => {
         return contact;
     };
 
-    Contact.findByPhone = async (phone) => {
-        const contact = await Contact.findOne({
-            where: { phone }
-        });
+    // Contact.findByPhone = async (phone) => {
+    //     const contact = await Contact.findOne({
+    //         where: { phone }
+    //     });
 
-        return contact;
-    };
+    //     return contact;
+    // };
 
     return Contact;
 };

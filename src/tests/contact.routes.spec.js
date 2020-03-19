@@ -42,7 +42,7 @@ describe('Contact negative tests', () => {
     it('should not create a contact', (done) => {
       request(app)
         .post('/contact')
-        .send({ email: randomWords(), name: randomWords() })
+        .send({ email: randomWords() })
         .set('Accept', 'application/json')
         .expect('Content-Type', 'text/html; charset=utf-8')
         .expect(400)
