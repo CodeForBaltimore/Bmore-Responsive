@@ -41,5 +41,26 @@ module.exports = {
     }
 
     return false;
+  },
+  getUser: async (email) => {
+    try {
+      if (validator.isEmail(email)) {
+        const user = await User.findOne({
+          where: {
+            email: email
+          },
+          attributes: ['email', 'roles', 'displayName', 'phone', 'createdAt', 'updatedAt']
+        });
+        if (user) user.roles = await UserRole.findRoles(user.roles);
+        return user;
+      }
+
+      throw new Error('Invalid input');
+      return email;
+    } catch (e) {
+      console.error(e);
+    }
+
+    return false;
   }
 }

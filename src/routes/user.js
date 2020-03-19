@@ -8,16 +8,22 @@ const router = new Router();
 // User login.
 router.post('/login', async (req, res) => {
   try {
-    return res.send(await controller.login(req.body));
-  } catch {
-    res.status(400).send('Invalid input');
+    const token = await controller.login(req.body);
+    if (token !== false) {
+      return res.send(token);
+    }
+  } catch (e) {
+    console.error(e);
   }
+  res.status(400).send('Invalid input');
 });
 
 // Gets all users.
 router.get('/', async (req, res) => {
   try {
-    return res.send(await controller.getUsers());
+    if (await utils.validateToken(req.headers.token)) {
+      return res.send(await controller.getUsers());
+    }
   } catch {
     res.status(400).send('Invalid input');
   }
@@ -26,18 +32,10 @@ router.get('/', async (req, res) => {
 // Gets a specific user.
 router.get('/:email', async (req, res) => {
   try {
-    if (validator.isEmail(req.params.email) && await utils.validateToken(req.headers.token, res)) {
-      const user = await req.context.models.User.findOne({
-        where: {
-          email: req.params.email
-        },
-        attributes: ['email', 'roles', 'displayName', 'phone', 'createdAt', 'updatedAt']
-      });
-      if (user) user.roles = await req.context.models.UserRole.findRoles(user.roles);
+    if (await utils.validateToken(req.headers.token)) {
+      const user = await controller.getUser(req.params.email);
       return res.send(user);
     }
-
-    throw new Error('Invalid input');
   } catch {
     res.status(400).send('Invalid payload');
   }

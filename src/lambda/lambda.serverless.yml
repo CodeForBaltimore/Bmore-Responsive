@@ -6,3 +6,11 @@ getUsers:
     handler: src/lambda/user.getUsers
     events:
       - http: GET /user
+getUser:
+    handler: src/lambda/user.getUser
+    events:
+      - http: GET /user/{email}
+        requests:
+          parameters:
+            paths:
+              email: true

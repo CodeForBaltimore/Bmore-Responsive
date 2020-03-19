@@ -34,5 +34,20 @@ module.exports = {
       console.error(e);
       return error;
     }
+  },
+  getUser: async event => {
+    try {
+      if (await utils.validateToken(event.headers.token)) {
+        const user = await controller.getUser(event.pathParameters.email);
+
+        return {
+          statusCode: 200,
+          body: JSON.stringify(user)
+        };
+      }
+    } catch (e) {
+      console.error(e);
+      return error;
+    }
   }
 }
