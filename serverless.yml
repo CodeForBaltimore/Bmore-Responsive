@@ -2,17 +2,11 @@
 service: bmore-responsive
 custom:
   region: ${opt:region,'us-east-1'}
-  stage: ${opt:stage, 'dev'}
   prune:
     automatic: true
     number: 3
-  stages:
-    - local
-    - dev
-    - staging
-    - prod
   serverless-offline:
-    port: 3000
+    port: ${self:provider.environment.PORT}
   webpack:
     webpackConfig: ./webpack.config.js
     includeModules: true
@@ -22,7 +16,7 @@ custom:
 provider:
   name: aws
   runtime: nodejs12.x
-  stage: ${self:custom.stage}
+  stage: ${self:provider.environment.NODE_ENV}
   region: ${self:custom.region}
   iamRoleStatements:
     - Effect: "Allow"

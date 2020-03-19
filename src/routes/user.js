@@ -8,43 +8,34 @@ const router = new Router();
 // User login.
 router.post('/login', async (req, res) => {
   try {
-    const token = await controller.login(req.body);
-    if (token !== false) {
-      return res.send(token);
-    }
+    const output = await controller.login(req.body);
+    return res.send(output);
   } catch (e) {
     console.error(e);
   }
-  res.status(400).send('Invalid input');
+  res.status(422).send('Invalid input');
 });
 
 // Gets all users.
 router.get('/', async (req, res) => {
   try {
-    if (await utils.validateToken(req.headers.token)) {
-      const users = await controller.getUsers();
-      return res.send({
-        _meta: {
-          total: users.length
-        },
-        results: users
-      });
-    }
-  } catch {
-    res.status(400).send('Invalid input');
+    const output = await controller.getUsers(req.headers.token);
+    return res.send(output);
+  } catch (e) {
+    console.error(e);
   }
+  res.status(422).send('Invalid input');
 });
 
 // Gets a specific user.
 router.get('/:email', async (req, res) => {
   try {
-    if (await utils.validateToken(req.headers.token)) {
-      const user = await controller.getUser(req.params.email);
-      return res.send(user);
-    }
-  } catch {
-    res.status(400).send('Invalid payload');
+    const user = await controller.getUser(req.headers.token, req.params.email);
+    return res.send(user);
+  } catch (e) {
+    console.error(e);
   }
+  res.status(422).send('Invalid input');
 });
 
 // Creates a new user.
@@ -77,20 +68,15 @@ router.put('/', async (req, res) => {
 // Deletes a user.
 router.delete('/:email', async (req, res) => {
   try {
-    if (validator.isEmail(req.params.email) && await utils.validateToken(req.headers.token, res)) {
-      const user = await req.context.models.User.findOne({
-        where: {
-          email: req.params.email
-        }
-      });
-      await user.destroy();
-      return res.send(req.params.email + ' deleted');
+    if (await utils.validateToken(req.headers.token, res)) {
+      const user = await controller.deleteUser(req.params.email);
+      return res.send(user);
     }
-
-    throw new Error('Invalid input');
-  } catch {
-    res.status(400).send('Invalid input');
+  } catch (e) {
+    console.error(e);
   }
+
+  res.status(400).send('Invalid input');
 });
 
 export default router;

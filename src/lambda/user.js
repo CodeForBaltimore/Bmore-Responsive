@@ -11,10 +11,7 @@ module.exports = {
   login: async event => {
     try {
       const token = await controller.login(JSON.parse(event.body));
-      return {
-        statusCode: 200,
-        body: token
-      };
+      return token;
     } catch (e) {
       console.error(e);
       return error;
@@ -22,19 +19,12 @@ module.exports = {
   },
   getUsers: async event => {
     try {
-      if (await utils.validateToken(event.headers.token)) {
-        const users = await controller.getUsers();
+      const users = await controller.getUsers(event.headers.token);
 
-        return {
-          statusCode: 200,
-          body: JSON.stringify({
-            _meta: {
-              total: users.length
-            },
-            results: users
-          }),
-        };
-      }
+      return {
+        statusCode: 200,
+        body: JSON.stringify(users),
+      };
     } catch (e) {
       console.error(e);
       return error;
@@ -42,14 +32,12 @@ module.exports = {
   },
   getUser: async event => {
     try {
-      if (await utils.validateToken(event.headers.token)) {
-        const user = await controller.getUser(event.pathParameters.email);
+      const user = await controller.getUser(event.headers.token, event.pathParameters.email);
 
-        return {
-          statusCode: 200,
-          body: JSON.stringify(user)
-        };
-      }
+      return {
+        statusCode: 200,
+        body: JSON.stringify(user)
+      };
     } catch (e) {
       console.error(e);
       return error;
@@ -71,6 +59,20 @@ module.exports = {
     try {
       if (await utils.validateToken(event.headers.token)) {
         const res = await controller.updateUser(JSON.parse(event.body));
+        return {
+          statusCode: 200,
+          body: res
+        };
+      }
+    } catch (e) {
+      console.error(e);
+      return error;
+    }
+  },
+  deleteUser: async event => {
+    try {
+      if (await utils.validateToken(event.headers.token)) {
+        const res = await controller.delete(event.pathParameters.email);
         return {
           statusCode: 200,
           body: res

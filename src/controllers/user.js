@@ -2,6 +2,7 @@
 require('dotenv').config();
 
 const validator = require('validator');
+const utils = require('../utils');
 const db = require('../lambda/db');
 const User = require('../models/user')(db.sequelize, db.Sequelize);
 const UserRole = require('../models/user-role')(db.sequelize, db.Sequelize);
@@ -14,45 +15,70 @@ module.exports = {
         const token = await User.findByLogin(email, password);
         if (token) {
           console.log(token);
-          return token;
+          return {
+            statusCode: 200,
+            body: token
+          }
+        }
+
+        return {
+          statusCode: 422,
+          body: 'Invalid credentials'
         }
       }
-
-      throw new Error('Invalid input');
     } catch (e) {
       console.error(e);
     }
 
     return false;
   },
-  getUsers: async () => {
+  getUsers: async (token) => {
     try {
-      const users = await User.findAll({
-        attributes: ['email', 'roles', 'displayName', 'phone', 'createdAt', 'updatedAt']
-      });
+      if (await utils.validateToken(token)) {
+        const users = await User.findAll({
+          attributes: ['email', 'roles', 'displayName', 'phone', 'createdAt', 'updatedAt']
+        });
 
-      for (const user of users) {
-        user.roles = await UserRole.findRoles(user.roles);
+        for (const user of users) {
+          user.roles = await UserRole.findRoles(user.roles);
+        }
+
+        return {
+          _meta: {
+            total: users.length
+          },
+          results: users
+        };
       }
 
-      return users;
+      return {
+        _meta: {
+          total: users.length
+        },
+        results: users
+      }
+
     } catch (e) {
       console.error(e);
     }
 
     return false;
   },
-  getUser: async (email) => {
+  getUser: async (token,email) => {
     try {
-      if (validator.isEmail(email)) {
+      if (validator.isEmail(email) && await utils.validateToken(token)) {
         const user = await User.findOne({
           where: {
             email: email
           },
           attributes: ['email', 'roles', 'displayName', 'phone', 'createdAt', 'updatedAt']
         });
-        if (user) user.roles = await UserRole.findRoles(user.roles);
-        return user;
+        if (user) {
+          user.roles = await UserRole.findRoles(user.roles);
+          return user;
+        }
+
+        return 'User not found'
       }
     } catch (e) {
       console.error(e);
@@ -86,6 +112,27 @@ module.exports = {
         user.password = password;
         await user.save();
         return `${user.email} updated`;
+      }
+    } catch (e) {
+      console.error(e);
+    }
+
+    return false;
+  },
+  deleteUser: async email => {
+    try {
+      if (validator.isEmail(email)) {
+        const user = await User.findOne({
+          where: {
+            email: email
+          }
+        });
+        if (user) {
+          await user.destroy();
+          return `${email} deleted`;
+        }
+
+        return 'User not found';
       }
     } catch (e) {
       console.error(e);

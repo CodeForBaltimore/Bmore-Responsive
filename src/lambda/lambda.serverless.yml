@@ -1,24 +1,28 @@
 login:
-    handler: src/lambda/user.login
-    events:
-      - http: POST /user/login
+  handler: src/lambda/user.login
+  events:
+    - http: POST /user/login
 getUsers:
-    handler: src/lambda/user.getUsers
-    events:
-      - http: GET /user
+  handler: src/lambda/user.getUsers
+  events:
+    - http: GET /user
 getUser:
-    handler: src/lambda/user.getUser
-    events:
-      - http: GET /user/{email}
-        requests:
-          parameters:
-            paths:
-              email: true
+  handler: src/lambda/user.getUser
+  events:
+    - http: GET /user/{email}
+      requests:
+        parameters:
+          paths:
+            email: true
 createUser:
-    handler: src/lambda/user.createUser
-    events:
-      - http: POST /user
+  handler: src/lambda/user.createUser
+  events:
+    - http: POST /user
 updateUser:
-    handler: src/lambda/user.updateUser
-    events:
-      - http: PUT /user
+  handler: src/lambda/user.updateUser
+  events:
+    - http: PUT /user
+deleteUser:
+  handler: src/lambda/user.deleteUser
+  events:
+    - http: DELETE /user
