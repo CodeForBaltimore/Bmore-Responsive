@@ -22,7 +22,13 @@ router.post('/login', async (req, res) => {
 router.get('/', async (req, res) => {
   try {
     if (await utils.validateToken(req.headers.token)) {
-      return res.send(await controller.getUsers());
+      const users = await controller.getUsers();
+      return res.send({
+        _meta: {
+          total: users.length
+        },
+        results: users
+      });
     }
   } catch {
     res.status(400).send('Invalid input');
@@ -44,11 +50,9 @@ router.get('/:email', async (req, res) => {
 // Creates a new user.
 router.post('/', async (req, res) => {
   try {
-    if (validator.isEmail(req.body.email)) {
-      const user = await controller.createUser(req.body);
-      if (user !== false) {
-        return res.send(user);
-      }
+    const user = await controller.createUser(req.body);
+    if (user !== false) {
+      return res.send(user);
     }
   } catch (e) {
     console.error(e);
@@ -59,23 +63,15 @@ router.post('/', async (req, res) => {
 // Updates any user.
 router.put('/', async (req, res) => {
   try {
-    if (validator.isEmail(req.body.email) && await utils.validateToken(req.headers.token, res)) {
-      /** @todo add email and phone update options */
-      const { email, password } = req.body;
-      const user = await req.context.models.User.findOne({
-        where: {
-          email
-        }
-      });
-      user.password = password;
-      await user.save();
-      return res.send(user.email + ' updated');
+    if (await utils.validateToken(req.headers.token, res)) {
+      const user = await controller.updateUser(req.body);
+      return res.send(user);
     }
-
-    throw new Error('Invalid input');
-  } catch {
-    res.status(400).send('Invalid input');
+  } catch (e) {
+    console.error(e);
   }
+
+  res.status(400).send('Invalid input');
 });
 
 // Deletes a user.

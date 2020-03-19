@@ -18,3 +18,7 @@ createUser:
     handler: src/lambda/user.createUser
     events:
       - http: POST /user
+updateUser:
+    handler: src/lambda/user.updateUser
+    events:
+      - http: PUT /user

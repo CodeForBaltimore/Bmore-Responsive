@@ -72,5 +72,25 @@ module.exports = {
     }
 
     return false;
+  },
+  updateUser: async body => {
+    try {
+      if (validator.isEmail(body.email)) {
+        /** @todo add other update options */
+        const { email, password } = body;
+        const user = await User.findOne({
+          where: {
+            email
+          }
+        });
+        user.password = password;
+        await user.save();
+        return `${user.email} updated`;
+      }
+    } catch (e) {
+      console.error(e);
+    }
+
+    return false;
   }
 }

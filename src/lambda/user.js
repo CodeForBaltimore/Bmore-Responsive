@@ -27,7 +27,12 @@ module.exports = {
 
         return {
           statusCode: 200,
-          body: JSON.stringify(users)
+          body: JSON.stringify({
+            _meta: {
+              total: users.length
+            },
+            results: users
+          }),
         };
       }
     } catch (e) {
@@ -57,6 +62,20 @@ module.exports = {
         statusCode: 200,
         body: res
       };
+    } catch (e) {
+      console.error(e);
+      return error;
+    }
+  },
+  updateUser: async event => {
+    try {
+      if (await utils.validateToken(event.headers.token)) {
+        const res = await controller.updateUser(JSON.parse(event.body));
+        return {
+          statusCode: 200,
+          body: res
+        };
+      }
     } catch (e) {
       console.error(e);
       return error;
