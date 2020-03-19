@@ -1,4 +1,4 @@
-const userRole = (sequelize, DataTypes) => {
+module.exports = (sequelize, DataTypes) => {
 	// Defining our userRole table and setting UserRole object.
 	const UserRole = sequelize.define('UserRole', {
 		role: {
@@ -37,5 +37,3 @@ const userRole = (sequelize, DataTypes) => {
 
 	return UserRole;
 };
-
-export default userRole;

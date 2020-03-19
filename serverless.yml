@@ -13,11 +13,11 @@ custom:
     - prod
   serverless-offline:
     port: 3000
-  webpack:
-    webpackConfig: ./webpack.config.js
-    includeModules: true
-    forceInclude:
-      - pg
+  # webpack:
+  #   webpackConfig: ./webpack.config.js
+  #   includeModules: true
+  #   forceInclude:
+  #     - pg
 provider:
   name: aws
   runtime: nodejs12.x
@@ -33,13 +33,13 @@ provider:
           - - "arn:aws:s3:::"
             - "Ref": "ServerlessDeploymentBucket"
 functions:
-  - '${file(./src/routes/lambda.serverless.yml)}'
+  - '${file(./src/lambda/lambda.serverless.yml)}'
 plugins:
     - serverless-domain-manager
     - serverless-dotenv-plugin
     - serverless-offline
     - serverless-prune-plugin
     - serverless-stage-manager
-    - serverless-webpack
+    # - serverless-webpack
 package: 
   individually: true

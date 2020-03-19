@@ -1,4 +1,0 @@
-getUsers:
-    handler: src/routes/user.getUsers
-    events:
-      - http: GET /user

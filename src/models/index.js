@@ -35,7 +35,7 @@ try {
 		.forEach(file => {
 			models[_.upperFirst(_.camelCase(file.replace('.js', '')))] = sequelize.import(`./${file.replace('.js', '')}`);
 		});
-} catch(e) {
+} catch (e) {
 	console.error(e);
 }
 
@@ -46,5 +46,5 @@ Object.keys(models).forEach(key => {
 	}
 });
 
-export {sequelize};
+export { sequelize };
 export default models;

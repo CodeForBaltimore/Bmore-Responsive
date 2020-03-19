@@ -1,14 +1,14 @@
-import { Router } from 'express';
+import {Router} from 'express';
 import validator from 'validator';
-import models from '../models'
 import utils from '../utils';
+import controller from '../controllers/user';
 
 const router = new Router();
 
 // User login.
 router.post('/login', async (req, res) => {
 	try {
-		const { email, password } = req.body;
+		const {email, password} = req.body;
 		if (validator.isEmail(email)) {
 			const token = await req.context.models.User.findByLogin(email, password);
 			if (token) {
@@ -27,7 +27,15 @@ router.post('/login', async (req, res) => {
 router.get('/', async (req, res) => {
 	try {
 		if (await utils.validateToken(req, res)) {
-			return res.send(await getUsers(req.context));
+			// const users = await req.context.models.User.findAll({
+			// 	attributes: ['email', 'roles', 'displayName', 'phone', 'createdAt', 'updatedAt']
+			// });
+
+			// for (const user of users) {
+			// 	user.roles = await req.context.models.UserRole.findRoles(user.roles);
+			// }
+
+			return res.send(await controller.getUsers());
 		}
 
 		throw new Error('Invalid input');
@@ -35,24 +43,6 @@ router.get('/', async (req, res) => {
 		res.status(400).send('Invalid input');
 	}
 });
-
-const getUsers = async event => {
-	try {
-		const users = await models.User.findAll({
-			attributes: ['email', 'roles', 'displayName', 'phone', 'createdAt', 'updatedAt']
-		});
-
-		for (const user of users) {
-			user.roles = await models.UserRole.findRoles(user.roles);
-		}
-
-		return users;
-
-		throw new Error('Invalid input');
-	} catch (e) {
-		console.error(e);
-	}
-}
 
 // Gets a specific user.
 router.get('/:email', async (req, res) => {
@@ -78,8 +68,8 @@ router.get('/:email', async (req, res) => {
 router.post('/', async (req, res) => {
 	try {
 		if (validator.isEmail(req.body.email)) {
-			const { email, password, roles } = req.body;
-			const user = await req.context.models.User.create({ email, password, roles });
+			const {email, password, roles} = req.body;
+			const user = await req.context.models.User.create({email, password, roles});
 			return res.send(user.email + ' created');
 		}
 
@@ -94,7 +84,7 @@ router.put('/', async (req, res) => {
 	try {
 		if (validator.isEmail(req.body.email) && await utils.validateToken(req, res)) {
 			/** @todo add email and phone update options */
-			const { email, password } = req.body;
+			const {email, password} = req.body;
 			const user = await req.context.models.User.findOne({
 				where: {
 					email
@@ -130,7 +120,4 @@ router.delete('/:email', async (req, res) => {
 	}
 });
 
-export { getUsers }
-export default {
-	router
-}
+export default router;

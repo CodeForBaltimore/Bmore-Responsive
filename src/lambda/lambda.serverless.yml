@@ -1,0 +1,4 @@
+getUsers:
+    handler: src/lambda/user.getUsers
+    events:
+      - http: GET /user

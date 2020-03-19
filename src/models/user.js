@@ -1,16 +1,16 @@
-import crypto from 'crypto';
-import jwt from 'jsonwebtoken';
-import utils from '../utils';
+const crypto = require('crypto');
+const jwt = require('jsonwebtoken');
+const utils = require('../utils');
 
-const user = (sequelize, DataTypes) => {
+module.exports = (sequelize, DataTypes) => {
 	// Defining our user table and setting User object.
 	const User = sequelize.define('User', {
 		id: {
-		  type: DataTypes.UUID,
-		  primaryKey: true,
-		  defaultValue: DataTypes.UUIDV4,
-		  allowNull: false,
-		  autoIncrement: false,
+			type: DataTypes.UUID,
+			primaryKey: true,
+			defaultValue: DataTypes.UUIDV4,
+			allowNull: false,
+			autoIncrement: false,
 		},
 		email: {
 			type: DataTypes.STRING,
@@ -38,9 +38,9 @@ const user = (sequelize, DataTypes) => {
 			type: DataTypes.STRING
 		}
 	},
-	{
-		schema: process.env.DATABASE_SCHEMA
-	});
+		{
+			schema: process.env.DATABASE_SCHEMA
+		});
 
 	/**
 	 * Looks up and validates a user by email and password.
@@ -52,7 +52,7 @@ const user = (sequelize, DataTypes) => {
 	 */
 	User.findByLogin = async (email, password) => {
 		const user = await User.findOne({
-			where: {email}
+			where: { email }
 		});
 		if (user) {
 			const pw = User.encryptPassword(password, user.salt);
@@ -76,11 +76,11 @@ const user = (sequelize, DataTypes) => {
 
 		if (now.getTime() < expiry * 1000) {
 			const user = await User.findOne({
-				where: {token}
+				where: { token }
 			});
 			if (user) {
 				try {
-					return jwt.verify(user.token, process.env.JWT_KEY, {email: user.email});
+					return jwt.verify(user.token, process.env.JWT_KEY, { email: user.email });
 				} catch {
 					return false;
 				}
@@ -126,9 +126,9 @@ const user = (sequelize, DataTypes) => {
 
 	const setToken = user => {
 		const token = jwt.sign(
-			{email: user.email},
+			{ email: user.email },
 			process.env.JWT_KEY,
-			{expiresIn: '1d'}
+			{ expiresIn: '1d' }
 		);
 		user.token = token;
 	};
@@ -156,6 +156,4 @@ const user = (sequelize, DataTypes) => {
 	User.beforeUpdate(setToken);
 
 	return User;
-};
-
-export default user;
+}
