@@ -9,6 +9,8 @@ module.exports = {
 			element.id = id;
 			element.createdAt = new Date();
 			element.updatedAt = new Date();
+			element.email = JSON.stringify(element.email);
+			element.phone = JSON.stringify(element.phone);
 		}
 
 		return queryInterface.bulkInsert('Contacts', contacts);
