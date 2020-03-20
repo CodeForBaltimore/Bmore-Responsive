@@ -111,4 +111,3 @@ dist
 
 # sequelize files
 sequelize/data/*.json
-sequelize/config.js
