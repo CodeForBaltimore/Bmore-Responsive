@@ -59,6 +59,10 @@ The various variables are defined as follows:
 
 _We do not recommend using the default options for PostgreSQL. The above values are provided as examples. It is more secure to create your own credentials._
 
+**Warning**: If you are running Docker Toolbox instead of Docker Desktop (likely meaning you are running Windows 10 Home, not Professional) you will need to change your `.env` to reflect Docker running on a VM: 
+- `DATABASE_HOST`: The IP address Docker is running on. You can find this by running `docker-machine ip` but it's usually `192.168.99.100` instead of `localhost`
+- `DATABASE_URL_DEV`: This will need to be adjusted as well, for example `DATABASE_URL_DEV=postgres://postgres:.@localhost:5432/postgres` would become `DATABASE_URL_DEV=postgres://postgres:.@192.168.99.100:5432/postgres`
+
 ### PostgreSQL
 ***You will need a PostgreSQL database running locally to run this application locally.*** You may setup PostgreSQL however you wish, however we recommend using Docker using the instructions found here: https://hub.docker.com/_/postgres
 
