@@ -11,6 +11,7 @@ services:
 before_script:
 - psql -c 'create database travis_ci_test;' -U postgres
 script:
+- npm run db-create
 - npm test
 after_script:
 - nyc --reporter=text-lcov npm test > coverage.lcov
