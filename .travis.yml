@@ -10,8 +10,8 @@ services:
 - docker
 before_script:
 - psql -c 'create database travis_ci_test;' -U postgres
-- npm run db-create
 script:
+- npm run db-create
 - npm test
 after_script:
 - nyc --reporter=text-lcov npm test > coverage.lcov
