@@ -61,7 +61,7 @@ _We do not recommend using the default options for PostgreSQL. The above values 
 
 If you are using the Docker method you may spin up your database layer by running this command:
 ```
-docker run -d -p 5432:5432 postgres
+docker run -d -e POSTGRES_HOST_AUTH_METHOD=trust -p 5432:5432 postgres
 ```
 If you're running a database in another way then we trust you can sort it out on your own because you're awesome :sunglasses:
 
