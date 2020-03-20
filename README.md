@@ -78,16 +78,7 @@ If you're running a database in another way then we trust you can sort it out on
 ### Sequelize _<optional>_
 You can run the application without doing anything and it will create the tables needed to operate automatically. It will not, however, create users. If you would like to seed your database with users you will need to follow a few steps.
 1. You may create your database tables without running the application by running `npm run db-create`.
-2. To use the provided example seeder scripts you will need to create JSON data under the `/data` directory. You will have to match required fields of your table model. Here is an example of a `user-role.json` file:
-```
-[
-    {
-        "role": "Test",
-        "description": "This is a test."
-    }
-]
-```
-3. You can now seed your database by running `npm run db-seed`. 
+2. You can now seed your database by running `npm run db-seed`. 
 
 Example `/migrations` and `/seeders` scripts have been supplied. You can rollback your all seeded data at any time by running `npm run db-unseed` and delete all created tables with `npm run db-delete`.
 

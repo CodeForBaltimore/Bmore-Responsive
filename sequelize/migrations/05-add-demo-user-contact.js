@@ -3,7 +3,7 @@ module.exports = {
     up: function(queryInterface, Sequelize) {
       return queryInterface.addColumn(
         'Contacts',
-        'user_id',
+        'UserId',
         {
             type: Sequelize.UUID,
             references: {

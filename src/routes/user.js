@@ -27,7 +27,7 @@ router.get('/', async (req, res) => {
 	try {
 		if (await utils.validateToken(req, res)) {
 			const users = await req.context.models.User.findAll({
-				attributes: ['email', 'roles', 'displayName', 'phone', 'createdAt', 'updatedAt']
+				attributes: ['id', 'email', 'roles', 'displayName', 'phone', 'createdAt', 'updatedAt']
 			});
 
 			for (const user of users) {
@@ -51,7 +51,7 @@ router.get('/:email', async (req, res) => {
 				where: {
 					email: req.params.email
 				},
-				attributes: ['email', 'roles', 'displayName', 'phone', 'createdAt', 'updatedAt']
+				attributes: ['id', 'email', 'roles', 'displayName', 'phone', 'createdAt', 'updatedAt']
 			});
 			if (user) user.roles = await req.context.models.UserRole.findRoles(user.roles);
 			return res.send(user);
