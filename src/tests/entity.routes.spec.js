@@ -4,7 +4,7 @@ import randomWords from 'random-words';
 import app from '..';
 
 const { expect } = chai;
-const contact = {
+const entity = {
     name: randomWords(), 
     phone: [
       {
@@ -18,23 +18,23 @@ const contact = {
     ]
 };
 
-describe('Contact positive tests', () => {
-    it('should create a contact', (done) => {
+describe('Entity positive tests', () => {
+    it('should create a entity', (done) => {
       request(app)
-        .post('/contact')
-        .send(contact)
+        .post('/entity')
+        .send(entity)
         .set('Accept', 'application/json')
         .expect('Content-Type', 'text/html; charset=utf-8')
         .expect(200)
         .end((err, res) => {
           if (err) return done(err);
-          // expect(res.text).to.equal(`${contact.name} created`);
+          // expect(res.text).to.equal(`${entity.id} created`);
           done();
         });
     });
-    it('should get all contacts', (done) => {
+    it('should get all entities', (done) => {
       request(app)
-        .get(`/contact`)
+        .get(`/entity`)
         .set('Accept', 'application/json')
         .expect('Content-Type', 'application/json; charset=utf-8')
         .expect(200)
@@ -46,10 +46,10 @@ describe('Contact positive tests', () => {
     });
 });
 
-describe('Contact negative tests', () => {
-    it('should not create a contact', (done) => {
+describe('Entity negative tests', () => {
+    it('should not create a entity', (done) => {
       request(app)
-        .post('/contact')
+        .post('/entity')
         .send({ email: randomWords() })
         .set('Accept', 'application/json')
         .expect('Content-Type', 'text/html; charset=utf-8')
@@ -60,9 +60,9 @@ describe('Contact negative tests', () => {
           done();
         });
     });
-    it('should not get a single contact', (done) => {
+    it('should not get a single entity', (done) => {
       request(app)
-        .get(`/contact/${contact.email}`)
+        .get(`/entity/${entity.email}`)
         .set('Accept', 'application/json')
         .expect(400)
         .end((err, res) => {
@@ -71,11 +71,11 @@ describe('Contact negative tests', () => {
           done();
         });
     });
-    it('should not update a contact', (done) => {
-      contact.email = randomWords();
+    it('should not update a entity', (done) => {
+      entity.email = randomWords();
       request(app)
-        .put('/contact')
-        .send(contact)
+        .put('/entity')
+        .send(entity)
         .set('Accept', 'application/json')
         .expect('Content-Type', 'text/html; charset=utf-8')
         .expect(400)
@@ -85,10 +85,10 @@ describe('Contact negative tests', () => {
           done();
         });
     });
-    it('should not delete a contact', (done) => {
-      contact.email = randomWords();
+    it('should not delete a entity', (done) => {
+      entity.email = randomWords();
       request(app)
-        .delete(`/contact/${contact.email}`)
+        .delete(`/entity/${entity.email}`)
         .set('Accept', 'application/json')
         .expect('Content-Type', 'text/html; charset=utf-8')
         .expect(400)

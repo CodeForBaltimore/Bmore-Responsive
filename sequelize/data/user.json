@@ -1,0 +1,27 @@
+[
+    {
+        "email": "test@test.test",
+        "password": "test",
+        "roles": [1]
+    },
+    {
+        "email": "test2@test.test",
+        "password": "test",
+        "roles": [1]
+    },
+    {
+        "email": "test3@test.test",
+        "password": "test",
+        "roles": [1]
+    },
+    {
+        "email": "test4@test.test",
+        "password": "test",
+        "roles": [1]
+    },
+    {
+        "email": "test5@test.test",
+        "password": "test",
+        "roles": [1]
+    }
+]

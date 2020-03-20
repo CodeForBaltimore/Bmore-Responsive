@@ -9,7 +9,7 @@ const contact = (sequelize, DataTypes) => {
             primaryKey: true,
             defaultValue: UUIDV4
         },
-        user_id: {
+        UserId: {
             type: DataTypes.STRING,
             references: {
                 model: 'User',

@@ -4,18 +4,18 @@ import utils from '../utils';
 
 const router = new Router();
 
-// Gets all contacts.
+// Gets all entities.
 router.get('/', async (req, res) => {
 	try {
 		if (await utils.validateToken(req, res)) {
-			const contacts = await req.context.models.Contact.findAll({
+			const entities = await req.context.models.Entity.findAll({
 				attributes: ['id', 'name', 'email', 'phone', 'createdAt', 'updatedAt']
 			});
 			return res.send({
 				_meta: {
-					total: contacts.length
+					total: entities.length
 				},
-				results: contacts
+				results: entities
 			});
 		}
 
@@ -25,17 +25,17 @@ router.get('/', async (req, res) => {
 	}
 });
 
-// Gets a specific contact.
-router.get('/:contact_id', async (req, res) => {
+// Gets a specific entity.
+router.get('/:entity_id', async (req, res) => {
 	try {
 		if (await utils.validateToken(req, res)) {
-			const contact = await req.context.models.Contact.findOne({
+			const entity = await req.context.models.Entity.findOne({
 				where: {
-					id: req.params.contact_id
+					id: req.params.entity_id
 				},
 				attributes: ['id', 'name', 'email', 'phone', 'createdAt', 'updatedAt']
 			});
-			return res.send(contact);
+			return res.send(entity);
 		}
 
 		throw new Error('Invalid input');
@@ -44,16 +44,16 @@ router.get('/:contact_id', async (req, res) => {
 	}
 });
 
-// Creates a new contact.
+// Creates a new entity.
 router.post('/', async (req, res) => {
 	try {
 		if (await utils.validateToken(req, res)) {
 			if (req.body.name !== undefined) {
 				const { name, phone, email } = req.body;
-				
+				console.log(email)
 
-				const contact = await req.context.models.Contact.create({ name, email, phone });
-				return res.send(contact.id + ' created');
+				const entity = await req.context.models.Entity.create({ name, email, phone });
+				return res.send(entity.id + ' created');
 			}
 		}
 
@@ -64,30 +64,29 @@ router.post('/', async (req, res) => {
 	}
 });
 
-// Updates any contact.
+// Updates any entity.
 router.put('/', async (req, res) => {
 	try {
 		if (await utils.validateToken(req, res)) {
-			const { id, name, phone, email, UserId } = req.body;
+			const { id, name, phone, email } = req.body;
 
 			/** @todo validate emails */
 			// Validating emails 
 			// if (await !utils.validateEmails(email)) res.status(400).send('Invalid input');
 			
-			const contact = await req.context.models.Contact.findOne({
+			const entity = await req.context.models.Entity.findOne({
 				where: {
 					id: id
 				}
 			});
 			
-			contact.name = name;
-			contact.UserId = UserId;
-			contact.phone = phone;
-			contact.email = email;
-			contact.updatedAt = new Date();
+			entity.name = name;
+			entity.phone = phone;
+			entity.email = email;
+			entity.updatedAt = new Date();
 
-			await contact.save();
-			return res.send(contact.id + ' updated');
+			await entity.save();
+			return res.send(entity.id + ' updated');
 		}
 
 		throw new Error('Invalid input');
@@ -97,17 +96,17 @@ router.put('/', async (req, res) => {
 	}
 });
 
-// Deletes a contact.
-router.delete('/:contact_id', async (req, res) => {
+// Deletes a entity.
+router.delete('/:entity_id', async (req, res) => {
 	try {
 		if (await utils.validateToken(req, res)) {
-			const contact = await req.context.models.Contact.findOne({
+			const entity = await req.context.models.Entity.findOne({
 				where: {
-					id: req.params.contact_id
+					id: req.params.entity_id
 				}
 			});
-			await contact.destroy();
-			return res.send(req.params.contact_id + ' deleted');
+			await entity.destroy();
+			return res.send(req.params.entity_id + ' deleted');
 		}
 		throw new Error('Invalid input');
 	} catch {

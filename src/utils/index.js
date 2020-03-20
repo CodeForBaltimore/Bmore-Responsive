@@ -1,6 +1,7 @@
 'use strict';
 
 import crypto from 'crypto';
+import validator from 'validator';
 
 /**
  * Formats a timestamp to something readable by humans.
@@ -58,8 +59,25 @@ const encryptPassword = (password, salt) => {
 		.digest('hex');
 };
 
+/**
+ * Checks array of emails for validitiy
+ * 
+ * @param {Array} emails
+ * 
+ * @return {Boolean}
+ */
+const validateEmails = async emails => {
+	for (let email of emails) {
+		console.log(email.address)
+		if (!validator.isEmail(email.address)) return false;
+	}
+
+	return true;
+}
+
 export default {
 	formatTime,
 	validateToken,
-	encryptPassword
+	encryptPassword,
+	validateEmails
 };
