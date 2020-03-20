@@ -40,8 +40,11 @@ DATABASE_USER=<your database user>
 DATABASE_PASSWORD=<your database password>
 DATABASE_SCHEMA=<your database schema>
 JWT_KEY=<your secret JWT seed phrase or key>
+DATABASE_URL_DEV=<your connection string based on above variables>
 ' >> ./.env
 ```
+
+And example of the `DATABASE_URL_DEV` would be `DATABASE_URL_DEV=postgres://postgres:.@localhost:5432/postgres`
 
 The various variables are defined as follows:
 - `NODE_ENV` = The label for your environment. 
@@ -63,25 +66,15 @@ If you are using the Docker method you may spin up your database layer by runnin
 ```
 docker run -d -e POSTGRES_HOST_AUTH_METHOD=trust -p 5432:5432 postgres
 ```
+
+_Note that POSTGRES_HOST_AUTH_METHOD=trust is insecure and will allow anything to connect to that db! Only use for testing and/or local dev!_
+
 If you're running a database in another way then we trust you can sort it out on your own because you're awesome :sunglasses:
 
 ### Sequelize _<optional>_
 You can run the application without doing anything and it will create the tables needed to operate automatically. It will not, however, create users. If you would like to seed your database with users you will need to follow a few steps.
-1. You will need to create a `config.js` file in the `/sequelize` directory. Here is an example:
-```
-module.exports = {
-  development: {
-    username: <your postgres username>,
-    password: <your postgres password>,
-    database: <your postgres database name>,
-    host: <your postgres host>,
-    port: <your postgres port>,
-    dialect: 'postgres'
-  }
-};
-```
-2. After you set your config options you may create your database tables without running the application by running `npm run db-create`.
-3. To use the provided example seeder scripts you will need to create JSON data under the `/data` directory. You will have to match required fields of your table model. Here is an example of a `user-role.json` file:
+1. You may create your database tables without running the application by running `npm run db-create`.
+2. To use the provided example seeder scripts you will need to create JSON data under the `/data` directory. You will have to match required fields of your table model. Here is an example of a `user-role.json` file:
 ```
 [
     {
@@ -90,7 +83,7 @@ module.exports = {
     }
 ]
 ```
-4. You can now seed your database by running `npm run db-seed`. 
+3. You can now seed your database by running `npm run db-seed`. 
 
 Example `/migrations` and `/seeders` scripts have been supplied. You can rollback your all seeded data at any time by running `npm run db-unseed` and delete all created tables with `npm run db-delete`.
 
