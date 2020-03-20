@@ -9,8 +9,9 @@ router.get('/', async (req, res) => {
 	try {
 		if (await utils.validateToken(req, res)) {
 			const entities = await req.context.models.Entity.findAll({
-				attributes: ['id', 'name', 'email', 'phone', 'createdAt', 'updatedAt']
+				attributes: ['id', 'name', 'updatedAt']
 			});
+
 			return res.send({
 				_meta: {
 					total: entities.length
@@ -35,11 +36,25 @@ router.get('/:entity_id', async (req, res) => {
 				},
 				attributes: ['id', 'name', 'email', 'phone', 'createdAt', 'updatedAt']
 			});
+			entity.dataValues.contacts = []
+
+			const contacts = await req.context.models.Entity.findContacts(req.params.entity_id);
+
+			for (let contact of contacts) {
+				entity.dataValues.contacts.push({
+					id: contact.dataValues.id,
+					name: contact.dataValues.name,
+				});
+			}
+
+			console.log(entity)
+
 			return res.send(entity);
 		}
 
 		throw new Error('Invalid input');
-	} catch {
+	} catch (e) {
+		console.error(e);
 		res.status(400).send('Invalid payload');
 	}
 });

@@ -24,6 +24,10 @@ const entity = (sequelize, DataTypes) => {
         schema: process.env.DATABASE_SCHEMA
     });
 
+    Entity.associate = models => {
+        Entity.hasMany(models.Contact);
+    }
+
     Entity.findById = async (id) => {
         const entity = await Entity.findOne({
             where: { id }
@@ -39,6 +43,16 @@ const entity = (sequelize, DataTypes) => {
         
         return entity;
     };
+
+    Entity.findContacts = async (id) => {
+        const entity = await Entity.findOne({
+            where: { id }
+        });
+
+        const contacts = await entity.getContacts();
+
+        return contacts;
+    }
 
     return Entity;
 };

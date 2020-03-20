@@ -20,7 +20,7 @@ module.exports = {
     down: function(queryInterface, Sequelize) {
       return queryInterface.removeColumn(
         'Contacts',
-        'user_id'
+        'UserId'
       );
     }
   }

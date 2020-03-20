@@ -34,7 +34,12 @@ router.get('/', async (req, res) => {
 				user.roles = await req.context.models.UserRole.findRoles(user.roles);
 			}
 
-			return res.send(users);
+			return res.send({
+				_meta: {
+					total: users.length
+				},
+				results: users
+			});
 		}
 
 		throw new Error('Invalid input');
@@ -53,12 +58,18 @@ router.get('/:email', async (req, res) => {
 				},
 				attributes: ['id', 'email', 'roles', 'displayName', 'phone', 'createdAt', 'updatedAt']
 			});
-			if (user) user.roles = await req.context.models.UserRole.findRoles(user.roles);
+			if (user) {
+				user.roles = await req.context.models.UserRole.findRoles(user.roles);
+				/** @todo add contact info for users */
+				// user.dataValues.contact = await req.context.models.Contact.findByUserId(user.id);
+			}
+
 			return res.send(user);
 		}
 
 		throw new Error('Invalid input');
-	} catch {
+	} catch (e) {
+		console.error(e);
 		res.status(400).send('Invalid payload');
 	}
 });

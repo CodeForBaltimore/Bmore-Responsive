@@ -10,10 +10,18 @@ const contact = (sequelize, DataTypes) => {
             defaultValue: UUIDV4
         },
         UserId: {
-            type: DataTypes.STRING,
+            type: DataTypes.UUID,
             references: {
                 model: 'User',
                 key: 'id', 
+            },
+            unique: true
+        },
+        EntityId: {
+            type: DataTypes.UUID,
+            references: {
+                model: 'Entity',
+                key: 'id'
             }
         },
         name : {
@@ -33,6 +41,7 @@ const contact = (sequelize, DataTypes) => {
 
     Contact.associate = models => {
         Contact.belongsTo(models.User);
+        Contact.belongsTo(models.Entity);
     }
 
     Contact.findById = async (id) => {
@@ -43,6 +52,14 @@ const contact = (sequelize, DataTypes) => {
         return contact;
     };
 
+    Contact.findByUserId = async (UserId) => {
+        const contact = await Contact.findOne({
+            where: { UserId }
+        });
+        
+        return contact.dataValues;
+    }
+
     Contact.findByName = async (name) => {
         const contact = await Contact.findOne({
             where: { name }
@@ -50,14 +67,6 @@ const contact = (sequelize, DataTypes) => {
         
         return contact;
     };
-
-    // Contact.findByPhone = async (phone) => {
-    //     const contact = await Contact.findOne({
-    //         where: { phone }
-    //     });
-
-    //     return contact;
-    // };
 
     return Contact;
 };
