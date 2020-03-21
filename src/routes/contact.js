@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import validator from 'validator';
+// import validator from 'validator';
 import utils from '../utils';
 
 const router = new Router();
@@ -9,7 +9,6 @@ router.get('/', async (req, res) => {
 	try {
 		if (await utils.validateToken(req, res)) {
 			const contacts = await req.context.models.Contact.findAll({
-				// attributes: ['id', 'name', 'updatedAt']
 			});
 			return res.send({
 				_meta: {
@@ -33,7 +32,6 @@ router.get('/:contact_id', async (req, res) => {
 				where: {
 					id: req.params.contact_id
 				},
-				// attributes: ['id', 'name', 'email', 'phone', 'UserId', 'createdAt', 'updatedAt']
 			});
 			return res.send(contact);
 		}

@@ -18,6 +18,9 @@ const entity = (sequelize, DataTypes) => {
         },
         email: {
             type: DataTypes.JSON,
+        },
+        checkIn: {
+            type: DataTypes.JSON,
         }
     },
     {

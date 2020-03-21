@@ -17,7 +17,10 @@ module.exports = {
             },
             email: {
                 type: Sequelize.JSON,
-            },
+			},
+			checkIn: {
+				type: Sequelize.JSON,
+			},
 			createdAt: {
 				allowNull: false,
 				type: Sequelize.DATE

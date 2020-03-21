@@ -71,7 +71,7 @@ const user = (sequelize, DataTypes) => {
 	 * @return {Boolean}
 	 */
 	User.validateToken = async token => {
-		const expiry = jwt.decode(token).exp;
+		const expiry = jwt.decode(token);
 		const now = new Date();
 
 		if (now.getTime() < expiry * 1000) {

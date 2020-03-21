@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import validator from 'validator';
+// import validator from 'validator';
 import utils from '../utils';
 
 const router = new Router();
@@ -9,7 +9,6 @@ router.get('/', async (req, res) => {
 	try {
 		if (await utils.validateToken(req, res)) {
 			const entities = await req.context.models.Entity.findAll({
-				attributes: ['id', 'name', 'updatedAt']
 			});
 
 			return res.send({
@@ -33,8 +32,7 @@ router.get('/:entity_id', async (req, res) => {
 			const entity = await req.context.models.Entity.findOne({
 				where: {
 					id: req.params.entity_id
-				},
-				attributes: ['id', 'name', 'email', 'phone', 'createdAt', 'updatedAt']
+				}
 			});
 			entity.dataValues.contacts = []
 
@@ -64,10 +62,18 @@ router.post('/', async (req, res) => {
 	try {
 		if (await utils.validateToken(req, res)) {
 			if (req.body.name !== undefined) {
-				const { name, phone, email } = req.body;
-				console.log(email)
+				let { name, phone, email, checkIn } = req.body;
 
-				const entity = await req.context.models.Entity.create({ name, email, phone });
+				if (!checkIn) {
+					checkIn = {
+						_meta: {
+							total: 0
+						},
+						checkIns: []
+					}
+				}
+
+				const entity = await req.context.models.Entity.create({ name, email, phone, checkIn });
 				return res.send(entity.id + ' created');
 			}
 		}
@@ -83,21 +89,48 @@ router.post('/', async (req, res) => {
 router.put('/', async (req, res) => {
 	try {
 		if (await utils.validateToken(req, res)) {
-			const { id, name, phone, email } = req.body;
+			let { id, name, phone, email, checkIn } = req.body;
 
 			/** @todo validate emails */
 			// Validating emails 
 			// if (await !utils.validateEmails(email)) res.status(400).send('Invalid input');
-			
-			const entity = await req.context.models.Entity.findOne({
+
+			let entity = await req.context.models.Entity.findOne({
 				where: {
 					id: id
 				}
 			});
-			
-			entity.name = name;
-			entity.phone = phone;
-			entity.email = email;
+
+			entity.name = (name) ? name : entity.name;
+			entity.phone = (phone) ? phone : entity.phone;
+			entity.email = (email) ? email : entity.email;
+			/** @todo validate checkIn JSON */
+			if (entity.checkIn === null && checkIn) {
+				const checkIns = {
+					_meta: {
+						total: 1
+					},
+					checkIns: [
+						checkIn
+					]
+				}
+
+				entity.checkIn = checkIns;
+			} else if (entity.checkIn !== null && checkIn) {
+				let checkIns = entity.checkIn.checkIns;
+				checkIns.push(checkIn);
+				let total = entity.checkIn._meta.total + 1
+
+				const update = {
+					_meta: {
+						total: total
+					},
+					checkIns: checkIns
+				}
+
+				entity.checkIn = update;
+			}
+
 			entity.updatedAt = new Date();
 
 			await entity.save();
@@ -124,7 +157,8 @@ router.delete('/:entity_id', async (req, res) => {
 			return res.send(req.params.entity_id + ' deleted');
 		}
 		throw new Error('Invalid input');
-	} catch {
+	} catch (e) {
+		console.error(e);
 		res.status(400).send('Invalid input');
 	}
 });
