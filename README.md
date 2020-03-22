@@ -53,9 +53,9 @@ JWT_KEY=<your secret JWT seed phrase or key>
 DATABASE_URL=<your connection string based on above variables>
 ' >> ./.env
 ```
-The `DATABASE_URL` is not a very clear var name, and the string is broken down as `postgress://username:password@host:port/database_name`
+The `DATABASE_URL` is not a very clear var name, and the string is broken down as `postgres://username:password@host:port/database_name`
 
-An example of the `DATABASE_URL` would be `DATABASE_URL=postgres://user:pass@localhost:5432/dbname`
+An example of the `DATABASE_URL` would be `DATABASE_URL=postgres://postgres:postgres@localhost:5432/postgres`
 
 The various variables are defined as follows:
 - `NODE_ENV` = The label for your environment. 
@@ -69,7 +69,7 @@ _We do not recommend using the default options for PostgreSQL. The above values 
 
 **Warning**: If you are running Docker Toolbox instead of Docker Desktop (likely meaning you are running Windows 10 Home, not Professional) you will need to change your `.env` to reflect Docker running on a VM: 
 - `DATABASE_HOST`: The IP address Docker is running on. You can find this by running `docker-machine ip` but it's usually `192.168.99.100` instead of `localhost`
-- `DATABASE_URL`: This will need to be adjusted as well, for example `DATABASE_URL=postgres://postgres:.@localhost:5432/postgres` would become `DATABASE_URL=postgres://postgres:.@192.168.99.100:5432/postgres`
+- `DATABASE_URL`: This will need to be adjusted as well, for example `DATABASE_URL=postgres://postgres:postgres@localhost:5432/postgres` would become `DATABASE_URL=postgres://postgres:postgres@192.168.99.100:5432/postgres`
 
 ## 2.3. PostgreSQL
 ***You will need a PostgreSQL database running locally to run this application locally.*** You may setup PostgreSQL however you wish, however we recommend using Docker using the instructions found here: https://hub.docker.com/_/postgres
