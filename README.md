@@ -50,7 +50,7 @@ echo 'NODE_ENV=local
 PORT=<your port>
 DATABASE_SCHEMA=<your database schema>
 JWT_KEY=<your secret JWT seed phrase or key>
-DATABASE_URL_DEV=<your connection string based on above variables>
+DATABASE_URL=<your connection string based on above variables>
 ' >> ./.env
 ```
 
@@ -68,7 +68,7 @@ _We do not recommend using the default options for PostgreSQL. The above values 
 
 **Warning**: If you are running Docker Toolbox instead of Docker Desktop (likely meaning you are running Windows 10 Home, not Professional) you will need to change your `.env` to reflect Docker running on a VM: 
 - `DATABASE_HOST`: The IP address Docker is running on. You can find this by running `docker-machine ip` but it's usually `192.168.99.100` instead of `localhost`
-- `DATABASE_URL_DEV`: This will need to be adjusted as well, for example `DATABASE_URL_DEV=postgres://postgres:.@localhost:5432/postgres` would become `DATABASE_URL_DEV=postgres://postgres:.@192.168.99.100:5432/postgres`
+- `DATABASE_URL`: This will need to be adjusted as well, for example `DATABASE_URL=postgres://postgres:.@localhost:5432/postgres` would become `DATABASE_URL=postgres://postgres:.@192.168.99.100:5432/postgres`
 
 ## 2.3. PostgreSQL
 ***You will need a PostgreSQL database running locally to run this application locally.*** You may setup PostgreSQL however you wish, however we recommend using Docker using the instructions found here: https://hub.docker.com/_/postgres
