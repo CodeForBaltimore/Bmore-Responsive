@@ -54,12 +54,12 @@ DATABASE_URL=<your connection string based on above variables>
 ' >> ./.env
 ```
 
-And example of the `DATABASE_URL` would be `DATABASE_URL=postgres://user:pass@example.com:5432/dbname`
+And example of the `DATABASE_URL` would be `DATABASE_URL=postgres://user:pass@localhost:5432/dbname`
 
 The various variables are defined as follows:
 - `NODE_ENV` = The label for your environment. 
 - `PORT` = The local port you wish to run on. Defaults to `3000`.
-- `DATABASE_URL` = The URL string for your db connection. For example: `postgres://user:pass@example.com:5432/dbname`
+- `DATABASE_URL` = The URL string for your db connection. For example: `postgres://user:pass@localhost:5432/dbname`
 - `DATABASE_SCHEMA` = Your local database schema. Postgres default is `public`.
 - `JWT_KEY` = A secret value to generate JWT's locally. 
 - `BYPASS_LOGIN` = _optional_  Allows you to hit the endpoints locally without having to login. If you wish to bypass the login process during local dev, set this to `true`.
@@ -68,7 +68,8 @@ _We do not recommend using the default options for PostgreSQL. The above values 
 
 **Warning**: If you are running Docker Toolbox instead of Docker Desktop (likely meaning you are running Windows 10 Home, not Professional) you will need to change your `.env` to reflect Docker running on a VM: 
 - `DATABASE_HOST`: The IP address Docker is running on. You can find this by running `docker-machine ip` but it's usually `192.168.99.100` instead of `localhost`
-- `DATABASE_URL`: This will need to be adjusted as well, for example `DATABASE_URL=postgres://postgres:.@localhost:5432/postgres` would become `DATABASE_URL=postgres://postgres:.@192.168.99.100:5432/postgres`
+- `DATABASE_URL`: This will need to be adjusted as well, for example `DATABASE_URL=postgres://postgres:postgres@localhost:5432/postgres
+` would become `DATABASE_URL=postgres://postgres:postgres@localhost:5432/postgres`
 
 ## 2.3. PostgreSQL
 ***You will need a PostgreSQL database running locally to run this application locally.*** You may setup PostgreSQL however you wish, however we recommend using Docker using the instructions found here: https://hub.docker.com/_/postgres
