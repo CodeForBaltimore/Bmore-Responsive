@@ -1,5 +1,19 @@
 [![Build Status](https://travis-ci.org/CodeForBaltimore/Bmore-Responsive.svg?branch=master)](https://travis-ci.org/CodeForBaltimore/Bmore-Responsive) [![codecov](https://codecov.io/gh/CodeForBaltimore/Bmore-Responsive/branch/master/graph/badge.svg)](https://codecov.io/gh/CodeForBaltimore/Bmore-Responsive) [![Known Vulnerabilities](https://snyk.io/test/github/CodeForBaltimore/Bmore-Responsive/badge.svg)](https://snyk.io/test/github/CodeForBaltimore/Bmore-Responsive)
-<!-- TOC -->autoauto- [1. Bmore Responsive](#1-bmore-responsive)auto    - [1.1. Documentation](#11-documentation)auto        - [1.1.1. API Spec](#111-api-spec)auto        - [1.1.2. Database Documentation](#112-database-documentation)auto- [2. Setup](#2-setup)auto    - [2.1. Node and Express setup](#21-node-and-express-setup)auto    - [2.2. Environment variables](#22-environment-variables)auto    - [2.3. PostgreSQL](#23-postgresql)auto        - [2.3.1. Sequelize](#231-sequelize)auto    - [2.4. Docker](#24-docker)auto- [3. Using this product](#3-using-this-product)auto    - [3.1. Testing](#31-testing)auto- [4. Sources and Links](#4-sources-and-links)autoauto<!-- /TOC -->
+<!-- TOC -->
+- [1. Bmore Responsive](#1-bmore-responsive)    
+    - [1.1. Documentation](#11-documentation)        
+        - [1.1.1. API Spec](#111-api-spec)        
+    - [1.1.2. Database Documentation](#112-database-documentation) 
+- [2. Setup](#2-setup)    
+    - [2.1. Node and Express setup](#21-node-and-express-setup)    
+    - [2.2. Environment variables](#22-environment-variables)    
+    - [2.3. PostgreSQL](#23-postgresql)        
+        - [2.3.1. Sequelize](#231-sequelize)    
+    - [2.4. Docker](#24-docker)
+- [3. Using this product](#3-using-this-product)    
+    - [3.1. Testing](#31-testing)
+- [4. Sources and Links](#4-sources-and-links)
+<!-- /TOC -->
 # 1. Bmore Responsive
 An API to drive disaster and emergency response systems.
 
@@ -67,9 +81,9 @@ docker run -d -e POSTGRES_PASSWORD=<your chosen password> -p 5432:5432 postgres
 If you're running a database in another way then we trust you can sort it out on your own because you're awesome :sunglasses:
 
 ### 2.3.1. Sequelize
-You can run the application without doing anything and it will create the tables needed to operate automatically. It will not, however, create users. If you would like to seed your database with users you will need to follow a few steps.
-1. You may create your database tables without running the application by running `npm run db-create`.
-2. You can now seed your database by running `npm run db-seed`. 
+To properly start the application the database needs to be built by Sequlize ahead of time. To do that run the following commands
+1. You must create your database tables without running the application by running `npm run db-create` first.
+2. _optional_ You can now seed your database if you wish by running `npm run db-seed`. 
 
 Example `/migrations` and `/seeders` scripts have been supplied. You can rollback your all seeded data at any time by running `npm run db-unseed` and delete all created tables with `npm run db-delete`.
 
