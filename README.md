@@ -53,8 +53,9 @@ JWT_KEY=<your secret JWT seed phrase or key>
 DATABASE_URL=<your connection string based on above variables>
 ' >> ./.env
 ```
+The `DATABASE_URL` is not a very clear var name, and the string is broken down as `postgress://username:password@host:port/database_name`
 
-And example of the `DATABASE_URL` would be `DATABASE_URL=postgres://user:pass@example.com:5432/dbname`
+An example of the `DATABASE_URL` would be `DATABASE_URL=postgres://user:pass@localhost:5432/dbname`
 
 The various variables are defined as follows:
 - `NODE_ENV` = The label for your environment. 
