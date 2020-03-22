@@ -27,7 +27,7 @@ Our API spec is on Swagger. You can view it here https://app.swaggerhub.com/apis
 Our database documentation can be found in our `docs` folder under `database.csv`. This documentation was created using SchemaSpy. Instructions for use can be found here https://github.com/bcgov/schemaspy
 
 # 2. Setup
-A `Dockerfile` and `docker-compose` file have been included for convenience, however this may not be the best local setup for this project. For more information on how to use Docker with this project, please see the [docker section](#docker).
+A `Dockerfile` and `docker-compose` file have been included for convenience, however this may not be the best local setup for this project. For more information on how to use Docker with this project, please see the [docker section](#24-docker).
 
 To work on this project you should have:
 -   NodeJS
@@ -92,7 +92,7 @@ To create new models, migrations, and seeders you _must_ use the Sequelize CLI c
 - `npx sequelize-cli seed:generate --name demo-user` - Creates a seeder for the `User` model and migration previously setup.
 
 ## 2.4. Docker
-To use the `docker-compose.yml` file included you will first need to set [environment variables](#environment-variables). You **MUST** set your `DATABASE_HOST` to `db` to use the `docker-compose` solution. 
+To use the `docker-compose.yml` file included you will first need to set [environment variables](#22-environment-variables). You **MUST** set your `DATABASE_HOST` to `db` to use the `docker-compose` solution. 
 
 If you are running your own database, but want to use the `Dockerfile` you will need to run that this way:
 ```
