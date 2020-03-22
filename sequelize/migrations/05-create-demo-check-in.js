@@ -1,26 +1,16 @@
 'use strict';
 module.exports = {
 	up: (queryInterface, Sequelize) => {
-		return queryInterface.createTable('Entities', {
+		return queryInterface.createTable('CheckIns', {
 			id: {
 			  type: Sequelize.UUID,
 			  primaryKey: true,
 			  allowNull: false,
 			  autoIncrement: false,
 			},
-            name : {
-                type: Sequelize.STRING,
-                required: true
-            },
-            phone: {
+            notes : {
                 type: Sequelize.JSON,
             },
-            email: {
-                type: Sequelize.JSON,
-			},
-			checkIn: {
-				type: Sequelize.JSON,
-			},
 			createdAt: {
 				allowNull: false,
 				type: Sequelize.DATE
@@ -32,6 +22,6 @@ module.exports = {
 		});
 	},
 	down: queryInterface => {
-		return queryInterface.dropTable('Entities');
+		return queryInterface.dropTable('CheckIns');
 	}
 };

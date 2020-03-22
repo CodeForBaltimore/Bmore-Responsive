@@ -42,7 +42,7 @@ describe('User positive tests', () => {
       .expect(200)
       .end((err, res) => {
         if (err) return done(err);
-        expect(res.body.length).to.be.greaterThan(0);
+        expect(res.body._meta.total).to.be.greaterThan(0);
         done();
       });
   });

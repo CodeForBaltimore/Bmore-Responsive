@@ -18,11 +18,18 @@ const entity = (sequelize, DataTypes) => {
         },
         email: {
             type: DataTypes.JSON,
+        },
+        checkIn: {
+            type: DataTypes.JSON,
         }
     },
     {
         schema: process.env.DATABASE_SCHEMA
     });
+
+    Entity.associate = models => {
+        Entity.hasMany(models.Contact);
+    }
 
     Entity.findById = async (id) => {
         const entity = await Entity.findOne({
@@ -39,6 +46,16 @@ const entity = (sequelize, DataTypes) => {
         
         return entity;
     };
+
+    Entity.findContacts = async (id) => {
+        const entity = await Entity.findOne({
+            where: { id }
+        });
+
+        const contacts = await entity.getContacts();
+
+        return contacts;
+    }
 
     return Entity;
 };
