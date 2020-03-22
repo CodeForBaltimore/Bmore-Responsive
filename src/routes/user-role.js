@@ -9,7 +9,6 @@ router.get('/', async (req, res) => {
 	try {
 		if (await utils.validateToken(req, res)) {
 			const roles = await req.context.models.UserRole.findAll({
-				attributes: ['id', 'role', 'description', 'createdAt', 'updatedAt']
 			});
 			return res.send(roles);
 		}
@@ -27,8 +26,7 @@ router.get('/:role', async (req, res) => {
 			const role = await req.context.models.UserRole.findOne({
 				where: {
 					role: req.params.role
-				},
-				attributes: ['id', 'role', 'description']
+				}
 			});
 			return res.send(role);
 		}
