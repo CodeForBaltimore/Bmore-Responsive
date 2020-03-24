@@ -121,6 +121,8 @@ router.post('/', async (req, res) => {
 
 // Updates any user.
 router.put('/', async (req, res) => {
+	let code;
+	let message;
 	try {
 		if (validator.isEmail(req.body.email)) {
 			if (await utils.validateToken(req, res)) {
