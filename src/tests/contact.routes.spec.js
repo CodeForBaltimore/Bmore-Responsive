@@ -46,56 +46,57 @@ describe('Contact positive tests', () => {
     });
 });
 
-// describe('Contact negative tests', () => {
-//     it('should not create a contact', (done) => {
-//       request(app)
-//         .post('/contact')
-//         .send({ email: randomWords() })
-//         .set('Accept', 'application/json')
-//         .expect('Content-Type', 'text/html; charset=utf-8')
-//         .expect(500)
-//         .end((err, res) => {
-//           if (err) return done(err);
-//           expect(res.text).to.equal('Invalid input')
-//           done();
-//         });
-//     });
-//     it('should not get a single contact', (done) => {
-//       request(app)
-//         .get(`/contact/${contact.email}`)
-//         .set('Accept', 'application/json')
-//         .expect(500)
-//         .end((err, res) => {
-//           if (err) return done(err);
-//           expect(res.body.email).to.be.an('undefined');
-//           done();
-//         });
-//     });
-//     it('should not update a contact', (done) => {
-//       contact.email = randomWords();
-//       request(app)
-//         .put('/contact')
-//         .send(contact)
-//         .set('Accept', 'application/json')
-//         .expect('Content-Type', 'text/html; charset=utf-8')
-//         .expect(500)
-//         .end((err, res) => {
-//           if (err) return done(err);
-//           expect(res.text).to.equal(`Invalid input`);
-//           done();
-//         });
-//     });
-//     it('should not delete a contact', (done) => {
-//       contact.email = randomWords();
-//       request(app)
-//         .delete(`/contact/${contact.email}`)
-//         .set('Accept', 'application/json')
-//         .expect('Content-Type', 'text/html; charset=utf-8')
-//         .expect(500)
-//         .end((err, res) => {
-//           if (err) return done(err);
-//           expect(res.text).to.equal(`Invalid input`);
-//           done();
-//         });
-//     });
-// });
+describe('Contact negative tests', () => {
+    it('should not create a contact', (done) => {
+      request(app)
+        .post('/contact')
+        .send({ email: randomWords() })
+        .set('Accept', 'application/json')
+        .expect('Content-Type', 'text/html; charset=utf-8')
+        .expect(400)
+        .end((err, res) => {
+          if (err) return done(err);
+          expect(res.text).to.equal('Invalid input')
+          done();
+        });
+    });
+    it('should not get a single contact', (done) => {
+      request(app)
+        .get(`/contact/${contact.email}`)
+        .set('Accept', 'application/json')
+        .expect(400)
+        .end((err, res) => {
+          if (err) return done(err);
+          expect(res.body.email).to.be.an('undefined');
+          done();
+        });
+    });
+    it('should not update a contact', (done) => {
+      contact.email = randomWords();
+      contact.id = randomWords();
+      request(app)
+        .put('/contact')
+        .send(contact)
+        .set('Accept', 'application/json')
+        .expect('Content-Type', 'text/html; charset=utf-8')
+        .expect(400)
+        .end((err, res) => {
+          if (err) return done(err);
+          expect(res.text).to.equal(`Invalid input`);
+          done();
+        });
+    });
+    it('should not delete a contact', (done) => {
+      contact.email = randomWords();
+      request(app)
+        .delete(`/contact/${contact.email}`)
+        .set('Accept', 'application/json')
+        .expect('Content-Type', 'text/html; charset=utf-8')
+        .expect(400)
+        .end((err, res) => {
+          if (err) return done(err);
+          expect(res.text).to.equal(`Invalid input`);
+          done();
+        });
+    });
+});

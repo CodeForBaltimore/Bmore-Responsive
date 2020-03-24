@@ -13,6 +13,9 @@ const entity = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             required: true
         },
+        address: {
+            type: DataTypes.JSON,
+        },
         phone: {
             type: DataTypes.JSON,
         },

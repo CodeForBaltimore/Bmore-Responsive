@@ -86,69 +86,70 @@ describe('User positive tests', () => {
   });
 });
 
-// describe('User negative tests', () => {
-//   it('should not login a user', (done) => {
-//     request(app)
-//       .post('/user/login')
-//       .send({ email: randomWords(), password: randomWords() })
-//       .set('Accept', 'application/json')
-//       .expect('Content-Type', 'text/html; charset=utf-8')
-//       .expect(400)
-//       .end((err, res) => {
-//         if (err) return done(err);
-//         expect(res.text).to.equal('Invalid input')
-//         done();
-//       });
-//   });
-//   it('should not create a user', (done) => {
-//     request(app)
-//       .post('/user')
-//       .send()
-//       .set('Accept', 'application/json')
-//       .expect('Content-Type', 'text/html; charset=utf-8')
-//       .expect(400)
-//       .end((err, res) => {
-//         if (err) return done(err);
-//         expect(res.text).to.equal('Invalid input')
-//         done();
-//       });
-//   });
-//   it('should not get a single user', (done) => {
-//     request(app)
-//       .get(`/user/${user.email}`)
-//       .set('Accept', 'application/json')
-//       .expect(200)
-//       .end((err, res) => {
-//         if (err) return done(err);
-//         expect(res.body.email).to.be.an('undefined');
-//         done();
-//       });
-//   });
-//   it('should not update a user', (done) => {
-//     user.password = randomWords();
-//     request(app)
-//       .put('/user')
-//       .send(user)
-//       .set('Accept', 'application/json')
-//       .expect('Content-Type', 'text/html; charset=utf-8')
-//       .expect(400)
-//       .end((err, res) => {
-//         if (err) return done(err);
-//         expect(res.text).to.equal(`Invalid input`);
-//         done();
-//       });
-//   });
-//   it('should not delete a user', (done) => {
-//     user.password = randomWords();
-//     request(app)
-//       .delete(`/user/${user.username}`)
-//       .set('Accept', 'application/json')
-//       .expect('Content-Type', 'text/html; charset=utf-8')
-//       .expect(400)
-//       .end((err, res) => {
-//         if (err) return done(err);
-//         expect(res.text).to.equal(`Invalid input`);
-//         done();
-//       });
-//   });
-// });
+describe('User negative tests', () => {
+  it('should not login a user', (done) => {
+    request(app)
+      .post('/user/login')
+      .send({ email: randomWords(), password: randomWords() })
+      .set('Accept', 'application/json')
+      .expect('Content-Type', 'text/html; charset=utf-8')
+      .expect(400)
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res.text).to.equal('Invalid input')
+        done();
+      });
+  });
+  it('should not create a user', (done) => {
+    user.email = randomWords();
+    request(app)
+      .post('/user')
+      .send(user)
+      .set('Accept', 'application/json')
+      .expect('Content-Type', 'text/html; charset=utf-8')
+      .expect(400)
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res.text).to.equal('Invalid input')
+        done();
+      });
+  });
+  it('should not get a single user', (done) => {
+    request(app)
+      .get(`/user/${user.email}`)
+      .set('Accept', 'application/json')
+      .expect(400)
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res.body.email).to.be.an('undefined');
+        done();
+      });
+  });
+  it('should not update a user', (done) => {
+    user.password = randomWords();
+    request(app)
+      .put('/user')
+      .send(user)
+      .set('Accept', 'application/json')
+      .expect('Content-Type', 'text/html; charset=utf-8')
+      .expect(400)
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res.text).to.equal(`Invalid input`);
+        done();
+      });
+  });
+  it('should not delete a user', (done) => {
+    user.password = randomWords();
+    request(app)
+      .delete(`/user/${user.username}`)
+      .set('Accept', 'application/json')
+      .expect('Content-Type', 'text/html; charset=utf-8')
+      .expect(400)
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res.text).to.equal(`Invalid input`);
+        done();
+      });
+  });
+});

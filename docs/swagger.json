@@ -531,26 +531,31 @@
         "type" : "object",
         "required" : [ "email" ],
         "properties" : {
+          "id": {
+            "type" : "string",
+            "format" : "uuid",
+            "example" : "e182ff44-7787-4fd7-82e3-4439ec47e897"
+          },
           "email" : {
             "type" : "string",
             "format" : "email",
-            "example" : "test@test.test"
+            "example" : "homer.simpson@sfpp.com"
           },
           "roles": {
             "type" : "array",
             "example" : [{
               "id" : 1,
-              "role" : "Test",
-              "description" : "This is a test."
+              "role" : "Safety Inspector",
+              "description" : "The plant Safety Inspector"
             }]
           },
           "displayNamme" : {
             "type" : "string",
-            "example" : "test"
+            "example" : "Homer Simpson"
           },
           "phone" : {
             "type" : "string",
-            "example" : "123456789"
+            "example" : "1234567890"
           },
           "createdAt" : {
             "type" : "string",
@@ -574,11 +579,48 @@
           },
           "role" : {
             "type" : "string",
-            "example" : "test"
+            "example" : "Safety Inspector"
+          },
+          "description" : {
+            "type" : "string",
+            "example" : "The plant Safety Inspector"
+          },
+          "createdAt" : {
+            "type" : "string",
+            "format" : "date-time",
+            "example" : "2020-01-21T13:45:52.348Z"
+          },
+          "updatedAt" : {
+            "type" : "string",
+            "format" : "date-time",
+            "example" : "2020-01-21T13:45:52.348Z"
+          }
+        }
+      },
+      "Entity" : {
+        "type" : "object",
+        "required" : [ "id", "role" ],
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "format" : "uuid",
+            "example" : "3ddffbeb-4370-49a1-9063-33bb88f41c14"
+          },
+          "name" : {
+            "type" : "string",
+            "example" : "Leftorium"
           },
           "description" : {
             "type" : "string",
             "example" : "This is a test"
+          },
+          "checkIn": {
+            "type" : "array",
+            "example" : [{
+              "time" : "2020-01-21T13:45:52.348Z",
+              "role" : "Safety Inspector",
+              "description" : "The plant Safety Inspector"
+            }]
           },
           "createdAt" : {
             "type" : "string",

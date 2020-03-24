@@ -66,8 +66,8 @@ router.get('/:email', async (req, res) => {
 	let code;
 	let message;
 	try {
-		if (validator.isEmail(req.params.email)) {
-			if (await utils.validateToken(req, res)) {
+		if (await utils.validateToken(req)) {
+			if (validator.isEmail(req.params.email)) {
 				const user = await req.context.models.User.findOne({
 					where: {
 						email: req.params.email
@@ -83,10 +83,10 @@ router.get('/:email', async (req, res) => {
 				code = 200;
 				message = user;
 			} else {
-				code = 401;
+				code = 400;
 			}
 		} else {
-			code = 400;
+			code = 401;
 		}
 	} catch (e) {
 		console.error(e);
@@ -114,7 +114,6 @@ router.post('/', async (req, res) => {
 		console.error(e);
 		code = 500;
 	}
-	console.log(code)
 
 	return utils.response(res, code, message);
 });
@@ -124,8 +123,8 @@ router.put('/', async (req, res) => {
 	let code;
 	let message;
 	try {
-		if (validator.isEmail(req.body.email)) {
-			if (await utils.validateToken(req, res)) {
+		if (await utils.validateToken(req)) {
+			if (validator.isEmail(req.body.email)) {
 				/** @todo add email and phone update options */
 				const { email, password } = req.body;
 				const user = await req.context.models.User.findOne({
@@ -139,10 +138,10 @@ router.put('/', async (req, res) => {
 				code = 200;
 				message = user.email + ' updated';
 			} else {
-				code = 401;
+				code = 400;
 			}
 		} else {
-			code = 400;
+			code = 401;
 		}
 	} catch (e) {
 		console.error(e);
@@ -157,8 +156,8 @@ router.delete('/:email', async (req, res) => {
 	let code;
 	let message;
 	try {
-		if (validator.isEmail(req.params.email)) {
-			if (await utils.validateToken(req, res)) {
+		if (await utils.validateToken(req)) {
+			if (validator.isEmail(req.params.email)) {
 				const user = await req.context.models.User.findOne({
 					where: {
 						email: req.params.email
@@ -169,10 +168,10 @@ router.delete('/:email', async (req, res) => {
 				code = 200;
 				message = req.params.email + ' deleted';
 			} else {
-				code = 401;
+				code = 400;
 			} 
 		} else {
-			code = 400;
+			code = 401;
 		}
 	} catch (e) {
 		console.error(e);

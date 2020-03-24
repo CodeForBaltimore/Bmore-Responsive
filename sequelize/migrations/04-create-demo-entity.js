@@ -12,6 +12,9 @@ module.exports = {
                 type: Sequelize.STRING,
                 required: true
             },
+            address: {
+                type: Sequelize.JSON,
+            },
             phone: {
                 type: Sequelize.JSON,
             },

@@ -1,5 +1,13 @@
 [
     {
-        "name": "The Leftorium"
+      "name": "The Leftorium",
+      "address": {
+        "street": [
+          "123 Anyplace St."
+        ],
+        "city": "Baltimore",
+        "state": "MD",
+        "zip": "12345"
+      }
     }
-]
+  ]
