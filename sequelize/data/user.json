@@ -3,5 +3,10 @@
         "email": "homer.simpson@sfpp.com",
         "password": "donuts",
         "roles": [1]
+    },
+    {
+        "email": "test@test.test",
+        "password": "test",
+        "roles": [1]
     }
 ]
