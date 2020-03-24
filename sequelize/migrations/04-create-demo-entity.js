@@ -21,6 +21,9 @@ module.exports = {
             email: {
                 type: Sequelize.JSON,
 			},
+			description: {
+				type: Sequelize.STRING
+			},
 			checkIn: {
 				type: Sequelize.JSON,
 			},

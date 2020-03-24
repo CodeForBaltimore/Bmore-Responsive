@@ -24,6 +24,9 @@ const entity = (sequelize, DataTypes) => {
         },
         checkIn: {
             type: DataTypes.JSON,
+        },
+        description: {
+            type: DataTypes.STRING
         }
     },
     {

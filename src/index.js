@@ -6,7 +6,7 @@ import requestId from 'express-request-id';
 import morgan from 'morgan';
 import swaggerUi from 'swagger-ui-express';
 
-import swaggerDocument from '../docs/swagger.json';
+import swaggerDocument from '../docs/swagger/swagger.json';
 import models, {sequelize} from './models';
 import routes from './routes';
 import utils from './utils';
