@@ -1,9 +1,9 @@
 [
     {
-      "name": "Test 1",
+      "name": "Ned Flanders",
       "email": [
         {
-          "address": "test@test.test",
+          "address": "ned@leftorium.com",
           "isPrimary": true
         }
       ],
@@ -11,42 +11,6 @@
         {
           "number": "1234567890",
           "isPrimary": true
-        }
-      ]
-    },
-    {
-      "name": "Test 2",
-      "email": [
-        {
-          "address": "test2@test.test",
-          "isPrimary": true
-        },
-        {
-          "address": "anotherTest@test.test"
-        }
-      ],
-      "phone": [
-        {
-          "number": "0987654321",
-          "isPrimary": true
-        }
-      ]
-    },
-    {
-      "name": "Test 3",
-      "email": [
-        {
-          "address": "test3@test.test",
-          "isPrimary": true
-        }
-      ],
-      "phone": [
-        {
-          "number": "6549873210",
-          "isPrimary": true
-        },
-        {
-          "number": "9871236549"
         }
       ]
     }

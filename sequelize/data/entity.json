@@ -1,17 +1,5 @@
 [
     {
-        "name": "Test 1",
-        "email": [
-            {
-                "address": "test@test.test",
-                "isPrimary": true
-            }
-        ],
-        "phone": [
-            {
-                "number": "1234567890",
-                "isPrimary": true
-            }
-        ]
+        "name": "The Leftorium"
     }
 ]

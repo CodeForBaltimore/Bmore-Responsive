@@ -28,8 +28,7 @@ const user = (sequelize, DataTypes) => {
 			type: DataTypes.STRING
 		},
 		roles: {
-			type: DataTypes.JSON,
-			allowNull: false
+			type: DataTypes.JSON
 		},
 		displayName: {
 			type: DataTypes.STRING
@@ -71,21 +70,24 @@ const user = (sequelize, DataTypes) => {
 	 * @return {Boolean}
 	 */
 	User.validateToken = async token => {
-		const expiry = jwt.decode(token);
+		/** @todo check if it is a token at all */
+		if (!token) return false;
+
+		const decoded = jwt.decode(token);
 		const now = new Date();
 
-		if (now.getTime() < expiry * 1000) {
+		if (now.getTime() < decoded.exp * 1000) {
 			const user = await User.findOne({
 				where: {token}
 			});
 			if (user) {
 				try {
-					return jwt.verify(user.token, process.env.JWT_KEY, {email: user.email});
+					return await jwt.verify(user.token, process.env.JWT_KEY, {email: user.email});
 				} catch {
 					return false;
 				}
 			}
-		}
+		} 
 
 		return false;
 	};

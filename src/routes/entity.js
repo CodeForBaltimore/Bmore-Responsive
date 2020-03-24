@@ -6,27 +6,50 @@ const router = new Router();
 
 // Gets all entities.
 router.get('/', async (req, res) => {
+	let code;
+	let message;
 	try {
 		if (await utils.validateToken(req, res)) {
 			const entities = await req.context.models.Entity.findAll({
 			});
 
-			return res.send({
+			for (let entity of entities) {
+				entity.dataValues.contacts = []
+
+				const contacts = await req.context.models.Entity.findContacts(entity.id);
+
+				if (contacts) {
+					for (let contact of contacts) {
+						entity.dataValues.contacts.push({
+							id: contact.dataValues.id,
+							name: contact.dataValues.name,
+						});
+					}
+				}
+			}
+
+			code = 200;
+			message = {
 				_meta: {
 					total: entities.length
 				},
 				results: entities
-			});
+			};
+		} else {
+			code = 401;
 		}
-
-		throw new Error('Invalid input');
-	} catch {
-		res.status(400).send('Invalid input');
+	} catch (e) {
+		console.error(e);
+		code = 500;
 	}
+
+	return utils.response(res, code, message);
 });
 
 // Gets a specific entity.
 router.get('/:entity_id', async (req, res) => {
+	let code;
+	let message;
 	try {
 		if (await utils.validateToken(req, res)) {
 			const entity = await req.context.models.Entity.findOne({
@@ -34,31 +57,36 @@ router.get('/:entity_id', async (req, res) => {
 					id: req.params.entity_id
 				}
 			});
-			entity.dataValues.contacts = []
+			entity.dataValues.contacts = [];
 
 			const contacts = await req.context.models.Entity.findContacts(req.params.entity_id);
 
-			for (let contact of contacts) {
-				entity.dataValues.contacts.push({
-					id: contact.dataValues.id,
-					name: contact.dataValues.name,
-				});
+			if (contacts) {
+				for (let contact of contacts) {
+					entity.dataValues.contacts.push({
+						id: contact.dataValues.id,
+						name: contact.dataValues.name,
+					});
+				}
 			}
 
-			console.log(entity)
-
-			return res.send(entity);
+			code = 200;
+			message = entity;
+		} else {
+			code = 401;
 		}
-
-		throw new Error('Invalid input');
 	} catch (e) {
 		console.error(e);
-		res.status(400).send('Invalid payload');
+		code = 500;
 	}
+
+	return utils.response(res, code, message);
 });
 
 // Creates a new entity.
 router.post('/', async (req, res) => {
+	let code;
+	let message;
 	try {
 		if (await utils.validateToken(req, res)) {
 			if (req.body.name !== undefined) {
@@ -74,26 +102,32 @@ router.post('/', async (req, res) => {
 				}
 
 				const entity = await req.context.models.Entity.create({ name, email, phone, checkIn });
-				return res.send(entity.id + ' created');
-			}
-		}
 
-		throw new Error('Invalid input');
+				code = 200;
+				message = entity.id + ' created';
+			}
+		} else {
+			code = 401;
+		}
 	} catch (e) {
 		console.error(e);
-		return res.status(400).send('Invalid input');
+		code = 500;
 	}
+
+	return utils.response(res, code, message);
 });
 
 // Updates any entity.
 router.put('/', async (req, res) => {
+	let code;
+	let message;
 	try {
 		if (await utils.validateToken(req, res)) {
 			let { id, name, phone, email, checkIn } = req.body;
 
 			/** @todo validate emails */
 			// Validating emails 
-			// if (await !utils.validateEmails(email)) res.status(400).send('Invalid input');
+			// if (await !utils.validateEmails(email)) res.status(500).send('Server error');
 
 			let entity = await req.context.models.Entity.findOne({
 				where: {
@@ -134,18 +168,24 @@ router.put('/', async (req, res) => {
 			entity.updatedAt = new Date();
 
 			await entity.save();
-			return res.send(entity.id + ' updated');
-		}
 
-		throw new Error('Invalid input');
+			code = 200;
+			message = entity.id + ' updated';
+		} else {
+			code = 401;
+		}
 	} catch (e) {
 		console.error(e);
-		res.status(400).send('Invalid input');
+		code = 500;
 	}
+
+	return utils.response(res, code, message);
 });
 
 // Deletes a entity.
 router.delete('/:entity_id', async (req, res) => {
+	let code;
+	let message;
 	try {
 		if (await utils.validateToken(req, res)) {
 			const entity = await req.context.models.Entity.findOne({
@@ -154,13 +194,18 @@ router.delete('/:entity_id', async (req, res) => {
 				}
 			});
 			await entity.destroy();
-			return res.send(req.params.entity_id + ' deleted');
+
+			code = 200;
+			message = req.params.entity_id + ' deleted';
+		} else {
+			code = 401;
 		}
-		throw new Error('Invalid input');
 	} catch (e) {
 		console.error(e);
-		res.status(400).send('Invalid input');
+		code = 500;
 	}
+
+	return utils.response(res, code, message);
 });
 
 export default router;
