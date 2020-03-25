@@ -47,7 +47,7 @@ router.get('/:contact_id', async (req, res) => {
 				code = 200;
 				message = contact;
 			} else {
-				code = 400;
+				code = 422;
 			}
 		} else {
 			code = 401;
@@ -67,14 +67,13 @@ router.post('/', async (req, res) => {
 	try {
 		if (await utils.validateToken(req)) {
 			if (req.body.name !== undefined) {
-				console.log('test')
 				const { name, phone, email, UserId, EntityId } = req.body;
 				const contact = await req.context.models.Contact.create({ name, email, phone, UserId, EntityId });
 
 				code = 200;
 				message = contact.id + ' created';
 			} else {
-				code = 400;
+				code = 422;
 			}
 		} else {
 			code = 401;
@@ -106,6 +105,8 @@ router.put('/', async (req, res) => {
 					}
 				});
 
+				if (!contact) return utils.response(res, 400, message);
+
 				contact.name = (name) ? name : contact.name;
 				contact.phone = (phone) ? phone : contact.phone;
 				contact.email = (email) ? email : contact.email;
@@ -118,7 +119,7 @@ router.put('/', async (req, res) => {
 				code = 200;
 				message = contact.id + ' updated';
 			} else {
-				code = 400;
+				code = 422;
 			}
 		} else {
 			code = 401;
@@ -148,7 +149,7 @@ router.delete('/:contact_id', async (req, res) => {
 				code = 200;
 				message = req.params.contact_id + ' deleted';
 			} else {
-				code = 400;
+				code = 422;
 			}
 		} else {
 			code = 401;
