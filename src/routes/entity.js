@@ -21,8 +21,7 @@ router.get('/', async (req, res) => {
 				if (contacts) {
 					for (let contact of contacts) {
 						entity.dataValues.contacts.push({
-							id: contact.dataValues.id,
-							name: contact.dataValues.name,
+							contact
 						});
 					}
 				}
@@ -65,8 +64,7 @@ router.get('/:entity_id', async (req, res) => {
 				if (contacts) {
 					for (let contact of contacts) {
 						entity.dataValues.contacts.push({
-							id: contact.dataValues.id,
-							name: contact.dataValues.name,
+							contact
 						});
 					}
 				}
