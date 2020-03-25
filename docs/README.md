@@ -56,7 +56,7 @@ This product makes use of [PostgreSQL](https://www.postgresql.org/) for the data
 
 ### Application Architecture
 The overall application will have several components in support of the code. These will facilitate secure communication between any front end, our API, and the data layer. Additionally our architecture will be designed to be scalable for instances of heavy load. 
-![Application Architecture](/docs/img/architecture-diagram)
+![Application Architecture](/docs/img/architecture-diagram.png)
 
 ## Roadmap
 We estimate the API will be at v1.0.0 by the end of March.
