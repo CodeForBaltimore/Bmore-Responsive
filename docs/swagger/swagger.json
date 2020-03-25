@@ -1,0 +1,1686 @@
+{
+  "openapi" : "3.0.0",
+  "servers" : [ {
+    "description" : "Localhost",
+    "url" : "http://localhost:3000"
+  } ],
+  "info" : {
+    "description" : "An emergency response and contact management API.",
+    "version" : "1.0.0",
+    "title" : "Bmore Responsive",
+    "contact" : {
+      "email" : "hello@codeforbaltimore.org"
+    },
+    "license" : {
+      "name" : "Apache 2.0",
+      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "tags" : [ {
+    "name" : "developer",
+    "description" : "Operations available to regular developers"
+  }, {
+    "name" : "user",
+    "description" : "Operations related to system users"
+  }, {
+    "name" : "userRole",
+    "description" : "Operations related to user roles"
+  }, {
+    "name" : "entity",
+    "description" : "Operations related to entities"
+  }, {
+    "name" : "contact",
+    "description" : "Operations related to contacts"
+  } ],
+  "paths" : {
+    "/health" : {
+      "get" : {
+        "tags" : [ "developer" ],
+        "summary" : "returns a healthcheck",
+        "description" : "This returns simple system information\n",
+        "responses" : {
+          "200" : {
+            "description" : "the system healthcheck",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/HealthcheckItem"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Server error"
+          }
+        }
+      }
+    },
+    "/user/login" : {
+      "post" : {
+        "tags" : [ "user" ],
+        "summary" : "logs in a system user",
+        "description" : "The system login endpoint.",
+        "requestBody" : {
+          "description" : "The body of the payload",
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "email", "password" ],
+                "properties" : {
+                  "email" : {
+                    "type" : "string",
+                    "format" : "email",
+                    "example" : "test@test.test"
+                  },
+                  "password" : {
+                    "type" : "string",
+                    "example" : "test"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "login token"
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "500" : {
+            "description" : "Server error"
+          }
+        }
+      }
+    },
+    "/user" : {
+      "post" : {
+        "tags" : [ "user" ],
+        "summary" : "creates a new user",
+        "description" : "The new user endpoint.",
+        "requestBody" : {
+          "description" : "The body of the payload",
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "email", "password" ],
+                "properties" : {
+                  "email" : {
+                    "type" : "string",
+                    "format" : "email",
+                    "example" : "homer.simpson@sfpp.com"
+                  },
+                  "password" : {
+                    "type" : "string",
+                    "format" : "password",
+                    "example" : "donuts"
+                  },
+                  "roles" : {
+                    "type" : "array",
+                    "items" : {
+                      "type" : "number",
+                      "example" : 42
+                    }
+                  },
+                  "displayName" : {
+                    "type" : "string",
+                    "example" : "Homer Simpson"
+                  },
+                  "phone" : {
+                    "type" : "string",
+                    "example" : "1234567890"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "user created"
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "500" : {
+            "description" : "Server error"
+          }
+        }
+      },
+      "get" : {
+        "tags" : [ "user" ],
+        "summary" : "returns all system users",
+        "description" : "By passing in the appropriate options, you can search for\navailable users in the system\n",
+        "parameters" : [ {
+          "in" : "header",
+          "name" : "token",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "search results matching criteria",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "_meta" : {
+                      "type" : "object",
+                      "properties" : {
+                        "total" : {
+                          "type" : "number",
+                          "example" : 1
+                        }
+                      }
+                    },
+                    "results" : {
+                      "type" : "array",
+                      "items" : {
+                        "$ref" : "#/components/schemas/UserItem"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "500" : {
+            "description" : "Server error"
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "user" ],
+        "summary" : "updates any single system user",
+        "description" : "By sending a valid payload you can update a user.",
+        "parameters" : [ {
+          "in" : "header",
+          "name" : "token",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "The body of the payload",
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "email", "password" ],
+                "properties" : {
+                  "email" : {
+                    "type" : "string",
+                    "format" : "email",
+                    "example" : "homer.simpson@sfpp.com"
+                  },
+                  "password" : {
+                    "type" : "string",
+                    "format" : "password",
+                    "example" : "donuts"
+                  },
+                  "roles" : {
+                    "type" : "array",
+                    "items" : {
+                      "type" : "number",
+                      "example" : 42
+                    }
+                  },
+                  "displayName" : {
+                    "type" : "string",
+                    "example" : "Homer Simpson"
+                  },
+                  "phone" : {
+                    "type" : "string",
+                    "example" : "1234567890"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "user updated"
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "500" : {
+            "description" : "Server error"
+          }
+        }
+      }
+    },
+    "/user/{email}" : {
+      "get" : {
+        "tags" : [ "user" ],
+        "summary" : "returns a single system user",
+        "description" : "By passing the username, you can lookup a user.",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "email",
+          "schema" : {
+            "type" : "string",
+            "format" : "email"
+          },
+          "required" : true,
+          "description" : "email of the user"
+        }, {
+          "in" : "header",
+          "name" : "token",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "the user object",
+            "content" : {
+              "session/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/UserItem"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "500" : {
+            "description" : "Server error"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "user" ],
+        "summary" : "deletes a single system user",
+        "description" : "By sending a valid payload you can delete a user.",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "email",
+          "schema" : {
+            "type" : "string",
+            "format" : "email"
+          },
+          "required" : true,
+          "description" : "the email of the user to delete."
+        }, {
+          "in" : "header",
+          "name" : "token",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "user deleted"
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "500" : {
+            "description" : "Server error"
+          }
+        }
+      }
+    },
+    "/userRole" : {
+      "post" : {
+        "tags" : [ "userRole" ],
+        "summary" : "creates a new user role",
+        "description" : "The new user role endpoint.",
+        "requestBody" : {
+          "description" : "The body of the payload",
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "role" ],
+                "properties" : {
+                  "role" : {
+                    "type" : "string",
+                    "example" : "test"
+                  },
+                  "description" : {
+                    "type" : "string",
+                    "example" : "This is a test"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "user role created"
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "500" : {
+            "description" : "Server error"
+          }
+        }
+      },
+      "get" : {
+        "tags" : [ "userRole" ],
+        "summary" : "returns all system user roles",
+        "description" : "By passing in the appropriate options, you can search for\navailable user roles in the system\n",
+        "parameters" : [ {
+          "in" : "header",
+          "name" : "token",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "search results matching criteria",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/UserRoleItem"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "500" : {
+            "description" : "Server error"
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "userRole" ],
+        "summary" : "updates any single system user role",
+        "description" : "By sending a valid payload you can update a user role.",
+        "parameters" : [ {
+          "in" : "header",
+          "name" : "token",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "The body of the payload.",
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "id", "role" ],
+                "properties" : {
+                  "id" : {
+                    "type" : "number",
+                    "example" : 42
+                  },
+                  "email" : {
+                    "type" : "string",
+                    "example" : "test"
+                  },
+                  "description" : {
+                    "type" : "string",
+                    "example" : "This is a test"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "user role updated"
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "500" : {
+            "description" : "Server error"
+          }
+        }
+      }
+    },
+    "/userRole/{role}" : {
+      "get" : {
+        "tags" : [ "userRole" ],
+        "summary" : "returns a single system user",
+        "description" : "By passing the username, you can lookup a user.",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "role",
+          "schema" : {
+            "type" : "string"
+          },
+          "required" : true,
+          "description" : "the role to get"
+        }, {
+          "in" : "header",
+          "name" : "token",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "the user object",
+            "content" : {
+              "session/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/UserRoleItem"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "500" : {
+            "description" : "Server error"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "userRole" ],
+        "summary" : "deletes a single system user role",
+        "description" : "By sending a valid payload you can delete a user role.",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "role",
+          "schema" : {
+            "type" : "string"
+          },
+          "required" : true,
+          "description" : "the user role to delete."
+        }, {
+          "in" : "header",
+          "name" : "token",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "user deleted"
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "500" : {
+            "description" : "Server error"
+          }
+        }
+      }
+    },
+    "/entity" : {
+      "post" : {
+        "tags" : [ "entity" ],
+        "summary" : "creates a new entity",
+        "description" : "The new entity endpoint.",
+        "requestBody" : {
+          "description" : "The body of the payload",
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "name" ],
+                "properties" : {
+                  "name" : {
+                    "type" : "string",
+                    "example" : "The Leftorium"
+                  },
+                  "address" : {
+                    "type" : "object",
+                    "properties" : {
+                      "street" : {
+                        "type" : "array",
+                        "items" : {
+                          "type" : "string",
+                          "example" : "123 Anyplace St."
+                        }
+                      },
+                      "city" : {
+                        "type" : "string",
+                        "example" : "Baltimore"
+                      },
+                      "state" : {
+                        "type" : "string",
+                        "example" : "MD"
+                      },
+                      "zip" : {
+                        "type" : "string",
+                        "example" : "12345"
+                      }
+                    }
+                  },
+                  "phone" : {
+                    "type" : "array",
+                    "items" : {
+                      "type" : "object",
+                      "properties" : {
+                        "address" : {
+                          "type" : "string",
+                          "example" : "0987654321"
+                        },
+                        "isPrimary" : {
+                          "type" : "boolean",
+                          "example" : true
+                        }
+                      }
+                    }
+                  },
+                  "email" : {
+                    "type" : "array",
+                    "items" : {
+                      "type" : "object",
+                      "properties" : {
+                        "address" : {
+                          "type" : "string",
+                          "format" : "email",
+                          "example" : "hello@leftorium.com"
+                        },
+                        "isPrimary" : {
+                          "type" : "boolean",
+                          "example" : true
+                        }
+                      }
+                    }
+                  },
+                  "checkIn" : {
+                    "type" : "array",
+                    "items" : {
+                      "type" : "object",
+                      "properties" : {
+                        "updatedAt" : {
+                          "type" : "string",
+                          "format" : "date-time",
+                          "example" : "2020-01-21T13:45:52.348Z"
+                        },
+                        "status" : {
+                          "type" : "string",
+                          "example" : "Safe"
+                        },
+                        "UserId" : {
+                          "type" : "string",
+                          "format" : "uuid",
+                          "example" : "4d9721a2-07f8-45ac-9570-682f4774cfa5"
+                        },
+                        "ContactId" : {
+                          "type" : "string",
+                          "format" : "uuid",
+                          "example" : "abafa852-ecd0-4d57-9083-85f4dfd9c402"
+                        },
+                        "questionnaire" : {
+                          "type" : "object",
+                          "properties" : {
+                            "id" : {
+                              "type" : "number",
+                              "example" : 1
+                            },
+                            "question1" : {
+                              "type" : "string",
+                              "example" : "They have left handed can openers"
+                            },
+                            "question2" : {
+                              "type" : "boolean",
+                              "example" : false
+                            }
+                          }
+                        },
+                        "notes" : {
+                          "type" : "string",
+                          "example" : "Everything is okilly dokilly"
+                        }
+                      }
+                    }
+                  },
+                  "description" : {
+                    "type" : "string",
+                    "example" : "Everything for the left handed man, woman, and child!"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "entity created"
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "500" : {
+            "description" : "Server error"
+          }
+        }
+      },
+      "get" : {
+        "tags" : [ "entity" ],
+        "summary" : "returns all system entities",
+        "description" : "By passing in the appropriate options, you can search for\navailable entities in the system\n",
+        "parameters" : [ {
+          "in" : "header",
+          "name" : "token",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "search results matching criteria",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "_meta" : {
+                      "type" : "object",
+                      "properties" : {
+                        "total" : {
+                          "type" : "number",
+                          "example" : 1
+                        }
+                      }
+                    },
+                    "results" : {
+                      "type" : "array",
+                      "items" : {
+                        "$ref" : "#/components/schemas/EntityItem"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "500" : {
+            "description" : "Server error"
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "entity" ],
+        "summary" : "updates any single system entity",
+        "description" : "By sending a valid payload you can update an entity.",
+        "parameters" : [ {
+          "in" : "header",
+          "name" : "token",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "The body of the payload",
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "id" ],
+                "properties" : {
+                  "id" : {
+                    "type" : "string",
+                    "format" : "uuid",
+                    "example" : "05533f95-b440-4f9d-876d-653636dce0c8"
+                  },
+                  "name" : {
+                    "type" : "string",
+                    "example" : "The Leftorium"
+                  },
+                  "address" : {
+                    "type" : "object",
+                    "properties" : {
+                      "street" : {
+                        "type" : "array",
+                        "items" : {
+                          "type" : "string",
+                          "example" : "123 Anyplace St."
+                        }
+                      },
+                      "city" : {
+                        "type" : "string",
+                        "example" : "Baltimore"
+                      },
+                      "state" : {
+                        "type" : "string",
+                        "example" : "MD"
+                      },
+                      "zip" : {
+                        "type" : "string",
+                        "example" : "12345"
+                      }
+                    }
+                  },
+                  "phone" : {
+                    "type" : "array",
+                    "items" : {
+                      "type" : "object",
+                      "properties" : {
+                        "address" : {
+                          "type" : "string",
+                          "example" : "0987654321"
+                        },
+                        "isPrimary" : {
+                          "type" : "boolean",
+                          "example" : true
+                        }
+                      }
+                    }
+                  },
+                  "email" : {
+                    "type" : "array",
+                    "items" : {
+                      "type" : "object",
+                      "properties" : {
+                        "address" : {
+                          "type" : "string",
+                          "format" : "email",
+                          "example" : "hello@leftorium.com"
+                        },
+                        "isPrimary" : {
+                          "type" : "boolean",
+                          "example" : true
+                        }
+                      }
+                    }
+                  },
+                  "checkIn" : {
+                    "type" : "array",
+                    "items" : {
+                      "type" : "object",
+                      "properties" : {
+                        "updatedAt" : {
+                          "type" : "string",
+                          "format" : "date-time",
+                          "example" : "2020-01-21T13:45:52.348Z"
+                        },
+                        "status" : {
+                          "type" : "string",
+                          "example" : "Safe"
+                        },
+                        "UserId" : {
+                          "type" : "string",
+                          "format" : "uuid",
+                          "example" : "4d9721a2-07f8-45ac-9570-682f4774cfa5"
+                        },
+                        "ContactId" : {
+                          "type" : "string",
+                          "format" : "uuid",
+                          "example" : "4d9721a2-07f8-45ac-9570-682f4774cfa5"
+                        },
+                        "questionnaire" : {
+                          "type" : "object",
+                          "properties" : {
+                            "id" : {
+                              "type" : "number",
+                              "example" : 1
+                            },
+                            "question1" : {
+                              "type" : "string",
+                              "example" : "They have left handed can openers"
+                            },
+                            "question2" : {
+                              "type" : "boolean",
+                              "example" : false
+                            }
+                          }
+                        },
+                        "notes" : {
+                          "type" : "string",
+                          "example" : "Everything is okilly dokilly"
+                        }
+                      }
+                    }
+                  },
+                  "description" : {
+                    "type" : "string",
+                    "example" : "Everything for the left handed man, woman, and child!"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "entity updated"
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "500" : {
+            "description" : "Server error"
+          }
+        }
+      }
+    },
+    "/entity/{entity_id}" : {
+      "get" : {
+        "tags" : [ "entity" ],
+        "summary" : "returns a single system entity",
+        "description" : "By passing the entity id, you can lookup an entity.",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "entity_id",
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          },
+          "required" : true,
+          "description" : "id of the entity"
+        }, {
+          "in" : "header",
+          "name" : "token",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "the entity object",
+            "content" : {
+              "session/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/EntityItem"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "500" : {
+            "description" : "Server error"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "entity" ],
+        "summary" : "deletes a single system entity",
+        "description" : "By sending a valid payload you can delete a user.",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "entity_id",
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          },
+          "required" : true,
+          "description" : "the id of the entity to delete."
+        }, {
+          "in" : "header",
+          "name" : "token",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "entity_id deleted"
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "500" : {
+            "description" : "Server error"
+          }
+        }
+      }
+    },
+    "/contact" : {
+      "post" : {
+        "tags" : [ "contact" ],
+        "summary" : "creates a new contact",
+        "description" : "The new contact endpoint.",
+        "requestBody" : {
+          "description" : "The body of the payload",
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "name" ],
+                "properties" : {
+                  "name" : {
+                    "type" : "string",
+                    "example" : "The Leftorium"
+                  },
+                  "address" : {
+                    "type" : "object",
+                    "properties" : {
+                      "street" : {
+                        "type" : "array",
+                        "items" : {
+                          "type" : "string",
+                          "example" : "123 Anyplace St."
+                        }
+                      },
+                      "city" : {
+                        "type" : "string",
+                        "example" : "Baltimore"
+                      },
+                      "state" : {
+                        "type" : "string",
+                        "example" : "MD"
+                      },
+                      "zip" : {
+                        "type" : "string",
+                        "example" : "12345"
+                      }
+                    }
+                  },
+                  "phone" : {
+                    "type" : "array",
+                    "items" : {
+                      "type" : "object",
+                      "properties" : {
+                        "address" : {
+                          "type" : "string",
+                          "example" : "0987654321"
+                        },
+                        "isPrimary" : {
+                          "type" : "boolean",
+                          "example" : true
+                        }
+                      }
+                    }
+                  },
+                  "email" : {
+                    "type" : "array",
+                    "items" : {
+                      "type" : "object",
+                      "properties" : {
+                        "address" : {
+                          "type" : "string",
+                          "format" : "email",
+                          "example" : "hello@leftorium.com"
+                        },
+                        "isPrimary" : {
+                          "type" : "boolean",
+                          "example" : true
+                        }
+                      }
+                    }
+                  },
+                  "UserID" : {
+                    "type" : "string",
+                    "format" : "uuid",
+                    "example" : "abafa852-ecd0-4d57-9083-85f4dfd9c402"
+                  },
+                  "EntityId" : {
+                    "type" : "string",
+                    "format" : "uuid",
+                    "example" : "c2fb852c-17fd-4e2b-9ea4-78128af9a5e9"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "contact created"
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "500" : {
+            "description" : "Server error"
+          }
+        }
+      },
+      "get" : {
+        "tags" : [ "contact" ],
+        "summary" : "returns all system contacts",
+        "description" : "By passing in the appropriate options, you can search for\navailable contacts in the system\n",
+        "parameters" : [ {
+          "in" : "header",
+          "name" : "token",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "search results matching criteria",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "_meta" : {
+                      "type" : "object",
+                      "properties" : {
+                        "total" : {
+                          "type" : "number",
+                          "example" : 1
+                        }
+                      }
+                    },
+                    "results" : {
+                      "type" : "array",
+                      "items" : {
+                        "$ref" : "#/components/schemas/ContactItem"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "500" : {
+            "description" : "Server error"
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "contact" ],
+        "summary" : "updates any single system contact",
+        "description" : "By sending a valid payload you can update an contact.",
+        "parameters" : [ {
+          "in" : "header",
+          "name" : "token",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "The body of the payload",
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "id" ],
+                "properties" : {
+                  "id" : {
+                    "type" : "string",
+                    "format" : "uuid",
+                    "example" : "05533f95-b440-4f9d-876d-653636dce0c8"
+                  },
+                  "name" : {
+                    "type" : "string",
+                    "example" : "The Leftorium"
+                  },
+                  "address" : {
+                    "type" : "object",
+                    "properties" : {
+                      "street" : {
+                        "type" : "array",
+                        "items" : {
+                          "type" : "string",
+                          "example" : "123 Anyplace St."
+                        }
+                      },
+                      "city" : {
+                        "type" : "string",
+                        "example" : "Baltimore"
+                      },
+                      "state" : {
+                        "type" : "string",
+                        "example" : "MD"
+                      },
+                      "zip" : {
+                        "type" : "string",
+                        "example" : "12345"
+                      }
+                    }
+                  },
+                  "phone" : {
+                    "type" : "array",
+                    "items" : {
+                      "type" : "object",
+                      "properties" : {
+                        "address" : {
+                          "type" : "string",
+                          "example" : "0987654321"
+                        },
+                        "isPrimary" : {
+                          "type" : "boolean",
+                          "example" : true
+                        }
+                      }
+                    }
+                  },
+                  "email" : {
+                    "type" : "array",
+                    "items" : {
+                      "type" : "object",
+                      "properties" : {
+                        "address" : {
+                          "type" : "string",
+                          "format" : "email",
+                          "example" : "hello@leftorium.com"
+                        },
+                        "isPrimary" : {
+                          "type" : "boolean",
+                          "example" : true
+                        }
+                      }
+                    }
+                  },
+                  "UserID" : {
+                    "type" : "string",
+                    "format" : "uuid",
+                    "example" : "abafa852-ecd0-4d57-9083-85f4dfd9c402"
+                  },
+                  "EntityId" : {
+                    "type" : "string",
+                    "format" : "uuid",
+                    "example" : "c2fb852c-17fd-4e2b-9ea4-78128af9a5e9"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "contact updated"
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "500" : {
+            "description" : "Server error"
+          }
+        }
+      }
+    },
+    "/contact/{contact_id}" : {
+      "get" : {
+        "tags" : [ "contact" ],
+        "summary" : "returns a single system contact",
+        "description" : "By passing the contact id, you can lookup an contact.",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "contact_id",
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          },
+          "required" : true,
+          "description" : "id of the contact"
+        }, {
+          "in" : "header",
+          "name" : "token",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "the contact object",
+            "content" : {
+              "session/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ContactItem"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "500" : {
+            "description" : "Server error"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "contact" ],
+        "summary" : "deletes a single system contact",
+        "description" : "By sending a valid payload you can delete a user.",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "contact_id",
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          },
+          "required" : true,
+          "description" : "the id of the contact to delete."
+        }, {
+          "in" : "header",
+          "name" : "token",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "contact_id deleted"
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "500" : {
+            "description" : "Server error"
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "HealthcheckItem" : {
+        "type" : "object",
+        "required" : [ "uptime", "environment", "version", "requestId" ],
+        "properties" : {
+          "uptime" : {
+            "type" : "string",
+            "example" : "42:42:42"
+          },
+          "environment" : {
+            "type" : "string",
+            "example" : "dev"
+          },
+          "version" : {
+            "type" : "string",
+            "example" : "0.0.1"
+          },
+          "requestId" : {
+            "type" : "string",
+            "format" : "uuid",
+            "example" : "602e1bd9-3eb1-4a26-a0d1-6bf08e8c0a66"
+          }
+        }
+      },
+      "UserItem" : {
+        "type" : "object",
+        "required" : [ "email" ],
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "format" : "uuid",
+            "example" : "4d9721a2-07f8-45ac-9570-682f4774cfa5"
+          },
+          "email" : {
+            "type" : "string",
+            "format" : "email",
+            "example" : "homer.simpson@sfpp.com"
+          },
+          "roles" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/UserRoleItem"
+            }
+          },
+          "displayNamme" : {
+            "type" : "string",
+            "example" : "Homer Simpson"
+          },
+          "phone" : {
+            "type" : "string",
+            "example" : "1234567890"
+          },
+          "createdAt" : {
+            "type" : "string",
+            "format" : "date-time",
+            "example" : "2020-01-21T13:45:52.348Z"
+          },
+          "updatedAt" : {
+            "type" : "string",
+            "format" : "date-time",
+            "example" : "2020-01-21T13:45:52.348Z"
+          }
+        }
+      },
+      "UserRoleItem" : {
+        "type" : "object",
+        "required" : [ "id", "role" ],
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "example" : 42
+          },
+          "role" : {
+            "type" : "string",
+            "example" : "Safety Inspector"
+          },
+          "description" : {
+            "type" : "string",
+            "example" : "The plant Safety Inspector"
+          },
+          "createdAt" : {
+            "type" : "string",
+            "format" : "date-time",
+            "example" : "2020-01-21T13:45:52.348Z"
+          },
+          "updatedAt" : {
+            "type" : "string",
+            "format" : "date-time",
+            "example" : "2020-01-21T13:45:52.348Z"
+          }
+        }
+      },
+      "EntityItem" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "format" : "uuid",
+            "example" : "c2fb852c-17fd-4e2b-9ea4-78128af9a5e9"
+          },
+          "name" : {
+            "type" : "string",
+            "example" : "The Leftorium"
+          },
+          "address" : {
+            "type" : "object",
+            "properties" : {
+              "address" : {
+                "type" : "array",
+                "items" : {
+                  "type" : "string",
+                  "example" : "123 Anyplace St."
+                }
+              },
+              "city" : {
+                "type" : "string",
+                "example" : "Baltimore"
+              },
+              "state" : {
+                "type" : "string",
+                "example" : "MD"
+              },
+              "zip" : {
+                "type" : "string",
+                "example" : "12345"
+              }
+            }
+          },
+          "phone" : {
+            "type" : "array",
+            "items" : {
+              "type" : "object",
+              "properties" : {
+                "address" : {
+                  "type" : "string",
+                  "example" : "0987654321"
+                },
+                "isPrimary" : {
+                  "type" : "boolean",
+                  "example" : true
+                }
+              }
+            }
+          },
+          "email" : {
+            "type" : "array",
+            "items" : {
+              "type" : "object",
+              "properties" : {
+                "address" : {
+                  "type" : "string",
+                  "format" : "email",
+                  "example" : "hello@leftorium.com"
+                },
+                "isPrimary" : {
+                  "type" : "boolean",
+                  "example" : true
+                }
+              }
+            }
+          },
+          "checkIn" : {
+            "type" : "array",
+            "items" : {
+              "type" : "object",
+              "properties" : {
+                "updatedAt" : {
+                  "type" : "string",
+                  "format" : "date-time",
+                  "example" : "2020-01-21T13:45:52.348Z"
+                },
+                "status" : {
+                  "type" : "string",
+                  "example" : "Safe"
+                },
+                "UserId" : {
+                  "type" : "string",
+                  "format" : "uuid",
+                  "example" : "4d9721a2-07f8-45ac-9570-682f4774cfa5"
+                },
+                "ContactId" : {
+                  "type" : "string",
+                  "format" : "uuid",
+                  "example" : "4d9721a2-07f8-45ac-9570-682f4774cfa5"
+                },
+                "questionnaire" : {
+                  "type" : "object",
+                  "properties" : {
+                    "id" : {
+                      "type" : "number",
+                      "example" : 1
+                    },
+                    "question1" : {
+                      "type" : "string",
+                      "example" : "They have left handed can openers"
+                    },
+                    "question2" : {
+                      "type" : "boolean",
+                      "example" : false
+                    }
+                  }
+                },
+                "notes" : {
+                  "type" : "string",
+                  "example" : "Everything is okilly dokilly"
+                }
+              }
+            }
+          },
+          "contacts" : {
+            "type" : "array",
+            "items" : {
+              "type" : "object",
+              "properties" : null,
+              "$ref" : "#/components/schemas/ContactItem"
+            }
+          },
+          "description" : {
+            "type" : "string",
+            "example" : "Everything for the left handed man, woman, and child!"
+          },
+          "createdAt" : {
+            "type" : "string",
+            "format" : "date-time",
+            "example" : "2020-01-21T13:45:52.348Z"
+          },
+          "updatedAt" : {
+            "type" : "string",
+            "format" : "date-time",
+            "example" : "2020-01-21T13:45:52.348Z"
+          }
+        }
+      },
+      "ContactItem" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "format" : "uuid",
+            "example" : "abafa852-ecd0-4d57-9083-85f4dfd9c402"
+          },
+          "UserID" : {
+            "type" : "string",
+            "format" : "uuid",
+            "example" : "abafa852-ecd0-4d57-9083-85f4dfd9c402"
+          },
+          "EntityId" : {
+            "type" : "string",
+            "format" : "uuid",
+            "example" : "c2fb852c-17fd-4e2b-9ea4-78128af9a5e9"
+          },
+          "name" : {
+            "type" : "string",
+            "example" : "Ned Flanders"
+          },
+          "phone" : {
+            "type" : "array",
+            "items" : {
+              "type" : "object",
+              "properties" : {
+                "address" : {
+                  "type" : "string",
+                  "example" : "0654987321"
+                },
+                "isPrimary" : {
+                  "type" : "boolean",
+                  "example" : true
+                }
+              }
+            }
+          },
+          "email" : {
+            "type" : "array",
+            "items" : {
+              "type" : "object",
+              "properties" : {
+                "address" : {
+                  "type" : "string",
+                  "format" : "email",
+                  "example" : "ned.flanders@leftorium.com"
+                },
+                "isPrimary" : {
+                  "type" : "boolean",
+                  "example" : true
+                }
+              }
+            }
+          },
+          "createdAt" : {
+            "type" : "string",
+            "format" : "date-time",
+            "example" : "2020-01-21T13:45:52.348Z"
+          },
+          "updatedAt" : {
+            "type" : "string",
+            "format" : "date-time",
+            "example" : "2020-01-21T13:45:52.348Z"
+          }
+        }
+      }
+    }
+  }
+}

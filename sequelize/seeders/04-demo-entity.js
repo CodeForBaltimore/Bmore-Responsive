@@ -12,6 +12,7 @@ module.exports = {
 			element.updatedAt = new Date();
 			element.email = JSON.stringify(element.email);
 			element.phone = JSON.stringify(element.phone);
+			element.address = JSON.stringify(element.address);
 		}
 
 		return queryInterface.bulkInsert('Entities', entities);

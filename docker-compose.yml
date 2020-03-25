@@ -1,16 +1,18 @@
 version: '3'
 services:
   api:
-    image: bmoreres
+    build: .
     depends_on: 
       - db
     links:
       - "db: database"
     ports:
       - '3000:3000'
-    command: >
-      sh -c "npm run db-create && 
-             npm start"
+    command:  >
+      sh -c "npm run db-delete &&
+            npm run db-create && 
+            npm run db-seed &&
+            npm start"
     volumes:
       - .:/app/
       - /app/node_modules

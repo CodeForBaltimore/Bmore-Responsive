@@ -101,9 +101,10 @@ describe('User negative tests', () => {
       });
   });
   it('should not create a user', (done) => {
+    user.email = randomWords();
     request(app)
       .post('/user')
-      .send()
+      .send(user)
       .set('Accept', 'application/json')
       .expect('Content-Type', 'text/html; charset=utf-8')
       .expect(400)
@@ -117,7 +118,7 @@ describe('User negative tests', () => {
     request(app)
       .get(`/user/${user.email}`)
       .set('Accept', 'application/json')
-      .expect(200)
+      .expect(400)
       .end((err, res) => {
         if (err) return done(err);
         expect(res.body.email).to.be.an('undefined');

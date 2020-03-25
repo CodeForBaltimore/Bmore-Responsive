@@ -1,6 +1,6 @@
 [
     {
-        "role": "Test",
-        "description": "This is a test."
+        "role": "admin",
+        "description": "This is a test admin role."
     }
 ]

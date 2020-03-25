@@ -73,6 +73,7 @@ describe('Contact negative tests', () => {
     });
     it('should not update a contact', (done) => {
       contact.email = randomWords();
+      contact.id = randomWords();
       request(app)
         .put('/contact')
         .send(contact)

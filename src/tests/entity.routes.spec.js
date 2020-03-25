@@ -73,6 +73,7 @@ describe('Entity negative tests', () => {
     });
     it('should not update a entity', (done) => {
       entity.email = randomWords();
+      entity.id = randomWords();
       request(app)
         .put('/entity')
         .send(entity)

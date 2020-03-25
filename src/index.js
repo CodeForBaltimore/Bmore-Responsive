@@ -3,22 +3,27 @@ import 'dotenv/config';
 import cors from 'cors';
 import express from 'express';
 import requestId from 'express-request-id';
+import helmet from 'helmet';
 import morgan from 'morgan';
 import swaggerUi from 'swagger-ui-express';
 
-import swaggerDocument from '../docs/swagger.json';
-import models, {sequelize} from './models';
+import swaggerDocument from '../docs/swagger/swagger.json';
+import models, { sequelize } from './models';
 import routes from './routes';
 import utils from './utils';
 
 const app = express();
+const swaggerOptions = {
+	customCss: '.swagger-ui .topbar { display: none }'
+};
 
 // Third-party middleware
 app.use(requestId());
 app.use(morgan('tiny'));
 app.use(cors());
+app.use(helmet());
 app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 
 // Custom middleware
 app.use(async (req, res, next) => {
@@ -39,7 +44,7 @@ app.use(async (req, res, next) => {
 app.get('/', (req, res) => {
 	res.redirect('/api-docs');
 });
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument,swaggerOptions));
 app.use('/health', (req, res) => {
 	res.status(200).json({
 		uptime: utils.formatTime(process.uptime()),
@@ -51,7 +56,7 @@ app.use('/health', (req, res) => {
 
 // Routes
 Object.entries(routes).forEach(([key, value]) => {
-	app.use(`/${key}`,value);
+	app.use(`/${key}`, value);
 });
 
 // Starting Express and connecting to PostgreSQL

@@ -31,17 +31,34 @@ const formatTime = seconds => {
  *
  * @return {Boolean}
  */
-const validateToken = async (req, res) => {
-	if (process.env.BYPASS_LOGIN) {
-		return true;
-	}
+const validateToken = async (req) => {
+	// if (process.env.BYPASS_LOGIN) {
+	// 	return true;
+	// }
 
-	if (await req.context.models.User.validateToken(req.headers.token)) {
-		return true;
-	}
+	console.log(req.headers.token)
 
-	res.status(401).send('Unauthorized');
+	const authorized = await req.context.models.User.validateToken(req.headers.token);
+
+	if (authorized || process.env.BYPASS_LOGIN) {
+		return true;
+	} 
+	
+	return false;
+
+	// res.status(401).send('Unauthorized');
 };
+
+const response = (res, code, message) => {
+	const codes = {
+		200: message,
+		400: "Invalid input",
+		401: "Unauthorized",
+		500: "Server error"
+	};
+
+	return res.status(code).send(codes[code]);
+}
 
 /**
 	 * Salts and hashes a password.
@@ -78,6 +95,7 @@ const validateEmails = async emails => {
 export default {
 	formatTime,
 	validateToken,
+	response,
 	encryptPassword,
 	validateEmails
 };

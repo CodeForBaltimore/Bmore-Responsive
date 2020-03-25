@@ -1,0 +1,682 @@
+{
+	"info": {
+		"_postman_id": "a6403ba9-91f9-486e-87c1-1cc1ba15722a",
+		"name": "Bmore-Responsive",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "local",
+			"item": [
+				{
+					"name": "user",
+					"item": [
+						{
+							"name": "All Users",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMDk5NTgsImV4cCI6MTU4NTA5NjM1OH0.-kvQxh85_r0ZOSyn5Ogn5wPhxGFMF8KGK9n8dZCIbRY",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "localhost:3000/user",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Single User",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMDk5NTgsImV4cCI6MTU4NTA5NjM1OH0.-kvQxh85_r0ZOSyn5Ogn5wPhxGFMF8KGK9n8dZCIbRY",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "localhost:3000/user/homer.simpson@sfpp.com",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"user",
+										"homer.simpson@sfpp.com"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "User Login",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"email\": \"homer.simpson@sfpp.com\",\n\t\"password\": \"donuts\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:3000/user/login",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"user",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create user",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "token",
+										"value": "replace me",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"email\": \"homer.simpson@sfpp.com\",\n\t\"password\": \"donuts\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:3000/user",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update User",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTAyODAsImV4cCI6MTU4NTA5NjY4MH0.D5k_tbQpa-R7gMGOBcGq9H4VgPcB-Or8Lyaa7EgPsic",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"email\": \"homer.simpson@sfpp.com\",\n\t\"password\": \"donuts\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:3000/user",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Deletes User",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTAzMzAsImV4cCI6MTU4NTA5NjczMH0.GJ9hWVtxz-8JDvFrG0STPxsyL2OJNKzPygSsTBzm1do",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "localhost:3000/user/homer.simpson@sfpp.com",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"user",
+										"homer.simpson@sfpp.com"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "userRole",
+					"item": [
+						{
+							"name": "All roles",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTA0NDksImV4cCI6MTU4NTA5Njg0OX0.7HEFcqfaCB31Oiu23iMCQbMIK5t3cHYyQMrDdip0QYQ",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "localhost:3000/userRole",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"userRole"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Single role",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTA0NDksImV4cCI6MTU4NTA5Njg0OX0.7HEFcqfaCB31Oiu23iMCQbMIK5t3cHYyQMrDdip0QYQ",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "localhost:3000/userRole/1",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"userRole",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create role",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTA0NDksImV4cCI6MTU4NTA5Njg0OX0.7HEFcqfaCB31Oiu23iMCQbMIK5t3cHYyQMrDdip0QYQ",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"role\": \"Safety Inspector\",\n\t\"description\": \"The Safety Inspector\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:3000/userRole",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"userRole"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Removes a role",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTA0NDksImV4cCI6MTU4NTA5Njg0OX0.7HEFcqfaCB31Oiu23iMCQbMIK5t3cHYyQMrDdip0QYQ",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "localhost:3000/userRole/1",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"userRole",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Updates a role",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTA0NDksImV4cCI6MTU4NTA5Njg0OX0.7HEFcqfaCB31Oiu23iMCQbMIK5t3cHYyQMrDdip0QYQ",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"id\": 1,\n\t\"role\": \"Safety Inspector\",\n\t\"description\": \"This is a test role update\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:3000/userRole",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"userRole"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "contact",
+					"item": [
+						{
+							"name": "All Contacts",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "token",
+										"type": "text",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTA0NDksImV4cCI6MTU4NTA5Njg0OX0.7HEFcqfaCB31Oiu23iMCQbMIK5t3cHYyQMrDdip0QYQ"
+									}
+								],
+								"url": {
+									"raw": "localhost:3000/contact",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"contact"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Single Contact",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTA0NDksImV4cCI6MTU4NTA5Njg0OX0.7HEFcqfaCB31Oiu23iMCQbMIK5t3cHYyQMrDdip0QYQ",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "localhost:3000/contact/ea95bc14-472c-4e9a-a421-98dbe34b4cdf",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"contact",
+										"ea95bc14-472c-4e9a-a421-98dbe34b4cdf"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Contact",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTA0NDksImV4cCI6MTU4NTA5Njg0OX0.7HEFcqfaCB31Oiu23iMCQbMIK5t3cHYyQMrDdip0QYQ",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"Ned Flanders\",\n  \"email\": [\n    {\n      \"address\": \"ned.flanders@leftorium.com\",\n      \"isPrimary\": \"true\"\n    }\n  ],\n  \"phone\": [\n    {\n      \"number\": \"1234567890\",\n      \"isPrimary\": \"true\"\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:3000/contact",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"contact"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Contact",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTA0NDksImV4cCI6MTU4NTA5Njg0OX0.7HEFcqfaCB31Oiu23iMCQbMIK5t3cHYyQMrDdip0QYQ",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": \"ea95bc14-472c-4e9a-a421-98dbe34b4cdf\",\n  \"name\": \"Ned Flanders\",\n  \"email\": [\n    {\n      \"address\": \"ned.flanders@leftorium.com\",\n      \"isPrimary\": \"true\"\n    },\n    {\n      \"address\": \"ned@church.org\"\n    }\n  ],\n  \"phone\": [\n    {\n      \"number\": \"1234567890\",\n      \"isPrimary\": \"true\"\n    }\n  ],\n  \"EntityId\": \"1887bc7a-0210-498d-afa2-b11f5882df2c\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:3000/contact",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"contact"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Deletes Contact",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTA0NDksImV4cCI6MTU4NTA5Njg0OX0.7HEFcqfaCB31Oiu23iMCQbMIK5t3cHYyQMrDdip0QYQ",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "localhost:3000/contact/d5da855f-e33c-4c87-80cb-9848c7903cb1",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"contact",
+										"d5da855f-e33c-4c87-80cb-9848c7903cb1"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "entity",
+					"item": [
+						{
+							"name": "All Entities",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "token",
+										"type": "text",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTA0NDksImV4cCI6MTU4NTA5Njg0OX0.7HEFcqfaCB31Oiu23iMCQbMIK5t3cHYyQMrDdip0QYQ"
+									}
+								],
+								"url": {
+									"raw": "localhost:3000/entity",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"entity"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Single Entity",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTA0NDksImV4cCI6MTU4NTA5Njg0OX0.7HEFcqfaCB31Oiu23iMCQbMIK5t3cHYyQMrDdip0QYQ",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "localhost:3000/entity/1887bc7a-0210-498d-afa2-b11f5882df2c",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"entity",
+										"1887bc7a-0210-498d-afa2-b11f5882df2c"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Entity",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTA0NDksImV4cCI6MTU4NTA5Njg0OX0.7HEFcqfaCB31Oiu23iMCQbMIK5t3cHYyQMrDdip0QYQ",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"The Leftorium\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:3000/entity",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"entity"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Entity",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTA0NDksImV4cCI6MTU4NTA5Njg0OX0.7HEFcqfaCB31Oiu23iMCQbMIK5t3cHYyQMrDdip0QYQ",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "   {\n   \t\t\"id\": \"1887bc7a-0210-498d-afa2-b11f5882df2c\",\n        \"email\": [\n            {\n                \"address\": \"hello@leftorium.com\",\n                \"isPrimary\": \"true\"\n            }\n        ]\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:3000/entity",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"entity"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Deletes Entity",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "token",
+										"value": "test",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "localhost:3000/contact/<enter id>",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"contact",
+										"<enter id>"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Heallthcheck (Express only)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"test\": \"test1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/health",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"health"
+							]
+						},
+						"description": "Checks the status of your Express app."
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

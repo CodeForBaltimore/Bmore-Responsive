@@ -24,8 +24,7 @@ module.exports = {
 				type: Sequelize.STRING
 			},
 			roles: {
-				type: Sequelize.JSON,
-				allowNull: false
+				type: Sequelize.JSON
 			},
 			displayName: {
 				type: Sequelize.STRING
