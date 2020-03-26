@@ -23,9 +23,6 @@
     "name" : "user",
     "description" : "Operations related to system users"
   }, {
-    "name" : "userRole",
-    "description" : "Operations related to user roles"
-  }, {
     "name" : "entity",
     "description" : "Operations related to entities"
   }, {
@@ -87,11 +84,11 @@
           "200" : {
             "description" : "login token"
           },
-          "400" : {
-            "description" : "Invalid input"
+          "403" : {
+            "description" : "Forbidden"
           },
-          "401" : {
-            "description" : "Unauthorized"
+          "422" : {
+            "description" : "Invalid input"
           },
           "500" : {
             "description" : "Server error"
@@ -147,11 +144,11 @@
           "200" : {
             "description" : "user created"
           },
-          "400" : {
-            "description" : "Invalid input"
-          },
           "401" : {
             "description" : "Unauthorized"
+          },
+          "422" : {
+            "description" : "Invalid input"
           },
           "500" : {
             "description" : "Server error"
@@ -198,9 +195,6 @@
                 }
               }
             }
-          },
-          "400" : {
-            "description" : "Invalid input"
           },
           "401" : {
             "description" : "Unauthorized"
@@ -266,11 +260,11 @@
           "200" : {
             "description" : "user updated"
           },
-          "400" : {
-            "description" : "Invalid input"
-          },
           "401" : {
             "description" : "Unauthorized"
+          },
+          "422" : {
+            "description" : "Invalid input"
           },
           "500" : {
             "description" : "Server error"
@@ -312,11 +306,11 @@
               }
             }
           },
-          "400" : {
-            "description" : "Invalid input"
-          },
           "401" : {
             "description" : "Unauthorized"
+          },
+          "422" : {
+            "description" : "Invalid input"
           },
           "500" : {
             "description" : "Server error"
@@ -349,227 +343,11 @@
           "200" : {
             "description" : "user deleted"
           },
-          "400" : {
-            "description" : "Invalid input"
-          },
           "401" : {
             "description" : "Unauthorized"
           },
-          "500" : {
-            "description" : "Server error"
-          }
-        }
-      }
-    },
-    "/userRole" : {
-      "post" : {
-        "tags" : [ "userRole" ],
-        "summary" : "creates a new user role",
-        "description" : "The new user role endpoint.",
-        "requestBody" : {
-          "description" : "The body of the payload",
-          "required" : true,
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "type" : "object",
-                "required" : [ "role" ],
-                "properties" : {
-                  "role" : {
-                    "type" : "string",
-                    "example" : "test"
-                  },
-                  "description" : {
-                    "type" : "string",
-                    "example" : "This is a test"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses" : {
-          "200" : {
-            "description" : "user role created"
-          },
-          "400" : {
+          "422" : {
             "description" : "Invalid input"
-          },
-          "401" : {
-            "description" : "Unauthorized"
-          },
-          "500" : {
-            "description" : "Server error"
-          }
-        }
-      },
-      "get" : {
-        "tags" : [ "userRole" ],
-        "summary" : "returns all system user roles",
-        "description" : "By passing in the appropriate options, you can search for\navailable user roles in the system\n",
-        "parameters" : [ {
-          "in" : "header",
-          "name" : "token",
-          "required" : true,
-          "schema" : {
-            "type" : "string",
-            "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "search results matching criteria",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "array",
-                  "items" : {
-                    "$ref" : "#/components/schemas/UserRoleItem"
-                  }
-                }
-              }
-            }
-          },
-          "400" : {
-            "description" : "Invalid input"
-          },
-          "401" : {
-            "description" : "Unauthorized"
-          },
-          "500" : {
-            "description" : "Server error"
-          }
-        }
-      },
-      "put" : {
-        "tags" : [ "userRole" ],
-        "summary" : "updates any single system user role",
-        "description" : "By sending a valid payload you can update a user role.",
-        "parameters" : [ {
-          "in" : "header",
-          "name" : "token",
-          "required" : true,
-          "schema" : {
-            "type" : "string",
-            "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
-          }
-        } ],
-        "requestBody" : {
-          "description" : "The body of the payload.",
-          "required" : true,
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "type" : "object",
-                "required" : [ "id", "role" ],
-                "properties" : {
-                  "id" : {
-                    "type" : "number",
-                    "example" : 42
-                  },
-                  "email" : {
-                    "type" : "string",
-                    "example" : "test"
-                  },
-                  "description" : {
-                    "type" : "string",
-                    "example" : "This is a test"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses" : {
-          "200" : {
-            "description" : "user role updated"
-          },
-          "400" : {
-            "description" : "Invalid input"
-          },
-          "401" : {
-            "description" : "Unauthorized"
-          },
-          "500" : {
-            "description" : "Server error"
-          }
-        }
-      }
-    },
-    "/userRole/{role}" : {
-      "get" : {
-        "tags" : [ "userRole" ],
-        "summary" : "returns a single system user",
-        "description" : "By passing the username, you can lookup a user.",
-        "parameters" : [ {
-          "in" : "path",
-          "name" : "role",
-          "schema" : {
-            "type" : "string"
-          },
-          "required" : true,
-          "description" : "the role to get"
-        }, {
-          "in" : "header",
-          "name" : "token",
-          "required" : true,
-          "schema" : {
-            "type" : "string",
-            "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "the user object",
-            "content" : {
-              "session/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/UserRoleItem"
-                }
-              }
-            }
-          },
-          "400" : {
-            "description" : "Invalid input"
-          },
-          "401" : {
-            "description" : "Unauthorized"
-          },
-          "500" : {
-            "description" : "Server error"
-          }
-        }
-      },
-      "delete" : {
-        "tags" : [ "userRole" ],
-        "summary" : "deletes a single system user role",
-        "description" : "By sending a valid payload you can delete a user role.",
-        "parameters" : [ {
-          "in" : "path",
-          "name" : "role",
-          "schema" : {
-            "type" : "string"
-          },
-          "required" : true,
-          "description" : "the user role to delete."
-        }, {
-          "in" : "header",
-          "name" : "token",
-          "required" : true,
-          "schema" : {
-            "type" : "string",
-            "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "user deleted"
-          },
-          "400" : {
-            "description" : "Invalid input"
-          },
-          "401" : {
-            "description" : "Unauthorized"
           },
           "500" : {
             "description" : "Server error"
@@ -713,11 +491,11 @@
           "200" : {
             "description" : "entity created"
           },
-          "400" : {
-            "description" : "Invalid input"
-          },
           "401" : {
             "description" : "Unauthorized"
+          },
+          "422" : {
+            "description" : "Invalid input"
           },
           "500" : {
             "description" : "Server error"
@@ -764,9 +542,6 @@
                 }
               }
             }
-          },
-          "400" : {
-            "description" : "Invalid input"
           },
           "401" : {
             "description" : "Unauthorized"
@@ -925,11 +700,11 @@
           "200" : {
             "description" : "entity updated"
           },
-          "400" : {
-            "description" : "Invalid input"
-          },
           "401" : {
             "description" : "Unauthorized"
+          },
+          "422" : {
+            "description" : "Invalid input"
           },
           "500" : {
             "description" : "Server error"
@@ -971,11 +746,11 @@
               }
             }
           },
-          "400" : {
-            "description" : "Invalid input"
-          },
           "401" : {
             "description" : "Unauthorized"
+          },
+          "422" : {
+            "description" : "Invalid input"
           },
           "500" : {
             "description" : "Server error"
@@ -1008,11 +783,11 @@
           "200" : {
             "description" : "entity_id deleted"
           },
-          "400" : {
-            "description" : "Invalid input"
-          },
           "401" : {
             "description" : "Unauthorized"
+          },
+          "422" : {
+            "description" : "Invalid input"
           },
           "500" : {
             "description" : "Server error"
@@ -1114,11 +889,11 @@
           "200" : {
             "description" : "contact created"
           },
-          "400" : {
-            "description" : "Invalid input"
-          },
           "401" : {
             "description" : "Unauthorized"
+          },
+          "422" : {
+            "description" : "Invalid input"
           },
           "500" : {
             "description" : "Server error"
@@ -1284,11 +1059,11 @@
           "200" : {
             "description" : "contact updated"
           },
-          "400" : {
-            "description" : "Invalid input"
-          },
           "401" : {
             "description" : "Unauthorized"
+          },
+          "422" : {
+            "description" : "Invalid input"
           },
           "500" : {
             "description" : "Server error"
@@ -1330,11 +1105,11 @@
               }
             }
           },
-          "400" : {
-            "description" : "Invalid input"
-          },
           "401" : {
             "description" : "Unauthorized"
+          },
+          "422" : {
+            "description" : "Invalid input"
           },
           "500" : {
             "description" : "Server error"
@@ -1367,11 +1142,11 @@
           "200" : {
             "description" : "contact_id deleted"
           },
-          "400" : {
-            "description" : "Invalid input"
-          },
           "401" : {
             "description" : "Unauthorized"
+          },
+          "422" : {
+            "description" : "Invalid input"
           },
           "500" : {
             "description" : "Server error"
@@ -1419,12 +1194,6 @@
             "format" : "email",
             "example" : "homer.simpson@sfpp.com"
           },
-          "roles" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/UserRoleItem"
-            }
-          },
           "displayNamme" : {
             "type" : "string",
             "example" : "Homer Simpson"
@@ -1432,34 +1201,6 @@
           "phone" : {
             "type" : "string",
             "example" : "1234567890"
-          },
-          "createdAt" : {
-            "type" : "string",
-            "format" : "date-time",
-            "example" : "2020-01-21T13:45:52.348Z"
-          },
-          "updatedAt" : {
-            "type" : "string",
-            "format" : "date-time",
-            "example" : "2020-01-21T13:45:52.348Z"
-          }
-        }
-      },
-      "UserRoleItem" : {
-        "type" : "object",
-        "required" : [ "id", "role" ],
-        "properties" : {
-          "id" : {
-            "type" : "integer",
-            "example" : 42
-          },
-          "role" : {
-            "type" : "string",
-            "example" : "Safety Inspector"
-          },
-          "description" : {
-            "type" : "string",
-            "example" : "The plant Safety Inspector"
           },
           "createdAt" : {
             "type" : "string",
