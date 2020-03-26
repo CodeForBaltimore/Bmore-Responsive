@@ -9,6 +9,10 @@
         "state": "MD",
         "zip": "12345"
       },
+      "latlng": [
+        39.296399,
+        -76.607842
+      ],
       "description": "Everything for the left handed man, woman, and child!"
     }
   ]

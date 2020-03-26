@@ -16,6 +16,9 @@ const entity = (sequelize, DataTypes) => {
         address: {
             type: DataTypes.JSON,
         },
+        latlng: {
+            type: DataTypes.JSON,
+        },
         phone: {
             type: DataTypes.JSON,
         },
