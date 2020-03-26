@@ -1,3 +1,23 @@
+<!-- TOC -->
+
+- [Tech Spec](#tech-spec)
+    - [Overview](#overview)
+    - [Scenarios](#scenarios)
+        - [COVID-19](#covid-19)
+        - [Automatic Checkin](#automatic-checkin)
+        - [Organized Response](#organized-response)
+    - [Non Goals](#non-goals)
+    - [Minimum Viable Product](#minimum-viable-product)
+    - [Components](#components)
+        - [API](#api)
+        - [CI/CD](#cicd)
+        - [Data](#data)
+        - [Application Architecture](#application-architecture)
+    - [Roadmap](#roadmap)
+    - [Contact Info](#contact-info)
+
+<!-- /TOC -->
+
 # Tech Spec
 Bmore Responsive is a Contact and Response Management System (CRMS) and API. This document will describe the application in some detail.
 

@@ -1,9 +1,9 @@
 # Best Practices
-Code for Baltimore projects should be built with the intention of deploying on [Heroku](https://heroku.com). For details on Heroku Best Practices see their [developer documentation](https://devcenter.heroku.com/articles/node-best-practices).
+Code for Baltimore projects should be built with the intention of deploying on [Heroku](https://heroku.com) or [AWS](https://aws.amazon.com/). For details on Heroku Best Practices see their [developer documentation](https://devcenter.heroku.com/articles/node-best-practices).
 
 ## Project Management
 
-We are using Github Issues to track outstanding issues and work for projects.
+We are using Github Issues to track outstanding issues and work for projects. 
 
 ### Projects
 
@@ -37,9 +37,6 @@ Example: Google has openly published style guides for many languages in wide use
 ## Static Code Analysis
 
 Static code analysis tools should be used when possible, to monitor and improve code quality. This may be integrated in the local development environment, automated repository commit checks, automated CI/CD pipelines, or other steps in the code development process.
-
-### SonarQube scanning
-Before committing or pushing any code changes those changes should be scanned with SonarQube.  For convenience a `docker-compose` file has been included with this repository to facilitate local scans so that clean code can be checked and pushed before the deployment scans.  See the [README](/sonarqube/README.md) in the sonarqube folder for more information.
 
 ## Git and Branching
 

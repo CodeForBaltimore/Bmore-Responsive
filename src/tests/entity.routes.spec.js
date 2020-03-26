@@ -53,7 +53,7 @@ describe('Entity negative tests', () => {
         .send({ email: randomWords() })
         .set('Accept', 'application/json')
         .expect('Content-Type', 'text/html; charset=utf-8')
-        .expect(400)
+        .expect(422)
         .end((err, res) => {
           if (err) return done(err);
           expect(res.text).to.equal('Invalid input')
@@ -64,7 +64,7 @@ describe('Entity negative tests', () => {
       request(app)
         .get(`/entity/${entity.email}`)
         .set('Accept', 'application/json')
-        .expect(400)
+        .expect(422)
         .end((err, res) => {
           if (err) return done(err);
           expect(res.body.email).to.be.an('undefined');
@@ -79,7 +79,7 @@ describe('Entity negative tests', () => {
         .send(entity)
         .set('Accept', 'application/json')
         .expect('Content-Type', 'text/html; charset=utf-8')
-        .expect(400)
+        .expect(422)
         .end((err, res) => {
           if (err) return done(err);
           expect(res.text).to.equal(`Invalid input`);
@@ -92,7 +92,7 @@ describe('Entity negative tests', () => {
         .delete(`/entity/${entity.email}`)
         .set('Accept', 'application/json')
         .expect('Content-Type', 'text/html; charset=utf-8')
-        .expect(400)
+        .expect(422)
         .end((err, res) => {
           if (err) return done(err);
           expect(res.text).to.equal(`Invalid input`);

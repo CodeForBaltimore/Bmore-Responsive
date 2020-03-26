@@ -72,7 +72,7 @@ router.get('/:entity_id', async (req, res) => {
 				code = 200;
 				message = entity;
 			} else {
-				code = 400;
+				code = 422;
 			}
 		} else {
 			code = 401;
@@ -108,7 +108,7 @@ router.post('/', async (req, res) => {
 				code = 200;
 				message = entity.id + ' created';
 			} else {
-				code = 400;
+				code = 422;
 			}
 		} else {
 			code = 401;
@@ -178,7 +178,7 @@ router.put('/', async (req, res) => {
 				code = 200;
 				message = entity.id + ' updated';
 			} else {
-				code = 400;
+				code = 422;
 			}
 		} else {
 			code = 401;
@@ -208,7 +208,7 @@ router.delete('/:entity_id', async (req, res) => {
 				code = 200;
 				message = req.params.entity_id + ' deleted';
 			} else {
-				code = 400;
+				code = 422;
 			}
 		} else {
 			code = 401;
