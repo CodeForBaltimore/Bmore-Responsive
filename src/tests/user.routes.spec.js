@@ -93,7 +93,7 @@ describe('User negative tests', () => {
       .send({ email: randomWords(), password: randomWords() })
       .set('Accept', 'application/json')
       .expect('Content-Type', 'text/html; charset=utf-8')
-      .expect(400)
+      .expect(422)
       .end((err, res) => {
         if (err) return done(err);
         expect(res.text).to.equal('Invalid input')
@@ -107,7 +107,7 @@ describe('User negative tests', () => {
       .send(user)
       .set('Accept', 'application/json')
       .expect('Content-Type', 'text/html; charset=utf-8')
-      .expect(400)
+      .expect(422)
       .end((err, res) => {
         if (err) return done(err);
         expect(res.text).to.equal('Invalid input')
@@ -118,7 +118,7 @@ describe('User negative tests', () => {
     request(app)
       .get(`/user/${user.email}`)
       .set('Accept', 'application/json')
-      .expect(400)
+      .expect(422)
       .end((err, res) => {
         if (err) return done(err);
         expect(res.body.email).to.be.an('undefined');
@@ -132,7 +132,7 @@ describe('User negative tests', () => {
       .send(user)
       .set('Accept', 'application/json')
       .expect('Content-Type', 'text/html; charset=utf-8')
-      .expect(400)
+      .expect(422)
       .end((err, res) => {
         if (err) return done(err);
         expect(res.text).to.equal(`Invalid input`);
@@ -145,7 +145,7 @@ describe('User negative tests', () => {
       .delete(`/user/${user.username}`)
       .set('Accept', 'application/json')
       .expect('Content-Type', 'text/html; charset=utf-8')
-      .expect(400)
+      .expect(422)
       .end((err, res) => {
         if (err) return done(err);
         expect(res.text).to.equal(`Invalid input`);

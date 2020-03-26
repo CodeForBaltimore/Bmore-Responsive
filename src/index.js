@@ -44,7 +44,10 @@ app.use(async (req, res, next) => {
 app.get('/', (req, res) => {
 	res.redirect('/api-docs');
 });
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument,swaggerOptions));
+app.get('/help', (req, res) => {
+	res.redirect('/api-docs');
+})
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, swaggerOptions));
 app.use('/health', (req, res) => {
 	res.status(200).json({
 		uptime: utils.formatTime(process.uptime()),
@@ -57,6 +60,17 @@ app.use('/health', (req, res) => {
 // Routes
 Object.entries(routes).forEach(([key, value]) => {
 	app.use(`/${key}`, value);
+});
+
+// Handle 404
+app.use((req, res) => {
+	return res.status(404).send("404: Not Found.");
+});
+
+// Handle 503
+app.use((error, req, res, next) => {
+	console.error(error);
+	return res.status(503).send("503: Service Unavailable");
 });
 
 // Starting Express and connecting to PostgreSQL

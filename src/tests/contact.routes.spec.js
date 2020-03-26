@@ -53,7 +53,7 @@ describe('Contact negative tests', () => {
         .send({ email: randomWords() })
         .set('Accept', 'application/json')
         .expect('Content-Type', 'text/html; charset=utf-8')
-        .expect(400)
+        .expect(422)
         .end((err, res) => {
           if (err) return done(err);
           expect(res.text).to.equal('Invalid input')
@@ -64,7 +64,7 @@ describe('Contact negative tests', () => {
       request(app)
         .get(`/contact/${contact.email}`)
         .set('Accept', 'application/json')
-        .expect(400)
+        .expect(422)
         .end((err, res) => {
           if (err) return done(err);
           expect(res.body.email).to.be.an('undefined');
@@ -79,7 +79,7 @@ describe('Contact negative tests', () => {
         .send(contact)
         .set('Accept', 'application/json')
         .expect('Content-Type', 'text/html; charset=utf-8')
-        .expect(400)
+        .expect(422)
         .end((err, res) => {
           if (err) return done(err);
           expect(res.text).to.equal(`Invalid input`);
@@ -92,7 +92,7 @@ describe('Contact negative tests', () => {
         .delete(`/contact/${contact.email}`)
         .set('Accept', 'application/json')
         .expect('Content-Type', 'text/html; charset=utf-8')
-        .expect(400)
+        .expect(422)
         .end((err, res) => {
           if (err) return done(err);
           expect(res.text).to.equal(`Invalid input`);

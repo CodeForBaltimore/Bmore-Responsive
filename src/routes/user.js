@@ -16,10 +16,10 @@ router.post('/login', async (req, res) => {
 				code = 200;
 				message = token;
 			} else {
-				code = 401;
+				code = 403;
 			}
 		} else {
-			code = 400;
+			code = 422;
 		}
 	} catch (e) {
 		console.error(e);
@@ -83,7 +83,7 @@ router.get('/:email', async (req, res) => {
 				code = 200;
 				message = user;
 			} else {
-				code = 400;
+				code = 422;
 			}
 		} else {
 			code = 401;
@@ -108,7 +108,7 @@ router.post('/', async (req, res) => {
 			code = 200;
 			message = user.email + ' created';
 		} else {
-			code = 400;
+			code = 422;
 		}
 	} catch (e) {
 		console.error(e);
@@ -138,7 +138,7 @@ router.put('/', async (req, res) => {
 				code = 200;
 				message = user.email + ' updated';
 			} else {
-				code = 400;
+				code = 422;
 			}
 		} else {
 			code = 401;
@@ -168,7 +168,7 @@ router.delete('/:email', async (req, res) => {
 				code = 200;
 				message = req.params.email + ' deleted';
 			} else {
-				code = 400;
+				code = 422;
 			} 
 		} else {
 			code = 401;

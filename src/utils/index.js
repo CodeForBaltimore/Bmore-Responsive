@@ -52,8 +52,10 @@ const validateToken = async (req) => {
 const response = (res, code, message) => {
 	const codes = {
 		200: message,
-		400: "Invalid input",
+		400: "Bad Request",
 		401: "Unauthorized",
+		403: "Forbidden",
+		422: "Invalid input",
 		500: "Server error"
 	};
 
