@@ -1,6 +1,6 @@
 output "cfb_registry" {
   description = "Address for the Registry"
-  value       = "${aws_ecr_repository.cfb-api.repository_url}"
+  value       = "${aws_ecr_repository.bmore-responsive-api.repository_url}"
 }
 
 output "ecs_role" {

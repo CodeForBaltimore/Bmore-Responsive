@@ -58,11 +58,11 @@ module "ecs_cluster" {
   source            = "../../modules/ecs"
   cluster_name      = "bmore-responsive-cluster"
   output_bucket_arn = "${module.s3.output_bucket_arn}"
-  cfb_desired_count     = "3"
-  cfb_target_group_arn  = "${module.alb.tg-cfb-arn}"
-  cfb_container_name    = "bmore-responsive"
-  cfb_container_port    = "8080"
-  cfb_container_definitions  = "${data.template_file.cfb_ecs_task_definition.rendered}"
+  bmore-responsive_desired_count     = "3"
+  bmore-responsive_target_group_arn  = "${module.alb.tg-cfb-arn}"
+  bmore-responsive_container_name    = "bmore-responsive"
+  bmore-responsive_container_port    = "8080"
+  bmore-responsive_container_definitions = "${data.template_file.cfb_ecs_task_definition.rendered}"
 
 }
 
@@ -91,4 +91,5 @@ module "db" {
   db_subnet_group_name   = "CFB Subnets"
   maintenance_window      = "Mon:00:00-Mon:03:00"
   backup_window           = "03:00-06:00"
+  parameter_group_name    = "db_parameter_group"
 }

@@ -15,10 +15,6 @@ RUN pip3 install awscli --upgrade
 # Install the AWS MFA Tool
 RUN pip3 install aws-mfa
 
-#Install for Bellese aws sso
-RUN pip3 install aws-google-auth
-
-
 # Add Executables from docker/bin folder to PATH
 ENV PATH "$PATH:/app/bin/util"
 

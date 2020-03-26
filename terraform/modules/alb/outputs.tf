@@ -13,7 +13,7 @@ output "lb-arn" {
   value       = "${aws_lb.lb.arn}"
 }
 
-output "tg-pricer-arn" {
-  description = "ARN of Pricer Target Group"
+output "tg-cfb-arn" {
+  description = "ARN of the Target Group"
   value       = "${aws_lb_target_group.tg-cfb.arn}"
 }

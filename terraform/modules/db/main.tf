@@ -45,11 +45,9 @@ resource "aws_db_instance" "this" {
   # DB parameter group
   parameter_group_name = "${var.parameter_group_name}"
 
-  # DB option group
-  major_engine_version = "9.6"
 
   # Snapshot name upon DB deletion
-  final_snapshot_identifier = "healthcare-rollcall_db"
+  final_snapshot_identifier = "healthcare-rollcall-db"
 
   # Database Deletion Protection
   deletion_protection = false

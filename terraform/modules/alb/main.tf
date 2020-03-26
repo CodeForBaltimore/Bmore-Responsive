@@ -16,7 +16,7 @@ resource "aws_lb" "lb" {
 
 # Create ALB target group for both containers
 resource "aws_lb_target_group" "tg-cfb" {
-  name_prefix     = "bmore-responsive-"
+  name_prefix     = "cfb-"
   port     = "${var.cfb_app_port}"
   protocol = "HTTP"
   vpc_id   = "${var.vpc_id}"

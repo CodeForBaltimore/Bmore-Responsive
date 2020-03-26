@@ -9,8 +9,6 @@ docker build -f docker/Dockerfile-Builder -t cfb-build-agent .
 # Set AWS Profile to default
 export AWS_PROFILE="default"
 
-# Set values for Bellese SSO
-
 # Login to MFA only if the end user has passed in MFA credentials
 if [ "$#" -gt 0 ]
   then

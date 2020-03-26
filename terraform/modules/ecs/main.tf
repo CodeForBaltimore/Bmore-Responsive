@@ -74,7 +74,7 @@ resource "aws_ecr_repository" "bmore-responsive-api" {
 
 
 resource "aws_ecr_repository_policy" "bmore-responsive-api-policy" {
-  repository = "${aws_ecr_repository.cfb-api.name}"
+  repository = "${aws_ecr_repository.bmore-responsive-api.name}"
 
   policy = <<EOF
 {
