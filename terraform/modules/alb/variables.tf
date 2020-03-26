@@ -4,12 +4,12 @@ variable "vpc_id" {
 
 variable "vpc_subnets" {
   description = "VPC subnets the lb will use"
-  type        = "list"
+  type        = list(string)
 }
 
 variable "mytags" {
   description = "Tags to include on the resources"
-  type        = "map"
+  type        = map(string)
   default     = {}
 }
 
@@ -20,3 +20,5 @@ variable "cfb_app_port" {
 variable "lb_sg" {
   description = "Security group IDs for the lb"
 }
+
+variable "certificate_arn" {}
