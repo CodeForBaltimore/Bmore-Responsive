@@ -14,7 +14,7 @@ module.exports = {
             },
             address: {
                 type: Sequelize.JSON,
-            },
+			},
             phone: {
                 type: Sequelize.JSON,
             },
