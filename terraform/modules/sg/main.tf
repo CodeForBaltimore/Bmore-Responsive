@@ -1,3 +1,7 @@
+terraform {
+  required_version = ">= 0.12"
+}
+
 # Create security group
 
 resource "aws_security_group" "sg-alb" {
@@ -9,9 +13,9 @@ resource "aws_security_group" "sg-alb" {
 
   ingress {
     # TLS (change to whatever ports you need)
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
+    from_port = 443
+    to_port   = 443
+    protocol  = "tcp"
 
     # We open to 0.0.0.0/0 here to support the testing activities.
     # In a production environment, these connections would be limited to

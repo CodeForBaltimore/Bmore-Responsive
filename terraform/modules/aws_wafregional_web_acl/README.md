@@ -1,4 +1,4 @@
-# sg
+# waf
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Providers
@@ -11,15 +11,16 @@
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:-----:|
-| mytags | Tags to include on the resources | `map` | `{}` | no |
-| vpc\_id | VPC ID | `any` | n/a | yes |
+| create | n/a | `bool` | `false` | no |
+| lb\_arn | n/a | `any` | n/a | yes |
+| resource\_suffix | n/a | `any` | n/a | yes |
+| whitelist\_cidrs | n/a | `list(string)` | n/a | yes |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| alb-sg-id | ALB Security Group ID |
-| ecs\_sg\_id | ECS Security Group ID |
+| web\_acl\_id | n/a |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 

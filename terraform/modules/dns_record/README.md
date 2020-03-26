@@ -1,4 +1,4 @@
-# sg
+# dns_record
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Providers
@@ -11,15 +11,14 @@
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:-----:|
-| mytags | Tags to include on the resources | `map` | `{}` | no |
-| vpc\_id | VPC ID | `any` | n/a | yes |
+| lb\_dns\_name | n/a | `any` | n/a | yes |
+| lb\_zone\_id | n/a | `any` | n/a | yes |
+| name | n/a | `any` | n/a | yes |
+| zone\_id | n/a | `any` | n/a | yes |
 
 ## Outputs
 
-| Name | Description |
-|------|-------------|
-| alb-sg-id | ALB Security Group ID |
-| ecs\_sg\_id | ECS Security Group ID |
+No output.
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
