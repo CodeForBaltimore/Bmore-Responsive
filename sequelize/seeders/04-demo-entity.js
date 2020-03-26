@@ -13,7 +13,6 @@ module.exports = {
 			element.email = JSON.stringify(element.email);
 			element.phone = JSON.stringify(element.phone);
 			element.address = JSON.stringify(element.address);
-			element.latlng = JSON.stringify(element.latlng);
 		}
 
 		return queryInterface.bulkInsert('Entities', entities);

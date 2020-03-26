@@ -15,9 +15,6 @@ module.exports = {
             address: {
                 type: Sequelize.JSON,
 			},
-			latlng: {
-				type: Sequelize.JSON,
-			},
             phone: {
                 type: Sequelize.JSON,
             },
