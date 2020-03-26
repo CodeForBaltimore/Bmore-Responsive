@@ -1,0 +1,27 @@
+FROM maven:3.6.0-jdk-11-slim
+
+# Download package dependencies
+RUN apt-get update && apt-get install wget python3-pip -y
+
+# Download Terraform and make it executable.
+WORKDIR /tmp/
+RUN wget -O terraform.zip https://releases.hashicorp.com/terraform/0.11.13/terraform_0.11.13_linux_amd64.zip
+RUN unzip terraform.zip
+RUN mv terraform /usr/bin/terraform
+
+# Install the AWS CLI
+RUN pip3 install awscli --upgrade
+
+# Install the AWS MFA Tool
+RUN pip3 install aws-mfa
+
+#Install for Bellese aws sso
+RUN pip3 install aws-google-auth
+
+
+# Add Executables from docker/bin folder to PATH
+ENV PATH "$PATH:/app/bin/util"
+
+# Create the directory for volume mounting
+RUN mkdir /app/
+WORKDIR /app/
