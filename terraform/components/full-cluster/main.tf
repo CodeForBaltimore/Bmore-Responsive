@@ -81,7 +81,7 @@ module "alb" {
 }
 
 module "waf" {
-  source          = "../../modules/aws_wafregional_web_acl"
+  source          = "../../modules/waf"
   whitelist_cidrs = var.waf_whitelist_cidrs
   lb_arn          = module.alb.lb-arn
   resource_suffix = random_pet.random_pet.id
