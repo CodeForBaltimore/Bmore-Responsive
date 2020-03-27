@@ -1,7 +1,10 @@
-# Infrastructure Requirements
- - [ ] Public DNS Zone - Route53
- - [ ] SSL/TLS termination at the ALB
- - [ ] ALB + WAF
+# full-cluster
+
+## Infrastructure Requirements
+ - [x] Public DNS Record
+ - [x] SSL/TLS termination at the ALB
+ - [x] IP whitelisting via WAF
+ - [ ] Auto db credential rotation via Lambda
  
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Providers
