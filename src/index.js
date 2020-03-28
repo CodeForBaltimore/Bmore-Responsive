@@ -6,6 +6,7 @@ import requestId from 'express-request-id';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import swaggerUi from 'swagger-ui-express';
+import nunjucks from 'nunjucks';
 
 import swaggerDocument from '../docs/swagger/swagger.json';
 import models, { sequelize } from './models';
@@ -16,6 +17,8 @@ const app = express();
 const swaggerOptions = {
 	customCss: '.swagger-ui .topbar { display: none }'
 };
+
+nunjucks.configure('mail_templates', { autoescape: true });
 
 // Third-party middleware
 app.use(requestId());
@@ -31,11 +34,6 @@ app.use(async (req, res, next) => {
 	req.context = {
 		models
 	};
-
-	/** @todo add some checks for auth tokens, etc */
-	// req.context.me = {
-	// 	id: 'abc-123'
-	// };
 
 	next();
 });
