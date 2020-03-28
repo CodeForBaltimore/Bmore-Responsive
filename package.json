@@ -2,7 +2,7 @@
   "name": "bmore-responsive",
   "version": "1.0.0",
   "description": "An emergency response API",
-  "main": "/src/app.js",
+  "main": "src/index.js",
   "directories": {
     "doc": "docs"
   },
@@ -44,7 +44,9 @@
     "lodash": "^4.17.15",
     "mocha": "7.1.1",
     "morgan": "1.9.1",
+    "nodemailer": "^6.4.6",
     "nodemon": "2.0.2",
+    "nunjucks": "^3.2.1",
     "pg": "7.18.2",
     "random-words": "1.1.0",
     "sequelize": "5.21.5",

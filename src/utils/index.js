@@ -32,22 +32,32 @@ const formatTime = seconds => {
  * @return {Boolean}
  */
 const validateToken = async (req) => {
-	// if (process.env.BYPASS_LOGIN) {
-	// 	return true;
-	// }
-
 	console.log(req.headers.token)
 
 	const authorized = await req.context.models.User.validateToken(req.headers.token);
-
 	if (authorized || process.env.BYPASS_LOGIN) {
+		req.context.me = authorized; // add user object to context
 		return true;
 	} 
 	
 	return false;
-
-	// res.status(401).send('Unauthorized');
 };
+
+/**
+ * Middleware function used to validate a user token
+ * 
+ * @param {*} req the request object
+ * @param {*} res the response object
+ * @param {*} next the next handler in the chain
+ */
+const authMiddleware = async (req, res, next) => {
+	if (await validateToken(req)) {
+		next();
+	} else {
+		response(res, 401, "");
+	}
+
+}
 
 const response = (res, code, message) => {
 	const codes = {
@@ -96,7 +106,7 @@ const validateEmails = async emails => {
 
 export default {
 	formatTime,
-	validateToken,
+	authMiddleware,
 	response,
 	encryptPassword,
 	validateEmails
