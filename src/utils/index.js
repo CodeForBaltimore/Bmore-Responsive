@@ -32,21 +32,15 @@ const formatTime = seconds => {
  * @return {Boolean}
  */
 const validateToken = async (req) => {
-	// if (process.env.BYPASS_LOGIN) {
-	// 	return true;
-	// }
-
 	console.log(req.headers.token)
 
 	const authorized = await req.context.models.User.validateToken(req.headers.token);
-
 	if (authorized || process.env.BYPASS_LOGIN) {
+		req.context.me = authorized; // add user object to context
 		return true;
 	} 
 	
 	return false;
-
-	// res.status(401).send('Unauthorized');
 };
 
 /**

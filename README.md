@@ -68,6 +68,10 @@ The various variables are defined as follows:
 - `DATABASE_URL` = The URL string for your db connection. For example: `postgres://user:pass@example.com:5432/dbname`
 - `DATABASE_SCHEMA` = Your local database schema. Postgres default is `public`.
 - `JWT_KEY` = A secret value to generate JWT's locally. 
+- `SMTP_HOST` = hostname for the SMTP server used to send notification emails
+- `SMTP_PORT` = port number for the SMTP server used to send notification emails
+- `SMTP_USER` = username for the SMTP server used to send notification emails
+- `SMTP_PASSWORD` = password for the SMTP server used to send notification emails
 - `BYPASS_LOGIN` = _optional_  Allows you to hit the endpoints locally without having to login. If you wish to bypass the login process during local dev, set this to `true`.
 
 _We do not recommend using the default options for PostgreSQL. The above values are provided as examples. It is more secure to create your own credentials._

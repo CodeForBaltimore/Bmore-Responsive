@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import validator from 'validator';
 import utils from '../utils';
+import email from '../email';
 
 const router = new Router();
 
@@ -17,6 +18,40 @@ router.post('/login', async (req, res) => {
 				message = token;
 			} else {
 				code = 403;
+			}
+		} else {
+			code = 422;
+		}
+	} catch (e) {
+		console.error(e);
+		code = 500;
+	}
+
+	return utils.response(res, code, message);
+});
+
+router.post('/forgotpassword/:email', async(req, res) => {
+	let code;
+	let message;
+	try {
+		if (validator.isEmail(req.params.email)) {
+			const user = await req.context.models.User.findOne({
+				where: {
+					email: req.params.email
+				},
+				attributes: ['id', 'email']
+			});
+			if (user) {
+				// short-lived temporary token that only lasts one hour
+				const temporaryToken = await User.getToken(user.id, '1h');
+
+				// send forgot password email
+				await email.sendForgotPassword(user.email, temporaryToken);
+
+				code = 200;
+				message = `Password reset email sent successfully for ${user.email}`;
+			} else {
+				code = 404;
 			}
 		} else {
 			code = 422;
