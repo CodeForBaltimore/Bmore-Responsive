@@ -53,7 +53,7 @@ const user = (sequelize, DataTypes) => {
 		if (user) {
 			const pw = User.encryptPassword(password, user.salt);
 			if (pw === user.password) {
-				return User.getToken(user.id);
+				return await User.getToken(user.id);
 			}
 		}
 	};
@@ -67,22 +67,24 @@ const user = (sequelize, DataTypes) => {
 	 */
 	User.validateToken = async token => {
 		/** @todo check if it is a token at all */
-		if (!token) return false;
-		try {
-			const decoded = jwt.verify(token, process.env.JWT_KEY);
-			const now = new Date();
-			if (now.getTime() < decoded.exp * 1000) {
-				const user = await User.findByPk(decoded.userId);
-				if (user) {
-					return user;
+		if (token) {
+			try {
+				const decoded = jwt.verify(token, process.env.JWT_KEY);
+				const now = new Date();
+				if (now.getTime() < decoded.exp * 1000) {
+					const user = await User.findByPk(decoded.userId);
+					if (user) {
+						return user;
+					}
 				}
+			} catch (e) {
+				console.error(e);
 			}
-		} catch (e) {
-			console.error(e);
 		}
+		return false;
 	};
 
-	User.getToken = (userId, expiresIn = '1d') => {
+	User.getToken = async (userId, expiresIn = '1d') => {
 		const token = jwt.sign(
 			{userId},
 			process.env.JWT_KEY,
