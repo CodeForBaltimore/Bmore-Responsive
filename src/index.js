@@ -32,11 +32,6 @@ app.use(async (req, res, next) => {
 		models
 	};
 
-	/** @todo add some checks for auth tokens, etc */
-	// req.context.me = {
-	// 	id: 'abc-123'
-	// };
-
 	next();
 });
 

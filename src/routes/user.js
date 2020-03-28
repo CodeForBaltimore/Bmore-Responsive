@@ -30,29 +30,25 @@ router.post('/login', async (req, res) => {
 });
 
 // Gets all users.
-router.get('/', async (req, res) => {
+router.get('/', utils.authMiddleware, async (req, res) => {
 	let code;
 	let message;
 	try {
-		if (await utils.validateToken(req)) {
-			const users = await req.context.models.User.findAll({
-				attributes: ['id', 'email', 'roles', 'displayName', 'phone', 'createdAt', 'updatedAt']
-			});
+		const users = await req.context.models.User.findAll({
+			attributes: ['id', 'email', 'roles', 'displayName', 'phone', 'createdAt', 'updatedAt']
+		});
 
-			for (const user of users) {
-				if(user.roles) user.roles = await req.context.models.UserRole.findRoles(user.roles);
-			}
-
-			code = 200;
-			message = {
-				_meta: {
-					total: users.length
-				},
-				results: users
-			};
-		} else {
-			code = 401;
+		for (const user of users) {
+			if(user.roles) user.roles = await req.context.models.UserRole.findRoles(user.roles);
 		}
+
+		code = 200;
+		message = {
+			_meta: {
+				total: users.length
+			},
+			results: users
+		};
 	} catch (e) {
 		console.error(e);
 		code = 500;
@@ -62,31 +58,27 @@ router.get('/', async (req, res) => {
 });
 
 // Gets a specific user.
-router.get('/:email', async (req, res) => {
+router.get('/:email', utils.authMiddleware, async (req, res) => {
 	let code;
 	let message;
 	try {
-		if (await utils.validateToken(req)) {
-			if (validator.isEmail(req.params.email)) {
-				const user = await req.context.models.User.findOne({
-					where: {
-						email: req.params.email
-					},
-					attributes: ['id', 'email', 'roles', 'displayName', 'phone', 'createdAt', 'updatedAt']
-				});
-				if (user.roles) {
-					user.roles = await req.context.models.UserRole.findRoles(user.roles);
-					/** @todo add contact info for users */
-					// user.dataValues.contact = await req.context.models.Contact.findByUserId(user.id);
-				}
-
-				code = 200;
-				message = user;
-			} else {
-				code = 422;
+		if (validator.isEmail(req.params.email)) {
+			const user = await req.context.models.User.findOne({
+				where: {
+					email: req.params.email
+				},
+				attributes: ['id', 'email', 'roles', 'displayName', 'phone', 'createdAt', 'updatedAt']
+			});
+			if (user.roles) {
+				user.roles = await req.context.models.UserRole.findRoles(user.roles);
+				/** @todo add contact info for users */
+				// user.dataValues.contact = await req.context.models.Contact.findByUserId(user.id);
 			}
+
+			code = 200;
+			message = user;
 		} else {
-			code = 401;
+			code = 422;
 		}
 	} catch (e) {
 		console.error(e);
@@ -119,29 +111,25 @@ router.post('/', async (req, res) => {
 });
 
 // Updates any user.
-router.put('/', async (req, res) => {
+router.put('/', utils.authMiddleware, async (req, res) => {
 	let code;
 	let message;
 	try {
-		if (await utils.validateToken(req)) {
-			if (validator.isEmail(req.body.email)) {
-				/** @todo add email and phone update options */
-				const { email, password } = req.body;
-				const user = await req.context.models.User.findOne({
-					where: {
-						email
-					}
-				});
-				user.password = password;
-				await user.save();
+		if (validator.isEmail(req.body.email)) {
+			/** @todo add email and phone update options */
+			const { email, password } = req.body;
+			const user = await req.context.models.User.findOne({
+				where: {
+					email
+				}
+			});
+			user.password = password;
+			await user.save();
 
-				code = 200;
-				message = user.email + ' updated';
-			} else {
-				code = 422;
-			}
+			code = 200;
+			message = user.email + ' updated';
 		} else {
-			code = 401;
+			code = 422;
 		}
 	} catch (e) {
 		console.error(e);
@@ -152,27 +140,23 @@ router.put('/', async (req, res) => {
 });
 
 // Deletes a user.
-router.delete('/:email', async (req, res) => {
+router.delete('/:email', utils.authMiddleware, async (req, res) => {
 	let code;
 	let message;
 	try {
-		if (await utils.validateToken(req)) {
-			if (validator.isEmail(req.params.email)) {
-				const user = await req.context.models.User.findOne({
-					where: {
-						email: req.params.email
-					}
-				});
-				await user.destroy();
+		if (validator.isEmail(req.params.email)) {
+			const user = await req.context.models.User.findOne({
+				where: {
+					email: req.params.email
+				}
+			});
+			await user.destroy();
 
-				code = 200;
-				message = req.params.email + ' deleted';
-			} else {
-				code = 422;
-			} 
+			code = 200;
+			message = req.params.email + ' deleted';
 		} else {
-			code = 401;
-		}
+			code = 422;
+		} 
 	} catch (e) {
 		console.error(e);
 		code = 500;

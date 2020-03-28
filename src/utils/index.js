@@ -49,6 +49,21 @@ const validateToken = async (req) => {
 	// res.status(401).send('Unauthorized');
 };
 
+/**
+ * Middleware function used to validate a user token
+ * @param {*} req the request object
+ * @param {*} res the response object
+ * @param {*} next the next handler in the chain
+ */
+const authMiddleware = async (req, res, next) => {
+	if (await validateToken(req)) {
+		next();
+	} else {
+		response(res, 401, "");
+	}
+
+}
+
 const response = (res, code, message) => {
 	const codes = {
 		200: message,
@@ -96,7 +111,7 @@ const validateEmails = async emails => {
 
 export default {
 	formatTime,
-	validateToken,
+	authMiddleware,
 	response,
 	encryptPassword,
 	validateEmails
