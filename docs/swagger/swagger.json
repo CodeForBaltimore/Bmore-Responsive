@@ -96,6 +96,37 @@
         }
       }
     },
+    "/user/forgotpassword/{email}" : {
+      "post" : {
+        "tags" : [ "user" ],
+        "summary" : "sends a reset password email",
+        "description" : "The forgot password endpoint.",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "email",
+          "schema" : {
+            "type" : "string",
+            "format" : "email"
+          },
+          "required" : true,
+          "description" : "email of the user"
+        }],
+        "responses" : {
+          "200" : {
+            "description" : "Reset password email sent"
+          },
+          "404" : {
+            "description" : "User not found by email address provided"
+          },
+          "422" : {
+            "description" : "Invalid input"
+          },
+          "500" : {
+            "description" : "Server error"
+          }
+        }
+      }
+    },
     "/user" : {
       "post" : {
         "tags" : [ "user" ],
