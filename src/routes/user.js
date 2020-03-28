@@ -43,7 +43,7 @@ router.post('/forgotpassword/:email', async(req, res) => {
 			});
 			if (user) {
 				// short-lived temporary token that only lasts one hour
-				const temporaryToken = await User.getToken(user.id, '1h');
+				const temporaryToken = await req.context.models.User.getToken(user.id, '1h');
 
 				// send forgot password email
 				await email.sendForgotPassword(user.email, temporaryToken);
