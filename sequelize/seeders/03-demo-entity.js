@@ -2,7 +2,7 @@ const uuid = require('uuid4');
 const entities = require('../data/entity.json');
 
 module.exports = {
-	up: queryInterface => {
+	up: async queryInterface => {
 
 		for (const element of entities) {
 			const id = uuid();
