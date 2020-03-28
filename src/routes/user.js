@@ -49,9 +49,10 @@ router.post('/forgotpassword/:email', async(req, res) => {
 				await email.sendForgotPassword(user.email, temporaryToken);
 
 				code = 200;
-				message = `Password reset email sent successfully for ${user.email}`;
+				message = `Password reset email sent`;
 			} else {
-				code = 404;
+				code = 200;
+				message = `Password reset email sent`;
 			}
 		} else {
 			code = 422;
