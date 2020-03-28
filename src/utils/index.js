@@ -51,6 +51,7 @@ const validateToken = async (req) => {
 
 /**
  * Middleware function used to validate a user token
+ * 
  * @param {*} req the request object
  * @param {*} res the response object
  * @param {*} next the next handler in the chain
