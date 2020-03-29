@@ -25,23 +25,25 @@ module "s3" {
 data "template_file" "cfb_ecs_task_definition" {
   template = file("cfb-container.json.tpl")
   vars = {
-    image_address         = module.ecs_cluster.cfb_registry
-    s3_bucket             = module.s3.output_bucket_name
-    vue_app_base_api_url  = "bmoreres.codeforbaltimore.org"
-    node_env              = "development"
-    database_host         = module.db.this_db_instance_address
-    database_user         = module.db.this_db_instance_username
-    database_password_arn = aws_secretsmanager_secret_version.db_password.arn
-    database_port         = module.db.this_db_instance_port
-    database_name         = "healthcareRollcallDB"
-    jwt_key               = "abc123"
-    bypass_login          = "false"
+    image_address        = "codeforbaltimore/bmore-responsive"
+    s3_bucket            = module.s3.output_bucket_name
+    vue_app_base_api_url = "bmoreres.codeforbaltimore.org"
+    node_env             = "development"
+    database_host        = module.db.this_db_instance_address
+    database_user        = module.db.this_db_instance_username
+    //    database_password_arn = aws_secretsmanager_secret_version.db_password.arn
+    database_port     = module.db.this_db_instance_port
+    database_name     = "healthcareRollcallDB"
+    jwt_key           = "abc123"
+    bypass_login      = "false"
+    aws_region        = var.aws_region
+    database_password = var.db_password
   }
 }
 
 resource "aws_secretsmanager_secret" "db_password" {
   name_prefix = "db_password"
-  
+
 }
 
 resource "aws_secretsmanager_secret_version" "db_password" {
@@ -96,7 +98,7 @@ module "alb" {
   vpc_id          = module.vpc.vpc-id
   vpc_subnets     = module.vpc.public-subnet-ids
   lb_sg           = module.sg.alb-sg-id
-  cfb_app_port    = 8080
+  cfb_app_port    = 3000
   certificate_arn = module.certificate.certificate_arn
 }
 
@@ -114,8 +116,9 @@ module "ecs_cluster" {
   bmore-responsive_desired_count         = "3"
   bmore-responsive_target_group_arn      = module.alb.tg-cfb-arn
   bmore-responsive_container_name        = "bmore-responsive"
-  bmore-responsive_container_port        = "8080"
+  bmore-responsive_container_port        = "3000"
   bmore-responsive_container_definitions = data.template_file.cfb_ecs_task_definition.rendered
+  aws_region                             = var.aws_region
 }
 
 module "asg" {

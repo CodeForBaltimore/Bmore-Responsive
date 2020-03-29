@@ -33,3 +33,4 @@ variable "output_bucket_arn" {
   type        = string
 }
 
+variable "aws_region" {}

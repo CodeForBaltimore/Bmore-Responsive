@@ -69,6 +69,8 @@ data "aws_iam_policy_document" "ecs_cluster_asg_policy" {
   }
 }
 
+data "aws_caller_identity" "current" {}
+
 resource "aws_iam_role" "ecs_cluster" {
   path = "/"
   name = "bmore-responsive_ecs_cluster_role"
@@ -148,31 +150,62 @@ EOF
 
 }
 
-resource "aws_iam_role" "task_execution_role" {
-  name                     = "ecsTaskExecutionRole"
-  assume_role_policy       =  <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Principal": {
-        "AWS": "${aws_iam_role.ecs_cluster.arn}"
-      },
-      "Action": [
-        "ssm:GetParameters",
-        "secretsmanager:GetSecretValue",
-        "kms:Decrypt"
-      ]
-    }
-  ]
+data "aws_iam_policy_document" "task_execution_role_permission_policy_document" {
+  statement {
+    effect = "Allow"
+    actions = [
+      "ssm:GetParameters",
+      "secretsmanager:GetSecretValue",
+      "kms:Decrypt"
+    ]
+    resources = [
+      "arn:aws:ssm:${var.aws_region}:${data.aws_caller_identity.current.account_id}:parameter/*",
+      "arn:aws:secretsmanager:${var.aws_region}:${data.aws_caller_identity.current.account_id}:secret:*",
+      "arn:aws:kms:${var.aws_region}:${data.aws_caller_identity.current.account_id}:key/*"
+    ]
+  }
+
+  statement {
+
+    effect = "Allow"
+    actions = [
+      "logs:CreateLogGroup"
+    ]
+    resources = [
+      "*"
+    ]
+  }
 }
-EOF
+
+resource "aws_iam_policy" "task_execution_role_permission_policy" {
+  name_prefix = "secrets-manager-access-"
+  policy      = data.aws_iam_policy_document.task_execution_role_permission_policy_document.json
+}
+
+data "aws_iam_policy_document" "task_execution_role_assume_role_policy_document" {
+  statement {
+    effect = "Allow"
+    principals {
+      identifiers = ["ecs-tasks.amazonaws.com"]
+      type        = "Service"
+    }
+    actions = ["sts:AssumeRole"]
+  }
+}
+
+resource "aws_iam_role" "task_execution_role" {
+  name               = "ecsTaskExecutionRole"
+  assume_role_policy = data.aws_iam_policy_document.task_execution_role_assume_role_policy_document.json
 }
 
 resource "aws_iam_role_policy_attachment" "task_execution_attachment" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy" // AWS provided policy
-  role       = "${aws_iam_role.task_execution_role.name}"
+  role       = aws_iam_role.task_execution_role.name
+}
+
+resource "aws_iam_role_policy_attachment" "task_execution_permissions_policy_attachment" {
+  policy_arn = aws_iam_policy.task_execution_role_permission_policy.arn
+  role       = aws_iam_role.task_execution_role.name
 }
 
 
@@ -183,8 +216,8 @@ resource "aws_ecs_cluster" "ecs_cluster" {
 resource "aws_ecs_task_definition" "bmore-responsive_ecs_task_definition" {
   family                = "bmore-responsive"
   container_definitions = var.bmore-responsive_container_definitions
-  task_role_arn      = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
-  execution_role_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
+  //  task_role_arn         = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
+  execution_role_arn = aws_iam_role.task_execution_role.arn
 }
 
 resource "aws_ecs_service" "pricer_ecs_service" {

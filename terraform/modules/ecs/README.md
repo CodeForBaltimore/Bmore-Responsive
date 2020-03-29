@@ -11,6 +11,7 @@
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:-----:|
+| aws\_region | n/a | `any` | n/a | yes |
 | bmore-responsive\_container\_definitions | The Rendered JSON of a container definition array. See example-container.json for a sample of valid JSON input. | `string` | n/a | yes |
 | bmore-responsive\_container\_name | The name of the container to associate with the Load Balancer. Must equal the container name in the container definition JSON | `string` | n/a | yes |
 | bmore-responsive\_container\_port | The port on the container to associate with the Load Balancer | `string` | n/a | yes |
