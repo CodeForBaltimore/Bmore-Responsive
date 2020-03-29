@@ -1,6 +1,7 @@
 [
     {
       "name": "The Leftorium",
+      "type": "Test",
       "address": {
         "street": [
           "123 Anyplace St."
@@ -17,6 +18,7 @@
     },
     {
       "name": "Moes Tavern",
+      "type": "Test",
       "address": {
         "street": [
           "123 Anyplace St."
