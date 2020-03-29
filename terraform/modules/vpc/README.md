@@ -21,6 +21,7 @@
 
 | Name | Description |
 |------|-------------|
+| private\_subnet\_cidrs | n/a |
 | public-subnet-ids | Subnet IDs |
 | subnet\_ids | Subnet IDs |
 | vpc-id | VPC ID |

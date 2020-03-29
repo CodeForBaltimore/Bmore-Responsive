@@ -7,6 +7,37 @@ terraform {
 data "aws_iam_policy_document" "ecs_cluster_asg_policy" {
   statement {
     actions = [
+      "ssmmessages:CreateControlChannel",
+      "ssmmessages:CreateDataChannel",
+      "ssmmessages:OpenControlChannel",
+      "ssmmessages:OpenDataChannel"
+    ]
+    effect = "Allow"
+
+    resources = ["*"]
+  }
+
+  statement {
+    actions = [
+      "s3:GetEncryptionConfiguration"
+    ]
+    effect    = "Allow"
+    resources = ["*"]
+  }
+
+  statement {
+
+    actions = [
+      "kms:Decrypt"
+    ]
+
+    effect = "Allow"
+
+    resources = ["*"]
+  }
+
+  statement {
+    actions = [
       "ecs:DeregisterContainerInstance",
       "ecs:DiscoverPollEndpoint",
       "ecs:Poll",
@@ -64,6 +95,11 @@ resource "aws_iam_role_policy" "ecs_cluster_asg_policy" {
   name_prefix = "ecs-cluster-policy-"
   role        = aws_iam_role.ecs_cluster.id
   policy      = data.aws_iam_policy_document.ecs_cluster_asg_policy.json
+}
+
+resource "aws_iam_role_policy_attachment" "ssm_policy_attachment" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+  role       = aws_iam_role.ecs_cluster.name
 }
 
 resource "aws_iam_instance_profile" "ecs_cluster_asg_profile" {

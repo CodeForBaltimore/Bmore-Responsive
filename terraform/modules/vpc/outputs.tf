@@ -11,3 +11,7 @@ output "public-subnet-ids" {
   description = "Subnet IDs"
   value       = aws_subnet.public-subnet.*.id
 }
+
+output "private_subnet_cidrs" {
+  value = var.private_subnet_cidrs
+}

@@ -7,3 +7,7 @@ variable "mytags" {
   type        = "map"
   default     = {}
 }
+
+variable "db_ingress_cidrs" {
+  type = list(string)
+}
