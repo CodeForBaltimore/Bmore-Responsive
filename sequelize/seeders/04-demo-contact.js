@@ -62,7 +62,7 @@ module.exports = {
 			contacts.push(contact);
 
 			i++;
-		} while (i < 16);
+		} while (i < 18);
 
 		return queryInterface.bulkInsert('Contacts', contacts);
 	},
