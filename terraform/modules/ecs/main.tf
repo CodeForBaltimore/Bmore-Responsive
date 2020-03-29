@@ -213,11 +213,19 @@ resource "aws_ecs_cluster" "ecs_cluster" {
   name = var.cluster_name
 }
 
+resource "aws_cloudwatch_log_group" "cfb-api-logs" {
+  name = "cfb-api-logs"
+}
+
 resource "aws_ecs_task_definition" "bmore-responsive_ecs_task_definition" {
-  family                = "bmore-responsive"
-  container_definitions = var.bmore-responsive_container_definitions
-  //  task_role_arn         = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
-  execution_role_arn = aws_iam_role.task_execution_role.arn
+  family                  = "bmore-responsive"
+  container_definitions   = var.bmore-responsive_container_definitions
+  //task_role_arn         = "arn:aws:iam::180104022864:role/bmore-responsive_ecs_cluster_role"
+  execution_role_arn      = aws_iam_role.task_execution_role.arn
+  //awslogs-create-group    = "true"
+  //awslogs-region          = "${var.aws_region}"
+  //awslogs-group           = aws_cloudwatch_log_group.cfb-api-logs.arn
+  //awslogs-stream-prefix   = "cfb-api-"
 }
 
 resource "aws_ecs_service" "pricer_ecs_service" {

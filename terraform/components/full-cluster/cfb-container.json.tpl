@@ -11,6 +11,16 @@
         "hostPort": 0
       }
     ],
+    "logConfiguration": 
+      {
+        "logDriver": "awslogs",
+          "options": 
+            {
+              "awslogs-group": "cfb-api-logs",
+              "awslogs-region": "us-east-2",
+              "awslogs-stream-prefix": "cfb-api-"
+            }
+      },
     "environment": [
       { "name" : "VUE_APP_BASE_API_URL", "value" : "${vue_app_base_api_url}" },
       { "name" : "NODE_ENV", "value" : "${node_env}" },
