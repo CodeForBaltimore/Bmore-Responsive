@@ -13,20 +13,6 @@ router.get('/', async (req, res) => {
 		const entities = await req.context.models.Entity.findAll({
 		});
 
-		for (let entity of entities) {
-			entity.dataValues.contacts = []
-
-			const contacts = await req.context.models.Entity.findContacts(entity.id);
-
-			if (contacts) {
-				for (let contact of contacts) {
-					entity.dataValues.contacts.push({
-						contact
-					});
-				}
-			}
-		}
-
 		code = 200;
 		message = {
 			_meta: {
