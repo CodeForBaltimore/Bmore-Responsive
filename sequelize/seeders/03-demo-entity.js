@@ -24,7 +24,8 @@ module.exports = {
 			"Kwik-E-Mart",
 			"Krusty Burger",
 			"Duff Brewery",
-			"Aztech Theater"
+			"Aztech Theater",
+			"The Copy Jalopy"
 		];
 
 		for (let name of entityNames) {
