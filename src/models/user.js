@@ -53,7 +53,7 @@ const user = (sequelize, DataTypes) => {
 		if (user) {
 			const pw = User.encryptPassword(password, user.salt);
 			if (pw === user.password) {
-				return await User.getToken(user.id);
+				return await User.getToken(user.id, user.email);
 			}
 		}
 	};
@@ -84,9 +84,9 @@ const user = (sequelize, DataTypes) => {
 		return false;
 	};
 
-	User.getToken = async (userId, expiresIn = '1d') => {
+	User.getToken = async (userId, email, expiresIn = '1d') => {
 		const token = jwt.sign(
-			{userId},
+			{userId, email},
 			process.env.JWT_KEY,
 			{expiresIn}
 		);
