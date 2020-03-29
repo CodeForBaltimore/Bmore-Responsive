@@ -3,9 +3,17 @@ import path from 'path';
 import fs from 'fs';
 import _ from 'lodash';
 
+let dbUrl;
+
+if (process.env.DATABASE_URL) {
+	dbUrl = process.env.DATABASE_URL;
+} else {
+	dbUrl = `postgres://${process.env.DATABASE_USERNAME}:${process.env.DATABASE_PASSWORD}@${process.env.DATABASE_HOST}:${process.env.DATABASE_PORT}/${process.env.DATABASE_NAME}`;
+}
+
 // Initializes the database.
 const sequelize = new Sequelize(
-	process.env.DATABASE_URL,
+	dbUrl,
 	{
 		dialect: 'postgres'
 	}
