@@ -40,7 +40,8 @@ data "template_file" "cfb_ecs_task_definition" {
 }
 
 resource "aws_secretsmanager_secret" "db_password" {
-  name = "db_password"
+  name_prefix = "db_password"
+  
 }
 
 resource "aws_secretsmanager_secret_version" "db_password" {

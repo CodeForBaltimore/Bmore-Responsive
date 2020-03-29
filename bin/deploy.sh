@@ -52,8 +52,7 @@ docker run -it -v $(pwd):/app/ cfb-build-agent ./db-create
 $(docker run -it -v $(pwd):/app/ -v $(pwd)/docker/aws/:/root/.aws/ -e AWS_PROFILE=$AWS_PROFILE cfb-build-agent ecr-login | tr -d '\r')
 
 # Build the container image for the API
-docker build -f docker/Dockerfile-Bmore-Responsive -t bmore-responsive \
-                        --build-arg DB_URL=${DB_URL}  .
+docker build -f docker/Dockerfile-Bmore-Responsive -t bmore-responsive .
 # Get the address of the repository in AWS
 CFB_REPO=$(docker run -it -v $(pwd):/app/ -v $(pwd)/docker/aws/:/root/.aws/ -e AWS_PROFILE=$AWS_PROFILE cfb-build-agent output full-cluster bmore-responsive_registry | tr -d '\r')
 # Tag the image for pushing

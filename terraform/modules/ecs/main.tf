@@ -148,6 +148,34 @@ EOF
 
 }
 
+resource "aws_iam_role" "task_execution_role" {
+  name                     = "ecsTaskExecutionRole"
+  assume_role_policy       =  <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "${aws_iam_role.ecs_cluster.arn}"
+      },
+      "Action": [
+        "ssm:GetParameters",
+        "secretsmanager:GetSecretValue",
+        "kms:Decrypt"
+      ]
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_role_policy_attachment" "task_execution_attachment" {
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy" // AWS provided policy
+  role       = "${aws_iam_role.task_execution_role.name}"
+}
+
+
 resource "aws_ecs_cluster" "ecs_cluster" {
   name = var.cluster_name
 }
@@ -155,6 +183,8 @@ resource "aws_ecs_cluster" "ecs_cluster" {
 resource "aws_ecs_task_definition" "bmore-responsive_ecs_task_definition" {
   family                = "bmore-responsive"
   container_definitions = var.bmore-responsive_container_definitions
+  task_role_arn      = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
+  execution_role_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
 
 resource "aws_ecs_service" "pricer_ecs_service" {
