@@ -25,9 +25,27 @@ module "s3" {
 data "template_file" "cfb_ecs_task_definition" {
   template = file("cfb-container.json.tpl")
   vars = {
-    image_address = module.ecs_cluster.cfb_registry
-    s3_bucket     = module.s3.output_bucket_name
+    image_address         = module.ecs_cluster.cfb_registry
+    s3_bucket             = module.s3.output_bucket_name
+    vue_app_base_api_url  = "bmoreres.codeforbaltimore.org"
+    node_env              = "development"
+    database_host         = module.db.this_db_instance_address
+    database_user         = module.db.this_db_instance_username
+    database_password_arn = aws_secretsmanager_secret_version.db_password.arn
+    database_port         = module.db.this_db_instance_port
+    database_name         = "healthcareRollcallDB"
+    jwt_key               = "abc123"
+    bypass_login          = "false"
   }
+}
+
+resource "aws_secretsmanager_secret" "db_password" {
+  name = "db_password"
+}
+
+resource "aws_secretsmanager_secret_version" "db_password" {
+  secret_id     = aws_secretsmanager_secret.db_password.id
+  secret_string = var.db_password
 }
 
 data "template_file" "user_data" {
@@ -49,8 +67,9 @@ module "vpc" {
 }
 
 module "sg" {
-  source = "../../modules/sg"
-  vpc_id = module.vpc.vpc-id
+  source           = "../../modules/sg"
+  vpc_id           = module.vpc.vpc-id
+  db_ingress_cidrs = module.vpc.private_subnet_cidrs
 }
 
 data "aws_route53_zone" "hosted_zone" {
@@ -120,7 +139,7 @@ module "db" {
   password               = var.db_password
   port                   = "5432"
   allocated_storage      = "20"
-  vpc_security_group_ids = [module.sg.alb-sg-id]
+  vpc_security_group_ids = [module.sg.sg_postgresql_id]
   db_subnet_group_name   = "CFB Subnets"
   maintenance_window     = "Mon:00:00-Mon:03:00"
   backup_window          = "03:00-06:00"
