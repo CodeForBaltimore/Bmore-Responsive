@@ -30,7 +30,7 @@ router.post('/login', async (req, res) => {
 	return utils.response(res, code, message);
 });
 
-router.post('/forgotpassword/:email', async(req, res) => {
+router.post('/reset/:email', async(req, res) => {
 	let code;
 	let message;
 	try {
