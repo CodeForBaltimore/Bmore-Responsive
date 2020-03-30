@@ -35,7 +35,7 @@ const sendMail = async (to, subject, html, text) => {
  * @param {string} resetPasswordToken temporary token for the reset password link
  */
 const sendForgotPassword = async (userEmail, resetPasswordToken) => {
-  const emailResetLink = `https://healthcarerollcall.org/reset/${resetPasswordToken}`;
+  const emailResetLink = `https://healthcare-rollcall.netlify.com/reset/${resetPasswordToken}`;
   await sendMail(
     userEmail,
     "Password Reset - Healthcare Roll Call",
