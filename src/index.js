@@ -22,7 +22,7 @@ nunjucks.configure('mail_templates', { autoescape: true });
 
 // Third-party middleware
 app.use(requestId());
-app.use(morgan('tiny'));
+app.use(morgan('common'));
 app.use(cors());
 app.use(helmet());
 app.use(express.json());
