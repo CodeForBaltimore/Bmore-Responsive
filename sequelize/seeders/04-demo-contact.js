@@ -30,7 +30,23 @@ module.exports = {
 				"Kwik-E-Mart",
 				"Krusty Burger",
 				"Duff Brewery",
-				"Aztech Theater"
+				"Aztech Theater",
+				"The Copy Jalopy",
+				"99¢ Furniture Store",
+				"Little Lisa Recycling Plant",
+				"Acne Grease and Shovel",
+				"Buzz Cola",
+				"Classy Jos",
+				"Compu-Global-Hyper-Mega-Net",
+				"Springfield Gas Company",
+				"U-Break-It Van Rental",
+				"Uncle Homers Daycare Center",
+				"Ziffcorp",
+				"Burns Slant Drilling Co.",
+				"Springfield Gorge",
+				"Springfield Tire Yard",
+				"The Murderhorn",
+				"Nuclear Lake"
 			];
 			let name = randomWords();
 
