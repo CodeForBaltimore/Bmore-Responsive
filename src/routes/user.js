@@ -124,8 +124,8 @@ router.get('/:email', utils.authMiddleware, async (req, res) => {
 	return utils.response(res, code, message);
 });
 
-// Creates a new user.
-if (process.env.NODE_ENV !== 'development') {
+// Creates a new user. ONLY if we're in dev
+if (process.env.NODE_ENV === 'development') {
 	router.post('/', async (req, res) => {
 		let code;
 		let message;
