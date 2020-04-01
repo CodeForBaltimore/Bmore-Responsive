@@ -2,20 +2,40 @@ import Sequelize from 'sequelize';
 import path from 'path';
 import fs from 'fs';
 import _ from 'lodash';
-
+const rdsCa = fs.readFileSync('./rds-combined-ca-bundle.pem');
+console.log(__dirname)
 let dbUrl;
-
 if (process.env.DATABASE_URL) {
 	dbUrl = process.env.DATABASE_URL;
 } else {
 	dbUrl = `postgres://${process.env.DATABASE_USERNAME}:${process.env.DATABASE_PASSWORD}@${process.env.DATABASE_HOST}:${process.env.DATABASE_PORT}/${process.env.DATABASE_NAME}`;
 }
 
+// Securing our db connection if prod
+/** @todo allow other options besides RDS */
+
+let dialectOptions;
+if (process.env.NODE_ENV === 'production') {
+	dialectOptions = {
+		ssl: {
+			rejectUnauthorized: true,
+			ca: [rdsCa],
+			checkServerIdentity: (host, cert) => {
+				const error = tls.checkServerIdentity(host, cert);
+				if (error && !cert.subject.CN.endsWith('.rds.amazonaws.com')) {
+					return error;
+				}
+			}
+		}
+	};
+}
+
 // Initializes the database.
 const sequelize = new Sequelize(
 	dbUrl,
 	{
-		dialect: 'postgres'
+		dialect: 'postgres',
+		dialectOptions: dialectOptions
 	}
 );
 const basename = path.basename(__filename);
@@ -47,5 +67,5 @@ Object.keys(models).forEach(key => {
 	}
 });
 
-export {sequelize};
+export { sequelize };
 export default models;

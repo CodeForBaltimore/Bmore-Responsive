@@ -3,15 +3,14 @@ import validator from 'validator';
 import utils from '../utils';
 
 const router = new Router();
-router.use(utils.authMiddleware)
+router.use(utils.authMiddleware);
 
 // Gets all entities.
 router.get('/', async (req, res) => {
 	let code;
 	let message;
 	try {
-		const entities = await req.context.models.Entity.findAll({
-		});
+		const entities = await req.context.models.Entity.findAll();
 
 		code = 200;
 		message = {
@@ -101,7 +100,7 @@ router.put('/', async (req, res) => {
 	let code;
 	let message;
 	try {
-		if (validator.isUUID(req.body.id)) {
+		if (validator.isUUID(req.body.id) && validator.isEmail(req.body.email)) {
 			let { id, name, address, phone, email, checkIn } = req.body;
 
 			/** @todo validate emails */

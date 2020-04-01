@@ -404,6 +404,10 @@
                     "type" : "string",
                     "example" : "The Leftorium"
                   },
+                  "type" : {
+                    "type" : "string",
+                    "example" : "Store"
+                  },
                   "address" : {
                     "type" : "object",
                     "properties" : {
@@ -612,6 +616,10 @@
                   "name" : {
                     "type" : "string",
                     "example" : "The Leftorium"
+                  },
+                  "type" : {
+                    "type" : "string",
+                    "example" : "Store"
                   },
                   "address" : {
                     "type" : "object",
@@ -1256,6 +1264,10 @@
           "name" : {
             "type" : "string",
             "example" : "The Leftorium"
+          },
+          "type" : {
+            "type" : "string",
+            "example" : "Store"
           },
           "address" : {
             "type" : "object",
