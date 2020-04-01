@@ -100,7 +100,7 @@ router.put('/', async (req, res) => {
 	let code;
 	let message;
 	try {
-		if (validator.isUUID(req.body.id) && validator.isEmail(req.body.email)) {
+		if (validator.isUUID(req.body.id)) {
 			let { id, name, address, phone, email, checkIn } = req.body;
 
 			/** @todo validate emails */
