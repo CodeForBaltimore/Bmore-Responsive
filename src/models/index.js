@@ -2,8 +2,9 @@ import Sequelize from 'sequelize';
 import path from 'path';
 import fs from 'fs';
 import _ from 'lodash';
+import tls from 'tls';
+
 const rdsCa = fs.readFileSync('./rds-combined-ca-bundle.pem');
-console.log(__dirname)
 let dbUrl;
 if (process.env.DATABASE_URL) {
 	dbUrl = process.env.DATABASE_URL;
