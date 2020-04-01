@@ -59,6 +59,12 @@ const authMiddleware = async (req, res, next) => {
 
 }
 
+/**
+ * 
+ * @param {*} res the response object
+ * @param {Number} code the response code 
+ * @param {String} message a custom response message
+ */
 const response = (res, code, message) => {
 	const codes = {
 		200: message,
@@ -97,7 +103,6 @@ const encryptPassword = (password, salt) => {
  */
 const validateEmails = async emails => {
 	for (let email of emails) {
-		console.log(email.address)
 		if (!validator.isEmail(email.address)) return false;
 	}
 

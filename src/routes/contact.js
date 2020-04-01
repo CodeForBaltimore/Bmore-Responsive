@@ -60,6 +60,13 @@ router.post('/', async (req, res) => {
 	try {
 		if (req.body.name !== undefined) {
 			const { name, phone, email, UserId, EntityId } = req.body;
+
+			// Validating emails 
+			if (email) {
+				const goodEmail = await utils.validateEmails(email);
+				if (!goodEmail) return utils.response(res, 422);
+			}
+			
 			const contact = await req.context.models.Contact.create({ name, email, phone, UserId, EntityId });
 
 			code = 200;
@@ -83,9 +90,11 @@ router.put('/', async (req, res) => {
 		if (validator.isUUID(req.body.id)) {
 			const { id, name, phone, email, UserId, EntityId } = req.body;
 
-			/** @todo validate emails */
 			// Validating emails 
-			// if (await !utils.validateEmails(email)) res.status(500).send('Server error');
+			if (email) {
+				const goodEmail = await utils.validateEmails(email);
+				if (!goodEmail) return utils.response(res, 422);
+			}
 
 			const contact = await req.context.models.Contact.findOne({
 				where: {

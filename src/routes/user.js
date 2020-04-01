@@ -124,27 +124,29 @@ router.get('/:email', utils.authMiddleware, async (req, res) => {
 	return utils.response(res, code, message);
 });
 
-// Creates a new user.
-router.post('/', async (req, res) => {
-	let code;
-	let message;
-	try {
-		if (validator.isEmail(req.body.email)) {
-			const { email, password, roles } = req.body;
-			const user = await req.context.models.User.create({ email, password, roles });
-
-			code = 200;
-			message = user.email + ' created';
-		} else {
-			code = 422;
+// Creates a new user. ONLY if we're in dev
+if (process.env.NODE_ENV === 'development') {
+	router.post('/', async (req, res) => {
+		let code;
+		let message;
+		try {
+			if (validator.isEmail(req.body.email)) {
+				const { email, password, roles } = req.body;
+				const user = await req.context.models.User.create({ email, password, roles });
+	
+				code = 200;
+				message = user.email + ' created';
+			} else {
+				code = 422;
+			}
+		} catch (e) {
+			console.error(e);
+			code = 500;
 		}
-	} catch (e) {
-		console.error(e);
-		code = 500;
-	}
-
-	return utils.response(res, code, message);
-});
+	
+		return utils.response(res, code, message);
+	});
+}
 
 // Updates any user.
 router.put('/', utils.authMiddleware, async (req, res) => {

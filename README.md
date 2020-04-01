@@ -32,7 +32,7 @@ Our API spec is on Swagger. You can view it here https://app.swaggerhub.com/apis
 Our database documentation can be found in our `docs` folder under `database.csv`. This documentation was created using SchemaSpy. Instructions for use can be found here https://github.com/bcgov/schemaspy
 
 # Setup
-A `Dockerfile` and `docker-compose` file have been included for convenience, however this may not be the best local setup for this project. For more information on how to use Docker with this project, please see the [docker section](#24-docker).
+A `Dockerfile` and `docker-compose` file have been included for convenience, however this may not be the best local setup for this project. For more information on how to use Docker with this project, please see the [docker section](#docker).
 
 To work on this project you should have:
 -   NodeJS
@@ -86,9 +86,9 @@ To make this easier included below is an example `.env` file using all default v
 ```
 NODE_ENV=development
 PORT=3000
-DATABASE_SCHEMA=public
 JWT_KEY=test123
 DATABASE_URL=postgres://postgres:postgres@localhost:5432/postgres
+DATABASE_SCHEMA=public
 BYPASS_LOGIN=true
 ```
 
@@ -114,7 +114,7 @@ To create new models, migrations, and seeders you _must_ use the Sequelize CLI c
 - `npx sequelize-cli seed:generate --name demo-user` - Creates a seeder for the `User` model and migration previously setup.
 
 ## Docker
-To use the `docker-compose.yml` file included you will first need to set [environment variables](#22-environment-variables). You **MUST** set your `DATABASE_HOST` to `db` to use the `docker-compose` solution. 
+To use the `docker-compose.yml` file included you will first need to set [environment variables](#environment-variables). You **MUST** set your `DATABASE_HOST` to `db` to use the `docker-compose` solution. 
 
 If you are running your own database, but want to use the `Dockerfile` you will need to run that this way:
 ```
@@ -127,9 +127,9 @@ You can manually set the environment variables and not use a `.env` file by sett
 ```
 -e NODE_ENV=development
 -e PORT=3000 
--e DATABASE_DATABASE_SCHEMA=<your database schema>
 -e JWT_KEY=<your JWT phrase>
 -e DATABASE_URL=<your connection string>
+-e DATABASE_DATABASE_SCHEMA=<your database schema>
 ```
 
 # Using this product
