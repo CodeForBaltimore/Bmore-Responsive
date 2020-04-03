@@ -12,7 +12,7 @@ router.post('/login', async (req, res) => {
 	try {
 		const { email, password } = req.body;
 		if (validator.isEmail(email)) {
-			const token = await req.context.models.User.findByLogin(email, password);
+			const token = await req.context.models.User.findByLogin(email.toLowerCase(), password);
 			if (token) {
 				code = 200;
 				message = token;
@@ -37,7 +37,7 @@ router.post('/reset/:email', async(req, res) => {
 		if (validator.isEmail(req.params.email)) {
 			const user = await req.context.models.User.findOne({
 				where: {
-					email: req.params.email
+					email: req.params.email.toLowerCase()
 				},
 				attributes: ['id', 'email']
 			});
@@ -101,14 +101,16 @@ router.get('/:email', utils.authMiddleware, async (req, res) => {
 		if (validator.isEmail(req.params.email)) {
 			const user = await req.context.models.User.findOne({
 				where: {
-					email: req.params.email
+					email: req.params.email.toLowerCase()
 				},
 				attributes: ['id', 'email', 'roles', 'displayName', 'phone', 'createdAt', 'updatedAt']
 			});
-			if (user.roles) {
-				user.roles = await req.context.models.UserRole.findRoles(user.roles);
+			if (user) {
+				if (user.roles) user.roles = await req.context.models.UserRole.findRoles(user.roles);
 				/** @todo add contact info for users */
 				// user.dataValues.contact = await req.context.models.Contact.findByUserId(user.id);
+			} else {
+				return utils.response(res, 422);
 			}
 
 			code = 200;
@@ -132,7 +134,7 @@ if (process.env.NODE_ENV === 'development') {
 		try {
 			if (validator.isEmail(req.body.email)) {
 				const { email, password, roles } = req.body;
-				const user = await req.context.models.User.create({ email, password, roles });
+				const user = await req.context.models.User.create({ email: email.toLowerCase(), password, roles });
 	
 				code = 200;
 				message = user.email + ' created';
@@ -158,7 +160,7 @@ router.put('/', utils.authMiddleware, async (req, res) => {
 			const { email, password } = req.body;
 			const user = await req.context.models.User.findOne({
 				where: {
-					email
+					email: email.toLowerCase()
 				}
 			});
 			user.password = password;
@@ -185,7 +187,7 @@ router.delete('/:email', utils.authMiddleware, async (req, res) => {
 		if (validator.isEmail(req.params.email)) {
 			const user = await req.context.models.User.findOne({
 				where: {
-					email: req.params.email
+					email: req.params.email.toLowerCase()
 				}
 			});
 			await user.destroy();
