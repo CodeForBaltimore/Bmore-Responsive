@@ -1,6 +1,6 @@
 {
   "name": "bmore-responsive",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "An emergency response API",
   "main": "src/index.js",
   "directories": {
