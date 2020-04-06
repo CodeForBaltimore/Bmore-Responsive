@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/CodeForBaltimore/Bmore-Responsive.svg?branch=master)](https://travis-ci.org/CodeForBaltimore/Bmore-Responsive) [![codecov](https://codecov.io/gh/CodeForBaltimore/Bmore-Responsive/branch/master/graph/badge.svg)](https://codecov.io/gh/CodeForBaltimore/Bmore-Responsive) [![All Contributors](https://img.shields.io/badge/all_contributors-13-orange.svg?style=flat-square)](#contributors)
+[![Build Status](https://travis-ci.org/CodeForBaltimore/Bmore-Responsive.svg?branch=master)](https://travis-ci.org/CodeForBaltimore/Bmore-Responsive) [![codecov](https://codecov.io/gh/CodeForBaltimore/Bmore-Responsive/branch/master/graph/badge.svg)](https://codecov.io/gh/CodeForBaltimore/Bmore-Responsive) [![All Contributors](https://img.shields.io/badge/all_contributors-0-orange.svg?style=flat-square)](#contributors-)
 
 <!-- TOC -->
 
@@ -16,7 +16,7 @@
 - [Using this product](#using-this-product)
     - [Testing](#testing)
 - [Sources and Links](#sources-and-links)
-- [Contributors](#contributors)
+    - [Contributors ✨](#contributors-)
 
 <!-- /TOC -->
 
@@ -150,10 +150,19 @@ We are also building a front-end application called [Healthcare Rollcall](https:
 
 We will be including multi-repo build processes with the front-end that will reference this project.
 
-# Contributors
-A ***BIG THANK YOU*** to all of our contributors and helpers! This project could not work without the contributions of the volunteers. THANK YOU!!!!
+## Contributors ✨
+
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<!-- markdownlint-enable -->
+<!-- prettier-ignore-end -->
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
 
 <p align="center">
     <img src="docs/img/CfB.png" width="400">
 </p>
-
