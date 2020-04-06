@@ -28,6 +28,19 @@
         "security",
         "test"
       ]
+    },
+    {
+      "login": "jbixon13",
+      "name": "Jason Bixon",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/32110237?v=4",
+      "profile": "http://jasonbixon.netlify.com",
+      "contributions": [
+        "code",
+        "ideas",
+        "infra",
+        "review",
+        "security"
+      ]
     }
   ],
   "contributorsPerLine": 7
