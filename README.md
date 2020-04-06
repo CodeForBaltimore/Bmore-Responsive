@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/CodeForBaltimore/Bmore-Responsive.svg?branch=master)](https://travis-ci.org/CodeForBaltimore/Bmore-Responsive) [![codecov](https://codecov.io/gh/CodeForBaltimore/Bmore-Responsive/branch/master/graph/badge.svg)](https://codecov.io/gh/CodeForBaltimore/Bmore-Responsive)
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-8-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-9-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 <!-- TOC -->
@@ -172,6 +172,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   </tr>
   <tr>
     <td align="center"><a href="https://dependabot.com"><img src="https://avatars1.githubusercontent.com/u/27347476?v=4" width="100px;" alt=""/><br /><sub><b>Dependabot</b></sub></a><br /><a href="#security-dependabot" title="Security">🛡️</a></td>
+    <td align="center"><a href="https://gnboor.se"><img src="https://avatars0.githubusercontent.com/u/2052524?v=4" width="100px;" alt=""/><br /><sub><b>Gabriel Boorse</b></sub></a><br /><a href="https://github.com/CodeForBaltimore/Bmore-Responsive/commits?author=gnboorse" title="Code">💻</a> <a href="https://github.com/CodeForBaltimore/Bmore-Responsive/pulls?q=is%3Apr+reviewed-by%3Agnboorse" title="Reviewed Pull Requests">👀</a></td>
   </tr>
 </table>
 
