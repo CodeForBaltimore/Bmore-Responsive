@@ -109,6 +109,7 @@ dist
 # Mac stupid DS_Store files
 *.DS_Store
 
+# terraform
 .idea
 .terraform
 *.plan
