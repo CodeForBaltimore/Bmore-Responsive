@@ -12,6 +12,7 @@ RUN npm install
 # Bundle app source
 COPY . .
 
+
 # Expose port (will not be respected by Heroku, must be defined in app)
 EXPOSE $port
 

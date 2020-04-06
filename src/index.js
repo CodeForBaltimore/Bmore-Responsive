@@ -6,6 +6,7 @@ import requestId from 'express-request-id';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import swaggerUi from 'swagger-ui-express';
+import nunjucks from 'nunjucks';
 
 import swaggerDocument from '../docs/swagger/swagger.json';
 import models, { sequelize } from './models';
@@ -17,9 +18,11 @@ const swaggerOptions = {
 	customCss: '.swagger-ui .topbar { display: none }'
 };
 
+nunjucks.configure('mail_templates', { autoescape: true });
+
 // Third-party middleware
 app.use(requestId());
-app.use(morgan('tiny'));
+app.use(morgan('common'));
 app.use(cors());
 app.use(helmet());
 app.use(express.json());
@@ -32,11 +35,6 @@ app.use(async (req, res, next) => {
 		models
 	};
 
-	/** @todo add some checks for auth tokens, etc */
-	// req.context.me = {
-	// 	id: 'abc-123'
-	// };
-
 	next();
 });
 
@@ -44,7 +42,10 @@ app.use(async (req, res, next) => {
 app.get('/', (req, res) => {
 	res.redirect('/api-docs');
 });
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument,swaggerOptions));
+app.get('/help', (req, res) => {
+	res.redirect('/api-docs');
+})
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, swaggerOptions));
 app.use('/health', (req, res) => {
 	res.status(200).json({
 		uptime: utils.formatTime(process.uptime()),
@@ -57,6 +58,17 @@ app.use('/health', (req, res) => {
 // Routes
 Object.entries(routes).forEach(([key, value]) => {
 	app.use(`/${key}`, value);
+});
+
+// Handle 404
+app.use((req, res) => {
+	return res.status(404).send("404: Not Found.");
+});
+
+// Handle 503
+app.use((error, req, res, next) => {
+	console.error(error);
+	return res.status(503).send("503: Service Unavailable");
 });
 
 // Starting Express and connecting to PostgreSQL

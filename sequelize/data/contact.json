@@ -12,6 +12,23 @@
           "number": "1234567890",
           "isPrimary": true
         }
-      ]
+      ],
+      "EntityId": "The Leftorium"
+    },
+    {
+      "name": "Moe Szyslak",
+      "email": [
+        {
+          "address": "moe@moestavern.com",
+          "isPrimary": true
+        }
+      ],
+      "phone": [
+        {
+          "number": "0987654321",
+          "isPrimary": true
+        }
+      ],
+      "EntityId": "Moes Tavern"
     }
   ]

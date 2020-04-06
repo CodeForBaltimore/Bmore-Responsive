@@ -24,9 +24,6 @@ const user = (sequelize, DataTypes) => {
 		salt: {
 			type: DataTypes.STRING
 		},
-		token: {
-			type: DataTypes.STRING
-		},
 		roles: {
 			type: DataTypes.JSON
 		},
@@ -56,8 +53,7 @@ const user = (sequelize, DataTypes) => {
 		if (user) {
 			const pw = User.encryptPassword(password, user.salt);
 			if (pw === user.password) {
-				await user.update();
-				return user.token;
+				return await User.getToken(user.id, user.email);
 			}
 		}
 	};
@@ -71,25 +67,30 @@ const user = (sequelize, DataTypes) => {
 	 */
 	User.validateToken = async token => {
 		/** @todo check if it is a token at all */
-		if (!token) return false;
-
-		const decoded = jwt.decode(token);
-		const now = new Date();
-
-		if (now.getTime() < decoded.exp * 1000) {
-			const user = await User.findOne({
-				where: {token}
-			});
-			if (user) {
-				try {
-					return await jwt.verify(user.token, process.env.JWT_KEY, {email: user.email});
-				} catch {
-					return false;
+		if (token) {
+			try {
+				const decoded = jwt.verify(token, process.env.JWT_KEY);
+				const now = new Date();
+				if (now.getTime() < decoded.exp * 1000) {
+					const user = await User.findByPk(decoded.userId);
+					if (user) {
+						return user;
+					}
 				}
+			} catch (e) {
+				console.error(e);
 			}
-		} 
-
+		}
 		return false;
+	};
+
+	User.getToken = async (userId, email, expiresIn = '1d') => {
+		const token = jwt.sign(
+			{userId, email},
+			process.env.JWT_KEY,
+			{expiresIn}
+		);
+		return token;
 	};
 
 	/**
@@ -126,15 +127,6 @@ const user = (sequelize, DataTypes) => {
 		}
 	};
 
-	const setToken = user => {
-		const token = jwt.sign(
-			{email: user.email},
-			process.env.JWT_KEY,
-			{expiresIn: '1d'}
-		);
-		user.token = token;
-	};
-
 	// Other Helpers
 	// const validateContactInfo = user => {
 	// 	let valid = true;
@@ -155,7 +147,6 @@ const user = (sequelize, DataTypes) => {
 	// Update prep actions
 	// User.beforeUpdate(validateContactInfo);
 	User.beforeUpdate(setSaltAndPassword);
-	User.beforeUpdate(setToken);
 
 	return User;
 };

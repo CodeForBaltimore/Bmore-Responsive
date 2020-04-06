@@ -32,28 +32,46 @@ const formatTime = seconds => {
  * @return {Boolean}
  */
 const validateToken = async (req) => {
-	// if (process.env.BYPASS_LOGIN) {
-	// 	return true;
-	// }
-
 	console.log(req.headers.token)
 
 	const authorized = await req.context.models.User.validateToken(req.headers.token);
-
 	if (authorized || process.env.BYPASS_LOGIN) {
+		req.context.me = authorized; // add user object to context
 		return true;
 	} 
 	
 	return false;
-
-	// res.status(401).send('Unauthorized');
 };
 
+/**
+ * Middleware function used to validate a user token
+ * 
+ * @param {*} req the request object
+ * @param {*} res the response object
+ * @param {*} next the next handler in the chain
+ */
+const authMiddleware = async (req, res, next) => {
+	if (await validateToken(req)) {
+		next();
+	} else {
+		response(res, 401, "");
+	}
+
+}
+
+/**
+ * 
+ * @param {*} res the response object
+ * @param {Number} code the response code 
+ * @param {String} message a custom response message
+ */
 const response = (res, code, message) => {
 	const codes = {
 		200: message,
-		400: "Invalid input",
+		400: "Bad Request",
 		401: "Unauthorized",
+		403: "Forbidden",
+		422: "Invalid input",
 		500: "Server error"
 	};
 
@@ -85,7 +103,6 @@ const encryptPassword = (password, salt) => {
  */
 const validateEmails = async emails => {
 	for (let email of emails) {
-		console.log(email.address)
 		if (!validator.isEmail(email.address)) return false;
 	}
 
@@ -94,7 +111,7 @@ const validateEmails = async emails => {
 
 export default {
 	formatTime,
-	validateToken,
+	authMiddleware,
 	response,
 	encryptPassword,
 	validateEmails
