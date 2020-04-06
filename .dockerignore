@@ -119,7 +119,15 @@ terraform/
 # Docker
 Dockerfile
 docker-compose.yml
+.dockerignore
 docker/
 
 # docs
 docs/
+
+# Misc
+.travis.yml
+.pre-commit-config.yaml
+.all-contributorsrc
+civic.json
+publiccode.yml

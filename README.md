@@ -16,6 +16,7 @@
 - [Using this product](#using-this-product)
     - [Testing](#testing)
 - [Sources and Links](#sources-and-links)
+- [Contributors](#contributors)
 
 <!-- /TOC -->
 
@@ -148,6 +149,13 @@ To check your linting you may run `npm run lint` and to format and automatically
 We are also building a front-end application called [Healthcare Rollcall](https://github.com/CodeForBaltimore/Healthcare-Rollcall) to interact with this backend API. To view that project, or to contribute to it, please visit the repo here: https://github.com/CodeForBaltimore/Healthcare-Rollcall
 
 We will be including multi-repo build processes with the front-end that will reference this project.
+
+# Contributors
+A ***BIG THANK YOU*** to all of our contributors and helpers! This project could not work without the contributions of the volunteers. THANK YOU!!!!
+
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-13-orange.svg?style=flat-square)](#contributors)
+<!-- ALL-CONTRIBUTORS-BADGE:END --> 
 
 <p align="center">
     <img src="docs/img/CfB.png" width="400">
