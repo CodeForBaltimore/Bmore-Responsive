@@ -111,6 +111,17 @@
         "code",
         "review"
       ]
+    },
+    {
+      "login": "bani-bellese",
+      "name": "bani-bellese",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/62711535?v=4",
+      "profile": "https://github.com/bani-bellese",
+      "contributions": [
+        "code",
+        "infra",
+        "security"
+      ]
     }
   ],
   "contributorsPerLine": 7
