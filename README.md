@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/CodeForBaltimore/Bmore-Responsive.svg?branch=master)](https://travis-ci.org/CodeForBaltimore/Bmore-Responsive) [![codecov](https://codecov.io/gh/CodeForBaltimore/Bmore-Responsive/branch/master/graph/badge.svg)](https://codecov.io/gh/CodeForBaltimore/Bmore-Responsive)
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-6-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 <!-- TOC -->
@@ -167,6 +167,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/cshamrick"><img src="https://avatars0.githubusercontent.com/u/2623452?v=4" width="100px;" alt=""/><br /><sub><b>cshamrick</b></sub></a><br /><a href="https://github.com/CodeForBaltimore/Bmore-Responsive/commits?author=cshamrick" title="Code">💻</a> <a href="#infra-cshamrick" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="#security-cshamrick" title="Security">🛡️</a></td>
     <td align="center"><a href="https://ao10.github.io"><img src="https://avatars3.githubusercontent.com/u/14120224?v=4" width="100px;" alt=""/><br /><sub><b>Ati Ok</b></sub></a><br /><a href="https://github.com/CodeForBaltimore/Bmore-Responsive/commits?author=ao10" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/joffutt4"><img src="https://avatars0.githubusercontent.com/u/10181869?v=4" width="100px;" alt=""/><br /><sub><b>joffutt4</b></sub></a><br /><a href="https://github.com/CodeForBaltimore/Bmore-Responsive/commits?author=joffutt4" title="Code">💻</a> <a href="https://github.com/CodeForBaltimore/Bmore-Responsive/commits?author=joffutt4" title="Documentation">📖</a> <a href="https://github.com/CodeForBaltimore/Bmore-Responsive/pulls?q=is%3Apr+reviewed-by%3Ajoffutt4" title="Reviewed Pull Requests">👀</a></td>
+    <td align="center"><a href="https://github.com/joffutt-bellese"><img src="https://avatars2.githubusercontent.com/u/61434152?v=4" width="100px;" alt=""/><br /><sub><b>joffutt-bellese</b></sub></a><br /><a href="https://github.com/CodeForBaltimore/Bmore-Responsive/commits?author=joffutt-bellese" title="Code">💻</a> <a href="https://github.com/CodeForBaltimore/Bmore-Responsive/commits?author=joffutt-bellese" title="Documentation">📖</a> <a href="https://github.com/CodeForBaltimore/Bmore-Responsive/pulls?q=is%3Apr+reviewed-by%3Ajoffutt-bellese" title="Reviewed Pull Requests">👀</a></td>
   </tr>
 </table>
 
