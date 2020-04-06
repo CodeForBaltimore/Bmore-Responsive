@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/CodeForBaltimore/Bmore-Responsive.svg?branch=master)](https://travis-ci.org/CodeForBaltimore/Bmore-Responsive) [![codecov](https://codecov.io/gh/CodeForBaltimore/Bmore-Responsive/branch/master/graph/badge.svg)](https://codecov.io/gh/CodeForBaltimore/Bmore-Responsive)
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 <!-- TOC -->
@@ -164,6 +164,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="http://www.jasonanton.com"><img src="https://avatars0.githubusercontent.com/u/6391564?v=4" width="100px;" alt=""/><br /><sub><b>Jason Anton</b></sub></a><br /><a href="https://github.com/CodeForBaltimore/Bmore-Responsive/commits?author=revjtanton" title="Code">💻</a> <a href="#data-revjtanton" title="Data">🔣</a> <a href="https://github.com/CodeForBaltimore/Bmore-Responsive/commits?author=revjtanton" title="Documentation">📖</a> <a href="#eventOrganizing-revjtanton" title="Event Organizing">📋</a> <a href="#ideas-revjtanton" title="Ideas, Planning, & Feedback">🤔</a> <a href="#infra-revjtanton" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="#maintenance-revjtanton" title="Maintenance">🚧</a> <a href="#question-revjtanton" title="Answering Questions">💬</a> <a href="https://github.com/CodeForBaltimore/Bmore-Responsive/pulls?q=is%3Apr+reviewed-by%3Arevjtanton" title="Reviewed Pull Requests">👀</a> <a href="#security-revjtanton" title="Security">🛡️</a> <a href="https://github.com/CodeForBaltimore/Bmore-Responsive/commits?author=revjtanton" title="Tests">⚠️</a></td>
     <td align="center"><a href="http://jasonbixon.netlify.com"><img src="https://avatars3.githubusercontent.com/u/32110237?v=4" width="100px;" alt=""/><br /><sub><b>Jason Bixon</b></sub></a><br /><a href="https://github.com/CodeForBaltimore/Bmore-Responsive/commits?author=jbixon13" title="Code">💻</a> <a href="#ideas-jbixon13" title="Ideas, Planning, & Feedback">🤔</a> <a href="#infra-jbixon13" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="https://github.com/CodeForBaltimore/Bmore-Responsive/pulls?q=is%3Apr+reviewed-by%3Ajbixon13" title="Reviewed Pull Requests">👀</a> <a href="#security-jbixon13" title="Security">🛡️</a></td>
+    <td align="center"><a href="https://github.com/cshamrick"><img src="https://avatars0.githubusercontent.com/u/2623452?v=4" width="100px;" alt=""/><br /><sub><b>cshamrick</b></sub></a><br /><a href="https://github.com/CodeForBaltimore/Bmore-Responsive/commits?author=cshamrick" title="Code">💻</a> <a href="#infra-cshamrick" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="#security-cshamrick" title="Security">🛡️</a></td>
   </tr>
 </table>
 
