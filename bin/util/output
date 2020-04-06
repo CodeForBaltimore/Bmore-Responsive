@@ -1,0 +1,5 @@
+#!/bin/bash
+
+cd terraform/components/$1
+terraform init > /dev/null 2>&1
+terraform output ${@:2}

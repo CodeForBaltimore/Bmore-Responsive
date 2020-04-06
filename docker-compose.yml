@@ -1,13 +1,13 @@
 version: '3'
 services:
   api:
-    build: .
+    image: 180104022864.dkr.ecr.us-east-2.amazonaws.com/bmore-responsive
     depends_on: 
       - db
     links:
       - "db: database"
     ports:
-      - '3000:3000'
+      - '8080:80'
     command:  >
       sh -c "npm run db-delete &&
             npm run db-create && 
