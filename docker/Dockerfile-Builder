@@ -1,0 +1,23 @@
+FROM maven:3.6.0-jdk-11-slim
+
+# Download package dependencies
+RUN apt-get update && apt-get install wget python3-pip -y
+
+# Download Terraform and make it executable.
+WORKDIR /tmp/
+RUN wget -O terraform.zip https://releases.hashicorp.com/terraform/0.12.24/terraform_0.12.24_linux_amd64.zip
+RUN unzip terraform.zip
+RUN mv terraform /usr/bin/terraform
+
+# Install the AWS CLI
+RUN pip3 install awscli --upgrade
+
+# Install the AWS MFA Tool
+RUN pip3 install aws-mfa
+
+# Add Executables from docker/bin folder to PATH
+ENV PATH "$PATH:/app/bin/util"
+
+# Create the directory for volume mounting
+RUN mkdir /app/
+WORKDIR /app/

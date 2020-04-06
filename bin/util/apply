@@ -1,0 +1,5 @@
+#!/bin/bash
+
+cd terraform/components/$1
+terraform init
+terraform apply ${@:2}
