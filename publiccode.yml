@@ -18,6 +18,7 @@ softwareType: "standalone/web"
 
 description:
   en:
+    localisedName: bmore-resonsive
     genericName: API
     shortDescription: >
           An API to drive disaster and emergency response systems.

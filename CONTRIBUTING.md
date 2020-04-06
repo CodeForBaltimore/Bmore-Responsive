@@ -3,7 +3,7 @@
 When contributing to this repository, please first discuss the change you wish to make via issue,
 email, slack, or any other method with the contributes of this repository, or Code for Baltimore, before making a change. 
 
-Please note we have a [CODE OF CONDUCT](/docs/CODE_OF_CONDUCT.md), please follow it in all your interactions with the project.
+Please note we have a [Code of Conduct](/docs/Code_of_Conduct.md), please follow it in all your interactions with the project.
 
 ## Overview
 
@@ -54,7 +54,9 @@ technologies:
 - [Docker](https://www.docker.com/)
 - [Terraform](https://www.terraform.io/)
 
-Please see our [BEST PRACTICES](/docs/BEST_PRACTICES.md) for code standards, git standards, and other guidance for writing clean and well 
+Please see our [Tech Spec](/docs/Tech_Spec.md) for a full breakdown of the project and workflows.
+
+Please see our [Best Practices](/docs/Best_Practices.md) for code standards, git standards, and other guidance for writing clean and well 
 documented code.
 
 ### Pull Request Process
@@ -77,4 +79,5 @@ The best ways to get in touch with us is via Slack. An active Slack link can be 
 You can also reach out to the tech lead [Jason Anton](https://github.com/revjtanton) via email at [jason@codeforbaltimore.org](mailto:jason@codeforbaltimore.org).
 
 ## Sources and Links
-We are also building a front-end application called [Healthcare Rollcall](https://github.com/CodeForBaltimore/Healthcare-Rollcall) to interact with this backend API. To view that project, or to contribute to it, please visit the repo here: https://github.com/CodeForBaltimore/Healthcare-Rollcall
+We are also building a front-end application called [Healthcare Rollcall](https://github.com/CodeForBaltimore/Healthcare-Rollcall) to interact 
+with this backend API. To view that project, or to contribute to it, please visit the repo here: https://github.com/CodeForBaltimore/Healthcare-Rollcall
