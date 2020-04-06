@@ -1,35 +1,37 @@
 [![Build Status](https://travis-ci.org/CodeForBaltimore/Bmore-Responsive.svg?branch=master)](https://travis-ci.org/CodeForBaltimore/Bmore-Responsive) [![codecov](https://codecov.io/gh/CodeForBaltimore/Bmore-Responsive/branch/master/graph/badge.svg)](https://codecov.io/gh/CodeForBaltimore/Bmore-Responsive)
 
-# Bmore Responsive
-An API to drive disaster and emergency response systems.
+<!-- TOC -->
 
-## Project Table of Contents
 - [Bmore Responsive](#bmore-responsive)
     - [Documentation](#documentation)
         - [API Spec](#api-spec)
         - [Database Documentation](#database-documentation)
-    - [Setup](#setup)
-        - [Node and Express setup](#node-and-express-setup)
-        - [Environment variables](#environment-variables)
-            - [Example .env](#example-env)
-        - [PostgreSQL](#postgresql)
-            - [Sequelize](#sequelize)
-        - [Docker](#docker)
-    - [Using this product](#using-this-product)
-        - [Testing](#testing)
-    - [Sources and Links](#sources-and-links)
-- [Contributing](/CONTRIBUTING.md)
-- [Best Practices](/docs/BEST_PRACTICES.md)
-- [Code of Conduct](/docs/CODE_OF_CONDUCT.md)
-- [Tech Spec](/docs/TECH_SPEC.md)
+- [Setup](#setup)
+    - [Node and Express setup](#node-and-express-setup)
+    - [Environment variables](#environment-variables)
+        - [Example .env](#example-env)
+    - [PostgreSQL](#postgresql)
+        - [Sequelize](#sequelize)
+    - [Docker](#docker)
+- [Using this product](#using-this-product)
+    - [Testing](#testing)
+- [Sources and Links](#sources-and-links)
 
-# Documentation
-We've included a `docs` folder with a template [Tech Spec](/docs/Tech_Spec.md) and [Best Practices](/docs/Best_Practices.md) document, though using Github's Wiki capabilities is also a good idea. This will get you started with documenting your project.  Other documents and relevant information that has no other place can live in the `docs` folder.  Replace this paragraph with a brief breakdown of what you've included in your `docs` folder.
+<!-- /TOC -->
 
-## API Spec
+# Bmore Responsive
+An API to drive disaster and emergency response systems.
+
+## Documentation
+Detailed documents describing this project and its use are available in this repository. The documentation currently available is as follows:
+-   [Best Practices](BEST_PRACTICES.md)
+-   [Code of Conduct](CODE_OF_CONDUCT.md)
+-   [Tech Spec](TECH_SPEC.md)
+
+### API Spec
 Our API spec is on Swagger. You can view it here https://app.swaggerhub.com/apis/codeforbaltimore/bmoreResponsive/1.0.0#/ or you can find the `swagger.json` file in our `docs` folder and use it via http://localhost:3000 when the app is running locally.  
 
-## Database Documentation
+### Database Documentation
 Our database documentation can be found in our `docs` folder under `database.csv`. This documentation was created using SchemaSpy. Instructions for use can be found here https://github.com/bcgov/schemaspy
 
 # Setup
