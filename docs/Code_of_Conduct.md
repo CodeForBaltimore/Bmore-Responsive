@@ -20,7 +20,7 @@ The Code for America community expects that Code for America network activities,
 
 Code for America reserves the right to ask anyone in violation of these policies not to participate in Code for America network activities, events, and digital forums.
 
-####Code for America's Anti-Harassment Policy
+#### Code for America's Anti-Harassment Policy
 
 This anti-harassment policy is based on <a href="http://geekfeminism.wikia.com/wiki/Conference_anti-harassment/Policy">the example policy</a> from the Geek Feminism wiki, created by the Ada Initiative and other volunteers.
 

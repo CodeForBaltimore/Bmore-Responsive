@@ -3,6 +3,9 @@
 [![All Contributors](https://img.shields.io/badge/all_contributors-10-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
+# Bmore Responsive
+An API to drive disaster and emergency response systems.
+
 <!-- TOC -->
 
 - [Bmore Responsive](#bmore-responsive)
@@ -22,9 +25,6 @@
     - [Contributors ✨](#contributors-)
 
 <!-- /TOC -->
-
-# Bmore Responsive
-An API to drive disaster and emergency response systems.
 
 ## Documentation
 Detailed documents describing this project and its use are available in this repository. The documentation currently available is as follows:

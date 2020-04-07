@@ -9,8 +9,7 @@ platforms:
   - web
 
 categories:
-  - emergency-response 
-  - healthcare
+  - emergency-response
 
 developmentStatus: production
 
@@ -25,15 +24,13 @@ description:
 
     longDescription: >
           In the event of a disaster a municipality or state may 
-          have need to check in on the status of all healthcare 
+          have need to check in on the status of healthcare 
           providers, or other types of entities, within in the 
           jurisdiction. This system will provide methods for 
-          healthcare providers and entities to check-in during 
-          disasters, and update their contact information during 
-          non-emergency periods.
+          entities to check-in during disasters, and update their 
+          contact information during non-emergency periods.
     documentation: "https://github.com/CodeForBaltimore/Bmore-Responsive/tree/master/docs"
     apiDocumentation: "https://app.swaggerhub.com/apis/codeforbaltimore/bmoreResponsive/1.0.2"
-    videos: "https://www.youtube.com/watch?v=y74QDRHFa4o&list=PL5-IuD-j5bbmWgJ8rrvmtycNtkfUgbGlH"
 
     features:
        - User management

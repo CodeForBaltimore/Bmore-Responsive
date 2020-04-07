@@ -1,12 +1,3 @@
-<!-- TOC -->
-
-- [Sequelize](#sequelize)
-    - [Migrations](#migrations)
-    - [Seeders](#seeders)
-    - [NPM commands](#npm-commands)
-
-<!-- /TOC -->
-
 # Sequelize
 This directory contains scripts and config options to seed the database with dummy data. For information and documentation about Sequelize please see their official website https://sequelize.org/
 

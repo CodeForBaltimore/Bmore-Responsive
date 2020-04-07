@@ -1,3 +1,6 @@
+# Tech Spec
+Bmore Responsive is a Contact and Response Management System (CRMS) and API. This document will describe the application in some detail.
+
 <!-- TOC -->
 
 - [Tech Spec](#tech-spec)
@@ -17,9 +20,6 @@
     - [Contact Info](#contact-info)
 
 <!-- /TOC -->
-
-# Tech Spec
-Bmore Responsive is a Contact and Response Management System (CRMS) and API. This document will describe the application in some detail.
 
 ## Overview
 This application will allow users to add and update contact information for individuals and entities. Additionally, the system will facilitate tracking of entity status and any other pertinent information. The data collected can be used by municipalities to organize response efforts in a disaster or crisis situation.
