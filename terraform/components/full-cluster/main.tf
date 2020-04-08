@@ -25,7 +25,7 @@ module "s3" {
 data "template_file" "cfb_ecs_task_definition" {
   template = file("cfb-container.json.tpl")
   vars = {
-    image_address        = "codeforbaltimore/bmore-responsive"
+    image_address        = module.ecs_cluster.cfb_registry
     s3_bucket            = module.s3.output_bucket_name
     vue_app_base_api_url = "bmoreres.codeforbaltimore.org"
     node_env             = "development"
@@ -38,8 +38,13 @@ data "template_file" "cfb_ecs_task_definition" {
     bypass_login      = "false"
     aws_region        = var.aws_region
     database_password = var.db_password
+    smtp_host         = "smtp.gmail.com"
+    smtp_port         = "587"
+    smtp_user         = "no-reply@codeforbaltimore.org"
+    smtp_password     = var.smtp_password
   }
 }
+
 
 resource "aws_secretsmanager_secret" "db_password" {
   name_prefix = "db_password"
@@ -55,6 +60,14 @@ data "template_file" "user_data" {
   template = file("userdata.sh.tpl")
   vars = {
     cluster_name = "bmore-responsive-cluster"
+  }
+}
+
+data "template_file" "seed_user_data" {
+  template = file("userdata_db_seed.sh.tpl")
+  vars = {
+    database_url = "postgres://${module.db.this_db_instance_username}:${var.db_password}@${module.db.this_db_instance_address}:${module.db.this_db_instance_port}/healthcareRollcallDB"
+    database_schema = "public"
   }
 }
 
@@ -150,4 +163,18 @@ module "db" {
   parameter_group_name   = "db_parameter_group"
   subnet_ids             = module.vpc.subnet_ids
 }
+
+module "ec2" {
+  source                 = "../../modules/ec2"
+  subnet_ids             = module.vpc.subnet_ids
+  app_name               = "cfb"
+  tags = { Name =  "healthcare_rollcall_db_seeder"}
+  ec2_ami = "ami-044bf85e844eddde5"
+  ec2_instance_type = "m5.large"
+  ec2_instance_count = "1"
+  ecs_role               = module.ecs_cluster.ecs_role
+  user_data = data.template_file.seed_user_data.rendered
+  vpc_sg = [module.sg.ecs_sg_id]
+}
+
 

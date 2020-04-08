@@ -63,6 +63,8 @@ data "aws_iam_policy_document" "ecs_cluster_asg_policy" {
     ]
 
     resources = [
+      "arn:aws:s3:::seed-data-cfb",
+      "arn:aws:s3:::seed-data-cfb/*",
       var.output_bucket_arn,
       "${var.output_bucket_arn}/*",
     ]
