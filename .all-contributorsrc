@@ -18,16 +18,8 @@
       "profile": "http://www.jasonanton.com",
       "contributions": [
         "code",
-        "data",
         "doc",
-        "eventOrganizing",
-        "ideas",
         "infra",
-        "maintenance",
-        "question",
-        "review",
-        "security",
-        "test"
       ]
     },
     {
@@ -37,10 +29,8 @@
       "profile": "http://jasonbixon.netlify.com",
       "contributions": [
         "code",
-        "ideas",
         "infra",
         "review",
-        "security"
       ]
     },
     {
