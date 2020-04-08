@@ -32,6 +32,9 @@ module.exports = {
 			phone: {
 				type: Sequelize.STRING
 			},
+			attributes: {
+				type: Sequelize.JSON,
+			},
 			createdAt: {
 				allowNull: false,
 				type: Sequelize.DATE

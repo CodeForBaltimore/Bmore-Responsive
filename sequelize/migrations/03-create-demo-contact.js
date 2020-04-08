@@ -18,6 +18,9 @@ module.exports = {
             email: {
                 type: Sequelize.JSON,
             },
+			attributes: {
+				type: Sequelize.JSON,
+			},
 			createdAt: {
 				allowNull: false,
 				type: Sequelize.DATE

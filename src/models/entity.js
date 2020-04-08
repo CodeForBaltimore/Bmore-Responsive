@@ -30,6 +30,9 @@ const entity = (sequelize, DataTypes) => {
         },
         description: {
             type: DataTypes.STRING
+        },
+        attributes: {
+            type: DataTypes.JSON,
         }
     },
     {
