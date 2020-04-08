@@ -29,13 +29,13 @@ resource "aws_autoscaling_group" "ecs_cluster_asg" {
   launch_configuration      = aws_launch_configuration.ecs_cluster_config.name
   max_size                  = var.max_size
   min_size                  = var.min_size
-  name                      = "bmore-responsive-ecs-cluster-asg"
+  name                      = "bmore-responsive-ecs-cluster-asg-cfb-aws"
   vpc_zone_identifier       = var.subnet_ids
 
   tags = [
     {
       key                 = "Name"
-      value               = "bmore-responsive-ecs-cluster-asg"
+      value               = "bmore-responsive-ecs-cluster-asg-cfb-aws"
       propagate_at_launch = true
     },
     {

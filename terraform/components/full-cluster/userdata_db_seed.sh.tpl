@@ -19,11 +19,10 @@ sudo ./aws/install
 export PATH=$PATH:/usr/local/bin
 aws s3 cp s3://${seed_data_bucket} ~/ --recursive
 cd root/seeder/
-npm install --save sequelize
-npm install --save pg pg-hstore
+npm install
 touch .env
 echo 'DATABASE_URL=${database_url}
-DATBASE_SCHEMA=${database_schema}
+DATABASE_SCHEMA=${database_schema}
 ' >> ./.env
 npm run db-delete
 npm run db-create

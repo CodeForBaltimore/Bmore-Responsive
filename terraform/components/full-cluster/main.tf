@@ -1,7 +1,7 @@
 terraform {
   required_version = "0.12.6"
   backend "s3" {
-    bucket  = "cfb-healthcare-rollcall-us-east-2-terraform-state"
+    bucket  = "cfb-healthcare-rollcall-cfb-aws-terraform-state"
     key     = "cfb-healthcare-rollcall/terraform/terraform.tfstate"
     region  = "us-east-2"
     encrypt = true
@@ -28,7 +28,7 @@ data "template_file" "cfb_ecs_task_definition" {
     image_address        = module.ecs_cluster.cfb_registry
     s3_bucket            = module.s3.output_bucket_name
     vue_app_base_api_url = "bmoreres.codeforbaltimore.org"
-    node_env             = "development"
+    node_env             = "production"
     database_host        = module.db.this_db_instance_address
     database_user        = module.db.this_db_instance_username
     //    database_password_arn = aws_secretsmanager_secret_version.db_password.arn
@@ -66,7 +66,7 @@ data "template_file" "user_data" {
 data "template_file" "seed_user_data" {
   template = file("userdata_db_seed.sh.tpl")
   vars = {
-    seed_data_bucket = "seed-data-cfb"
+    seed_data_bucket = "seed-data-cfb-aws"
     database_url = "postgres://${module.db.this_db_instance_username}:${var.db_password}@${module.db.this_db_instance_address}:${module.db.this_db_instance_port}/healthcareRollcallDB"
     database_schema = "public"
   }
@@ -133,7 +133,7 @@ module "ecs_cluster" {
   bmore-responsive_container_port        = "3000"
   bmore-responsive_container_definitions = data.template_file.cfb_ecs_task_definition.rendered
   aws_region                             = var.aws_region
-  seed_data_bucket_arn                       = "arn:aws:s3:::seed-data-cfb"
+  seed_data_bucket_arn                       = "arn:aws:s3:::seed-data-cfb-aws"
 }
 
 module "asg" {
