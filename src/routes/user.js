@@ -71,7 +71,7 @@ router.get('/', utils.authMiddleware, async (req, res) => {
 	let message;
 	try {
 		const users = await req.context.models.User.findAll({
-			attributes: ['id', 'email', 'roles', 'displayName', 'phone', 'createdAt', 'updatedAt']
+			attributes: ['id', 'email', 'roles', 'displayName', 'phone', 'attributes', 'createdAt', 'updatedAt']
 		});
 
 		for (const user of users) {

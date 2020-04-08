@@ -32,7 +32,10 @@ const user = (sequelize, DataTypes) => {
 		},
 		phone: {
 			type: DataTypes.STRING
-		}
+		},
+        attributes: {
+            type: DataTypes.JSON,
+        }
 	},
 	{
 		schema: process.env.DATABASE_SCHEMA
