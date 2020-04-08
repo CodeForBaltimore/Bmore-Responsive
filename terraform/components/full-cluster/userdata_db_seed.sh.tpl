@@ -17,7 +17,7 @@ curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip
 unzip awscliv2.zip
 sudo ./aws/install
 export PATH=$PATH:/usr/local/bin
-aws s3 cp s3://seed-data-cfb ~/ --recursive
+aws s3 cp s3://${seed_data_bucket} ~/ --recursive
 cd root/seeder/
 npm install --save sequelize
 npm install --save pg pg-hstore

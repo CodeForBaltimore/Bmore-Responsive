@@ -66,6 +66,7 @@ data "template_file" "user_data" {
 data "template_file" "seed_user_data" {
   template = file("userdata_db_seed.sh.tpl")
   vars = {
+    seed_data_bucket = "seed-data-cfb"
     database_url = "postgres://${module.db.this_db_instance_username}:${var.db_password}@${module.db.this_db_instance_address}:${module.db.this_db_instance_port}/healthcareRollcallDB"
     database_schema = "public"
   }
@@ -132,6 +133,7 @@ module "ecs_cluster" {
   bmore-responsive_container_port        = "3000"
   bmore-responsive_container_definitions = data.template_file.cfb_ecs_task_definition.rendered
   aws_region                             = var.aws_region
+  seed_data_bucket_arn                       = "arn:aws:s3:::seed-data-cfb"
 }
 
 module "asg" {
