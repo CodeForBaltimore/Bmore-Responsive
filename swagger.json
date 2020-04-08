@@ -751,6 +751,12 @@
             "type" : "string",
             "example" : "1234567890"
           },
+          "attributes" : {
+            "type" : "array",
+            "items" : {
+              "type" : "object"
+            }
+          },
           "createdAt" : {
             "type" : "string",
             "format" : "date-time",
@@ -792,6 +798,12 @@
             "type" : "array",
             "items" : {
               "$ref" : "#/components/schemas/entity_email"
+            }
+          },
+          "attributes" : {
+            "type" : "array",
+            "items" : {
+              "type" : "object"
             }
           },
           "checkIn" : {
@@ -854,6 +866,12 @@
             "type" : "array",
             "items" : {
               "$ref" : "#/components/schemas/ContactItem_email"
+            }
+          },
+          "attributes" : {
+            "type" : "array",
+            "items" : {
+              "type" : "object"
             }
           },
           "createdAt" : {
@@ -925,6 +943,12 @@
           "phone" : {
             "type" : "string",
             "example" : "1234567890"
+          },
+          "attributes" : {
+            "type" : "array",
+            "items" : {
+              "type" : "object"
+            }
           }
         }
       },
@@ -1073,6 +1097,12 @@
               "$ref" : "#/components/schemas/entity_email"
             }
           },
+          "attributes" : {
+            "type" : "array",
+            "items" : {
+              "type" : "object"
+            }
+          },
           "checkIn" : {
             "type" : "array",
             "items" : {
@@ -1141,6 +1171,12 @@
             "type" : "array",
             "items" : {
               "$ref" : "#/components/schemas/entity_email"
+            }
+          },
+          "attributes" : {
+            "type" : "array",
+            "items" : {
+              "type" : "object"
             }
           },
           "checkIn" : {
