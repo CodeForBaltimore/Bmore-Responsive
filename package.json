@@ -33,7 +33,7 @@
   },
   "homepage": "https://github.com/CodeForBaltimore/Bmore-Responsive#readme",
   "dependencies": {
-    "@babel/core": "7.8.7",
+    "@babel/core": "7.9.0",
     "@babel/node": "7.8.7",
     "chai": "4.2.0",
     "cors": "2.8.5",
