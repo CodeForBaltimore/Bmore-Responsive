@@ -28,7 +28,10 @@
   }, {
     "name" : "contact",
     "description" : "Operations related to contacts"
-  } ],
+  }, {
+   "name": "csv",
+    "description": "Operations related to CSV data dumps"
+  }],
   "paths" : {
     "/health" : {
       "get" : {
@@ -693,6 +696,48 @@
           },
           "401" : {
             "description" : "Unauthorized"
+          },
+          "422" : {
+            "description" : "Invalid input"
+          },
+          "500" : {
+            "description" : "Server error"
+          }
+        }
+      }
+    },
+    "/csv/{model_type}": {
+      "get": {
+        "tags" : [ "csv" ],
+        "summary" : "returns a full csv data dump based on the model type",
+        "description" : "By passing the model type, you can dump all of the current data in csv format.",
+        "parameters" : [ {
+          "name" : "model_type",
+          "in" : "path",
+          "description" : "type of model you want a csv data dump for",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "the csv data dump",
+            "content" : {
+                "text/plain": {
+                  "schema": {
+                    "type": "string"
+                  }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "404" : {
+            "description": "No data for particular model"
           },
           "422" : {
             "description" : "Invalid input"
