@@ -109,10 +109,35 @@ const validateEmails = async emails => {
 	return true;
 }
 
+/**
+ * Processes model results based on type
+ *
+ * @param {Array} results
+ * @param {String} modelType
+ *
+ * @return {processedResults}
+ */
+const processResults = async (results, modelType) => {
+	switch (modelType){
+		case "Entity":
+			let processedResults = [];
+			for(let result of results){
+				if(result["checkIn"].checkIns.length !== 0) {
+					result["checkIn"] = result["checkIn"].checkIns[0];
+				}
+				processedResults = [...processedResults, result];
+			}
+			return processedResults;
+		default:
+			return results;
+	};
+}
+
 export default {
 	formatTime,
 	authMiddleware,
 	response,
 	encryptPassword,
-	validateEmails
+	validateEmails,
+	processResults
 };

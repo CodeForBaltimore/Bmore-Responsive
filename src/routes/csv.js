@@ -10,11 +10,16 @@ router.use(utils.authMiddleware)
 router.get('/:model_type', async (req, res) => {
     let code;
     let message;
+    const modelType = req.params.model_type;
     try {
-        if(req.context.models.hasOwnProperty(req.params.model_type)){
-            const results = await req.context.models[req.params.model_type].findAll({raw:true});
+        if(req.context.models.hasOwnProperty(modelType)){
+            //todo add filtering
+            const results = await req.context.models[modelType].findAll({raw:true});
+
+            const processedResults = await utils.processResults(results, modelType);
+
             if(results.length !== 0){
-                message = await parseAsync(JSON.parse(JSON.stringify(results)), Object.keys(results[0]), {});
+                message = await parseAsync(JSON.parse(JSON.stringify(processedResults)), Object.keys(results[0]), {});
             }
             code = 200;
         } else {
