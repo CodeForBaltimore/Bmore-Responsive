@@ -736,9 +736,6 @@
           "401" : {
             "description" : "Unauthorized"
           },
-          "404" : {
-            "description": "No data for particular model"
-          },
           "422" : {
             "description" : "Invalid input"
           },
