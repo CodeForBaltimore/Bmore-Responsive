@@ -1,27 +1,25 @@
 import { Router } from 'express';
 import validator from 'validator';
 import utils from '../utils';
+import { parseAsync } from "json2csv";
 
 const router = new Router();
 router.use(utils.authMiddleware)
 
-// Gets all contacts.
+// Gets a data dump from the passed in model (if it exists).
 router.get('/:model_type', async (req, res) => {
     let code;
     let message;
     try {
         if(req.context.models.hasOwnProperty(req.params.model_type)){
-            const results = await req.context.models[req.params.model_type].findAll({})
+            const results = await req.context.models[req.params.model_type].findAll({raw:true});
+
+            const csv = results.length === 0 ? "no data found for type" : await parseAsync(JSON.parse(JSON.stringify(results)), Object.keys(results[0]), {});
 
             code = 200;
-            message = {
-                _meta: {
-                    total: results.length
-                },
-                results
-            };
+            message = csv;
         } else {
-            console.log("model type is invalid")
+            message = "model type is invalid"
             code = 422;
         }
     } catch (e) {
@@ -31,132 +29,5 @@ router.get('/:model_type', async (req, res) => {
 
     return utils.response(res, code, message);
 });
-
-// Gets a specific contact.
-/*router.get('/:contact_id', async (req, res) => {
-    let code;
-    let message;
-    try {
-        if (validator.isUUID(req.params.contact_id)) {
-            const contact = await req.context.models.Contact.findOne({
-                where: {
-                    id: req.params.contact_id
-                },
-            });
-
-            code = 200;
-            message = contact;
-        } else {
-            code = 422;
-        }
-    } catch (e) {
-        console.error(e);
-        code = 500;
-    }
-
-    return utils.response(res, code, message);
-});
-
-// Creates a new contact.
-router.post('/', async (req, res) => {
-    let code;
-    let message;
-    try {
-        if (req.body.name !== undefined) {
-            const { name, phone, email, UserId, EntityId } = req.body;
-
-            // Validating emails
-            if (email) {
-                const goodEmail = await utils.validateEmails(email);
-                if (!goodEmail) return utils.response(res, 422);
-            }
-
-            const contact = await req.context.models.Contact.create({ name, email, phone, UserId, EntityId });
-
-            code = 200;
-            message = contact.id + ' created';
-        } else {
-            code = 422;
-        }
-    } catch (e) {
-        console.error(e);
-        code = 500;
-    }
-
-    return utils.response(res, code, message);
-});
-
-// Updates any contact.
-router.put('/', async (req, res) => {
-    let code;
-    let message;
-    try {
-        if (validator.isUUID(req.body.id)) {
-            const { id, name, phone, email, UserId, EntityId } = req.body;
-
-            // Validating emails
-            if (email) {
-                const goodEmail = await utils.validateEmails(email);
-                if (!goodEmail) return utils.response(res, 422);
-            }
-
-            const contact = await req.context.models.Contact.findOne({
-                where: {
-                    id: id
-                }
-            });
-
-            if (!contact) return utils.response(res, 400, message);
-
-            contact.name = (name) ? name : contact.name;
-            contact.phone = (phone) ? phone : contact.phone;
-            contact.email = (email) ? email : contact.email;
-            contact.UserId = (UserId) ? UserId : contact.UserId;
-            contact.EntityId = (EntityId) ? EntityId : contact.EntityId;
-            contact.updatedAt = new Date();
-
-            await contact.save();
-
-            code = 200;
-            message = contact.id + ' updated';
-        } else {
-            code = 422;
-        }
-
-    } catch (e) {
-        console.error(e);
-        code = 500;
-    }
-
-    return utils.response(res, code, message);
-});
-
-// Deletes a contact.
-router.delete('/:contact_id', async (req, res) => {
-    let code;
-    let message;
-    try {
-        if (validator.isUUID(req.params.contact_id)) {
-            const contact = await req.context.models.Contact.findOne({
-                where: {
-                    id: req.params.contact_id
-                }
-            });
-            await contact.destroy();
-
-            code = 200;
-            message = req.params.contact_id + ' deleted';
-        } else {
-            code = 422;
-        }
-    } catch (e) {
-        console.error(e);
-        code = 500;
-    }
-
-    return utils.response(res, code, message);
-});
-
-export default router;*/
 
 export default router;
