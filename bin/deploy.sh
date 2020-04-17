@@ -46,17 +46,17 @@ echo "Db address -> $DB_ADDRESS"
 
 DB_URL="postgres://${DB_USERNAME}:${DB_PASSWORD}@${DB_ENDPOINT}:${DB_PORT}/${DB_NAME}"
 echo "DB URL -> $DB_URL"
-### Building and Pushing Docker Images ###
-docker run -it -v $(pwd):/app/ cfb-build-agent ./db-create
+
 # Log into the ECS Repository first
 $(docker run -it -v $(pwd):/app/ -v $(pwd)/docker/aws/:/root/.aws/ -e AWS_PROFILE=$AWS_PROFILE cfb-build-agent ecr-login | tr -d '\r')
 
 # Build the container image for the API
-docker build -f docker/Dockerfile-Bmore-Responsive -t bmore-responsive .
+docker pull codeforbaltimore/bmore-responsive:release-1.0.2
+
 # Get the address of the repository in AWS
 CFB_REPO=$(docker run -it -v $(pwd):/app/ -v $(pwd)/docker/aws/:/root/.aws/ -e AWS_PROFILE=$AWS_PROFILE cfb-build-agent output full-cluster bmore-responsive_registry | tr -d '\r')
 # Tag the image for pushing
-docker tag bmore-responsive $CFB_REPO:latest
+docker tag codeforbaltimore/bmore-responsive:release-1.0.2 $CFB_REPO:latest
 # Push the new docker image
 docker push $CFB_REPO
 

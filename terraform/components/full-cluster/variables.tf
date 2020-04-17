@@ -9,6 +9,11 @@ variable "db_password" {
   default = null
 }
 
+variable "smtp_password" {
+  type    = string
+  default = null
+}
+
 variable "public_hosted_zone_name" {}
 
 variable "waf_whitelist_cidrs" {
