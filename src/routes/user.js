@@ -30,7 +30,7 @@ router.post('/login', async (req, res) => {
 	return utils.response(res, code, message);
 });
 
-router.post('/reset/:email', async(req, res) => {
+router.post('/reset/:email', async (req, res) => {
 	let code;
 	let message;
 	try {
@@ -75,7 +75,7 @@ router.get('/', utils.authMiddleware, async (req, res) => {
 		});
 
 		for (const user of users) {
-			if(user.roles) user.roles = await req.context.models.UserRole.findRoles(user.roles);
+			if (user.roles) user.roles = await req.context.models.UserRole.findRoles(user.roles);
 		}
 
 		code = 200;
@@ -126,29 +126,27 @@ router.get('/:email', utils.authMiddleware, async (req, res) => {
 	return utils.response(res, code, message);
 });
 
-// Creates a new user. ONLY if we're in dev
-if (process.env.NODE_ENV === 'development') {
-	router.post('/', async (req, res) => {
-		let code;
-		let message;
-		try {
-			if (validator.isEmail(req.body.email)) {
-				const { email, password, roles } = req.body;
-				const user = await req.context.models.User.create({ email: email.toLowerCase(), password, roles });
-	
-				code = 200;
-				message = user.email + ' created';
-			} else {
-				code = 422;
-			}
-		} catch (e) {
-			console.error(e);
-			code = 500;
+// Creates a new user. 
+router.post('/', utils.authMiddleware, async (req, res) => {
+	let code;
+	let message;
+	try {
+		if (validator.isEmail(req.body.email)) {
+			const { email, password, roles } = req.body;
+			const user = await req.context.models.User.create({ email: email.toLowerCase(), password, roles });
+
+			code = 200;
+			message = user.email + ' created';
+		} else {
+			code = 422;
 		}
-	
-		return utils.response(res, code, message);
-	});
-}
+	} catch (e) {
+		console.error(e);
+		code = 500;
+	}
+
+	return utils.response(res, code, message);
+});
 
 // Updates any user.
 router.put('/', utils.authMiddleware, async (req, res) => {
@@ -196,7 +194,7 @@ router.delete('/:email', utils.authMiddleware, async (req, res) => {
 			message = req.params.email + ' deleted';
 		} else {
 			code = 422;
-		} 
+		}
 	} catch (e) {
 		console.error(e);
 		code = 500;
