@@ -1,7 +1,7 @@
 {
   "name": "bmore-responsive",
-  "version": "1.0.3",
-  "description": "An emergency response API",
+  "version": "1.0.4",
+  "description": "An API-driven CRM (Civic Relationship Management) system.",
   "main": "src/index.js",
   "directories": {
     "doc": "docs"
