@@ -29,7 +29,10 @@
       { "name" : "DATABASE_PORT", "value" : "${database_port}" },
       { "name" : "DATABASE_NAME", "value" : "${database_name}" },
       { "name" : "JWT_KEY", "value" : "${jwt_key}" },
-      { "name" : "BYPASS_LOGIN", "value" : "${bypass_login}" },
+      { "name" : "SMTP_HOST", "value" : "${smtp_host}" },
+      { "name" : "SMTP_PORT", "value" : "${smtp_port}" },
+      { "name" : "SMTP_USER", "value" : "${smtp_user}" },
+      { "name" : "SMTP_PASSWORD", "value" : "${smtp_password}" },
       { "name" : "DATABASE_PASSWORD", "value" : "${database_password}" }
     ]
   }

@@ -33,4 +33,9 @@ variable "output_bucket_arn" {
   type        = string
 }
 
+variable "seed_data_bucket_arn" {
+  description = "arn of the seed data bucket"
+  type        = string
+}
+
 variable "aws_region" {}
