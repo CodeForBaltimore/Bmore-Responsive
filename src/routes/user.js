@@ -1,12 +1,18 @@
 import { Router } from 'express';
+import rateLimit from 'express-rate-limit';
 import validator from 'validator';
 import utils from '../utils';
 import email from '../email';
 
 const router = new Router();
+const loginLimiter = rateLimit({
+	windowMs: 60 * 60 * 1000,
+	max: 5,
+	message: "Too many login attempts for this IP. Please try again later."
+});
 
 // User login.
-router.post('/login', async (req, res) => {
+router.post('/login', loginLimiter, async (req, res) => {
 	let code;
 	let message;
 	try {
@@ -30,7 +36,7 @@ router.post('/login', async (req, res) => {
 	return utils.response(res, code, message);
 });
 
-router.post('/reset/:email', async(req, res) => {
+router.post('/reset/:email', loginLimiter, async(req, res) => {
 	let code;
 	let message;
 	try {

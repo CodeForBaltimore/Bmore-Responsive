@@ -2,6 +2,9 @@
 
 import crypto from 'crypto';
 import validator from 'validator';
+import { newEnforcer } from 'casbin';
+
+const enforcer =  newEnforcer('../../casbin/model.conf', '../../casbin/policy.csv');
 
 /**
  * Formats a timestamp to something readable by humans.
@@ -32,8 +35,6 @@ const formatTime = seconds => {
  * @return {Boolean}
  */
 const validateToken = async (req) => {
-	console.log(req.headers.token)
-
 	const authorized = await req.context.models.User.validateToken(req.headers.token);
 	if (authorized || process.env.BYPASS_LOGIN) {
 		req.context.me = authorized; // add user object to context
@@ -43,6 +44,21 @@ const validateToken = async (req) => {
 	return false;
 };
 
+const validateRoles = async (req) => {
+	console.log(req.method)
+	console.log(req.originalUrl)
+	if (req.context.me.roles) {
+		const roles = await req.context.models.UserRole.findRoles(req.context.me.roles);
+		for (const role of roles) {
+			console.log(role.role)
+			const auth = await enforcer.enforce(role.role, req.originalUrl, req.method);
+			console.log(auth)
+		}
+	}
+
+	return true;
+}
+
 /**
  * Middleware function used to validate a user token
  * 
@@ -51,7 +67,10 @@ const validateToken = async (req) => {
  * @param {*} next the next handler in the chain
  */
 const authMiddleware = async (req, res, next) => {
-	if (await validateToken(req)) {
+	let authed = await validateToken(req);
+	authed = await validateRoles(req);
+	
+	if (authed) {
 		next();
 	} else {
 		response(res, 401, "");

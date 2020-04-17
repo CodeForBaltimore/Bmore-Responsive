@@ -3,9 +3,10 @@ import 'dotenv/config';
 import cors from 'cors';
 import express from 'express';
 import requestId from 'express-request-id';
+import rateLimit from 'express-rate-limit';
+import swaggerUi from 'swagger-ui-express';
 import helmet from 'helmet';
 import morgan from 'morgan';
-import swaggerUi from 'swagger-ui-express';
 import nunjucks from 'nunjucks';
 
 import swaggerDocument from '../swagger.json';
@@ -17,6 +18,10 @@ const app = express();
 const swaggerOptions = {
 	customCss: '.swagger-ui .topbar { display: none }'
 };
+const apiLimiter = rateLimit({
+	windowMs: 15 * 60 * 1000, // 15 minutes
+	max: 100
+});
 
 nunjucks.configure('mail_templates', { autoescape: true });
 
@@ -39,14 +44,14 @@ app.use(async (req, res, next) => {
 });
 
 // Helper endpoints
-app.get('/', (req, res) => {
+app.get('/', apiLimiter, (req, res) => {
 	res.redirect('/api-docs');
 });
-app.get('/help', (req, res) => {
+app.get('/help', apiLimiter, (req, res) => {
 	res.redirect('/api-docs');
 })
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, swaggerOptions));
-app.use('/health', (req, res) => {
+app.use('/api-docs', apiLimiter, swaggerUi.serve, swaggerUi.setup(swaggerDocument, swaggerOptions));
+app.use('/health', apiLimiter, (req, res) => {
 	res.status(200).json({
 		uptime: utils.formatTime(process.uptime()),
 		environment: process.env.NODE_ENV || 'n/a',
@@ -57,16 +62,16 @@ app.use('/health', (req, res) => {
 
 // Routes
 Object.entries(routes).forEach(([key, value]) => {
-	app.use(`/${key}`, value);
+	app.use(`/${key}`, apiLimiter, value);
 });
 
 // Handle 404
-app.use((req, res) => {
+app.use(apiLimiter, (req, res) => {
 	return res.status(404).send("404: Not Found.");
 });
 
 // Handle 503
-app.use((error, req, res, next) => {
+app.use(apiLimiter, (error, req, res, next) => {
 	console.error(error);
 	return res.status(503).send("503: Service Unavailable");
 });
