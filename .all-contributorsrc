@@ -1,0 +1,129 @@
+{
+  "projectName": "Bmore-Responsive",
+  "projectOwner": "CodeForBaltimore",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "contributorsSortAlphabetically": true,
+  "commit": true,
+  "commitConvention": "none",
+  "contributors": [
+    {
+      "login": "revjtanton",
+      "name": "Jason Anton",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/6391564?v=4",
+      "profile": "http://www.jasonanton.com",
+      "contributions": [
+        "code",
+        "doc",
+        "infra"
+      ]
+    },
+    {
+      "login": "jbixon13",
+      "name": "Jason Bixon",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/32110237?v=4",
+      "profile": "http://jasonbixon.netlify.com",
+      "contributions": [
+        "code",
+        "infra",
+        "review"
+      ]
+    },
+    {
+      "login": "cshamrick",
+      "name": "cshamrick",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/2623452?v=4",
+      "profile": "https://github.com/cshamrick",
+      "contributions": [
+        "code",
+        "infra",
+        "security"
+      ]
+    },
+    {
+      "login": "ao10",
+      "name": "Ati Ok",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/14120224?v=4",
+      "profile": "https://ao10.github.io",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "joffutt4",
+      "name": "joffutt4",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/10181869?v=4",
+      "profile": "https://github.com/joffutt4",
+      "contributions": [
+        "code",
+        "doc",
+        "review"
+      ]
+    },
+    {
+      "login": "joffutt-bellese",
+      "name": "joffutt-bellese",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/61434152?v=4",
+      "profile": "https://github.com/joffutt-bellese",
+      "contributions": [
+        "code",
+        "doc",
+        "review"
+      ]
+    },
+    {
+      "login": "snyk-bot",
+      "name": "Snyk bot",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/19733683?v=4",
+      "profile": "https://snyk.io",
+      "contributions": [
+        "security"
+      ]
+    },
+    {
+      "login": "dependabot[bot]",
+      "name": "Dependabot",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/27347476?v=4",
+      "profile": "https://dependabot.com",
+      "contributions": [
+        "security"
+      ]
+    },
+    {
+      "login": "gnboorse",
+      "name": "Gabriel Boorse",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/2052524?v=4",
+      "profile": "https://gnboor.se",
+      "contributions": [
+        "code",
+        "review"
+      ]
+    },
+    {
+      "login": "bani-bellese",
+      "name": "bani-bellese",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/62711535?v=4",
+      "profile": "https://github.com/bani-bellese",
+      "contributions": [
+        "code",
+        "infra",
+        "security"
+      ]
+    },
+    {
+      "login": "seancrim23",
+      "name": "Sean Crim",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/48462417?v=4",
+      "profile": "https://github.com/seancrim23",
+      "contributions": [
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "skipCi": true
+}

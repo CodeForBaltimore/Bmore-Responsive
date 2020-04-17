@@ -33,6 +33,9 @@ const contact = (sequelize, DataTypes) => {
         },
         email: {
             type: DataTypes.JSON,
+        },
+        attributes: {
+            type: DataTypes.JSON,
         }
     },
     {

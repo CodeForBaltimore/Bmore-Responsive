@@ -1,6 +1,22 @@
 # Best Practices
 Code for Baltimore projects should be built with the intention of deploying on [Heroku](https://heroku.com) or [AWS](https://aws.amazon.com/). For details on Heroku Best Practices see their [developer documentation](https://devcenter.heroku.com/articles/node-best-practices).
 
+<!-- TOC -->
+
+- [Best Practices](#best-practices)
+    - [Project Management](#project-management)
+        - [Projects](#projects)
+        - [Issues and Milestones](#issues-and-milestones)
+        - [Tagging Issues](#tagging-issues)
+    - [Code Quality Standards](#code-quality-standards)
+        - [Style Guides](#style-guides)
+    - [Static Code Analysis](#static-code-analysis)
+    - [Git and Branching](#git-and-branching)
+        - [Branch Names](#branch-names)
+        - [Merging and Pull Requests](#merging-and-pull-requests)
+
+<!-- /TOC -->
+
 ## Project Management
 
 We are using Github Issues to track outstanding issues and work for projects. 
@@ -43,7 +59,7 @@ Static code analysis tools should be used when possible, to monitor and improve 
 All code work should be done in an isolated or feature branch off of the `master` branch.  Before starting work on new code, developers should create their feature branch using a standard naming convention determined by the project.  
 
 ### Branch Names
-Branch names should follow this patter: `<your github username>/issue-<github issue number>`. This will ensure there are no branch name conflicts, and anyone looking for your branch will know what it is called based on the issue addressed. For example if your username was letsGoOs, and you were working on issue 8, then your branch name would be `letsGoOs/issue-8`. If you wanted to make a new branch to continue your work on your issue then add a suffix with an incremented number. To continue the previous example if you wanted to make a second branch for your issue 8 work your second branch would be called `letsGoOs/issue-8-2`.
+Branch names should follow this patter: `<your github username>/issue-<github issue number>`. This will ensure there are no branch name conflicts, and anyone looking for your branch will know what it is called based on the issue addressed. For example if your username was `letsGoOs`, and you were working on issue 8, then your branch name would be `letsGoOs/issue-8`. If you wanted to make a new branch to continue your work on your issue then add a suffix with an incremented number. To continue the previous example if you wanted to make a second branch for your issue 8 work your second branch would be called `letsGoOs/issue-8-2`.
 
 ### Merging and Pull Requests
 

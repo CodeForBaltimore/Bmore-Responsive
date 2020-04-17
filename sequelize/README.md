@@ -1,12 +1,3 @@
-<!-- TOC -->
-
-- [Sequelize](#sequelize)
-    - [Migrations](#migrations)
-    - [Seeders](#seeders)
-    - [NPM commands](#npm-commands)
-
-<!-- /TOC -->
-
 # Sequelize
 This directory contains scripts and config options to seed the database with dummy data. For information and documentation about Sequelize please see their official website https://sequelize.org/
 
@@ -28,3 +19,8 @@ This repo has simplified a few of the Sequelize CLI options that would be common
 - `npm run db-delete` will delete all tables and revert all migrations.
 - `npm run db-seed` will run all seeders and populate all data.
 - `npm run db-unseed` will delete all data in all tables and revert all seeders.
+
+# Links and more information
+To create new models, migrations, and seeders you _must_ use the Sequelize CLI commands. Full documentation is here https://sequelize.org/master/manual/migrations.html but here are a few useful commands:
+- `npx sequelize-cli model:generate --name User --attributes firstName:string,lastName:string,email:string` - Creates a model under `/src/models` and a migration script.
+- `npx sequelize-cli seed:generate --name demo-user` - Creates a seeder for the `User` model and migration previously setup.
