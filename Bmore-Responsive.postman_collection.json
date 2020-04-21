@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "a6403ba9-91f9-486e-87c1-1cc1ba15722a",
+		"_postman_id": "5ee3a91c-a54c-4b36-863f-61ca99e283d6",
 		"name": "Bmore-Responsive",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -638,6 +638,211 @@
 								}
 							},
 							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "csv",
+					"item": [
+						{
+							"name": "Contact CSV",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "239399b3-c08e-4923-a615-c6e0008cac4f",
+										"exec": [
+											"pm.test(\"Response time is less than \" + pm.environment.get(\"fastResponse\") + \"ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(parseInt(pm.environment.get(\"fastResponse\"), 10));",
+											"});",
+											"",
+											"",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{baseUrl}}/csv/Contact",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"csv",
+										"Contact"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Entity CSV",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "8931f00c-65c8-4739-bfa2-498aff694cbc",
+										"exec": [
+											"pm.test(\"Response time is less than \" + pm.environment.get(\"fastResponse\") + \"ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(parseInt(pm.environment.get(\"fastResponse\"), 10));",
+											"});",
+											"",
+											"",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{baseUrl}}/csv/Entity",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"csv",
+										"Entity"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "User CSV",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "c3d8ac72-751f-4d3e-a329-72eb8d1b4185",
+										"exec": [
+											"pm.test(\"Response time is less than \" + pm.environment.get(\"fastResponse\") + \"ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(parseInt(pm.environment.get(\"fastResponse\"), 10));",
+											"});",
+											"",
+											"",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{baseUrl}}/csv/User",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"csv",
+										"User"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "UserRole CSV",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "3abcb65a-ca56-44da-bffb-fbfc6299da56",
+										"exec": [
+											"pm.test(\"Response time is less than \" + pm.environment.get(\"fastResponse\") + \"ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(parseInt(pm.environment.get(\"fastResponse\"), 10));",
+											"});",
+											"",
+											"",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{baseUrl}}/csv/UserRole",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"csv",
+										"UserRole"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "d282190f-9ba1-4db8-a668-9e6c8ac4dbb3",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "afc0880d-68db-4dc0-942c-fa5a86edbca5",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
 						}
 					],
 					"protocolProfileBehavior": {},
