@@ -113,7 +113,27 @@
         "infra",
         "security"
       ]
+    },
+    {
+      "login": "seancrim23",
+      "name": "Sean Crim",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/48462417?v=4",
+      "profile": "https://github.com/seancrim23",
+      "contributions": [
+        "code",
+        "review"
+      ]
+    },
+    {
+      "login": "carorm",
+      "name": "carorm",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/8696896?v=4",
+      "profile": "https://github.com/carorm",
+      "contributions": [
+        "test"
+      ]
     }
   ],
-  "contributorsPerLine": 7
+  "contributorsPerLine": 7,
+  "skipCi": true
 }
