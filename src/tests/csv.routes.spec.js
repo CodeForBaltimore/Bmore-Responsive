@@ -1,0 +1,107 @@
+import chai from 'chai';
+import request from 'supertest';
+import app from '..';
+
+const { expect } = chai;
+
+describe('CSV Dump Positive Tests', () => {
+    it('Positive Test for CSV Dump on User ', (done) => {
+        request(app)
+            .get('/csv/User')
+            .set('Accept', 'application/json')
+            .expect('Content-Type', 'text/html; charset=utf-8')
+            .expect(200)
+            .end((err, res) => {
+                if (err) return done(err);
+                done();
+            });
+    });
+
+    it('Positive Test for CSV Dump on UserRole', (done) => {
+        request(app)
+            .get('/csv/UserRole')
+            .set('Accept', 'application/json')
+            .expect('Content-Type', 'text/html; charset=utf-8')
+            .expect(200)
+            .end((err, res) => {
+                if (err) return done(err);
+                done();
+            });
+    });
+
+    it('Positive Test for CSV Dump on Entity', (done) => {
+        request(app)
+            .get('/csv/Entity')
+            .set('Accept', 'application/json')
+            .expect('Content-Type', 'text/html; charset=utf-8')
+            .expect(200)
+        .end((err, res) => {
+                if (err) return done(err);
+                done();
+            });
+    });
+
+    it('Positive Test for CSV Dump on Contact', (done) => {
+        request(app)
+            .get('/csv/Contact')
+            .set('Accept', 'application/json')
+            .expect('Content-Type', 'text/html; charset=utf-8')
+            .expect(200)
+            .end((err, res) => {
+                if (err) return done(err);
+                done();
+            });
+    });
+});
+
+describe('CSV Dump Negative Tests', () => {
+    it('Negative Test (422) for CSV Dump on Contact', (done) => {
+        request(app)
+            .get('/csv/contact')
+            .set('Accept', 'application/json')
+            .expect('Content-Type', 'text/html; charset=utf-8')
+            .expect(422)
+            .end((err, res) => {
+                if (err) return done(err);
+                done();
+            });
+    });
+
+    it('Negative Test (422) for CSV Dump on Entity', (done) => {
+        request(app)
+            .get('/csv/entity')
+            .set('Accept', 'application/json')
+            .expect('Content-Type', 'text/html; charset=utf-8')
+            .expect(422)
+            .end((err, res) => {
+                if (err) return done(err);
+                done();
+            });
+    });
+
+    it('Negative Test (422) for CSV Dump on User', (done) => {
+        request(app)
+            .get('/csv/user')
+            .set('Accept', 'application/json')
+            .expect('Content-Type', 'text/html; charset=utf-8')
+            .expect(422)
+            .end((err, res) => {
+                if (err) return done(err);
+                done();
+            });
+    });
+
+    it('Negative Test (422) for CSV Dump on UserRole', (done) => {
+        request(app)
+            .get('/csv/userRole')
+            .set('Accept', 'application/json')
+            .expect('Content-Type', 'text/html; charset=utf-8')
+            .expect(422)
+            .end((err, res) => {
+                if (err) return done(err);
+                done();
+            });
+    });
+
+
+});
