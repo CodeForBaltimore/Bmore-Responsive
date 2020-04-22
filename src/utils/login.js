@@ -20,5 +20,5 @@ module.exports = async () => {
             () => expect(response.body).to.have.property('token'));
     });
 
-    return response.body.token; // return the api token
+    return response.body.token; // return the API token
 };
