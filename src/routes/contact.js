@@ -42,6 +42,11 @@ router.get('/:contact_id', async (req, res) => {
 
 			code = 200;
 			message = contact;
+
+			//get all entities associated with the particular contact
+			const contactEntities = await req.context.EntityContact.findAll({
+
+			})
 		} else {
 			code = 422;
 		}
@@ -145,6 +150,43 @@ router.delete('/:contact_id', async (req, res) => {
 		} else {
 			code = 422;
 		}
+	} catch (e) {
+		console.error(e);
+		code = 500;
+	}
+
+	return utils.response(res, code, message);
+});
+
+// links contact with list of entities
+router.post('/link/:contact_id', async (req, res) => {
+	//todo lots of validation to validate what is passed to the endpoint
+	//todo util function to check if relationship already exists?
+	let code;
+	let message;
+	try {
+		const contact = await req.context.models.Contact.findOne({
+			where: {
+				id: req.params.contact_id
+			}
+		});
+
+		for(entity in req.body.entities) {
+			const entityToLink = await req.context.models.Entity.findOne({
+				id: entity.id
+			});
+
+			const ec = {
+				entityId: entityToLink.id,
+				contactId: contact.id,
+				relationshipTitle: entity.title
+			};
+
+			const savedProductOrder = await req.context.models.EntityContact.create(ec);
+		}
+
+		message = `Link successful for contact with ID ${contact.id}`;
+		code = 200;
 	} catch (e) {
 		console.error(e);
 		code = 500;

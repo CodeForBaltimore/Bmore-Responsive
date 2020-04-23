@@ -188,4 +188,40 @@ router.delete('/:entity_id', async (req, res) => {
 	return utils.response(res, code, message);
 });
 
+// links entity with list of contacts
+router.post('/link/:entity_id', async (req, res) => {
+	//todo lots of validation to validate what is passed to the endpoint
+	let code;
+	let message;
+	try {
+		const entity = await req.context.models.Entity.findOne({
+			where: {
+				id: req.params.entity_id
+			}
+		});
+
+		for(contact in req.body.contacts) {
+			const contactToLink = await req.context.models.Contact.findOne({
+				id: contact.id
+			});
+
+			const ec = {
+				entityId: entity.id,
+				contactId: contactToLink.id,
+				relationshipTitle: contact.title
+			};
+
+			const savedProductOrder = await req.context.models.EntityContact.create(ec);
+		}
+
+		message = `Link successful for entity with ID ${entity.id}`;
+		code = 200;
+	} catch (e) {
+		console.error(e);
+		code = 500;
+	}
+
+	return utils.response(res, code, message);
+});
+
 export default router;
