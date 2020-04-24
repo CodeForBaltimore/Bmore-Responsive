@@ -80,9 +80,12 @@ router.get('/', utils.authMiddleware, async (req, res) => {
 			attributes: ['id', 'email', 'displayName', 'phone', 'attributes', 'createdAt', 'updatedAt']
 		});
 
-		// for (const user of users) {
-		// 	if (user.roles) user.roles = await req.context.models.UserRole.findRoles(user.roles);
-		// }
+		for (const user of users) {
+			const e = await utils.loadCasbin();
+			const roles = await e.getRolesForUser(user.email);
+
+			user.dataValues.roles = roles;
+		}
 
 		code = 200;
 		message = {
@@ -112,7 +115,11 @@ router.get('/:email', utils.authMiddleware, async (req, res) => {
 				attributes: ['id', 'email', 'displayName', 'phone', 'createdAt', 'updatedAt']
 			});
 			if (user) {
-				// if (user.roles) user.roles = await req.context.models.UserRole.findRoles(user.roles);
+				const e = await utils.loadCasbin();
+				const roles = await e.getRolesForUser(user.email);
+
+				user.dataValues.roles = roles;
+
 				/** @todo add contact info for users */
 				// user.dataValues.contact = await req.context.models.Contact.findByUserId(user.id);
 			} else {
