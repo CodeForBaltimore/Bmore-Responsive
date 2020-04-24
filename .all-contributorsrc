@@ -132,6 +132,15 @@
       "contributions": [
         "test"
       ]
+    },
+    {
+      "login": "blakenan-bellese",
+      "name": "blakenan-bellese",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/61432973?v=4",
+      "profile": "https://github.com/blakenan-bellese",
+      "contributions": [
+        "ideas"
+      ]
     }
   ],
   "contributorsPerLine": 7,
