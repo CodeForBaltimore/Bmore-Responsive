@@ -3,14 +3,10 @@ import path from 'path';
 import fs from 'fs';
 import _ from 'lodash';
 import tls from 'tls';
+import utils from '../utils';
 
 const rdsCa = fs.readFileSync('./rds-combined-ca-bundle.pem');
-let dbUrl;
-if (process.env.DATABASE_URL) {
-	dbUrl = process.env.DATABASE_URL;
-} else {
-	dbUrl = `postgres://${process.env.DATABASE_USERNAME}:${process.env.DATABASE_PASSWORD}@${process.env.DATABASE_HOST}:${process.env.DATABASE_PORT}/${process.env.DATABASE_NAME}`;
-}
+const dbUrl = utils.dbUrl();
 
 // Securing our db connection if prod
 /** @todo allow other options besides RDS */

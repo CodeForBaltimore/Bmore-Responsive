@@ -10,32 +10,11 @@ router.get('/', async (req, res) => {
 	let code;
 	let message;
 	try {
-		const roles = await req.context.models.UserRole.findAll({
-		});
+		const e = await utils.loadCasbin();
+		const roles = await e.getNamedPolicy('p');
 
 		code = 200;
 		message = roles;
-	} catch (e) {
-		console.error(e);
-		code = 500;
-	}
-
-	return utils.response(res, code, message);
-});
-
-// Gets a specific role.
-router.get('/:role_id', async (req, res) => {
-	let code;
-	let message;
-	try {
-		const role = await req.context.models.UserRole.findOne({
-			where: {
-				id: req.params.role_id
-			}
-		});
-
-		code = 200;
-		message = role;
 	} catch (e) {
 		console.error(e);
 		code = 500;
@@ -49,39 +28,24 @@ router.post('/', async (req, res) => {
 	let code;
 	let message;
 	try {
-		const { role, description } = req.body;
-		const newRole = await req.context.models.UserRole.create({ role, description });
-		code = 200;
-		message = newRole.role + ' created';
-	} catch (e) {
-		console.error(e);
-		code = 500;
-	}
+		let added = false;
+		const { role, path, method } = req.body;
 
-	return utils.response(res, code, message);
-});
+		if (role && path && method) {
+			const e = await utils.loadCasbin();
+			const p = [role, path, method]
+			const added = await e.addPolicy(...p)
 
-// Updates any role.
-router.put('/', async (req, res) => {
-	let code;
-	let message;
-	try {
-		const { id, role, description } = req.body;
-		if (validator.isNumeric(id.toString())) {
-			const updatedRole = await req.context.models.UserRole.findOne({
-				where: {
-					id
-				}
-			});
-			updatedRole.role = role;
-			updatedRole.description = description;
-			await updatedRole.save();
-
-			code = 200;
-			message = updatedRole.role + ' updated';
+			if (added) {
+				code = 200;
+				message = 'policy created';
+			} else {
+				code = 422;
+			}
 		} else {
-			code = 400;
+			code = 422;
 		}
+
 	} catch (e) {
 		console.error(e);
 		code = 500;
@@ -91,20 +55,22 @@ router.put('/', async (req, res) => {
 });
 
 // Deletes a role.
-router.delete('/:role_id', async (req, res) => {
+router.post('/delete', async (req, res) => {
 	let code;
 	let message;
 	try {
-		const role = await req.context.models.UserRole.findOne({
-			where: {
-				id: req.params.role_id
-			}
-		});
-		const name = (role) ? role.role : '';
-		await role.destroy();
+		const e = await utils.loadCasbin();
+		const { role, path, method } = req.body;
 
-		code = 200;
-		message = name + ' deleted';
+		const p = [role, path, method]
+		const removed = await e.removePolicy(...p)
+
+		if (removed) {
+			code = 200;
+			message = 'policy deleted';
+		} else {
+			code = 422;
+		}
 	} catch (e) {
 		console.error(e);
 		code = 500;

@@ -1,6 +1,86 @@
 [
     {
-        "role": "admin",
-        "description": "This is a test admin role."
+        "ptype": "p",
+        "v0": "admin",
+        "v1": "/*",
+        "v2": "GET"
+    },
+    {
+        "ptype": "p",
+        "v0": "admin",
+        "v1": "/*",
+        "v2": "POST"
+    },
+    {
+        "ptype": "p",
+        "v0": "admin",
+        "v1": "/*",
+        "v2": "PUT"
+    },
+    {
+        "ptype": "p",
+        "v0": "admin",
+        "v1": "/*",
+        "v2": "DELETE"
+    },
+    {
+        "ptype": "p",
+        "v0": "user",
+        "v1": "/entity",
+        "v2": "GET"
+    },
+    {
+        "ptype": "p",
+        "v0": "user",
+        "v1": "/entity",
+        "v2": "POST"
+    },
+    {
+        "ptype": "p",
+        "v0": "user",
+        "v1": "/entity",
+        "v2": "PUT"
+    },
+    {
+        "ptype": "p",
+        "v0": "user",
+        "v1": "/contact",
+        "v2": "GET"
+    },
+    {
+        "ptype": "p",
+        "v0": "user",
+        "v1": "/contact",
+        "v2": "POST"
+    },
+    {
+        "ptype": "p",
+        "v0": "user",
+        "v1": "/contact",
+        "v2": "PUT"
+    },
+    {
+        "ptype": "p",
+        "v0": "user",
+        "v1": "/csv/Entity",
+        "v2": "GET"
+    },
+    {
+        "ptype": "p",
+        "v0": "user",
+        "v1": "/csv/Contact",
+        "v2": "GET"
+    },
+    {
+        "ptype": "p",
+        "v0": "user",
+        "v1": "/user/*",
+        "v2": "GET"
+    },
+    {
+        "ptype": "p",
+        "v0": "user",
+        "v1": "/user/*",
+        "v2": "PUT"
     }
 ]

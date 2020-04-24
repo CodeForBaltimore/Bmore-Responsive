@@ -35,7 +35,8 @@
   "dependencies": {
     "@babel/core": "7.9.0",
     "@babel/node": "7.8.7",
-    "casbin": "4.2.1",
+    "casbin": "4.3.1",
+    "casbin-sequelize-adapter": "2.0.1",
     "chai": "4.2.0",
     "cors": "2.8.5",
     "crypto": "1.0.1",

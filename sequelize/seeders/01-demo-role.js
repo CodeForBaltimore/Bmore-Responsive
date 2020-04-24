@@ -1,15 +1,15 @@
+
 const userRoles = require('../data/user-role.json');
+const casbin = require('casbin');
+const csa = require('casbin-sequelize-adapter');
+
+const casbinConf = `${__dirname}/casbin.conf`;
 
 module.exports = {
 	up: queryInterface => {
-		for (const element of userRoles) {
-			element.createdAt = new Date();
-			element.updatedAt = new Date();
-		}
-
-		return queryInterface.bulkInsert('UserRoles', userRoles);
+		return queryInterface.bulkInsert('casbin_rule', userRoles);
 	},
 	down: queryInterface => {
-		return queryInterface.bulkDelete('UserRoles', null, {});
+		return queryInterface.bulkDelete('casbin_rule', null, {});
 	}
 };

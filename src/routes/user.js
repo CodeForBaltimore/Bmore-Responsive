@@ -77,12 +77,12 @@ router.get('/', utils.authMiddleware, async (req, res) => {
 	let message;
 	try {
 		const users = await req.context.models.User.findAll({
-			attributes: ['id', 'email', 'roles', 'displayName', 'phone', 'attributes', 'createdAt', 'updatedAt']
+			attributes: ['id', 'email', 'displayName', 'phone', 'attributes', 'createdAt', 'updatedAt']
 		});
 
-		for (const user of users) {
-			if (user.roles) user.roles = await req.context.models.UserRole.findRoles(user.roles);
-		}
+		// for (const user of users) {
+		// 	if (user.roles) user.roles = await req.context.models.UserRole.findRoles(user.roles);
+		// }
 
 		code = 200;
 		message = {
@@ -109,10 +109,10 @@ router.get('/:email', utils.authMiddleware, async (req, res) => {
 				where: {
 					email: req.params.email.toLowerCase()
 				},
-				attributes: ['id', 'email', 'roles', 'displayName', 'phone', 'createdAt', 'updatedAt']
+				attributes: ['id', 'email', 'displayName', 'phone', 'createdAt', 'updatedAt']
 			});
 			if (user) {
-				if (user.roles) user.roles = await req.context.models.UserRole.findRoles(user.roles);
+				// if (user.roles) user.roles = await req.context.models.UserRole.findRoles(user.roles);
 				/** @todo add contact info for users */
 				// user.dataValues.contact = await req.context.models.Contact.findByUserId(user.id);
 			} else {

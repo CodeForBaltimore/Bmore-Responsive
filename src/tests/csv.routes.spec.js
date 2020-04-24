@@ -17,18 +17,6 @@ describe('CSV Dump Positive Tests', () => {
             });
     });
 
-    it('Positive Test for CSV Dump on UserRole', (done) => {
-        request(app)
-            .get('/csv/UserRole')
-            .set('Accept', 'application/json')
-            .expect('Content-Type', 'text/html; charset=utf-8')
-            .expect(200)
-            .end((err, res) => {
-                if (err) return done(err);
-                done();
-            });
-    });
-
     it('Positive Test for CSV Dump on Entity', (done) => {
         request(app)
             .get('/csv/Entity')
