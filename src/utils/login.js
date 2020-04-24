@@ -1,24 +1,43 @@
 // libraries
-const chakram = require('chakram');
-const { describe, it } = require('mocha');
+import request from "supertest";
+import app from "..";
+import user from "../models/user";
 
-const { expect } = chakram; // use the chakram expectation
-const { serviceUrl, login } = require('../data/config');
+const {describe, it} = require('mocha');
 
+
+const createUser = async (user) => {
+    // it('should create a user', async() => {
+    await request(app)
+        .post('/user')
+        .send(user)
+        .set('Accept', 'application/json')
+        .expect('Content-Type', 'text/html; charset=utf-8')
+        .expect(200)
+    // .end((err, res) => {
+    //     if (err) return done(err);
+    //     expect(res.text).to.equal(`${user.email} created`);
+    //     done();
+    // });
+    // });
+}
 /**
  * Login to the API to get a JWT token.
  */
-module.exports = async () => {
+const login = async (user) => {
+    // let response
+    // it ('should login with token', async() => {
     // get token response from api
-    const response = await chakram.post(`${serviceUrl}/login`, login);
-
-    describe('logging in', () => {
-        it('should have 200 response',
-            () => expect(response).to.have.status(200));
-
-        it('should have token property',
-            () => expect(response.body).to.have.property('token'));
-    });
-
-    return response.body.token; // return the API token
+    const response = await request(app)
+        .post('/user/login')
+        .send(user)
+        .set('Accept', 'application/json')
+        .expect('Content-Type', 'text/html; charset=utf-8')
+        .expect(200);
+    // });
+    return response.text;
 };
+module.exports = {
+    login: login,
+    createUser
+}
