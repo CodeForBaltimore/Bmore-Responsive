@@ -11,7 +11,16 @@ router.get('/', async (req, res) => {
 	let message;
 	try {
 		const e = await utils.loadCasbin();
-		const roles = await e.getNamedPolicy('p');
+		const rolesRaw = await e.getNamedPolicy('p');
+		const roles = [];
+
+		for (const role of rolesRaw) {
+			roles.push({
+				role: role[0],
+				path: role[1],
+				method: role[2]
+			});
+		}
 
 		code = 200;
 		message = roles;
@@ -28,13 +37,14 @@ router.post('/', async (req, res) => {
 	let code;
 	let message;
 	try {
-		let added = false;
 		const { role, path, method } = req.body;
 
 		if (role && path && method) {
+			let added = false;
+			
 			const e = await utils.loadCasbin();
 			const p = [role, path, method]
-			const added = await e.addPolicy(...p)
+			added = await e.addPolicy(...p)
 
 			if (added) {
 				code = 200;
