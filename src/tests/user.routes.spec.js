@@ -4,7 +4,7 @@ import randomWords from 'random-words';
 import app from '..';
 import {login, createUser} from '../utils/login'
 
-const {expect, describe, before, it} = chai;
+const {expect} = chai;
 const user = {email: `${randomWords()}@test.test`, password: randomWords(), roles: [1]};
 
 
