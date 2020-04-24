@@ -3,7 +3,7 @@ import request from 'supertest';
 import randomWords from 'random-words';
 import app from '..';
 
-const { describe, before} = chai;
+const { describe, before, it} = chai;
 const { expect } = chakram; // use the chakram expectations
 const { serviceUrl, login } = require('../data/config');
 
