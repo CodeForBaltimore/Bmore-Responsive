@@ -1,6 +1,5 @@
 import { UUIDV4 } from "sequelize";
-import Contact from "./contact";
-import EntityContact from "./entitycontact";
+import models from "./index";
 
 const entity = (sequelize, DataTypes) => {
     // Defining our entity table and setting Entity object.
@@ -43,7 +42,7 @@ const entity = (sequelize, DataTypes) => {
 
     Entity.associate = models => {
         Entity.belongsToMany(models.Contact, {
-            through: "EntityContacts",
+            through: "EntityContact",
             as: "contacts",
             foreignKey: "entityId",
             otherKey: "contactId"
@@ -76,16 +75,16 @@ const entity = (sequelize, DataTypes) => {
         return contacts;
     }
 
-    Entity.findAssociatedContactsByEntityId = async (entityId) => {
+    Entity.findEntityWithAssociatedContacts = async (entityId) => {
         const entityContacts = await Entity.findAll({
             where: { id: entityId },
             include: [{
-                model: Contact,
+                model: models.Contact,
                 as: 'contacts',
                 required: false,
                 attributes: ["name", "phone", "email", "attributes", "email"],
                 through: {
-                    model: EntityContact,
+                    model: models.EntityContact,
                     as: "entityContacts",
                     attributes: ["relationshipTitle"]
                 }

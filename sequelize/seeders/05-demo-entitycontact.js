@@ -2,11 +2,6 @@ const uuid = require('uuid4');
 const randomWords = require('random-words');
 const contacts = require('../data/contact.json');
 
-//iterate through the contacts and entities that were created
-//build entitycontacts out of them
-//add to db
-//profit?
-
 module.exports = {
     up: async queryInterface => {
         let entityContacts = [];
@@ -25,9 +20,9 @@ module.exports = {
             entityContacts.push(entityContact)
         }
 
-        return queryInterface.bulkInsert('EntityContact', entityContacts);
+        return queryInterface.bulkInsert('EntityContacts', entityContacts);
     },
     down: queryInterface => {
-        return queryInterface.bulkDelete('EntityContact', null, {});
+        return queryInterface.bulkDelete('EntityContacts', null, {});
     }
 };

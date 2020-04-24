@@ -1,6 +1,4 @@
 import { UUIDV4 } from "sequelize";
-import Entity from "./entity";
-import Contact from "./contact";
 
 const entityContact = (sequelize, DataTypes) => {
     // Defining our EntityContact object.
@@ -13,9 +11,17 @@ const entityContact = (sequelize, DataTypes) => {
             },
             entityId: {
                 type: DataTypes.UUID,
+                references: {
+                    model: 'Entity',
+                    key: 'id'
+                }
             },
             contactId: {
                 type: DataTypes.UUID,
+                references: {
+                    model: 'Contact',
+                    key: 'id'
+                }
             },
             relationshipTitle: {
                 type: DataTypes.STRING,
@@ -25,24 +31,6 @@ const entityContact = (sequelize, DataTypes) => {
         {
             schema: process.env.DATABASE_SCHEMA
         });
-
-    EntityContact.findAssociatedEntitiesByContactId = async (contactId) => {
-        const contactEntities = await EntityContact.findAll({
-            where: { contactId },
-            include: [Entity]
-        });
-
-        return contactEntities;
-    };
-
-    EntityContact.findAssociatedContactsByEntityId = async (entityId) => {
-        const contactEntities = await EntityContact.findAll({
-            where: { entityId },
-            include: [Contact]
-        });
-
-        return contactEntities;
-    };
 
     return EntityContact;
 };

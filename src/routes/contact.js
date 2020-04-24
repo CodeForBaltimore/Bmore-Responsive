@@ -34,19 +34,10 @@ router.get('/:contact_id', async (req, res) => {
 	let message;
 	try {
 		if (validator.isUUID(req.params.contact_id)) {
-			const contact = await req.context.models.Contact.findOne({
-				where: {
-					id: req.params.contact_id
-				},
-			});
+			const contact = await req.context.models.Contact.findContactWithAssociatedEntities(req.params.contact_id);
 
 			code = 200;
 			message = contact;
-
-			//get all entities associated with the particular contact
-			const contactEntities = await req.context.EntityContact.findAll({
-
-			})
 		} else {
 			code = 422;
 		}
@@ -170,10 +161,11 @@ router.post('/link/:contact_id', async (req, res) => {
 				id: req.params.contact_id
 			}
 		});
-
-		for(entity in req.body.entities) {
+		for(const entity of req.body.entities) {
 			const entityToLink = await req.context.models.Entity.findOne({
-				id: entity.id
+				where: {
+					id: entity.id
+				}
 			});
 
 			const ec = {

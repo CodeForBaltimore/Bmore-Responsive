@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
     up: (queryInterface, Sequelize) => {
-        return queryInterface.createTable('EntityContact', {
+        return queryInterface.createTable('EntityContacts', {
             id: {
                 type: Sequelize.UUID,
                 primaryKey: true,
@@ -9,10 +9,10 @@ module.exports = {
                 autoIncrement: false,
             },
             entityId: {
-                type: Sequelize.UUID,
+                type: Sequelize.UUID
             },
             contactId: {
-                type: Sequelize.UUID,
+                type: Sequelize.UUID
             },
             relationshipTitle: {
                 type: Sequelize.STRING,
@@ -29,6 +29,6 @@ module.exports = {
         });
     },
     down: queryInterface => {
-        return queryInterface.dropTable('EntityContact');
+        return queryInterface.dropTable('EntityContacts');
     }
 };
