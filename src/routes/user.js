@@ -166,15 +166,25 @@ router.put('/', utils.authMiddleware, async (req, res) => {
 	let code;
 	let message;
 	try {
-		if (validator.isEmail(req.body.email)) {
+		if (validator.isEmail(req.body.email) && req.body.password !== undefined) {
 			/** @todo add email and phone update options */
-			const { email, password } = req.body;
+			const { email, password, displayName, phone, attributes } = req.body;
 			const user = await req.context.models.User.findOne({
 				where: {
 					email: email.toLowerCase()
 				}
 			});
+			/** @todo add ability to change email */
+
+			/** @todo when roles are added make sure only admin or relevant user can change password */
 			user.password = password;
+
+			user.displayName = (displayName) ? displayName : user.displayName;
+			user.phone = (phone) ? phone : user.phone;
+			user.attributes = (attributes) ? attributes : user.attributes;
+
+			user.updatedAt = new Date();
+
 			await user.save();
 
 			code = 200;
