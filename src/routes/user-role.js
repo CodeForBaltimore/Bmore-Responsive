@@ -12,14 +12,21 @@ router.get('/', async (req, res) => {
 	try {
 		const e = await utils.loadCasbin();
 		const rolesRaw = await e.getNamedPolicy('p');
-		const roles = [];
+		const roles = {};
+
 
 		for (const role of rolesRaw) {
-			roles.push({
-				role: role[0],
-				path: role[1],
-				method: role[2]
-			});
+			if (roles[role[0]] !== undefined) {
+				roles[role[0]].push({
+					path: role[1],
+					method: role[2]
+				})
+			} else {
+				roles[role[0]] = [{
+					path: role[1],
+					method: role[2]
+				}];
+			}
 		}
 
 		code = 200;

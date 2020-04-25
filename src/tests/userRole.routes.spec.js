@@ -1,9 +1,8 @@
 import chai from 'chai';
 import request from 'supertest';
-import randomWords from 'random-words';
 import app from '..';
 
-const { expect } = chai;
+const { expect,assert } = chai;
 const role = { role: 'test', path: '/test', method: 'GET' };
 
 describe('User roles positive tests', () => {
@@ -28,7 +27,7 @@ describe('User roles positive tests', () => {
         .expect(200)
         .end((err, res) => {
           if (err) return done(err);
-          expect(res.body.length).to.be.greaterThan(0);
+          assert.isObject(res.body, 'body is an object');
           done();
         });
     });
