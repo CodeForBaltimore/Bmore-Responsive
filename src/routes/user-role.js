@@ -1,5 +1,4 @@
 import { Router } from 'express';
-import validator from 'validator';
 import utils from '../utils';
 
 const router = new Router();

@@ -1,14 +1,24 @@
-import chai from 'chai';
 import request from 'supertest';
+import { Login } from '../utils/login';
 import app from '..';
 
-const { expect } = chai;
-
 describe('CSV Dump Positive Tests', () => {
+    const authed = new Login();
+    let token;
+
+    before(async () => {
+        await authed.setToken();
+        token = authed.getToken();
+    });
+    after(async() => {
+        await authed.destroyToken();
+    });
+
     it('Positive Test for CSV Dump on User ', (done) => {
         request(app)
             .get('/csv/User')
             .set('Accept', 'application/json')
+            .set('token', token)
             .expect('Content-Type', 'text/html; charset=utf-8')
             .expect(200)
             .end((err, res) => {
@@ -21,6 +31,7 @@ describe('CSV Dump Positive Tests', () => {
         request(app)
             .get('/csv/Entity')
             .set('Accept', 'application/json')
+            .set('token', token)
             .expect('Content-Type', 'text/html; charset=utf-8')
             .expect(200)
         .end((err, res) => {
@@ -33,6 +44,7 @@ describe('CSV Dump Positive Tests', () => {
         request(app)
             .get('/csv/Contact')
             .set('Accept', 'application/json')
+            .set('token', token)
             .expect('Content-Type', 'text/html; charset=utf-8')
             .expect(200)
             .end((err, res) => {

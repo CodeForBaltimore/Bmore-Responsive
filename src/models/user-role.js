@@ -1,6 +1,10 @@
+import { newEnforcer, Adapter, Helper, Model } from 'casbin';
+
+const casbinConf = `${__dirname}/casbin.conf`;
+
 const userRole = (sequelize, DataTypes) => {
-	// Defining our userRole table and setting UserRole object.
-	const UserRole = sequelize.define('casbin_rule', {
+    // Defining our userRole table and setting UserRole object.
+    const UserRole = sequelize.define('casbin_rule', {
         id: {
             allowNull: false,
             autoIncrement: true,
@@ -28,12 +32,12 @@ const userRole = (sequelize, DataTypes) => {
         v5: {
             type: DataTypes.STRING
         },
-	},
-	{
-		schema: process.env.DATABASE_SCHEMA
-	});
+    },
+        {
+            schema: process.env.DATABASE_SCHEMA
+        });
 
-	return UserRole;
+    return UserRole;
 };
 
 export default userRole;

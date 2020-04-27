@@ -35,7 +35,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Custom middleware
 app.use(async (req, res, next) => {
-	// Making our models available in the request.
+
 	req.context = {
 		models
 	};

@@ -1,27 +1,29 @@
 import chai from 'chai';
 import request from 'supertest';
 import randomWords from 'random-words';
+import { Login } from '../utils/login';
 import app from '..';
-import {login, createUser} from '../utils/login'
 
-const {expect} = chai;
-const user = {email: `${randomWords()}@test.test`, password: randomWords(), roles: [1]};
-
-
-/** @todo add JWT validation tests */
-
+const { expect } = chai;
+const user = { email: `${randomWords()}@test.test`, password: randomWords(), roles: ["admin"] };
 
 describe('User positive tests', () => {
-    let tokenHeader;
+    const authed = new Login();
+    let token;
+
     before(async () => {
-        await createUser(user)
-        tokenHeader = {token: await login(user)};
+        await authed.setToken();
+        token = authed.getToken();
     });
+    after(async() => {
+        await authed.destroyToken();
+    });
+
     it('should get all users', (done) => {
         request(app)
             .get(`/user`)
             .set('Accept', 'application/json')
-            .set('token', tokenHeader.token)
+            .set('token', token)
             .send()
             .expect('Content-Type', 'application/json; charset=utf-8')
             .expect(200)
@@ -31,11 +33,25 @@ describe('User positive tests', () => {
                 done();
             });
     });
+    it('should create a new user', (done) => {
+        request(app)
+        .post('/user')
+        .set('token', token)
+        .send(user)
+        .set('Accept', 'application/json')
+        .expect('Content-Type', 'text/html; charset=utf-8')
+        .expect(200)
+        .end((err, res) => {
+            if (err) return done(err);
+            expect(res.text).to.equal(`${user.email} created`);
+            done();
+        });
+    })
     it('should get a single user', (done) => {
         request(app)
             .get(`/user/${user.email}`)
             .set('Accept', 'application/json')
-            .set('token', tokenHeader.token)
+            .set('token', token)
             .send()
             .expect('Content-Type', 'application/json; charset=utf-8')
             .expect(200)
@@ -51,7 +67,7 @@ describe('User positive tests', () => {
     //     request(app)
     //         .put('/user')
     //         .send(user)
-    //         .set('token', tokenHeader.token)
+    //         .set('token', token)
     //         .set('Accept', 'application/json')
     //         .send()
     //         .expect('Content-Type', 'text/html; charset=utf-8')
@@ -62,27 +78,27 @@ describe('User positive tests', () => {
     //             done();
     //         });
     // });
-    it('should delete a user', (done) => {
-        request(app)
-            .delete(`/user/${user.email}`)
-            .set('Accept', 'application/json')
-            .set('token', tokenHeader.token)
-            .send()
-            .expect('Content-Type', 'text/html; charset=utf-8')
-            .expect(200)
-            .end((err, res) => {
-                if (err) return done(err);
-                expect(res.text).to.equal(`${user.email} deleted`);
-                done();
-            });
-    });
+    // it('should delete a user', (done) => {
+    //     request(app)
+    //         .delete(`/user/${user.email}`)
+    //         .set('Accept', 'application/json')
+    //         .set('token', token)
+    //         .send()
+    //         .expect('Content-Type', 'text/html; charset=utf-8')
+    //         .expect(200)
+    //         .end((err, res) => {
+    //             if (err) return done(err);
+    //             expect(res.text).to.equal(`${user.email} deleted`);
+    //             done();
+    //         });
+    // });
 });
 
 describe('User negative tests', () => {
     it('should not login a user', (done) => {
         request(app)
             .post('/user/login')
-            .send({email: randomWords(), password: randomWords()})
+            .send({ email: randomWords(), password: randomWords() })
             .set('Accept', 'application/json')
             .expect('Content-Type', 'text/html; charset=utf-8')
             .expect(422)

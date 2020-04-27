@@ -70,7 +70,7 @@ const validateToken = async (req) => {
  * @return {Boolean}
  */
 const validateRoles = async (req) => {
-	const e = await loadCasbin();
+	const e = await req.context.casbinEnforcer;
 	const { originalUrl: path, method } = req;
 
 	const isAllowed = await e.enforce(req.context.me.email, path, method);

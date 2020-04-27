@@ -80,8 +80,9 @@ router.get('/', utils.authMiddleware, async (req, res) => {
 			attributes: ['id', 'email', 'displayName', 'phone', 'attributes', 'createdAt', 'updatedAt']
 		});
 
+		const e = await utils.loadCasbin();
+
 		for (const user of users) {
-			const e = await utils.loadCasbin();
 			const roles = await e.getRolesForUser(user.email);
 
 			user.dataValues.roles = roles;
@@ -146,7 +147,14 @@ router.post('/', utils.authMiddleware, async (req, res) => {
 	try {
 		if (validator.isEmail(req.body.email)) {
 			const { email, password, roles } = req.body;
-			const user = await req.context.models.User.create({ email: email.toLowerCase(), password, roles });
+			const user = await req.context.models.User.create({ email: email.toLowerCase(), password });
+
+			if (roles !== undefined) {
+				const e = await utils.loadCasbin();
+				for (const role of roles) {
+					await e.addRoleForUser(email.toLowerCase(), role);
+				}
+			}
 
 			code = 200;
 			message = user.email + ' created';
