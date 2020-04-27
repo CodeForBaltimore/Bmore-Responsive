@@ -35,7 +35,6 @@ app.use(express.urlencoded({ extended: true }));
 
 // Custom middleware
 app.use(async (req, res, next) => {
-
 	req.context = {
 		models
 	};
@@ -45,10 +44,10 @@ app.use(async (req, res, next) => {
 
 // Helper endpoints
 app.get('/', apiLimiter, (req, res) => {
-	res.redirect('/api-docs');
+	res.redirect('/api-docs/');
 });
 app.get('/help', apiLimiter, (req, res) => {
-	res.redirect('/api-docs');
+	res.redirect('/api-docs/');
 })
 app.use('/api-docs', apiLimiter, swaggerUi.serve, swaggerUi.setup(swaggerDocument, swaggerOptions));
 app.use('/health', apiLimiter, (req, res) => {
