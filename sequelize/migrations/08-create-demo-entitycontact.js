@@ -10,10 +10,22 @@ module.exports = {
                     autoIncrement: false,
                 },
                 entityId: {
-                    type: Sequelize.UUID
+                    type: Sequelize.UUID,
+                    references: {
+                        model: 'Entities',
+                        key: 'id',
+                    },
+                    onUpdate: 'CASCADE',
+                    onDelete: 'CASCADE',
                 },
                 contactId: {
-                    type: Sequelize.UUID
+                    type: Sequelize.UUID,
+                    references: {
+                        model: 'Contacts',
+                        key: 'id',
+                    },
+                    onUpdate: 'CASCADE',
+                    onDelete: 'CASCADE',
                 },
                 relationshipTitle: {
                     type: Sequelize.STRING,
