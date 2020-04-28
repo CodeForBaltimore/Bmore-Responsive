@@ -199,7 +199,7 @@ router.post('/link/:entity_id', async (req, res) => {
 				relationshipTitle: contact.title
 			};
 
-			const savedProductOrder = await req.context.models.EntityContact.create(ec);
+			await req.context.models.EntityContact.create(ec);
 		}
 
 		message = `Link successful for entity with ID ${entity.id}`;
