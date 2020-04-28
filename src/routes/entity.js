@@ -175,35 +175,36 @@ router.delete('/:entity_id', async (req, res) => {
 
 // links entity with list of contacts
 router.post('/link/:entity_id', async (req, res) => {
-	//todo lots of validation to validate what is passed to the endpoint
 	let code;
 	let message;
 	try {
-		const entity = await req.context.models.Entity.findOne({
-			where: {
-				id: req.params.entity_id
-			}
-		});
-		console.log(req.body.contacts);
-		for(const contact of req.body.contacts) {
-			console.log(contact);
-			const contactToLink = await req.context.models.Contact.findOne({
+		if (validator.isUUID(req.params.contact_id)) {
+			const entity = await req.context.models.Entity.findOne({
 				where: {
-					id: contact.id
+					id: req.params.entity_id
 				}
 			});
+			for(const contact of req.body.contacts) {
+				console.log(contact);
+				const contactToLink = await req.context.models.Contact.findOne({
+					where: {
+						id: contact.id
+					}
+				});
 
-			const ec = {
-				entityId: entity.id,
-				contactId: contactToLink.id,
-				relationshipTitle: contact.title
-			};
+				const ec = {
+					entityId: entity.id,
+					contactId: contactToLink.id,
+					relationshipTitle: contact.title
+				};
 
-			await req.context.models.EntityContact.create(ec);
+				await req.context.models.EntityContact.createIfNew(ec);
+			}
+			message = `Link successful/already exists for entity with ID ${entity.id}`;
+			code = 200;
+		} else {
+			code = 422;
 		}
-
-		message = `Link successful for entity with ID ${entity.id}`;
-		code = 200;
 	} catch (e) {
 		console.error(e);
 		code = 500;

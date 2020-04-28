@@ -150,34 +150,35 @@ router.delete('/:contact_id', async (req, res) => {
 
 // links contact with list of entities
 router.post('/link/:contact_id', async (req, res) => {
-	//todo lots of validation to validate what is passed to the endpoint
-	//todo util function to check if relationship already exists?
 	let code;
 	let message;
 	try {
-		const contact = await req.context.models.Contact.findOne({
-			where: {
-				id: req.params.contact_id
-			}
-		});
-		for(const entity of req.body.entities) {
-			const entityToLink = await req.context.models.Entity.findOne({
+		if (validator.isUUID(req.params.contact_id)) {
+			const contact = await req.context.models.Contact.findOne({
 				where: {
-					id: entity.id
+					id: req.params.contact_id
 				}
 			});
+			for(const entity of req.body.entities) {
+				const entityToLink = await req.context.models.Entity.findOne({
+					where: {
+						id: entity.id
+					}
+				});
 
-			const ec = {
-				entityId: entityToLink.id,
-				contactId: contact.id,
-				relationshipTitle: entity.title
-			};
-
-			await req.context.models.EntityContact.create(ec);
+				const ec = {
+					entityId: entityToLink.id,
+					contactId: contact.id,
+					relationshipTitle: entity.title
+				};
+				
+				await req.context.models.EntityContact.createIfNew(ec);
+			}
+			message = `Link successful/already exists for contact with ID ${contact.id}`;
+			code = 200;
+		} else {
+			code = 422;
 		}
-
-		message = `Link successful for contact with ID ${contact.id}`;
-		code = 200;
 	} catch (e) {
 		console.error(e);
 		code = 500;

@@ -32,6 +32,18 @@ const entityContact = (sequelize, DataTypes) => {
             schema: process.env.DATABASE_SCHEMA
         });
 
+    EntityContact.createIfNew = async (ec) => {
+        const ecObject = await EntityContact.findOne({
+            where: { 
+                entityId: ec.entityId,
+                contactId: ec.contactId
+            }
+        });
+        if (!ecObject) {
+            await EntityContact.create(ec)
+        }
+    }
+
     return EntityContact;
 };
 
