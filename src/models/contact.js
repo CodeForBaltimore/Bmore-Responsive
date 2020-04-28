@@ -18,13 +18,6 @@ const contact = (sequelize, DataTypes) => {
             },
             unique: true
         },
-        EntityId: {
-            type: DataTypes.UUID,
-            references: {
-                model: 'Entity',
-                key: 'id'
-            }
-        },
         name : {
             type: DataTypes.STRING,
             required: true
