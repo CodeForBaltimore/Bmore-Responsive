@@ -795,6 +795,63 @@
         }
       }
     },
+    "/entity/link/{entity_id}" : {
+      "post" : {
+        "tags" : [ "entity" ],
+        "summary" : "links an entity with a list of given contacts",
+        "description" : "By passing the entity id and list of contacts, you can link the entity to each contact.",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "entity_id",
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          },
+          "required" : true,
+          "description" : "id of the contact"
+        }, {
+          "in" : "header",
+          "name" : "token",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "The body of the payload",
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "contacts" ],
+                "properties" : {
+                  "contacts" : {
+                    "type" : "string",
+                    "example" : [{"id":""},{"id":"","title":""}]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successful/already exists"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "422" : {
+            "description" : "Invalid input"
+          },
+          "500" : {
+            "description" : "Server error"
+          }
+        }
+      }
+    },
     "/contact" : {
       "post" : {
         "tags" : [ "contact" ],
@@ -1141,6 +1198,63 @@
         "responses" : {
           "200" : {
             "description" : "contact_id deleted"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "422" : {
+            "description" : "Invalid input"
+          },
+          "500" : {
+            "description" : "Server error"
+          }
+        }
+      }
+    },
+    "/contact/link/{contact_id}" : {
+      "post" : {
+        "tags" : [ "contact" ],
+        "summary" : "links a contact with a list of given entities",
+        "description" : "By passing the contact id and list of entities, you can link the contact to each entity.",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "contact_id",
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          },
+          "required" : true,
+          "description" : "id of the contact"
+        }, {
+          "in" : "header",
+          "name" : "token",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "The body of the payload",
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "entities" ],
+                "properties" : {
+                  "entities" : {
+                    "type" : "string",
+                    "example" : [{"id":""},{"id":"","title":""}]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successful/already exists"
           },
           "401" : {
             "description" : "Unauthorized"
