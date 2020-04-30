@@ -76,13 +76,13 @@ const entity = (sequelize, DataTypes) => {
     }
 
     Entity.findEntityWithAssociatedContacts = async (entityId) => {
-        const entityContacts = await Entity.findAll({
+        const entityContacts = await Entity.findOne({
             where: { id: entityId },
             include: [{
                 model: models.Contact,
                 as: 'contacts',
                 required: false,
-                attributes: ["name", "phone", "email", "attributes", "email"],
+                attributes: ["id", "name", "phone", "email", "attributes", "email"],
                 through: {
                     model: models.EntityContact,
                     as: "entityContacts",
