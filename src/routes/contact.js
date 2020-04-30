@@ -53,17 +53,31 @@ router.get('/:contact_id', async (req, res) => {
 router.post('/', async (req, res) => {
 	let code;
 	let message;
+	let contact;
+	let ec;
 	try {
 		if (req.body.name !== undefined) {
-			const { name, phone, email, UserId } = req.body;
+			const { name, phone, email, UserId, entities } = req.body;
 
 			// Validating emails 
 			if (email) {
-				const goodEmail = await utils.validateEmails(email);
+				const goodEmail = utils.validateEmails(email);
 				if (!goodEmail) return utils.response(res, 422);
 			}
-			
-			const contact = await req.context.models.Contact.create({ name, email, phone, UserId });
+
+			contact = await req.context.models.Contact.create({ name, email, phone, UserId });
+			if (entities) {
+				for(const entity of entities) {
+					ec = {
+						entityId: entity.id,
+						contactId: contact.id
+					}
+					if (entity.title) {
+						ec.relationshipTitle = entity.title;
+					}
+					await req.context.models.EntityContact.createIfNew(ec);
+				}
+			}
 
 			code = 200;
 			message = contact.id + ' created';
@@ -84,7 +98,7 @@ router.put('/', async (req, res) => {
 	let message;
 	try {
 		if (validator.isUUID(req.body.id)) {
-			const { id, name, phone, email, UserId } = req.body;
+			const { id, name, phone, email, UserId, entities } = req.body;
 
 			// Validating emails 
 			if (email) {
@@ -107,6 +121,19 @@ router.put('/', async (req, res) => {
 			contact.updatedAt = new Date();
 
 			await contact.save();
+
+			if (entities) {
+				for(const entity of entities) {
+					ec = {
+						entityId: entity.id,
+						contactId: contact.id
+					}
+					if (entity.title) {
+						ec.relationshipTitle = entity.title;
+					}
+					await req.context.models.EntityContact.createIfNew(ec);
+				}
+			}
 
 			code = 200;
 			message = contact.id + ' updated';
