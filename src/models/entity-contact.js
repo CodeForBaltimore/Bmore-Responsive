@@ -36,7 +36,8 @@ const entityContact = (sequelize, DataTypes) => {
         const ecObject = await EntityContact.findOne({
             where: { 
                 entityId: ec.entityId,
-                contactId: ec.contactId
+                contactId: ec.contactId,
+                relationshipTitle: ec.relationshipTitle
             }
         });
         if (!ecObject) {
