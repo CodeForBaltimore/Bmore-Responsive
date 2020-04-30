@@ -169,8 +169,11 @@ router.post('/link/:contact_id', async (req, res) => {
 				const ec = {
 					entityId: entityToLink.id,
 					contactId: contact.id,
-					relationshipTitle: entity.title
 				};
+
+				if (entity.title) {
+					ec.relationshipTitle = contact.title;
+				}
 				
 				await req.context.models.EntityContact.createIfNew(ec);
 			}

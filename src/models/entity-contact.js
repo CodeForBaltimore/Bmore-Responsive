@@ -33,12 +33,15 @@ const entityContact = (sequelize, DataTypes) => {
         });
 
     EntityContact.createIfNew = async (ec) => {
+        let whereQuery = { 
+            entityId: ec.entityId,
+            contactId: ec.contactId,
+        }
+        if (ec.relationshipTitle) {
+            whereQuery.relationshipTitle = ec.relationshipTitle;
+        }
         const ecObject = await EntityContact.findOne({
-            where: { 
-                entityId: ec.entityId,
-                contactId: ec.contactId,
-                relationshipTitle: ec.relationshipTitle
-            }
+            where: whereQuery
         });
         if (!ecObject) {
             await EntityContact.create(ec)

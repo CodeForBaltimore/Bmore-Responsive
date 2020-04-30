@@ -178,25 +178,29 @@ router.post('/link/:entity_id', async (req, res) => {
 	let code;
 	let message;
 	try {
-		if (validator.isUUID(req.params.contact_id)) {
+		if (validator.isUUID(req.params.entity_id)) {
 			const entity = await req.context.models.Entity.findOne({
 				where: {
 					id: req.params.entity_id
 				}
 			});
 			for(const contact of req.body.contacts) {
-				console.log(contact);
 				const contactToLink = await req.context.models.Contact.findOne({
 					where: {
 						id: contact.id
 					}
 				});
 
+
+
 				const ec = {
 					entityId: entity.id,
-					contactId: contactToLink.id,
-					relationshipTitle: contact.title
+					contactId: contactToLink.id
 				};
+
+				if (contact.title) {
+					ec.relationshipTitle = contact.title;
+				}
 
 				await req.context.models.EntityContact.createIfNew(ec);
 			}
