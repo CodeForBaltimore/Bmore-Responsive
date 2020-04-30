@@ -16,7 +16,9 @@
     "db-seed": "sequelize db:seed:all",
     "db-unseed": "sequelize db:seed:undo:all",
     "contributors:add": "all-contributors add",
-    "contributors:generate": "all-contributors generate"
+    "contributors:generate": "all-contributors generate",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -54,13 +56,14 @@
     "nodemon": "2.0.3",
     "nunjucks": "^3.2.1",
     "pg": "7.18.2",
-    "random-words": "1.1.0",
-    "sequelize": "5.21.5",
+    "random-words": "1.1.1",
+    "sequelize": "5.21.6",
     "supertest": "4.0.2",
     "swagger-ui-express": "4.1.4",
     "tls": "0.0.1",
     "uuid4": "1.1.4",
-    "validator": "12.2.0"
+    "validator": "12.2.0",
+    "snyk": "^1.316.1"
   },
   "devDependencies": {
     "@babel/compat-data": "7.8.6",
@@ -85,5 +88,6 @@
     "exclude": [
       "**/*.spec.js"
     ]
-  }
+  },
+  "snyk": true
 }
