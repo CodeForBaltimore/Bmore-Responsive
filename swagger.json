@@ -478,6 +478,10 @@
                       }
                     }
                   },
+                  "contacts" : {
+                    "type" : "string",
+                    "example" : [{"id":""},{"id":"","title":""}]
+                  },
                   "description" : {
                     "type" : "string",
                     "example" : "Everything for the left handed man, woman, and child!"
@@ -686,6 +690,10 @@
                         }
                       }
                     }
+                  },
+                  "entities" : {
+                    "type" : "string",
+                    "example" : [{"id":""},{"id":"","title":""}]
                   },
                   "description" : {
                     "type" : "string",
@@ -932,10 +940,9 @@
                     "format" : "uuid",
                     "example" : "abafa852-ecd0-4d57-9083-85f4dfd9c402"
                   },
-                  "EntityId" : {
+                  "entities" : {
                     "type" : "string",
-                    "format" : "uuid",
-                    "example" : "c2fb852c-17fd-4e2b-9ea4-78128af9a5e9"
+                    "example" : [{"id":""},{"id":"","title":""}]
                   }
                 }
               }
@@ -1102,10 +1109,9 @@
                     "format" : "uuid",
                     "example" : "abafa852-ecd0-4d57-9083-85f4dfd9c402"
                   },
-                  "EntityId" : {
+                  "entities" : {
                     "type" : "string",
-                    "format" : "uuid",
-                    "example" : "c2fb852c-17fd-4e2b-9ea4-78128af9a5e9"
+                    "example" : [{"id":""},{"id":"","title":""}]
                   }
                 }
               }
