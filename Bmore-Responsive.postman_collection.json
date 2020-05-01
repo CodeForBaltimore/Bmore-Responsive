@@ -22,6 +22,11 @@
 											"//grab the token and save it into \"token\" env variable",
 											"pm.environment.set(\"token\",pm.response.text());",
 											"",
+											"",
+											"//confirm that request returns a success code of 200",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
 											""
 										],
 										"type": "text/javascript"
@@ -70,7 +75,12 @@
 										"exec": [
 											"// grab the id of the first contatc returned for use in subsequent transactions",
 											"var jsonData = pm.response.json();",
-											"pm.environment.set(\"firstUserEmail\", jsonData.results[0].email);"
+											"pm.environment.set(\"firstUserEmail\", jsonData.results[0].email);",
+											"",
+											"//confirm that request returns a success code of 200",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
 										],
 										"type": "text/javascript"
 									}
@@ -99,6 +109,21 @@
 						},
 						{
 							"name": "Single User",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "3908e851-991d-4e9a-8255-ba21abdef273",
+										"exec": [
+											"//confirm that request returns a success code of 200",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -139,7 +164,12 @@
 											"//get the email of the new user from the request and save it to env variable",
 											"//this will allow deletion of this in the Delete transaction",
 											"var reqBody = JSON.parse(request.data);",
-											"pm.environment.set(\"newUserEmail\", reqBody.email);"
+											"pm.environment.set(\"newUserEmail\", reqBody.email);",
+											"",
+											"//confirm that request returns a success code of 200",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
 										],
 										"type": "text/javascript"
 									}
@@ -183,6 +213,21 @@
 						},
 						{
 							"name": "Update User",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "9d93e390-dc13-42a1-8b78-c683b6c31e58",
+										"exec": [
+											"//confirm that request returns a success code of 200",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"request": {
 								"method": "PUT",
 								"header": [
@@ -215,6 +260,21 @@
 						},
 						{
 							"name": "Deletes User",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "13bf75ad-caf0-4fa9-afd7-f6d2a23dae15",
+										"exec": [
+											"//confirm that request returns a success code of 200",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"request": {
 								"method": "DELETE",
 								"header": [
@@ -246,6 +306,21 @@
 					"item": [
 						{
 							"name": "All roles",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "822834c8-3772-4bd1-9ec8-65e3f441455d",
+										"exec": [
+											"//confirm that request returns a success code of 200",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"request": {
 								"method": "GET",
 								"header": [
@@ -269,6 +344,21 @@
 						},
 						{
 							"name": "Single role",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "063c331d-8b09-4668-9d1c-6f898d97ca29",
+										"exec": [
+											"//confirm that request returns a success code of 200",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"request": {
 								"method": "GET",
 								"header": [
@@ -293,6 +383,21 @@
 						},
 						{
 							"name": "Create role",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "041e221d-c931-4b22-884a-73fefd1c1b80",
+										"exec": [
+											"//confirm that request returns a success code of 200",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"request": {
 								"method": "POST",
 								"header": [
@@ -325,6 +430,21 @@
 						},
 						{
 							"name": "Removes a role",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "db7d2227-79fe-4dc9-bfee-a97248e53e12",
+										"exec": [
+											"//confirm that request returns a success code of 200",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"request": {
 								"method": "DELETE",
 								"header": [
@@ -349,6 +469,21 @@
 						},
 						{
 							"name": "Updates a role",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "be918ffe-cd40-480e-a086-013f06e4c5aa",
+										"exec": [
+											"//confirm that request returns a success code of 200",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"request": {
 								"method": "PUT",
 								"header": [
@@ -398,6 +533,11 @@
 											"var jsonData = pm.response.json();",
 											"pm.environment.set(\"firstContactId\", jsonData.results[0].id);",
 											"pm.environment.set(\"secondContactId\", jsonData.results[1].id);",
+											"",
+											"//confirm that request returns a success code of 200",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
 											""
 										],
 										"type": "text/javascript"
@@ -427,6 +567,21 @@
 						},
 						{
 							"name": "Single Contact",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "075e31f9-3255-460a-9fa4-b112db37f39a",
+										"exec": [
+											"//confirm that request returns a success code of 200",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"request": {
 								"method": "GET",
 								"header": [
@@ -459,7 +614,12 @@
 										"exec": [
 											"//get the 36 character id of the new contact and save it to env variable",
 											"//this will allow deletion of this in the Delete transaction",
-											"pm.environment.set(\"newContactId\", pm.response.text().slice(0,36));"
+											"pm.environment.set(\"newContactId\", pm.response.text().slice(0,36));",
+											"",
+											"//confirm that request returns a success code of 200",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
 										],
 										"type": "text/javascript"
 									}
@@ -497,6 +657,21 @@
 						},
 						{
 							"name": "Update Contact",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "6f1765bb-101a-40d0-904f-37af9aa96558",
+										"exec": [
+											"//confirm that request returns a success code of 200",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"request": {
 								"method": "PUT",
 								"header": [
@@ -529,6 +704,21 @@
 						},
 						{
 							"name": "Link Contact to Entities",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "1831285f-51de-45fb-9a68-e3c281951a44",
+										"exec": [
+											"//confirm that request returns a success code of 200",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"request": {
 								"method": "POST",
 								"header": [
@@ -563,6 +753,21 @@
 						},
 						{
 							"name": "Deletes Contact",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "7e59699f-e52f-47ac-b2aa-05fedf731131",
+										"exec": [
+											"//confirm that request returns a success code of 200",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"request": {
 								"method": "DELETE",
 								"header": [
@@ -627,7 +832,11 @@
 											"var jsonData = pm.response.json();",
 											"pm.environment.set(\"firstEntityId\", jsonData.results[0].id);",
 											"pm.environment.set(\"secondEntityId\", jsonData.results[1].id);",
-											""
+											"",
+											"//confirm that request returns a success code of 200",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
 										],
 										"type": "text/javascript"
 									}
@@ -656,6 +865,21 @@
 						},
 						{
 							"name": "Single Entity",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "126b51f5-5c6a-40eb-95b6-b0316f2e2e2e",
+										"exec": [
+											"//confirm that request returns a success code of 200",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"request": {
 								"method": "GET",
 								"header": [
@@ -688,7 +912,12 @@
 										"exec": [
 											"//get the 36 character id of the new entity and save it to env variable",
 											"//this will allow deletion of this in the Delete transaction",
-											"pm.environment.set(\"newEntityId\", pm.response.text().slice(0,36));"
+											"pm.environment.set(\"newEntityId\", pm.response.text().slice(0,36));",
+											"",
+											"//confirm that request returns a success code of 200",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
 										],
 										"type": "text/javascript"
 									}
@@ -726,6 +955,21 @@
 						},
 						{
 							"name": "Update Entity",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "2393125b-9337-436e-ad40-816eed71e98a",
+										"exec": [
+											"//confirm that request returns a success code of 200",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"request": {
 								"method": "PUT",
 								"header": [
@@ -758,6 +1002,21 @@
 						},
 						{
 							"name": "Link Entity to Contacts",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "63c5ec2a-d368-4014-9ffa-2ac4a4bce1a6",
+										"exec": [
+											"//confirm that request returns a success code of 200",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"request": {
 								"method": "POST",
 								"header": [
@@ -790,6 +1049,21 @@
 						},
 						{
 							"name": "Deletes Entity",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "0c54a785-ee1e-4cb0-b9bb-b290937b50ff",
+										"exec": [
+											"//confirm that request returns a success code of 200",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"request": {
 								"method": "DELETE",
 								"header": [
@@ -833,7 +1107,10 @@
 									"script": {
 										"id": "737b2c37-bff3-45b8-b01a-02fdcca9e012",
 										"exec": [
-											""
+											"//confirm that request returns a success code of 200",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
 										],
 										"type": "text/javascript"
 									}
@@ -870,7 +1147,10 @@
 									"script": {
 										"id": "8f8f78ba-eb6f-4c06-9939-7e0e7d2af5af",
 										"exec": [
-											""
+											"//confirm that request returns a success code of 200",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
 										],
 										"type": "text/javascript"
 									}
@@ -907,7 +1187,10 @@
 									"script": {
 										"id": "5b84cbe0-f036-45bf-b973-f9bf869b5cb8",
 										"exec": [
-											""
+											"//confirm that request returns a success code of 200",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
 										],
 										"type": "text/javascript"
 									}
@@ -944,7 +1227,10 @@
 									"script": {
 										"id": "7781e1ff-7c1f-4544-a554-063b098e08bb",
 										"exec": [
-											""
+											"//confirm that request returns a success code of 200",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
 										],
 										"type": "text/javascript"
 									}
@@ -1001,6 +1287,21 @@
 				},
 				{
 					"name": "Heallthcheck (Express only)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ad699e86-0ff1-48e2-96aa-a339d48e14a1",
+								"exec": [
+									"//confirm that request returns a success code of 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
