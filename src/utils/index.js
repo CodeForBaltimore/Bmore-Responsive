@@ -70,7 +70,7 @@ const validateToken = async (req) => {
  * @return {Boolean}
  */
 const validateRoles = async (req) => {
-	const e = await req.context.casbinEnforcer;
+	const e = await loadCasbin();
 	const { originalUrl: path, method } = req;
 
 	const isAllowed = await e.enforce(req.context.me.email, path, method);
@@ -84,15 +84,17 @@ const validateRoles = async (req) => {
  * @param {*} res the response object
  * @param {*} next the next handler in the chain
  */
-const authMiddleware = async (req, res, next) => {
+const authMiddleware = async (req, res, next) => { 
 	let authed = false;
 	
 	if (process.env.BYPASS_LOGIN) {
 		authed = process.env.BYPASS_LOGIN;
 	} else {
 		authed = await validateToken(req);
-		authed = await validateRoles(req);
-	}
+		if (authed) {
+			authed = await validateRoles(req);
+		}
+	} 
 
 	if (authed) {
 		next();

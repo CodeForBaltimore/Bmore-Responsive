@@ -183,9 +183,25 @@ router.put('/', utils.authMiddleware, async (req, res) => {
 				}
 			});
 			/** @todo add ability to change email */
+			
 
 			/** @todo when roles are added make sure only admin or relevant user can change password */
-			user.password = password;
+			const e = await utils.loadCasbin();
+			const roles = await e.getRolesForUser(req.context.me.email);
+
+			if (password) {
+				if (req.context.me.email === email || roles.includes('admin')) {
+					user.password = password;
+				}
+			}
+
+			/** @todo this is half-baked. Once updating users is available through the front-end this should be revisited. */
+			if (roles !== undefined) {
+				const e = await utils.loadCasbin();
+				for (const role of roles) {
+					await e.addRoleForUser(email.toLowerCase(), role);
+				}
+			}
 
 			user.displayName = (displayName) ? displayName : user.displayName;
 			user.phone = (phone) ? phone : user.phone;

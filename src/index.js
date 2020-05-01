@@ -32,6 +32,7 @@ app.use(cors());
 app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(apiLimiter);
 
 // Custom middleware
 app.use(async (req, res, next) => {
@@ -43,14 +44,14 @@ app.use(async (req, res, next) => {
 });
 
 // Helper endpoints
-app.get('/', apiLimiter, (req, res) => {
+app.get('/', (req, res) => {
 	res.redirect('/api-docs/');
 });
-app.get('/help', apiLimiter, (req, res) => {
+app.get('/help', (req, res) => {
 	res.redirect('/api-docs/');
 })
 app.use('/api-docs', apiLimiter, swaggerUi.serve, swaggerUi.setup(swaggerDocument, swaggerOptions));
-app.use('/health', apiLimiter, (req, res) => {
+app.use('/health', (req, res) => {
 	res.status(200).json({
 		uptime: utils.formatTime(process.uptime()),
 		environment: process.env.NODE_ENV || 'n/a',
@@ -61,16 +62,16 @@ app.use('/health', apiLimiter, (req, res) => {
 
 // Routes
 Object.entries(routes).forEach(([key, value]) => {
-	app.use(`/${key}`, apiLimiter, value);
+	app.use(`/${key}`, value);
 });
 
 // Handle 404
-app.use(apiLimiter, (req, res) => {
+app.use((req, res) => {
 	return res.status(404).send("404: Not Found.");
 });
 
 // Handle 503
-app.use(apiLimiter, (error, req, res, next) => {
+app.use((error, req, res, next) => {
 	console.error(error);
 	return res.status(503).send("503: Service Unavailable");
 });
