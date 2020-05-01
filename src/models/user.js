@@ -24,9 +24,6 @@ const user = (sequelize, DataTypes) => {
 		salt: {
 			type: DataTypes.STRING
 		},
-		roles: {
-			type: DataTypes.JSON
-		},
 		displayName: {
 			type: DataTypes.STRING
 		},
@@ -86,6 +83,10 @@ const user = (sequelize, DataTypes) => {
 		}
 		return false;
 	};
+
+	User.decodeToken = async token => {
+		return jwt.verify(token, process.env.JWT_KEY);
+	}
 
 	User.getToken = async (userId, email, expiresIn = '1d') => {
 		const token = jwt.sign(

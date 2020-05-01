@@ -3,9 +3,10 @@ import 'dotenv/config';
 import cors from 'cors';
 import express from 'express';
 import requestId from 'express-request-id';
+import rateLimit from 'express-rate-limit';
+import swaggerUi from 'swagger-ui-express';
 import helmet from 'helmet';
 import morgan from 'morgan';
-import swaggerUi from 'swagger-ui-express';
 import nunjucks from 'nunjucks';
 
 import swaggerDocument from '../swagger.json';
@@ -17,6 +18,10 @@ const app = express();
 const swaggerOptions = {
 	customCss: '.swagger-ui .topbar { display: none }'
 };
+const apiLimiter = rateLimit({
+	windowMs: 15 * 60 * 1000, // 15 minutes
+	max: 100
+});
 
 nunjucks.configure('mail_templates', { autoescape: true });
 
@@ -27,10 +32,10 @@ app.use(cors());
 app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(apiLimiter);
 
 // Custom middleware
 app.use(async (req, res, next) => {
-	// Making our models available in the request.
 	req.context = {
 		models
 	};
@@ -40,12 +45,12 @@ app.use(async (req, res, next) => {
 
 // Helper endpoints
 app.get('/', (req, res) => {
-	res.redirect('/api-docs');
+	res.redirect('/api-docs/');
 });
 app.get('/help', (req, res) => {
-	res.redirect('/api-docs');
+	res.redirect('/api-docs/');
 })
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, swaggerOptions));
+app.use('/api-docs', apiLimiter, swaggerUi.serve, swaggerUi.setup(swaggerDocument, swaggerOptions));
 app.use('/health', (req, res) => {
 	res.status(200).json({
 		uptime: utils.formatTime(process.uptime()),

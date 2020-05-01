@@ -57,4 +57,37 @@ describe('API Integration Tests', () => {
 				done();
 			});
 	});
+	it('should redirect home request', done => {
+		request(app)
+			.get('/')
+			.end((err, res) => {
+				if (err) {
+					console.error(`IT version error: ${err}`);
+				}
+				expect(res.statusCode).to.equal(302);
+				done();
+			});
+	});
+	it('should redirect help request', done => {
+		request(app)
+			.get('/help')
+			.end((err, res) => {
+				if (err) {
+					console.error(`IT version error: ${err}`);
+				}
+				expect(res.statusCode).to.equal(302);
+				done();
+			});
+	});
+	it('should return swagger', done => {
+		request(app)
+			.get('/api-docs/')
+			.end((err, res) => {
+				if (err) {
+					console.error(`IT version error: ${err}`);
+				}
+				expect(res.statusCode).to.equal(200);
+				done();
+			});
+	});
 });

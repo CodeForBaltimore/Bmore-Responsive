@@ -1,6 +1,73 @@
 [
     {
         "role": "admin",
-        "description": "This is a test admin role."
+        "path": "/*",
+        "method": "GET"
+    },
+    {
+        "role": "admin",
+        "path": "/*",
+        "method": "POST"
+    },
+    {
+        "role": "admin",
+        "path": "/*",
+        "method": "PUT"
+    },
+    {
+        "role": "admin",
+        "path": "/*",
+        "method": "DELETE"
+    },
+    
+    {
+        "role": "user",
+        "path": "/entity",
+        "method": "GET"
+    },
+    {
+        "role": "user",
+        "path": "/entity",
+        "method": "POST"
+    },
+    {
+        "role": "user",
+        "path": "/entity",
+        "method": "PUT"
+    },
+    {
+        "role": "user",
+        "path": "/contact",
+        "method": "GET"
+    },
+    {
+        "role": "user",
+        "path": "/contact",
+        "method": "POST"
+    },
+    {
+        "role": "user",
+        "path": "/contact",
+        "method": "PUT"
+    },
+    {
+        "role": "user",
+        "path": "/csv/Entity",
+        "method": "GET"
+    },
+    {
+        "role": "user",
+        "path": "/csv/Contact",
+        "method": "GET"
+    },
+    {
+        "role": "user",
+        "path": "/user/*",
+        "method": "GET"
+    },
+    {
+        "role": "user",
+        "path": "/user/*",
+        "method": "PUT"
     }
 ]
