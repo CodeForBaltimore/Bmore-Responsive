@@ -52,6 +52,7 @@ router.get('/:entity_id', async (req, res) => {
 router.post('/', async (req, res) => {
 	let code;
 	let message;
+	let ec;
 	try {
 		if (req.body.name !== undefined) {
 			let { name, address, phone, email, checkIn, contacts } = req.body;
@@ -96,6 +97,7 @@ router.post('/', async (req, res) => {
 router.put('/', async (req, res) => {
 	let code;
 	let message;
+	let ec;
 	try {
 		if (validator.isUUID(req.body.id)) {
 			let { id, name, address, phone, email, checkIn, contacts } = req.body;

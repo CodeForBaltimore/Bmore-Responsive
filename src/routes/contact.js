@@ -96,6 +96,7 @@ router.post('/', async (req, res) => {
 router.put('/', async (req, res) => {
 	let code;
 	let message;
+	let ec;
 	try {
 		if (validator.isUUID(req.body.id)) {
 			const { id, name, phone, email, UserId, entities } = req.body;
