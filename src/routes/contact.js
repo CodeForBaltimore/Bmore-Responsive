@@ -57,7 +57,7 @@ router.post('/', async (req, res) => {
 	let ec;
 	try {
 		if (req.body.name !== undefined) {
-			const { name, phone, email, UserId, entities } = req.body;
+			const { name, phone, email, UserId, entities, attributes } = req.body;
 
 			// Validating emails 
 			if (email) {
@@ -65,7 +65,7 @@ router.post('/', async (req, res) => {
 				if (!goodEmail) return utils.response(res, 422);
 			}
 
-			contact = await req.context.models.Contact.create({ name, email, phone, UserId });
+			contact = await req.context.models.Contact.create({ name, email, phone, UserId, attributes });
 			if (entities) {
 				for(const entity of entities) {
 					ec = {
@@ -99,7 +99,7 @@ router.put('/', async (req, res) => {
 	let ec;
 	try {
 		if (validator.isUUID(req.body.id)) {
-			const { id, name, phone, email, UserId, entities } = req.body;
+			const { id, name, phone, email, UserId, entities, attributes } = req.body;
 
 			// Validating emails 
 			if (email) {
@@ -120,6 +120,7 @@ router.put('/', async (req, res) => {
 			contact.email = (email) ? email : contact.email;
 			contact.UserId = (UserId) ? UserId : contact.UserId;
 			contact.updatedAt = new Date();
+			contact.attributes = (attributes) ? attributes : contact.attributes
 
 			await contact.save();
 
