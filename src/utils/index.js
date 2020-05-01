@@ -2,6 +2,10 @@
 
 import crypto from 'crypto';
 import validator from 'validator';
+import { newEnforcer } from 'casbin';
+import { SequelizeAdapter } from 'casbin-sequelize-adapter';
+
+const casbinConf = `${__dirname}/casbin.conf`;
 
 /**
  * Formats a timestamp to something readable by humans.
@@ -22,6 +26,23 @@ const formatTime = seconds => {
 };
 
 /**
+ * Loads Casbin for role validation
+ * 
+ * @returns {Object}
+ */
+const loadCasbin = async () => {
+	const dbUrl = process.env.DATABASE_URL;
+	const a = await SequelizeAdapter.newAdapter(
+		dbUrl,
+		{
+			dialect: 'postgres'
+		}
+	);
+
+	return await newEnforcer(casbinConf, a);
+}
+
+/**
  * Validates a user login token.
  *
  * This validates a user token. If the token is invalid the request will immediately be rejected back with a 401.
@@ -32,16 +53,29 @@ const formatTime = seconds => {
  * @return {Boolean}
  */
 const validateToken = async (req) => {
-	console.log(req.headers.token)
-
 	const authorized = await req.context.models.User.validateToken(req.headers.token);
-	if (authorized || process.env.BYPASS_LOGIN) {
+	if (authorized) {
 		req.context.me = authorized; // add user object to context
 		return true;
-	} 
-	
+	}
+
 	return false;
 };
+
+/**
+ * Validates a user role.
+ * 
+ * @param {*} req The request object
+ * 
+ * @return {Boolean}
+ */
+const validateRoles = async (req) => {
+	const e = await loadCasbin();
+	const { originalUrl: path, method } = req;
+
+	const isAllowed = await e.enforce(req.context.me.email, path, method);
+	return isAllowed;
+}
 
 /**
  * Middleware function used to validate a user token
@@ -50,13 +84,23 @@ const validateToken = async (req) => {
  * @param {*} res the response object
  * @param {*} next the next handler in the chain
  */
-const authMiddleware = async (req, res, next) => {
-	if (await validateToken(req)) {
+const authMiddleware = async (req, res, next) => { 
+	let authed = false;
+	
+	if (process.env.BYPASS_LOGIN) {
+		authed = process.env.BYPASS_LOGIN;
+	} else {
+		authed = await validateToken(req);
+		if (authed) {
+			authed = await validateRoles(req);
+		}
+	} 
+
+	if (authed) {
 		next();
 	} else {
 		response(res, 401, "");
 	}
-
 }
 
 /**
@@ -118,12 +162,12 @@ const validateEmails = async emails => {
  * @return {processedResults}
  */
 const processResults = async (results, modelType) => {
-	switch (modelType){
+	switch (modelType) {
 		case "Entity":
 			let processedResults = [];
-			for(let result of results){
+			for (let result of results) {
 				//todo expand conditional checking as checkin object becomes more mature
-				if(result["checkIn"] !== null) {
+				if (result["checkIn"] !== null) {
 					result["checkIn"] = result["checkIn"].checkIns[0];
 				}
 				processedResults = [...processedResults, result];
@@ -134,11 +178,21 @@ const processResults = async (results, modelType) => {
 	};
 }
 
+const dbUrl = () => {
+	if (process.env.DATABASE_URL) {
+		return process.env.DATABASE_URL;
+	} else {
+		return `postgres://${process.env.DATABASE_USERNAME}:${process.env.DATABASE_PASSWORD}@${process.env.DATABASE_HOST}:${process.env.DATABASE_PORT}/${process.env.DATABASE_NAME}`;
+	}
+}
+
 export default {
 	formatTime,
+	loadCasbin,
 	authMiddleware,
 	response,
 	encryptPassword,
 	validateEmails,
-	processResults
+	processResults,
+	dbUrl
 };

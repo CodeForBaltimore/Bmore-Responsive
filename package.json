@@ -16,7 +16,9 @@
     "db-seed": "sequelize db:seed:all",
     "db-unseed": "sequelize db:seed:undo:all",
     "contributors:add": "all-contributors add",
-    "contributors:generate": "all-contributors generate"
+    "contributors:generate": "all-contributors generate",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -35,11 +37,14 @@
   "dependencies": {
     "@babel/core": "7.9.0",
     "@babel/node": "7.8.7",
+    "casbin": "4.3.1",
+    "casbin-sequelize-adapter": "2.0.1",
     "chai": "4.2.0",
     "cors": "2.8.5",
     "crypto": "1.0.1",
     "dotenv": "8.2.0",
     "express": "4.17.1",
+    "express-rate-limit": "5.1.1",
     "express-request-id": "1.4.1",
     "helmet": "3.22.0",
     "json2csv": "^5.0.0",
@@ -57,7 +62,8 @@
     "swagger-ui-express": "4.1.4",
     "tls": "0.0.1",
     "uuid4": "1.1.4",
-    "validator": "12.2.0"
+    "validator": "12.2.0",
+    "snyk": "^1.316.1"
   },
   "devDependencies": {
     "@babel/compat-data": "7.8.6",
@@ -82,5 +88,6 @@
     "exclude": [
       "**/*.spec.js"
     ]
-  }
+  },
+  "snyk": true
 }

@@ -1,139 +1,98 @@
-/**
- * This functionality is currently being disabled. It will be enabled in the future.
- */
+import { Router } from 'express';
+import utils from '../utils';
 
-// import { Router } from 'express';
-// import validator from 'validator';
-// import utils from '../utils';
+const router = new Router();
+router.use(utils.authMiddleware)
 
-// const router = new Router();
+// Gets all roles.
+router.get('/', async (req, res) => {
+	let code;
+	let message;
+	try {
+		const e = await utils.loadCasbin();
+		const rolesRaw = await e.getNamedPolicy('p');
+		const roles = {};
 
-// // Gets all roles.
-// router.get('/', async (req, res) => {
-// 	let code;
-// 	let message;
-// 	try {
-// 		if (await utils.validateToken(req, res)) {
-// 			const roles = await req.context.models.UserRole.findAll({
-// 			});
 
-// 			code = 200;
-// 			message = roles;
-// 		} else {
-// 			code = 401;
-// 		}
-// 	} catch (e) {
-// 		console.error(e);
-// 		code = 500;
-// 	}
+		for (const role of rolesRaw) {
+			if (roles[role[0]] !== undefined) {
+				roles[role[0]].push({
+					path: role[1],
+					method: role[2]
+				})
+			} else {
+				roles[role[0]] = [{
+					path: role[1],
+					method: role[2]
+				}];
+			}
+		}
 
-// 	return utils.response(res, code, message);
-// });
+		code = 200;
+		message = roles;
+	} catch (e) {
+		console.error(e);
+		code = 500;
+	}
 
-// // Gets a specific role.
-// router.get('/:role_id', async (req, res) => {
-// 	let code;
-// 	let message;
-// 	try {
-// 		if (await utils.validateToken(req, res)) {
-// 			const role = await req.context.models.UserRole.findOne({
-// 				where: {
-// 					id: req.params.role_id
-// 				}
-// 			});
+	return utils.response(res, code, message);
+});
 
-// 			code = 200;
-// 			message = role;
-// 		} else {
-// 			code = 401;
-// 		}
-// 	} catch (e) {
-// 		console.error(e);
-// 		code = 500;
-// 	}
+// Creates a new role.
+router.post('/', async (req, res) => {
+	let code;
+	let message;
+	try {
+		const { role, path, method } = req.body;
 
-// 	return utils.response(res, code, message);
-// });
+		if (role && path && method) {
+			let added = false;
+			
+			const e = await utils.loadCasbin();
+			const p = [role, path, method]
+			added = await e.addPolicy(...p)
 
-// // Creates a new role.
-// router.post('/', async (req, res) => {
-// 	let code;
-// 	let message;
-// 	try {
-// 		const { role, description } = req.body;
-// 		if (await utils.validateToken(req, res)) {
-// 			const newRole = await req.context.models.UserRole.create({ role, description });
-// 			code = 200;
-// 			message = newRole.role + ' created';
-// 		} else {
-// 			code = 401;
-// 		}
-// 	} catch (e) {
-// 		console.error(e);
-// 		code = 500;
-// 	}
+			if (added) {
+				code = 200;
+				message = 'policy created';
+			} else {
+				code = 422;
+			}
+		} else {
+			code = 422;
+		}
 
-// 	return utils.response(res, code, message);
-// });
+	} catch (e) {
+		console.error(e);
+		code = 500;
+	}
 
-// // Updates any role.
-// router.put('/', async (req, res) => {
-// 	let code;
-// 	let message;
-// 	try {
-// 		const { id, role, description } = req.body;
-// 		if (validator.isNumeric(id.toString())) {
-// 			if (await utils.validateToken(req, res)) {
-// 				const updatedRole = await req.context.models.UserRole.findOne({
-// 					where: {
-// 						id
-// 					}
-// 				});
-// 				updatedRole.role = role;
-// 				updatedRole.description = description;
-// 				await updatedRole.save();
+	return utils.response(res, code, message);
+});
 
-// 				code = 200;
-// 				message = updatedRole.role + ' updated';
-// 			} else {
-// 				code = 401;
-// 			}
-// 		} else {
-// 			code = 400;
-// 		}
-// 	} catch (e) {
-// 		console.error(e);
-// 		code = 500;
-// 	}
+// Deletes a role.
+router.post('/delete', async (req, res) => {
+	let code;
+	let message;
+	try {
+		const e = await utils.loadCasbin();
+		const { role, path, method } = req.body;
 
-// 	return utils.response(res, code, message);
-// });
+		const p = [role, path, method]
+		const removed = await e.removePolicy(...p)
 
-// // Deletes a role.
-// router.delete('/:role_id', async (req, res) => {
-// 	let code;
-// 	let message;
-// 	try {
-// 		if (await utils.validateToken(req, res)) {
-// 			const role = await req.context.models.UserRole.findOne({
-// 				where: {
-// 					id: req.params.role_id
-// 				}
-// 			});
-// 			const name = (role) ? role.role : '';
-// 			await role.destroy();
+		if (removed) {
+			code = 200;
+			message = 'policy deleted';
+		} else {
+			code = 422;
+		}
+	} catch (e) {
+		console.error(e);
+		code = 500;
+	}
 
-// 			code = 200;
-// 			message = name + ' deleted';
-// 		} else {
-// 			code = 401;
-// 		}
-// 	} catch (e) {
-// 		console.error(e);
-// 		code = 500;
-// 	}
+	return utils.response(res, code, message);
+});
 
-// 	return utils.response(res, code, message);
-// });
-
-// export default router;
+export default router;

@@ -1,12 +1,18 @@
 import { Router } from 'express';
+import rateLimit from 'express-rate-limit';
 import validator from 'validator';
 import utils from '../utils';
 import email from '../email';
 
 const router = new Router();
+const loginLimiter = rateLimit({
+	windowMs: 60 * 60 * 1000,
+	max: 5,
+	message: "Too many login attempts for this IP. Please try again later."
+});
 
 // User login.
-router.post('/login', async (req, res) => {
+router.post('/login', loginLimiter, async (req, res) => {
 	let code;
 	let message;
 	try {
@@ -30,7 +36,7 @@ router.post('/login', async (req, res) => {
 	return utils.response(res, code, message);
 });
 
-router.post('/reset/:email', async (req, res) => {
+router.post('/reset/:email', loginLimiter, async(req, res) => {
 	let code;
 	let message;
 	try {
@@ -71,11 +77,15 @@ router.get('/', utils.authMiddleware, async (req, res) => {
 	let message;
 	try {
 		const users = await req.context.models.User.findAll({
-			attributes: ['id', 'email', 'roles', 'displayName', 'phone', 'attributes', 'createdAt', 'updatedAt']
+			attributes: ['id', 'email', 'displayName', 'phone', 'attributes', 'createdAt', 'updatedAt']
 		});
 
+		const e = await utils.loadCasbin();
+
 		for (const user of users) {
-			if (user.roles) user.roles = await req.context.models.UserRole.findRoles(user.roles);
+			const roles = await e.getRolesForUser(user.email);
+
+			user.dataValues.roles = roles;
 		}
 
 		code = 200;
@@ -103,10 +113,14 @@ router.get('/:email', utils.authMiddleware, async (req, res) => {
 				where: {
 					email: req.params.email.toLowerCase()
 				},
-				attributes: ['id', 'email', 'roles', 'displayName', 'phone', 'createdAt', 'updatedAt']
+				attributes: ['id', 'email', 'displayName', 'phone', 'createdAt', 'updatedAt']
 			});
 			if (user) {
-				if (user.roles) user.roles = await req.context.models.UserRole.findRoles(user.roles);
+				const e = await utils.loadCasbin();
+				const roles = await e.getRolesForUser(user.email);
+
+				user.dataValues.roles = roles;
+
 				/** @todo add contact info for users */
 				// user.dataValues.contact = await req.context.models.Contact.findByUserId(user.id);
 			} else {
@@ -133,7 +147,14 @@ router.post('/', utils.authMiddleware, async (req, res) => {
 	try {
 		if (validator.isEmail(req.body.email)) {
 			const { email, password, roles } = req.body;
-			const user = await req.context.models.User.create({ email: email.toLowerCase(), password, roles });
+			const user = await req.context.models.User.create({ email: email.toLowerCase(), password });
+
+			if (roles !== undefined) {
+				const e = await utils.loadCasbin();
+				for (const role of roles) {
+					await e.addRoleForUser(email.toLowerCase(), role);
+				}
+			}
 
 			code = 200;
 			message = user.email + ' created';
@@ -162,9 +183,25 @@ router.put('/', utils.authMiddleware, async (req, res) => {
 				}
 			});
 			/** @todo add ability to change email */
+			
 
 			/** @todo when roles are added make sure only admin or relevant user can change password */
-			user.password = password;
+			const e = await utils.loadCasbin();
+			const roles = await e.getRolesForUser(req.context.me.email);
+
+			if (password) {
+				if (req.context.me.email === email || roles.includes('admin')) {
+					user.password = password;
+				}
+			}
+
+			/** @todo this is half-baked. Once updating users is available through the front-end this should be revisited. */
+			if (roles !== undefined) {
+				const e = await utils.loadCasbin();
+				for (const role of roles) {
+					await e.addRoleForUser(email.toLowerCase(), role);
+				}
+			}
 
 			user.displayName = (displayName) ? displayName : user.displayName;
 			user.phone = (phone) ? phone : user.phone;

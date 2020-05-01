@@ -23,9 +23,6 @@ module.exports = {
 			token: {
 				type: Sequelize.STRING
 			},
-			roles: {
-				type: Sequelize.JSON
-			},
 			displayName: {
 				type: Sequelize.STRING
 			},
