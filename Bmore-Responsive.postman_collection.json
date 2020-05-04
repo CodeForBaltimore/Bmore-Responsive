@@ -6,1292 +6,1099 @@
 	},
 	"item": [
 		{
-			"name": "local",
+			"name": "user",
 			"item": [
 				{
-					"name": "user",
-					"item": [
-						{
-							"name": "Login with admin user",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "19989e9e-11ee-476a-b986-5be021e89a45",
-										"exec": [
-											"//grab the token and save it into \"token\" env variable",
-											"pm.environment.set(\"token\",pm.response.text());",
-											"",
-											"",
-											"//confirm that request returns a success code of 200",
-											"pm.test(\"Status code is 200\", function () {",
-											"    pm.response.to.have.status(200);",
-											"});",
-											""
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"name": "Content-Type",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n\t\"email\": \"{{testAdminUsername}}\",\n\t\"password\": \"{{testAdminPassword}}\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{baseUrl}}/user/login",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"user",
-										"login"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "All Users",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "19a429d8-ad47-4502-ab20-9fda4c54ea87",
-										"exec": [
-											"// grab the id of the first contatc returned for use in subsequent transactions",
-											"var jsonData = pm.response.json();",
-											"pm.environment.set(\"firstUserEmail\", jsonData.results[0].email);",
-											"",
-											"//confirm that request returns a success code of 200",
-											"pm.test(\"Status code is 200\", function () {",
-											"    pm.response.to.have.status(200);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMDk5NTgsImV4cCI6MTU4NTA5NjM1OH0.-kvQxh85_r0ZOSyn5Ogn5wPhxGFMF8KGK9n8dZCIbRY",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{baseUrl}}/user",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"user"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Single User",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "3908e851-991d-4e9a-8255-ba21abdef273",
-										"exec": [
-											"//confirm that request returns a success code of 200",
-											"pm.test(\"Status code is 200\", function () {",
-											"    pm.response.to.have.status(200);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMDk5NTgsImV4cCI6MTU4NTA5NjM1OH0.-kvQxh85_r0ZOSyn5Ogn5wPhxGFMF8KGK9n8dZCIbRY",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "{{baseUrl}}/user/{{firstUserEmail}}",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"user",
-										"{{firstUserEmail}}"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Create user",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "e6385331-050e-4ae5-94ff-3388f161bb55",
-										"exec": [
-											"//get the email of the new user from the request and save it to env variable",
-											"//this will allow deletion of this in the Delete transaction",
-											"var reqBody = JSON.parse(request.data);",
-											"pm.environment.set(\"newUserEmail\", reqBody.email);",
-											"",
-											"//confirm that request returns a success code of 200",
-											"pm.test(\"Status code is 200\", function () {",
-											"    pm.response.to.have.status(200);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"name": "Content-Type",
-										"value": "application/json",
-										"type": "text"
-									},
-									{
-										"key": "token",
-										"value": "replace me",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n\t\"email\": \"marge.simpson@sfpp.com\",\n\t\"password\": \"donuts\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{baseUrl}}/user",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"user"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Update User",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "9d93e390-dc13-42a1-8b78-c683b6c31e58",
-										"exec": [
-											"//confirm that request returns a success code of 200",
-											"pm.test(\"Status code is 200\", function () {",
-											"    pm.response.to.have.status(200);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "PUT",
-								"header": [
-									{
-										"key": "token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTAyODAsImV4cCI6MTU4NTA5NjY4MH0.D5k_tbQpa-R7gMGOBcGq9H4VgPcB-Or8Lyaa7EgPsic",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n\t\"email\": \"{{newUserEmail}}\",\n\t\"password\": \"donuts123\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{baseUrl}}/user",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"user"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Deletes User",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "13bf75ad-caf0-4fa9-afd7-f6d2a23dae15",
-										"exec": [
-											"//confirm that request returns a success code of 200",
-											"pm.test(\"Status code is 200\", function () {",
-											"    pm.response.to.have.status(200);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "DELETE",
-								"header": [
-									{
-										"key": "token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTAzMzAsImV4cCI6MTU4NTA5NjczMH0.GJ9hWVtxz-8JDvFrG0STPxsyL2OJNKzPygSsTBzm1do",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{baseUrl}}/user/{{newUserEmail}}",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"user",
-										"{{newUserEmail}}"
-									]
-								}
-							},
-							"response": []
-						}
-					],
-					"protocolProfileBehavior": {},
-					"_postman_isSubFolder": true
-				},
-				{
-					"name": "userRole",
-					"item": [
-						{
-							"name": "All roles",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "822834c8-3772-4bd1-9ec8-65e3f441455d",
-										"exec": [
-											"//confirm that request returns a success code of 200",
-											"pm.test(\"Status code is 200\", function () {",
-											"    pm.response.to.have.status(200);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTA0NDksImV4cCI6MTU4NTA5Njg0OX0.7HEFcqfaCB31Oiu23iMCQbMIK5t3cHYyQMrDdip0QYQ",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{baseUrl}}/userRole",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"userRole"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Single role",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "063c331d-8b09-4668-9d1c-6f898d97ca29",
-										"exec": [
-											"//confirm that request returns a success code of 200",
-											"pm.test(\"Status code is 200\", function () {",
-											"    pm.response.to.have.status(200);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTA0NDksImV4cCI6MTU4NTA5Njg0OX0.7HEFcqfaCB31Oiu23iMCQbMIK5t3cHYyQMrDdip0QYQ",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{baseUrl}}/userRole/1",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"userRole",
-										"1"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Create role",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "041e221d-c931-4b22-884a-73fefd1c1b80",
-										"exec": [
-											"//confirm that request returns a success code of 200",
-											"pm.test(\"Status code is 200\", function () {",
-											"    pm.response.to.have.status(200);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTA0NDksImV4cCI6MTU4NTA5Njg0OX0.7HEFcqfaCB31Oiu23iMCQbMIK5t3cHYyQMrDdip0QYQ",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n\t\"role\": \"Safety Inspector\",\n\t\"description\": \"The Safety Inspector\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{baseUrl}}/userRole",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"userRole"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Removes a role",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "db7d2227-79fe-4dc9-bfee-a97248e53e12",
-										"exec": [
-											"//confirm that request returns a success code of 200",
-											"pm.test(\"Status code is 200\", function () {",
-											"    pm.response.to.have.status(200);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "DELETE",
-								"header": [
-									{
-										"key": "token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTA0NDksImV4cCI6MTU4NTA5Njg0OX0.7HEFcqfaCB31Oiu23iMCQbMIK5t3cHYyQMrDdip0QYQ",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{baseUrl}}/userRole/1",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"userRole",
-										"1"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Updates a role",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "be918ffe-cd40-480e-a086-013f06e4c5aa",
-										"exec": [
-											"//confirm that request returns a success code of 200",
-											"pm.test(\"Status code is 200\", function () {",
-											"    pm.response.to.have.status(200);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "PUT",
-								"header": [
-									{
-										"key": "token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTA0NDksImV4cCI6MTU4NTA5Njg0OX0.7HEFcqfaCB31Oiu23iMCQbMIK5t3cHYyQMrDdip0QYQ",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n\t\"id\": 1,\n\t\"role\": \"Safety Inspector\",\n\t\"description\": \"This is a test role update\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{baseUrl}}/userRole",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"userRole"
-									]
-								}
-							},
-							"response": []
-						}
-					],
-					"protocolProfileBehavior": {},
-					"_postman_isSubFolder": true
-				},
-				{
-					"name": "contact  ",
-					"item": [
-						{
-							"name": "All Contacts",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "376871ec-6bdf-4315-af89-90886bff9317",
-										"exec": [
-											"// grab the id of the first contatc returned for use in subsequent transactions",
-											"var jsonData = pm.response.json();",
-											"pm.environment.set(\"firstContactId\", jsonData.results[0].id);",
-											"pm.environment.set(\"secondContactId\", jsonData.results[1].id);",
-											"",
-											"//confirm that request returns a success code of 200",
-											"pm.test(\"Status code is 200\", function () {",
-											"    pm.response.to.have.status(200);",
-											"});",
-											""
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "token",
-										"type": "text",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTA0NDksImV4cCI6MTU4NTA5Njg0OX0.7HEFcqfaCB31Oiu23iMCQbMIK5t3cHYyQMrDdip0QYQ"
-									}
-								],
-								"url": {
-									"raw": "{{baseUrl}}/contact",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"contact"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Single Contact",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "075e31f9-3255-460a-9fa4-b112db37f39a",
-										"exec": [
-											"//confirm that request returns a success code of 200",
-											"pm.test(\"Status code is 200\", function () {",
-											"    pm.response.to.have.status(200);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTA0NDksImV4cCI6MTU4NTA5Njg0OX0.7HEFcqfaCB31Oiu23iMCQbMIK5t3cHYyQMrDdip0QYQ",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{baseUrl}}/contact/{{firstContactId}}",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"contact",
-										"{{firstContactId}}"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Create Contact",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "fa562b7d-4783-4cbb-a06b-e7b774023591",
-										"exec": [
-											"//get the 36 character id of the new contact and save it to env variable",
-											"//this will allow deletion of this in the Delete transaction",
-											"pm.environment.set(\"newContactId\", pm.response.text().slice(0,36));",
-											"",
-											"//confirm that request returns a success code of 200",
-											"pm.test(\"Status code is 200\", function () {",
-											"    pm.response.to.have.status(200);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTA0NDksImV4cCI6MTU4NTA5Njg0OX0.7HEFcqfaCB31Oiu23iMCQbMIK5t3cHYyQMrDdip0QYQ",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"name\": \"Rod Flanders\",\n  \"email\": [\n    {\n      \"address\": \"rod.flanders@leftorium.com\",\n      \"isPrimary\": \"true\"\n    }\n  ],\n  \"phone\": [\n    {\n      \"number\": \"12345551212\",\n      \"isPrimary\": \"true\"\n    }\n  ]\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{baseUrl}}/contact",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"contact"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Update Contact",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "6f1765bb-101a-40d0-904f-37af9aa96558",
-										"exec": [
-											"//confirm that request returns a success code of 200",
-											"pm.test(\"Status code is 200\", function () {",
-											"    pm.response.to.have.status(200);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "PUT",
-								"header": [
-									{
-										"key": "token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTA0NDksImV4cCI6MTU4NTA5Njg0OX0.7HEFcqfaCB31Oiu23iMCQbMIK5t3cHYyQMrDdip0QYQ",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"id\": \"{{firstContactId}}\",\n  \"name\": \"Rod Flanders\",\n  \"email\": [\n    {\n      \"address\": \"rod.flanders@leftorium.com\",\n      \"isPrimary\": \"true\"\n    },\n    {\n      \"address\": \"nrod@church.org\"\n    }\n  ],\n  \"phone\": [\n    {\n      \"number\": \"4105551212\",\n      \"isPrimary\": \"true\"\n    }\n  ]\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{baseUrl}}/contact",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"contact"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Link Contact to Entities",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "1831285f-51de-45fb-9a68-e3c281951a44",
-										"exec": [
-											"//confirm that request returns a success code of 200",
-											"pm.test(\"Status code is 200\", function () {",
-											"    pm.response.to.have.status(200);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "token",
-										"type": "text",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTA0NDksImV4cCI6MTU4NTA5Njg0OX0.7HEFcqfaCB31Oiu23iMCQbMIK5t3cHYyQMrDdip0QYQ"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"entities\": [\n    {\n      \"id\": \"{{firstEntityID}}\"\n    },\n    {\n      \"id\": \"{{secondEntityID}}\",\n      \"title\": \"Owner\"\n    }\n  ]\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{baseUrl}}/contact/link/",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"contact",
-										"link",
-										""
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Deletes Contact",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "7e59699f-e52f-47ac-b2aa-05fedf731131",
-										"exec": [
-											"//confirm that request returns a success code of 200",
-											"pm.test(\"Status code is 200\", function () {",
-											"    pm.response.to.have.status(200);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "DELETE",
-								"header": [
-									{
-										"key": "token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTA0NDksImV4cCI6MTU4NTA5Njg0OX0.7HEFcqfaCB31Oiu23iMCQbMIK5t3cHYyQMrDdip0QYQ",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{baseUrl}}/contact/{{newContactId}}",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"contact",
-										"{{newContactId}}"
-									]
-								}
-							},
-							"response": []
-						}
-					],
-					"description": "This folder contains calls to excercise the contact endpoint.  Please note that the these calls are expected to be made in order as some subsequent examples rely on values derived from previous calls. For exacmple the \"Get Single Contact\" retrieves the first contact returned from the previous \"Get All Contacts\" transaction.",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"id": "e50ba8bc-02c6-40ba-ae51-57fa584d8aee",
-								"type": "text/javascript",
-								"exec": [
-									""
-								]
-							}
-						},
-						{
-							"listen": "test",
-							"script": {
-								"id": "194a84e5-96bd-4efa-afa6-a7f770d99d85",
-								"type": "text/javascript",
-								"exec": [
-									""
-								]
-							}
-						}
-					],
-					"protocolProfileBehavior": {},
-					"_postman_isSubFolder": true
-				},
-				{
-					"name": "entity",
-					"item": [
-						{
-							"name": "All Entities",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "64a0b1b0-b208-4ad5-a1cd-2bed78440b07",
-										"exec": [
-											"// grab the id of the first two entities returned for use in subsequent transactions",
-											"var jsonData = pm.response.json();",
-											"pm.environment.set(\"firstEntityId\", jsonData.results[0].id);",
-											"pm.environment.set(\"secondEntityId\", jsonData.results[1].id);",
-											"",
-											"//confirm that request returns a success code of 200",
-											"pm.test(\"Status code is 200\", function () {",
-											"    pm.response.to.have.status(200);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "token",
-										"type": "text",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTA0NDksImV4cCI6MTU4NTA5Njg0OX0.7HEFcqfaCB31Oiu23iMCQbMIK5t3cHYyQMrDdip0QYQ"
-									}
-								],
-								"url": {
-									"raw": "{{baseUrl}}/entity",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"entity"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Single Entity",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "126b51f5-5c6a-40eb-95b6-b0316f2e2e2e",
-										"exec": [
-											"//confirm that request returns a success code of 200",
-											"pm.test(\"Status code is 200\", function () {",
-											"    pm.response.to.have.status(200);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTA0NDksImV4cCI6MTU4NTA5Njg0OX0.7HEFcqfaCB31Oiu23iMCQbMIK5t3cHYyQMrDdip0QYQ",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{baseUrl}}/entity/{{firstEntityId}}",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"entity",
-										"{{firstEntityId}}"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Create Entity",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "76ea05ba-36d2-45b2-acfa-425f1029860d",
-										"exec": [
-											"//get the 36 character id of the new entity and save it to env variable",
-											"//this will allow deletion of this in the Delete transaction",
-											"pm.environment.set(\"newEntityId\", pm.response.text().slice(0,36));",
-											"",
-											"//confirm that request returns a success code of 200",
-											"pm.test(\"Status code is 200\", function () {",
-											"    pm.response.to.have.status(200);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTA0NDksImV4cCI6MTU4NTA5Njg0OX0.7HEFcqfaCB31Oiu23iMCQbMIK5t3cHYyQMrDdip0QYQ",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"name\": \"Krustyland\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{baseUrl}}/entity",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"entity"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Update Entity",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "2393125b-9337-436e-ad40-816eed71e98a",
-										"exec": [
-											"//confirm that request returns a success code of 200",
-											"pm.test(\"Status code is 200\", function () {",
-											"    pm.response.to.have.status(200);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "PUT",
-								"header": [
-									{
-										"key": "token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTA0NDksImV4cCI6MTU4NTA5Njg0OX0.7HEFcqfaCB31Oiu23iMCQbMIK5t3cHYyQMrDdip0QYQ",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "   {\n   \t\t\"id\": \"{{newEntityId}}\",\n        \"email\": [\n            {\n                \"address\": \"hello@krustyland.com\",\n                \"isPrimary\": \"true\"\n            }\n        ]\n    }",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{baseUrl}}/entity",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"entity"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Link Entity to Contacts",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "63c5ec2a-d368-4014-9ffa-2ac4a4bce1a6",
-										"exec": [
-											"//confirm that request returns a success code of 200",
-											"pm.test(\"Status code is 200\", function () {",
-											"    pm.response.to.have.status(200);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTA0NDksImV4cCI6MTU4NTA5Njg0OX0.7HEFcqfaCB31Oiu23iMCQbMIK5t3cHYyQMrDdip0QYQ",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"contacts\": [\n    {\n      \"id\": \"{{firstContactId}}\"\n    },\n    {\n      \"id\": \"{{secondContactId}}\",\n      \"title\": \"Owner\"\n    }\n  ]\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{baseUrl}}/entity",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"entity"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Deletes Entity",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "0c54a785-ee1e-4cb0-b9bb-b290937b50ff",
-										"exec": [
-											"//confirm that request returns a success code of 200",
-											"pm.test(\"Status code is 200\", function () {",
-											"    pm.response.to.have.status(200);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "DELETE",
-								"header": [
-									{
-										"key": "token",
-										"value": "test",
-										"type": "text"
-									},
-									{
-										"key": "Content-Type",
-										"name": "Content-Type",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{baseUrl}}/entity/{{newEntityId}}",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"entity",
-										"{{newEntityId}}"
-									]
-								}
-							},
-							"response": []
-						}
-					],
-					"protocolProfileBehavior": {},
-					"_postman_isSubFolder": true
-				},
-				{
-					"name": "csv",
-					"item": [
-						{
-							"name": "Contact CSV",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "737b2c37-bff3-45b8-b01a-02fdcca9e012",
-										"exec": [
-											"//confirm that request returns a success code of 200",
-											"pm.test(\"Status code is 200\", function () {",
-											"    pm.response.to.have.status(200);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"method": "GET",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "{{baseUrl}}/csv/Contact",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"csv",
-										"Contact"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Entity CSV",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "8f8f78ba-eb6f-4c06-9939-7e0e7d2af5af",
-										"exec": [
-											"//confirm that request returns a success code of 200",
-											"pm.test(\"Status code is 200\", function () {",
-											"    pm.response.to.have.status(200);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"method": "GET",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "{{baseUrl}}/csv/Entity",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"csv",
-										"Entity"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "User CSV",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "5b84cbe0-f036-45bf-b973-f9bf869b5cb8",
-										"exec": [
-											"//confirm that request returns a success code of 200",
-											"pm.test(\"Status code is 200\", function () {",
-											"    pm.response.to.have.status(200);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"method": "GET",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "{{baseUrl}}/csv/User",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"csv",
-										"User"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "UserRole CSV",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "7781e1ff-7c1f-4544-a554-063b098e08bb",
-										"exec": [
-											"//confirm that request returns a success code of 200",
-											"pm.test(\"Status code is 200\", function () {",
-											"    pm.response.to.have.status(200);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"method": "GET",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "{{baseUrl}}/csv/UserRole",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"csv",
-										"UserRole"
-									]
-								}
-							},
-							"response": []
-						}
-					],
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"id": "63407654-a4a9-4402-9e72-011815893577",
-								"type": "text/javascript",
-								"exec": [
-									""
-								]
-							}
-						},
-						{
-							"listen": "test",
-							"script": {
-								"id": "1c17cf82-30be-4bd0-9efb-89e228067f49",
-								"type": "text/javascript",
-								"exec": [
-									""
-								]
-							}
-						}
-					],
-					"protocolProfileBehavior": {},
-					"_postman_isSubFolder": true
-				},
-				{
-					"name": "Heallthcheck (Express only)",
+					"name": "Login with admin user",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
-								"id": "ad699e86-0ff1-48e2-96aa-a339d48e14a1",
+								"id": "19989e9e-11ee-476a-b986-5be021e89a45",
+								"exec": [
+									"//grab the token and save it into \"token\" env variable",
+									"pm.environment.set(\"token\",pm.response.text());",
+									"",
+									"",
+									"//confirm that request returns a success code of 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"{{testAdminUsername}}\",\n\t\"password\": \"{{testAdminPassword}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All Users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "19a429d8-ad47-4502-ab20-9fda4c54ea87",
+								"exec": [
+									"// grab the id of the first contatc returned for use in subsequent transactions",
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"firstUserEmail\", jsonData.results[0].email);",
+									"",
+									"//confirm that request returns a success code of 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMDk5NTgsImV4cCI6MTU4NTA5NjM1OH0.-kvQxh85_r0ZOSyn5Ogn5wPhxGFMF8KGK9n8dZCIbRY",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/user",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Single User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3908e851-991d-4e9a-8255-ba21abdef273",
+								"exec": [
+									"//confirm that request returns a success code of 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMDk5NTgsImV4cCI6MTU4NTA5NjM1OH0.-kvQxh85_r0ZOSyn5Ogn5wPhxGFMF8KGK9n8dZCIbRY",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user/{{firstUserEmail}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								"{{firstUserEmail}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e6385331-050e-4ae5-94ff-3388f161bb55",
+								"exec": [
+									"//get the email of the new user from the request and save it to env variable",
+									"//this will allow deletion of this in the Delete transaction",
+									"var reqBody = JSON.parse(request.data);",
+									"pm.environment.set(\"newUserEmail\", reqBody.email);",
+									"",
+									"//confirm that request returns a success code of 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "token",
+								"value": "replace me",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"marge.simpson@sfpp.com\",\n\t\"password\": \"donuts\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9d93e390-dc13-42a1-8b78-c683b6c31e58",
+								"exec": [
+									"//confirm that request returns a success code of 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTAyODAsImV4cCI6MTU4NTA5NjY4MH0.D5k_tbQpa-R7gMGOBcGq9H4VgPcB-Or8Lyaa7EgPsic",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"{{newUserEmail}}\",\n\t\"password\": \"donuts123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletes User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "13bf75ad-caf0-4fa9-afd7-f6d2a23dae15",
+								"exec": [
+									"//confirm that request returns a success code of 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTAzMzAsImV4cCI6MTU4NTA5NjczMH0.GJ9hWVtxz-8JDvFrG0STPxsyL2OJNKzPygSsTBzm1do",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/user/{{newUserEmail}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								"{{newUserEmail}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "userRole",
+			"item": [
+				{
+					"name": "All roles",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "822834c8-3772-4bd1-9ec8-65e3f441455d",
+								"exec": [
+									"//confirm that request returns a success code of 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTA0NDksImV4cCI6MTU4NTA5Njg0OX0.7HEFcqfaCB31Oiu23iMCQbMIK5t3cHYyQMrDdip0QYQ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/userRole",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"userRole"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Single role",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "063c331d-8b09-4668-9d1c-6f898d97ca29",
+								"exec": [
+									"//confirm that request returns a success code of 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTA0NDksImV4cCI6MTU4NTA5Njg0OX0.7HEFcqfaCB31Oiu23iMCQbMIK5t3cHYyQMrDdip0QYQ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/userRole/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"userRole",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create role",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "041e221d-c931-4b22-884a-73fefd1c1b80",
+								"exec": [
+									"//confirm that request returns a success code of 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTA0NDksImV4cCI6MTU4NTA5Njg0OX0.7HEFcqfaCB31Oiu23iMCQbMIK5t3cHYyQMrDdip0QYQ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"role\": \"Safety Inspector\",\n\t\"description\": \"The Safety Inspector\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/userRole",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"userRole"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Removes a role",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "db7d2227-79fe-4dc9-bfee-a97248e53e12",
+								"exec": [
+									"//confirm that request returns a success code of 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTA0NDksImV4cCI6MTU4NTA5Njg0OX0.7HEFcqfaCB31Oiu23iMCQbMIK5t3cHYyQMrDdip0QYQ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/userRole/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"userRole",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Updates a role",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "be918ffe-cd40-480e-a086-013f06e4c5aa",
+								"exec": [
+									"//confirm that request returns a success code of 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTA0NDksImV4cCI6MTU4NTA5Njg0OX0.7HEFcqfaCB31Oiu23iMCQbMIK5t3cHYyQMrDdip0QYQ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\": 1,\n\t\"role\": \"Safety Inspector\",\n\t\"description\": \"This is a test role update\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/userRole",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"userRole"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "contact  ",
+			"item": [
+				{
+					"name": "All Contacts",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "376871ec-6bdf-4315-af89-90886bff9317",
+								"exec": [
+									"// grab the id of the first contatc returned for use in subsequent transactions",
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"firstContactId\", jsonData.results[0].id);",
+									"pm.environment.set(\"secondContactId\", jsonData.results[1].id);",
+									"",
+									"//confirm that request returns a success code of 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"type": "text",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTA0NDksImV4cCI6MTU4NTA5Njg0OX0.7HEFcqfaCB31Oiu23iMCQbMIK5t3cHYyQMrDdip0QYQ"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/contact",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"contact"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Single Contact",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "075e31f9-3255-460a-9fa4-b112db37f39a",
+								"exec": [
+									"//confirm that request returns a success code of 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTA0NDksImV4cCI6MTU4NTA5Njg0OX0.7HEFcqfaCB31Oiu23iMCQbMIK5t3cHYyQMrDdip0QYQ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/contact/{{firstContactId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"contact",
+								"{{firstContactId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Contact",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "fa562b7d-4783-4cbb-a06b-e7b774023591",
+								"exec": [
+									"//get the 36 character id of the new contact and save it to env variable",
+									"//this will allow deletion of this in the Delete transaction",
+									"pm.environment.set(\"newContactId\", pm.response.text().slice(0,36));",
+									"",
+									"//confirm that request returns a success code of 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTA0NDksImV4cCI6MTU4NTA5Njg0OX0.7HEFcqfaCB31Oiu23iMCQbMIK5t3cHYyQMrDdip0QYQ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Rod Flanders\",\n  \"email\": [\n    {\n      \"address\": \"rod.flanders@leftorium.com\",\n      \"isPrimary\": \"true\"\n    }\n  ],\n  \"phone\": [\n    {\n      \"number\": \"12345551212\",\n      \"isPrimary\": \"true\"\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/contact",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"contact"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Contact",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6f1765bb-101a-40d0-904f-37af9aa96558",
+								"exec": [
+									"//confirm that request returns a success code of 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTA0NDksImV4cCI6MTU4NTA5Njg0OX0.7HEFcqfaCB31Oiu23iMCQbMIK5t3cHYyQMrDdip0QYQ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": \"{{firstContactId}}\",\n  \"name\": \"Rod Flanders\",\n  \"email\": [\n    {\n      \"address\": \"rod.flanders@leftorium.com\",\n      \"isPrimary\": \"true\"\n    },\n    {\n      \"address\": \"nrod@church.org\"\n    }\n  ],\n  \"phone\": [\n    {\n      \"number\": \"4105551212\",\n      \"isPrimary\": \"true\"\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/contact",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"contact"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Link Contact to Entities",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1831285f-51de-45fb-9a68-e3c281951a44",
+								"exec": [
+									"//confirm that request returns a success code of 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"type": "text",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTA0NDksImV4cCI6MTU4NTA5Njg0OX0.7HEFcqfaCB31Oiu23iMCQbMIK5t3cHYyQMrDdip0QYQ"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"entities\": [\n    {\n      \"id\": \"{{firstEntityID}}\"\n    },\n    {\n      \"id\": \"{{secondEntityID}}\",\n      \"title\": \"Owner\"\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/contact/link/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"contact",
+								"link",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletes Contact",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7e59699f-e52f-47ac-b2aa-05fedf731131",
+								"exec": [
+									"//confirm that request returns a success code of 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTA0NDksImV4cCI6MTU4NTA5Njg0OX0.7HEFcqfaCB31Oiu23iMCQbMIK5t3cHYyQMrDdip0QYQ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/contact/{{newContactId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"contact",
+								"{{newContactId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "This folder contains calls to excercise the contact endpoint.  Please note that the these calls are expected to be made in order as some subsequent examples rely on values derived from previous calls. For exacmple the \"Get Single Contact\" retrieves the first contact returned from the previous \"Get All Contacts\" transaction.",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "e50ba8bc-02c6-40ba-ae51-57fa584d8aee",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "194a84e5-96bd-4efa-afa6-a7f770d99d85",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "entity",
+			"item": [
+				{
+					"name": "All Entities",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "64a0b1b0-b208-4ad5-a1cd-2bed78440b07",
+								"exec": [
+									"// grab the id of the first two entities returned for use in subsequent transactions",
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"firstEntityId\", jsonData.results[0].id);",
+									"pm.environment.set(\"secondEntityId\", jsonData.results[1].id);",
+									"",
+									"//confirm that request returns a success code of 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"type": "text",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTA0NDksImV4cCI6MTU4NTA5Njg0OX0.7HEFcqfaCB31Oiu23iMCQbMIK5t3cHYyQMrDdip0QYQ"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/entity",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"entity"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Single Entity",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "126b51f5-5c6a-40eb-95b6-b0316f2e2e2e",
+								"exec": [
+									"//confirm that request returns a success code of 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTA0NDksImV4cCI6MTU4NTA5Njg0OX0.7HEFcqfaCB31Oiu23iMCQbMIK5t3cHYyQMrDdip0QYQ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/entity/{{firstEntityId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"entity",
+								"{{firstEntityId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Entity",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "76ea05ba-36d2-45b2-acfa-425f1029860d",
+								"exec": [
+									"//get the 36 character id of the new entity and save it to env variable",
+									"//this will allow deletion of this in the Delete transaction",
+									"pm.environment.set(\"newEntityId\", pm.response.text().slice(0,36));",
+									"",
+									"//confirm that request returns a success code of 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTA0NDksImV4cCI6MTU4NTA5Njg0OX0.7HEFcqfaCB31Oiu23iMCQbMIK5t3cHYyQMrDdip0QYQ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Krustyland\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/entity",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"entity"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Entity",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2393125b-9337-436e-ad40-816eed71e98a",
+								"exec": [
+									"//confirm that request returns a success code of 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTA0NDksImV4cCI6MTU4NTA5Njg0OX0.7HEFcqfaCB31Oiu23iMCQbMIK5t3cHYyQMrDdip0QYQ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "   {\n   \t\t\"id\": \"{{newEntityId}}\",\n        \"email\": [\n            {\n                \"address\": \"hello@krustyland.com\",\n                \"isPrimary\": \"true\"\n            }\n        ]\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/entity",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"entity"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Link Entity to Contacts",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "63c5ec2a-d368-4014-9ffa-2ac4a4bce1a6",
+								"exec": [
+									"//confirm that request returns a success code of 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTA0NDksImV4cCI6MTU4NTA5Njg0OX0.7HEFcqfaCB31Oiu23iMCQbMIK5t3cHYyQMrDdip0QYQ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"contacts\": [\n    {\n      \"id\": \"{{firstContactId}}\"\n    },\n    {\n      \"id\": \"{{secondContactId}}\",\n      \"title\": \"Owner\"\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/entity",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"entity"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletes Entity",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0c54a785-ee1e-4cb0-b9bb-b290937b50ff",
+								"exec": [
+									"//confirm that request returns a success code of 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "token",
+								"value": "test",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/entity/{{newEntityId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"entity",
+								"{{newEntityId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "csv",
+			"item": [
+				{
+					"name": "Contact CSV",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "737b2c37-bff3-45b8-b01a-02fdcca9e012",
 								"exec": [
 									"//confirm that request returns a success code of 200",
 									"pm.test(\"Status code is 200\", function () {",
@@ -1310,28 +1117,210 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							"raw": ""
 						},
 						"url": {
-							"raw": "{{baseUrl}}/health",
+							"raw": "{{baseUrl}}/csv/Contact",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
-								"health"
+								"csv",
+								"Contact"
 							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Entity CSV",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8f8f78ba-eb6f-4c06-9939-7e0e7d2af5af",
+								"exec": [
+									"//confirm that request returns a success code of 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
 						},
-						"description": "Checks the status of your Express app."
+						"url": {
+							"raw": "{{baseUrl}}/csv/Entity",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"csv",
+								"Entity"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User CSV",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5b84cbe0-f036-45bf-b973-f9bf869b5cb8",
+								"exec": [
+									"//confirm that request returns a success code of 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/csv/User",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"csv",
+								"User"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UserRole CSV",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7781e1ff-7c1f-4544-a554-063b098e08bb",
+								"exec": [
+									"//confirm that request returns a success code of 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/csv/UserRole",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"csv",
+								"UserRole"
+							]
+						}
 					},
 					"response": []
 				}
 			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "63407654-a4a9-4402-9e72-011815893577",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "1c17cf82-30be-4bd0-9efb-89e228067f49",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
 			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Heallthcheck (Express only)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ad699e86-0ff1-48e2-96aa-a339d48e14a1",
+						"exec": [
+							"//confirm that request returns a success code of 200",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/health",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"health"
+					]
+				},
+				"description": "Checks the status of your Express app."
+			},
+			"response": []
 		}
 	],
 	"auth": {
