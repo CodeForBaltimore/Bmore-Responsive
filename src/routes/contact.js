@@ -220,7 +220,7 @@ router.post('/link/:contact_id', async (req, res) => {
 });
 
 // unlinks contact with list of entities
-router.post('/unlink/:contact_id', async (req, res) => {
+router.delete('/unlink/:contact_id', async (req, res) => {
 	let code;
 	let message;
 	try {

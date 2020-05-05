@@ -52,7 +52,6 @@ router.get('/:entity_id', async (req, res) => {
 router.post('/', async (req, res) => {
 	let code;
 	let message;
-	let ec;
 	try {
 		if (req.body.name !== undefined) {
 			let { name, address, phone, email, checkIn, contacts } = req.body;
@@ -69,7 +68,7 @@ router.post('/', async (req, res) => {
 			const entity = await req.context.models.Entity.create({ name, address, email, phone, checkIn });
 			if (contacts) {
 				for(const contact of contacts) {
-					ec = {
+					const ec = {
 						entityId: entity.id,
 						contactId: contact.id
 					}
@@ -97,7 +96,6 @@ router.post('/', async (req, res) => {
 router.put('/', async (req, res) => {
 	let code;
 	let message;
-	let ec;
 	try {
 		if (validator.isUUID(req.body.id)) {
 			let { id, name, address, phone, email, checkIn, contacts } = req.body;
@@ -246,7 +244,6 @@ router.post('/link/:entity_id', async (req, res) => {
 router.delete('/link/:entity_id', async (req, res) => {
 	let code;
 	let message;
-	let ec;
 	try {
 		if (validator.isUUID(req.params.entity_id)) {
 			const entity = await req.context.models.Entity.findOne({
@@ -263,7 +260,7 @@ router.delete('/link/:entity_id', async (req, res) => {
 				});
 
 				// ideally only one of these should exist
-				ec = await req.context.models.EntityContact.findOne({
+				const ec = await req.context.models.EntityContact.findOne({
 					where: {
 						entityId: entity.id,
 						contactId: contactToUnLink.id
