@@ -241,7 +241,7 @@ router.post('/link/:entity_id', async (req, res) => {
 });
 
 // unlinks entity with list of contacts
-router.delete('/link/:entity_id', async (req, res) => {
+router.post('/unlink/:entity_id', async (req, res) => {
 	let code;
 	let message;
 	try {
