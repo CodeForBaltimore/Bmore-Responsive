@@ -52,7 +52,6 @@ router.get('/:entity_id', async (req, res) => {
 router.post('/', async (req, res) => {
 	let code;
 	let message;
-	let ec;
 	try {
 		if (req.body.name !== undefined) {
 			let { name, address, phone, email, checkIn, contacts } = req.body;
@@ -69,7 +68,7 @@ router.post('/', async (req, res) => {
 			const entity = await req.context.models.Entity.create({ name, address, email, phone, checkIn });
 			if (contacts) {
 				for(const contact of contacts) {
-					ec = {
+					const ec = {
 						entityId: entity.id,
 						contactId: contact.id
 					}
@@ -97,7 +96,6 @@ router.post('/', async (req, res) => {
 router.put('/', async (req, res) => {
 	let code;
 	let message;
-	let ec;
 	try {
 		if (validator.isUUID(req.body.id)) {
 			let { id, name, address, phone, email, checkIn, contacts } = req.body;
@@ -218,8 +216,6 @@ router.post('/link/:entity_id', async (req, res) => {
 					}
 				});
 
-
-
 				const ec = {
 					entityId: entity.id,
 					contactId: contactToLink.id
@@ -231,7 +227,7 @@ router.post('/link/:entity_id', async (req, res) => {
 
 				await req.context.models.EntityContact.createIfNew(ec);
 			}
-			message = `Link successful/already exists for entity with ID ${entity.id}`;
+			message = `Linking successful/already exists for entity with ID ${entity.id}`;
 			code = 200;
 		} else {
 			code = 422;
@@ -242,6 +238,48 @@ router.post('/link/:entity_id', async (req, res) => {
 	}
 
 	return utils.response(res, code, message);
+});
+
+// unlinks entity with list of contacts
+router.post('/unlink/:entity_id', async (req, res) => {
+	let code;
+	let message;
+	try {
+		if (validator.isUUID(req.params.entity_id)) {
+			const entity = await req.context.models.Entity.findOne({
+				where: {
+					id: req.params.entity_id
+				}
+			});
+
+			for(const contact of req.body.contacts) {
+				const contactToUnLink = await req.context.models.Contact.findOne({
+					where: {
+						id: contact.id
+					}
+				});
+
+				// ideally only one of these should exist
+				const ec = await req.context.models.EntityContact.findOne({
+					where: {
+						entityId: entity.id,
+						contactId: contactToUnLink.id
+					}
+				});
+
+				await ec.destroy();
+			}
+			message = `Unlinking successful for entity with ID ${entity.id}`;
+			code = 200;
+		} else {
+			code = 422;
+		}
+	} catch (e) {
+		console.error(e);
+		code = 500;
+	}
+
+	return utils.response(res, code, message)
 });
 
 export default router;
