@@ -88,7 +88,7 @@
 						"header": [
 							{
 								"key": "token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMDk5NTgsImV4cCI6MTU4NTA5NjM1OH0.-kvQxh85_r0ZOSyn5Ogn5wPhxGFMF8KGK9n8dZCIbRY",
+								"value": "{{token}}",
 								"type": "text"
 							}
 						],
@@ -129,7 +129,7 @@
 						"header": [
 							{
 								"key": "token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMDk5NTgsImV4cCI6MTU4NTA5NjM1OH0.-kvQxh85_r0ZOSyn5Ogn5wPhxGFMF8KGK9n8dZCIbRY",
+								"value": "{{token}}",
 								"type": "text"
 							}
 						],
@@ -183,7 +183,7 @@
 							},
 							{
 								"key": "token",
-								"value": "replace me",
+								"value": "{{token}}",
 								"type": "text"
 							}
 						],
@@ -230,13 +230,13 @@
 						"header": [
 							{
 								"key": "token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTAyODAsImV4cCI6MTU4NTA5NjY4MH0.D5k_tbQpa-R7gMGOBcGq9H4VgPcB-Or8Lyaa7EgPsic",
+								"value": "{{token}}",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"email\": \"{{newUserEmail}}\",\n\t\"password\": \"donuts123\"\n}",
+							"raw": "{\n\t\"email\": \"{{testAdminUsername}}\",\n\t\"displayName\": \"Updated Name\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -277,7 +277,7 @@
 						"header": [
 							{
 								"key": "token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTAzMzAsImV4cCI6MTU4NTA5NjczMH0.GJ9hWVtxz-8JDvFrG0STPxsyL2OJNKzPygSsTBzm1do",
+								"value": "{{token}}",
 								"type": "text"
 							}
 						],
@@ -322,7 +322,7 @@
 						"header": [
 							{
 								"key": "token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTA0NDksImV4cCI6MTU4NTA5Njg0OX0.7HEFcqfaCB31Oiu23iMCQbMIK5t3cHYyQMrDdip0QYQ",
+								"value": "{{token}}",
 								"type": "text"
 							}
 						],
@@ -333,45 +333,6 @@
 							],
 							"path": [
 								"userRole"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Single role",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "063c331d-8b09-4668-9d1c-6f898d97ca29",
-								"exec": [
-									"//confirm that request returns a success code of 200",
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTA0NDksImV4cCI6MTU4NTA5Njg0OX0.7HEFcqfaCB31Oiu23iMCQbMIK5t3cHYyQMrDdip0QYQ",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{baseUrl}}/userRole/1",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"userRole",
-								"1"
 							]
 						}
 					},
@@ -399,13 +360,13 @@
 						"header": [
 							{
 								"key": "token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTA0NDksImV4cCI6MTU4NTA5Njg0OX0.7HEFcqfaCB31Oiu23iMCQbMIK5t3cHYyQMrDdip0QYQ",
+								"value": "{{token}}",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"role\": \"Safety Inspector\",\n\t\"description\": \"The Safety Inspector\"\n}",
+							"raw": "{\n  \"role\": \"test4\",\n  \"path\": \"/test\",\n  \"method\": \"GET\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -442,69 +403,26 @@
 						}
 					],
 					"request": {
-						"method": "DELETE",
+						"method": "POST",
 						"header": [
 							{
 								"key": "token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTA0NDksImV4cCI6MTU4NTA5Njg0OX0.7HEFcqfaCB31Oiu23iMCQbMIK5t3cHYyQMrDdip0QYQ",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{baseUrl}}/userRole/1",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"userRole",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Updates a role",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "be918ffe-cd40-480e-a086-013f06e4c5aa",
-								"exec": [
-									"//confirm that request returns a success code of 200",
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTA0NDksImV4cCI6MTU4NTA5Njg0OX0.7HEFcqfaCB31Oiu23iMCQbMIK5t3cHYyQMrDdip0QYQ",
+								"value": "{{token}}",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"id\": 1,\n\t\"role\": \"Safety Inspector\",\n\t\"description\": \"This is a test role update\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							"raw": "{\n  \"role\": \"test2\",\n  \"path\": \"/test\",\n  \"method\": \"GET\"\n}"
 						},
 						"url": {
-							"raw": "{{baseUrl}}/userRole",
+							"raw": "{{baseUrl}}/userRole/delete",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
-								"userRole"
+								"userRole",
+								"delete"
 							]
 						}
 					},
@@ -545,7 +463,7 @@
 							{
 								"key": "token",
 								"type": "text",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTA0NDksImV4cCI6MTU4NTA5Njg0OX0.7HEFcqfaCB31Oiu23iMCQbMIK5t3cHYyQMrDdip0QYQ"
+								"value": "{{token}}"
 							}
 						],
 						"url": {
@@ -582,7 +500,7 @@
 						"header": [
 							{
 								"key": "token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTA0NDksImV4cCI6MTU4NTA5Njg0OX0.7HEFcqfaCB31Oiu23iMCQbMIK5t3cHYyQMrDdip0QYQ",
+								"value": "{{token}}",
 								"type": "text"
 							}
 						],
@@ -625,7 +543,7 @@
 						"header": [
 							{
 								"key": "token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTA0NDksImV4cCI6MTU4NTA5Njg0OX0.7HEFcqfaCB31Oiu23iMCQbMIK5t3cHYyQMrDdip0QYQ",
+								"value": "{{token}}",
 								"type": "text"
 							}
 						],
@@ -672,7 +590,7 @@
 						"header": [
 							{
 								"key": "token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTA0NDksImV4cCI6MTU4NTA5Njg0OX0.7HEFcqfaCB31Oiu23iMCQbMIK5t3cHYyQMrDdip0QYQ",
+								"value": "{{token}}",
 								"type": "text"
 							}
 						],
@@ -692,55 +610,6 @@
 							],
 							"path": [
 								"contact"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Link Contact to Entities",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "1831285f-51de-45fb-9a68-e3c281951a44",
-								"exec": [
-									"//confirm that request returns a success code of 200",
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "token",
-								"type": "text",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTA0NDksImV4cCI6MTU4NTA5Njg0OX0.7HEFcqfaCB31Oiu23iMCQbMIK5t3cHYyQMrDdip0QYQ"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"entities\": [\n    {\n      \"id\": \"{{firstEntityID}}\"\n    },\n    {\n      \"id\": \"{{secondEntityID}}\",\n      \"title\": \"Owner\"\n    }\n  ]\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/contact/link/",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"contact",
-								"link",
-								""
 							]
 						}
 					},
@@ -768,7 +637,7 @@
 						"header": [
 							{
 								"key": "token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTA0NDksImV4cCI6MTU4NTA5Njg0OX0.7HEFcqfaCB31Oiu23iMCQbMIK5t3cHYyQMrDdip0QYQ",
+								"value": "{{token}}",
 								"type": "text"
 							}
 						],
@@ -842,7 +711,7 @@
 							{
 								"key": "token",
 								"type": "text",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTA0NDksImV4cCI6MTU4NTA5Njg0OX0.7HEFcqfaCB31Oiu23iMCQbMIK5t3cHYyQMrDdip0QYQ"
+								"value": "{{token}}"
 							}
 						],
 						"url": {
@@ -879,7 +748,7 @@
 						"header": [
 							{
 								"key": "token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTA0NDksImV4cCI6MTU4NTA5Njg0OX0.7HEFcqfaCB31Oiu23iMCQbMIK5t3cHYyQMrDdip0QYQ",
+								"value": "{{token}}",
 								"type": "text"
 							}
 						],
@@ -922,7 +791,7 @@
 						"header": [
 							{
 								"key": "token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTA0NDksImV4cCI6MTU4NTA5Njg0OX0.7HEFcqfaCB31Oiu23iMCQbMIK5t3cHYyQMrDdip0QYQ",
+								"value": "{{token}}",
 								"type": "text"
 							}
 						],
@@ -969,60 +838,13 @@
 						"header": [
 							{
 								"key": "token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTA0NDksImV4cCI6MTU4NTA5Njg0OX0.7HEFcqfaCB31Oiu23iMCQbMIK5t3cHYyQMrDdip0QYQ",
+								"value": "{{token}}",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "   {\n   \t\t\"id\": \"{{newEntityId}}\",\n        \"email\": [\n            {\n                \"address\": \"hello@krustyland.com\",\n                \"isPrimary\": \"true\"\n            }\n        ]\n    }",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/entity",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"entity"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Link Entity to Contacts",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "63c5ec2a-d368-4014-9ffa-2ac4a4bce1a6",
-								"exec": [
-									"//confirm that request returns a success code of 200",
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbWVyLnNpbXBzb25Ac2ZwcC5jb20iLCJpYXQiOjE1ODUwMTA0NDksImV4cCI6MTU4NTA5Njg0OX0.7HEFcqfaCB31Oiu23iMCQbMIK5t3cHYyQMrDdip0QYQ",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"contacts\": [\n    {\n      \"id\": \"{{firstContactId}}\"\n    },\n    {\n      \"id\": \"{{secondContactId}}\",\n      \"title\": \"Owner\"\n    }\n  ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1063,7 +885,7 @@
 						"header": [
 							{
 								"key": "token",
-								"value": "test",
+								"value": "{{token}}",
 								"type": "text"
 							},
 							{
@@ -1085,6 +907,133 @@
 						}
 					},
 					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "links",
+			"item": [
+				{
+					"name": "Link Contact to Entities",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1831285f-51de-45fb-9a68-e3c281951a44",
+								"exec": [
+									"//confirm that request returns a success code of 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"entities\": [\n    {\n      \"id\": \"{{firstEntityId}}\"\n    },\n    {\n      \"id\": \"{{secondEntityId}}\",\n      \"title\": \"Owner\"\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/contact/link/{{firstContactId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"contact",
+								"link",
+								"{{firstContactId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Link Entity to Contacts",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "63c5ec2a-d368-4014-9ffa-2ac4a4bce1a6",
+								"exec": [
+									"//confirm that request returns a success code of 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"contacts\": [\n    {\n      \"id\": \"{{firstContactId}}\"\n    },\n    {\n      \"id\": \"{{secondContactId}}\",\n      \"title\": \"Owner\"\n    }\n  ]\n}\n\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/entity/link/{{firstEntityId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"entity",
+								"link",
+								"{{firstEntityId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "These calls are exampled on how to create relationships between contacts and entities.  These are put in their own folder in postman as they two sample calls require that Get All Contacts and Get All Entities have already been run.",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "79b9e2be-9773-4ed5-87d9-46fa27c2d92e",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "5c697ba8-81eb-487b-99f6-ab624dc9d589",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
 				}
 			],
 			"protocolProfileBehavior": {}
@@ -1114,7 +1063,13 @@
 					},
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": ""
@@ -1154,7 +1109,13 @@
 					},
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": ""
@@ -1194,7 +1155,13 @@
 					},
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": ""
@@ -1234,7 +1201,13 @@
 					},
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": ""
@@ -1323,16 +1296,6 @@
 			"response": []
 		}
 	],
-	"auth": {
-		"type": "bearer",
-		"bearer": [
-			{
-				"key": "token",
-				"value": "{{token}}",
-				"type": "string"
-			}
-		]
-	},
 	"event": [
 		{
 			"listen": "prerequest",
