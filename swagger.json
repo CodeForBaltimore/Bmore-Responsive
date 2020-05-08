@@ -6,7 +6,7 @@
   } ],
   "info" : {
     "description" : "An emergency response and contact management API.",
-    "version" : "1.0.4",
+    "version" : "1.1.0",
     "title" : "Bmore Responsive",
     "contact" : {
       "email" : "hello@codeforbaltimore.org"
