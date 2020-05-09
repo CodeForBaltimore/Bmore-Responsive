@@ -33,7 +33,6 @@ const formatTime = seconds => {
  * @returns {Object}
  */
 const loadCasbin = async () => {
-	const dbUrl = dbUrl();
 	let dialectOptions;
 	if (process.env.NODE_ENV === 'production') {
 		dialectOptions = {
@@ -50,7 +49,7 @@ const loadCasbin = async () => {
 		};
 	}
 	const a = await SequelizeAdapter.newAdapter(
-		dbUrl,
+		dbUrl(),
 		{
 			dialect: 'postgres',
 			dialectOptions: dialectOptions
