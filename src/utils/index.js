@@ -33,7 +33,7 @@ const formatTime = seconds => {
  * @returns {Object}
  */
 const loadCasbin = async () => {
-	const dbUrl = process.env.DATABASE_URL;
+	const dbUrl = dbUrl();
 	let dialectOptions;
 	if (process.env.NODE_ENV === 'production') {
 		dialectOptions = {
