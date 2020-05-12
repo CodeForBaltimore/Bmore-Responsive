@@ -1,6 +1,6 @@
 {
   "name": "bmore-responsive",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "description": "An API-driven CRM (Civic Relationship Management) system.",
   "main": "src/index.js",
   "directories": {

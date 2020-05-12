@@ -206,7 +206,48 @@ router.post('/link/:contact_id', async (req, res) => {
 				
 				await req.context.models.EntityContact.createIfNew(ec);
 			}
-			message = `Link successful/already exists for contact with ID ${contact.id}`;
+			message = `Linking successful/already exists for contact with ID ${contact.id}`;
+			code = 200;
+		} else {
+			code = 422;
+		}
+	} catch (e) {
+		console.error(e);
+		code = 500;
+	}
+
+	return utils.response(res, code, message);
+});
+
+// unlinks contact with list of entities
+router.post('/unlink/:contact_id', async (req, res) => {
+	let code;
+	let message;
+	try {
+		if (validator.isUUID(req.params.contact_id)) {
+			const contact = await req.context.models.Contact.findOne({
+				where: {
+					id: req.params.contact_id
+				}
+			});
+			for(const entity of req.body.entities) {
+				const entityToUnLink = await req.context.models.Entity.findOne({
+					where: {
+						id: entity.id
+					}
+				});
+
+				// ideally only one of these should exist
+				const ec = await req.context.models.EntityContact.findOne({
+					where: {
+						entityId: entityToUnLink.id,
+						contactId: contact.id
+					}
+				});
+
+				await ec.destroy();
+			}
+			message = `Unlinking successful for contact with ID ${contact.id}`;
 			code = 200;
 		} else {
 			code = 422;
