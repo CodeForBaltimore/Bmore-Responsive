@@ -2,10 +2,12 @@
 
 import crypto from 'crypto';
 import validator from 'validator';
+import fs from 'fs';
 import { newEnforcer } from 'casbin';
 import { SequelizeAdapter } from 'casbin-sequelize-adapter';
 
 const casbinConf = `${__dirname}/casbin.conf`;
+const rdsCa = fs.readFileSync('./rds-combined-ca-bundle.pem');
 
 /**
  * Formats a timestamp to something readable by humans.
@@ -31,11 +33,26 @@ const formatTime = seconds => {
  * @returns {Object}
  */
 const loadCasbin = async () => {
-	const dbUrl = process.env.DATABASE_URL;
+	let dialectOptions;
+	if (process.env.NODE_ENV === 'production') {
+		dialectOptions = {
+			ssl: {
+				rejectUnauthorized: true,
+				ca: [rdsCa],
+				checkServerIdentity: (host, cert) => {
+					const error = tls.checkServerIdentity(host, cert);
+					if (error && !cert.subject.CN.endsWith('.rds.amazonaws.com')) {
+						return error;
+					}
+				}
+			}
+		};
+	}
 	const a = await SequelizeAdapter.newAdapter(
-		dbUrl,
+		dbUrl(),
 		{
-			dialect: 'postgres'
+			dialect: 'postgres',
+			dialectOptions: dialectOptions
 		}
 	);
 
