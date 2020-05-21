@@ -62,36 +62,35 @@ describe('User positive tests', () => {
             });
     });
     //          Test will need some more work.
-    // it('should update a user', (done) => {
-    //     user.password = randomWords();
-    //     request(app)
-    //         .put('/user')
-    //         .send(user)
-    //         .set('token', token)
-    //         .set('Accept', 'application/json')
-    //         .send()
-    //         .expect('Content-Type', 'text/html; charset=utf-8')
-    //         .expect(200)
-    //         .end((err, res) => {
-    //             if (err) return done(err);
-    //             expect(res.text).to.equal(`${user.email} updated`);
-    //             done();
-    //         });
-    // });
-    // it('should delete a user', (done) => {
-    //     request(app)
-    //         .delete(`/user/${user.email}`)
-    //         .set('Accept', 'application/json')
-    //         .set('token', token)
-    //         .send()
-    //         .expect('Content-Type', 'text/html; charset=utf-8')
-    //         .expect(200)
-    //         .end((err, res) => {
-    //             if (err) return done(err);
-    //             expect(res.text).to.equal(`${user.email} deleted`);
-    //             done();
-    //         });
-    // });
+    it('should update a user', (done) => {
+        user.displayName = randomWords();
+        request(app)
+            .put('/user')
+            .set('token', token)
+            .send(user)
+            .set('Accept', 'application/json')
+            .expect('Content-Type', 'text/html; charset=utf-8')
+            .expect(200)
+            .end((err, res) => {
+                if (err) return done(err);
+                expect(res.text).to.equal(`${user.email} updated`);
+                done();
+            });
+    });
+    it('should delete a user', (done) => {
+        request(app)
+            .delete(`/user/${user.email}`)
+            .set('Accept', 'application/json')
+            .set('token', token)
+            .send()
+            .expect('Content-Type', 'text/html; charset=utf-8')
+            .expect(200)
+            .end((err, res) => {
+                if (err) return done(err);
+                expect(res.text).to.equal(`${user.email} deleted`);
+                done();
+            });
+    });
 });
 
 describe('User negative tests', () => {
