@@ -56,7 +56,7 @@ router.post('/', async (req, res) => {
 	let contact;
 	let ec;
 	try {
-		if (req.body.name !== undefined) {
+		if (req.body.name !== undefined && req.body.name !== '') {
 			const { name, phone, email, UserId, entities, attributes } = req.body;
 
 			// Validating emails 

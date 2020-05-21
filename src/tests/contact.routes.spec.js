@@ -65,7 +65,7 @@ describe('Contact negative tests', () => {
     request(app)
       .post('/contact')
       .set('Accept', 'application/json')
-      .send({ email: randomWords() })
+      .send({ name: '' })
       .expect('Content-Type', 'text/html; charset=utf-8')
       .expect(422)
       .end((err, res) => {
