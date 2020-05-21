@@ -6,189 +6,218 @@
   } ],
   "info" : {
     "description" : "An emergency response and contact management API.",
-    "version" : "1.1.1",
+    "version" : "1.1.2",
     "title" : "Bmore Responsive",
     "contact" : {
       "email" : "hello@codeforbaltimore.org"
     },
-    "license" : {
-      "name" : "Apache 2.0",
-      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
     }
   },
-  "tags" : [ {
-    "name" : "developer",
-    "description" : "Operations available to regular developers"
-  }, {
-    "name" : "user",
-    "description" : "Operations related to system users"
-  }, {
-    "name" : "entity",
-    "description" : "Operations related to entities"
-  }, {
-    "name" : "contact",
-    "description" : "Operations related to contacts"
-  } ],
-  "paths" : {
-    "/health" : {
-      "get" : {
-        "tags" : [ "developer" ],
-        "summary" : "returns a healthcheck",
-        "description" : "This returns simple system information\n",
-        "responses" : {
-          "200" : {
-            "description" : "the system healthcheck",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/HealthcheckItem"
+  "tags": [
+    {
+      "name": "developer",
+      "description": "Operations available to regular developers"
+    },
+    {
+      "name": "user",
+      "description": "Operations related to system users"
+    },
+    {
+      "name": "userRole",
+      "description": "Operations related to userRole"
+    },
+    {
+      "name": "entity",
+      "description": "Operations related to entities"
+    },
+    {
+      "name": "contact",
+      "description": "Operations related to contacts"
+    },
+    {
+      "name": "csv",
+      "description": "Operations related to csv"
+    }
+  ],
+  "paths": {
+    "/health": {
+      "get": {
+        "tags": [
+          "developer"
+        ],
+        "summary": "returns a healthcheck",
+        "description": "This returns simple system information\n",
+        "responses": {
+          "200": {
+            "description": "the system healthcheck",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthcheckItem"
                 }
               }
             }
           },
-          "500" : {
-            "description" : "Server error"
+          "500": {
+            "description": "Server error"
           }
         }
       }
     },
-    "/user/login" : {
-      "post" : {
-        "tags" : [ "user" ],
-        "summary" : "logs in a system user",
-        "description" : "The system login endpoint.",
-        "requestBody" : {
-          "description" : "The body of the payload",
-          "required" : true,
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "type" : "object",
-                "required" : [ "email", "password" ],
-                "properties" : {
-                  "email" : {
-                    "type" : "string",
-                    "format" : "email",
-                    "example" : "test@test.test"
+    "/user/login": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "logs in a system user",
+        "description": "The system login endpoint.",
+        "requestBody": {
+          "description": "The body of the payload",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "email",
+                  "password"
+                ],
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "example": "test@test.test"
                   },
-                  "password" : {
-                    "type" : "string",
-                    "example" : "test"
+                  "password": {
+                    "type": "string",
+                    "example": "test"
                   }
                 }
               }
             }
           }
         },
-        "responses" : {
-          "200" : {
-            "description" : "login token"
+        "responses": {
+          "200": {
+            "description": "login token"
           },
-          "403" : {
-            "description" : "Forbidden"
+          "403": {
+            "description": "Forbidden"
           },
-          "422" : {
-            "description" : "Invalid input"
+          "422": {
+            "description": "Invalid input"
           },
-          "500" : {
-            "description" : "Server error"
+          "500": {
+            "description": "Server error"
           }
         }
       }
     },
-    "/user" : {
-      "post" : {
-        "tags" : [ "user" ],
-        "summary" : "creates a new user",
-        "description" : "The new user endpoint.",
-        "requestBody" : {
-          "description" : "The body of the payload",
-          "required" : true,
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "type" : "object",
-                "required" : [ "email", "password" ],
-                "properties" : {
-                  "email" : {
-                    "type" : "string",
-                    "format" : "email",
-                    "example" : "homer.simpson@sfpp.com"
+    "/user": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "creates a new user",
+        "description": "The new user endpoint.  Note that displayname and phone are not written to the database.",
+        "requestBody": {
+          "description": "The body of the payload",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "email",
+                  "password"
+                ],
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "example": "homer.simpson@sfpp.com"
                   },
-                  "password" : {
-                    "type" : "string",
-                    "format" : "password",
-                    "example" : "donuts"
+                  "password": {
+                    "type": "string",
+                    "format": "password",
+                    "example": "donuts"
                   },
-                  "roles" : {
-                    "type" : "array",
-                    "items" : {
-                      "type" : "number",
-                      "example" : 42
+                  "roles": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "example": "user"
                     }
                   },
-                  "displayName" : {
-                    "type" : "string",
-                    "example" : "Homer Simpson"
+                  "displayName": {
+                    "type": "string",
+                    "example": "Homer Simpson"
                   },
-                  "phone" : {
-                    "type" : "string",
-                    "example" : "1234567890"
+                  "phone": {
+                    "type": "string",
+                    "example": "1234567890"
                   }
                 }
               }
             }
           }
         },
-        "responses" : {
-          "200" : {
-            "description" : "user created"
+        "responses": {
+          "200": {
+            "description": "user created"
           },
-          "401" : {
-            "description" : "Unauthorized"
+          "401": {
+            "description": "Unauthorized"
           },
-          "422" : {
-            "description" : "Invalid input"
+          "422": {
+            "description": "Invalid input"
           },
-          "500" : {
-            "description" : "Server error"
+          "500": {
+            "description": "Server error"
           }
         }
       },
-      "get" : {
-        "tags" : [ "user" ],
-        "summary" : "returns all system users",
-        "description" : "By passing in the appropriate options, you can search for\navailable users in the system\n",
-        "parameters" : [ {
-          "in" : "header",
-          "name" : "token",
-          "required" : true,
-          "schema" : {
-            "type" : "string",
-            "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "returns all system users",
+        "description": "Returns all users within the system and their information.\n",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "token",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
+            }
           }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "search results matching criteria",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "object",
-                  "properties" : {
-                    "_meta" : {
-                      "type" : "object",
-                      "properties" : {
-                        "total" : {
-                          "type" : "number",
-                          "example" : 1
+        ],
+        "responses": {
+          "200": {
+            "description": "List of all users in the system and their information.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "_meta": {
+                      "type": "object",
+                      "properties": {
+                        "total": {
+                          "type": "number",
+                          "example": 1
                         }
                       }
                     },
-                    "results" : {
-                      "type" : "array",
-                      "items" : {
-                        "$ref" : "#/components/schemas/UserItem"
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/UserItem"
                       }
                     }
                   }
@@ -196,1015 +225,1067 @@
               }
             }
           },
-          "401" : {
-            "description" : "Unauthorized"
+          "401": {
+            "description": "Unauthorized"
           },
-          "500" : {
-            "description" : "Server error"
+          "500": {
+            "description": "Server error"
           }
         }
       },
-      "put" : {
-        "tags" : [ "user" ],
-        "summary" : "updates any single system user",
-        "description" : "By sending a valid payload you can update a user.",
-        "parameters" : [ {
-          "in" : "header",
-          "name" : "token",
-          "required" : true,
-          "schema" : {
-            "type" : "string",
-            "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
+      "put": {
+        "tags": [
+          "user"
+        ],
+        "summary": "updates any single system user",
+        "description": "By sending a valid payload you can update a user.  Note that displayname and phone are not stored in the database.",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "token",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
+            }
           }
-        } ],
-        "requestBody" : {
-          "description" : "The body of the payload",
-          "required" : true,
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "type" : "object",
-                "required" : [ "email", "password" ],
-                "properties" : {
-                  "email" : {
-                    "type" : "string",
-                    "format" : "email",
-                    "example" : "homer.simpson@sfpp.com"
+        ],
+        "requestBody": {
+          "description": "The body of the payload",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "email",
+                  "password"
+                ],
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "example": "homer.simpson@sfpp.com"
                   },
-                  "password" : {
-                    "type" : "string",
-                    "format" : "password",
-                    "example" : "donuts"
+                  "password": {
+                    "type": "string",
+                    "format": "password",
+                    "example": "donuts"
                   },
-                  "roles" : {
-                    "type" : "array",
-                    "items" : {
-                      "type" : "number",
-                      "example" : 42
+                  "roles": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "example": "admin"
                     }
                   },
-                  "displayName" : {
-                    "type" : "string",
-                    "example" : "Homer Simpson"
+                  "displayName": {
+                    "type": "string",
+                    "example": "Homer Simpson"
                   },
-                  "phone" : {
-                    "type" : "string",
-                    "example" : "1234567890"
+                  "phone": {
+                    "type": "string",
+                    "example": "1234567890"
                   }
                 }
               }
             }
           }
         },
-        "responses" : {
-          "200" : {
-            "description" : "user updated"
+        "responses": {
+          "200": {
+            "description": "user updated"
           },
-          "401" : {
-            "description" : "Unauthorized"
+          "401": {
+            "description": "Unauthorized"
           },
-          "422" : {
-            "description" : "Invalid input"
+          "422": {
+            "description": "Invalid input"
           },
-          "500" : {
-            "description" : "Server error"
+          "500": {
+            "description": "Server error"
           }
         }
       }
     },
-    "/user/{email}" : {
-      "get" : {
-        "tags" : [ "user" ],
-        "summary" : "returns a single system user",
-        "description" : "By passing the username, you can lookup a user.",
-        "parameters" : [ {
-          "in" : "path",
-          "name" : "email",
-          "schema" : {
-            "type" : "string",
-            "format" : "email"
+    "/user/{email}": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "returns a single system user",
+        "description": "By passing the username, you can lookup a user.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "email",
+            "schema": {
+              "type": "string",
+              "format": "email"
+            },
+            "required": true,
+            "description": "email of the user"
           },
-          "required" : true,
-          "description" : "email of the user"
-        }, {
-          "in" : "header",
-          "name" : "token",
-          "required" : true,
-          "schema" : {
-            "type" : "string",
-            "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
+          {
+            "in": "header",
+            "name": "token",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
+            }
           }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "the user object",
-            "content" : {
-              "session/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/UserItem"
+        ],
+        "responses": {
+          "200": {
+            "description": "the user object",
+            "content": {
+              "session/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserItem"
                 }
               }
             }
           },
-          "401" : {
-            "description" : "Unauthorized"
+          "401": {
+            "description": "Unauthorized"
           },
-          "422" : {
-            "description" : "Invalid input"
+          "422": {
+            "description": "Invalid input"
           },
-          "500" : {
-            "description" : "Server error"
+          "500": {
+            "description": "Server error"
           }
         }
       },
-      "delete" : {
-        "tags" : [ "user" ],
-        "summary" : "deletes a single system user",
-        "description" : "By sending a valid payload you can delete a user.",
-        "parameters" : [ {
-          "in" : "path",
-          "name" : "email",
-          "schema" : {
-            "type" : "string",
-            "format" : "email"
+      "delete": {
+        "tags": [
+          "user"
+        ],
+        "summary": "deletes a single system user",
+        "description": "By sending a valid payload you can delete a user.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "email",
+            "schema": {
+              "type": "string",
+              "format": "email"
+            },
+            "required": true,
+            "description": "the email of the user to delete."
           },
-          "required" : true,
-          "description" : "the email of the user to delete."
-        }, {
-          "in" : "header",
-          "name" : "token",
-          "required" : true,
-          "schema" : {
-            "type" : "string",
-            "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
+          {
+            "in": "header",
+            "name": "token",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
+            }
           }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "user deleted"
+        ],
+        "responses": {
+          "200": {
+            "description": "user deleted"
           },
-          "401" : {
-            "description" : "Unauthorized"
+          "401": {
+            "description": "Unauthorized"
           },
-          "422" : {
-            "description" : "Invalid input"
+          "422": {
+            "description": "Invalid input"
           },
-          "500" : {
-            "description" : "Server error"
+          "500": {
+            "description": "Server error"
           }
         }
       }
     },
-    "/userRole" : {
-      "post" : {
-        "tags" : [ "userRole" ],
-        "summary" : "creates a new user role",
-        "description" : "The new user role endpoint.",
-        "parameters" : [ {
-          "in" : "header",
-          "name" : "token",
-          "required" : true,
-          "schema" : {
-            "type" : "string",
-            "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
+    "/userRole": {
+      "post": {
+        "tags": [
+          "userRole"
+        ],
+        "summary": "creates a new user role",
+        "description": "The new user role endpoint.",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "token",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
+            }
           }
-        } ],
-        "requestBody" : {
-          "description" : "The body of the payload",
-          "required" : true,
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "type" : "object",
-                "required" : [ "role" ],
-                "properties" : {
-                  "role" : {
-                    "type" : "string",
-                    "example" : "test"
+        ],
+        "requestBody": {
+          "description": "The body of the payload",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "role"
+                ],
+                "properties": {
+                  "role": {
+                    "type": "string",
+                    "example": "test"
                   },
-                  "path" : {
-                    "type" : "string",
-                    "example" : "/test"
+                  "path": {
+                    "type": "string",
+                    "example": "/test"
                   },
-                  "method" : {
-                    "type" : "string",
-                    "example" : "GET"
+                  "method": {
+                    "type": "string",
+                    "example": "GET"
                   }
                 }
               }
             }
           }
         },
-        "responses" : {
-          "200" : {
-            "description" : "policy created"
+        "responses": {
+          "200": {
+            "description": "policy created"
           },
-          "400" : {
-            "description" : "Invalid input"
+          "401": {
+            "description": "Unauthorized"
           },
-          "401" : {
-            "description" : "Unauthorized"
+          "422": {
+            "description": "Invalid input"
           },
-          "500" : {
-            "description" : "Server error"
+          "500": {
+            "description": "Server error"
           }
         }
       },
-      "get" : {
-        "tags" : [ "userRole" ],
-        "summary" : "returns all system user roles",
-        "description" : "By passing in the appropriate options, you can search for\navailable user roles in the system\n",
-        "parameters" : [ {
-          "in" : "header",
-          "name" : "token",
-          "required" : true,
-          "schema" : {
-            "type" : "string",
-            "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "search results matching criteria",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "array",
-                  "items" : {
-                    "$ref" : "#/components/schemas/UserRoleItem"
-                  }
-                }
-              }
+      "get": {
+        "tags": [
+          "userRole"
+        ],
+        "summary": "returns all system user roles",
+        "description": "By passing in the appropriate options, you can search for\navailable user roles in the system\n",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "token",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
             }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "search results matching criteria"
           },
-          "400" : {
-            "description" : "Invalid input"
+          "401": {
+            "description": "Unauthorized"
           },
-          "401" : {
-            "description" : "Unauthorized"
-          },
-          "500" : {
-            "description" : "Server error"
+          "500": {
+            "description": "Server error"
           }
         }
       }
     },
-    "/userRole/delete" : {
-      "post" : {
-        "tags" : [ "userRole" ],
-        "summary" : "deletes a single system user role",
-        "description" : "By sending a valid payload you can delete a user role.",
-        "parameters" : [ {
-          "in" : "header",
-          "name" : "token",
-          "required" : true,
-          "schema" : {
-            "type" : "string",
-            "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
+    "/userRole/delete": {
+      "post": {
+        "tags": [
+          "userRole"
+        ],
+        "summary": "deletes a single system user role",
+        "description": "By sending a valid payload you can delete a user role.",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "token",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
+            }
           }
-        } ],
-        "requestBody" : {
-          "description" : "The body of the payload",
-          "required" : true,
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "type" : "object",
-                "required" : [ "role" ],
-                "properties" : {
-                  "role" : {
-                    "type" : "string",
-                    "example" : "test"
+        ],
+        "requestBody": {
+          "description": "The body of the payload",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "role"
+                ],
+                "properties": {
+                  "role": {
+                    "type": "string",
+                    "example": "test"
                   },
-                  "path" : {
-                    "type" : "string",
-                    "example" : "/test"
+                  "path": {
+                    "type": "string",
+                    "example": "/test"
                   },
-                  "method" : {
-                    "type" : "string",
-                    "example" : "GET"
+                  "method": {
+                    "type": "string",
+                    "example": "GET"
                   }
                 }
               }
             }
           }
         },
-        "responses" : {
-          "200" : {
-            "description" : "policy deleted"
+        "responses": {
+          "200": {
+            "description": "policy deleted"
           },
-          "400" : {
-            "description" : "Invalid input"
+          "401": {
+            "description": "Unauthorized"
           },
-          "401" : {
-            "description" : "Unauthorized"
+          "422": {
+            "description": "Invalid input"
           },
-          "500" : {
-            "description" : "Server error"
+          "500": {
+            "description": "Server error"
           }
         }
       }
     },
-    "/entity" : {
-      "post" : {
-        "tags" : [ "entity" ],
-        "summary" : "creates a new entity",
-        "description" : "The new entity endpoint.",
-        "requestBody" : {
-          "description" : "The body of the payload",
-          "required" : true,
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "type" : "object",
-                "required" : [ "name" ],
-                "properties" : {
-                  "name" : {
-                    "type" : "string",
-                    "example" : "The Leftorium"
+    "/entity": {
+      "post": {
+        "tags": [
+          "entity"
+        ],
+        "summary": "creates a new entity",
+        "description": "The new entity endpoint.",
+        "requestBody": {
+          "description": "The body of the payload.  Contact ids must be populated if part of the body with existinct contactids.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "name"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "The Leftorium"
                   },
-                  "address" : {
-                    "type" : "object",
-                    "properties" : {
-                      "street" : {
-                        "type" : "array",
-                        "items" : {
-                          "type" : "string",
-                          "example" : "123 Anyplace St."
+                  "type": {
+                    "type": "string",
+                    "example": "Assisted Living Facility"
+                  },
+                  "address": {
+                    "type": "object",
+                    "properties": {
+                      "street": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "example": "123 Anyplace St."
                         }
                       },
-                      "city" : {
-                        "type" : "string",
-                        "example" : "Baltimore"
+                      "city": {
+                        "type": "string",
+                        "example": "Baltimore"
                       },
-                      "state" : {
-                        "type" : "string",
-                        "example" : "MD"
+                      "state": {
+                        "type": "string",
+                        "example": "MD"
                       },
-                      "zip" : {
-                        "type" : "string",
-                        "example" : "12345"
+                      "zip": {
+                        "type": "string",
+                        "example": "12345"
                       }
                     }
                   },
-                  "phone" : {
-                    "type" : "array",
-                    "items" : {
-                      "type" : "object",
-                      "properties" : {
-                        "address" : {
-                          "type" : "string",
-                          "example" : "0987654321"
+                  "checkIn": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "updatedAt": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2020-01-21T13:45:52.348Z"
                         },
-                        "isPrimary" : {
-                          "type" : "boolean",
-                          "example" : true
-                        }
-                      }
-                    }
-                  },
-                  "email" : {
-                    "type" : "array",
-                    "items" : {
-                      "type" : "object",
-                      "properties" : {
-                        "address" : {
-                          "type" : "string",
-                          "format" : "email",
-                          "example" : "hello@leftorium.com"
+                        "status": {
+                          "type": "string",
+                          "example": "Safe"
                         },
-                        "isPrimary" : {
-                          "type" : "boolean",
-                          "example" : true
-                        }
-                      }
-                    }
-                  },
-                  "checkIn" : {
-                    "type" : "array",
-                    "items" : {
-                      "type" : "object",
-                      "properties" : {
-                        "updatedAt" : {
-                          "type" : "string",
-                          "format" : "date-time",
-                          "example" : "2020-01-21T13:45:52.348Z"
+                        "UserId": {
+                          "type": "string",
+                          "format": "uuid",
+                          "example": "4d9721a2-07f8-45ac-9570-682f4774cfa5"
                         },
-                        "status" : {
-                          "type" : "string",
-                          "example" : "Safe"
+                        "ContactId": {
+                          "type": "string",
+                          "format": "uuid",
+                          "example": "abafa852-ecd0-4d57-9083-85f4dfd9c402"
                         },
-                        "UserId" : {
-                          "type" : "string",
-                          "format" : "uuid",
-                          "example" : "4d9721a2-07f8-45ac-9570-682f4774cfa5"
-                        },
-                        "ContactId" : {
-                          "type" : "string",
-                          "format" : "uuid",
-                          "example" : "abafa852-ecd0-4d57-9083-85f4dfd9c402"
-                        },
-                        "questionnaire" : {
-                          "type" : "object",
-                          "properties" : {
-                            "id" : {
-                              "type" : "number",
-                              "example" : 1
+                        "questionnaire": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "number",
+                              "example": 1
                             },
-                            "question1" : {
-                              "type" : "string",
-                              "example" : "They have left handed can openers"
+                            "question1": {
+                              "type": "string",
+                              "example": "They have left handed can openers"
                             },
-                            "question2" : {
-                              "type" : "boolean",
-                              "example" : false
+                            "question2": {
+                              "type": "boolean",
+                              "example": false
                             }
                           }
                         },
-                        "notes" : {
-                          "type" : "string",
-                          "example" : "Everything is okilly dokilly"
+                        "notes": {
+                          "type": "string",
+                          "example": "Everything is okilly dokilly"
                         }
                       }
                     }
                   },
-                  "contacts" : {
-                    "type" : "string",
-                    "example" : [{"id":""},{"id":"","title":""}]
+                  "contacts": {
+                    "type": "string",
+                    "example": [
+                      {
+                        "id": ""
+                      },
+                      {
+                        "id": "",
+                        "title": ""
+                      }
+                    ]
                   },
-                  "description" : {
-                    "type" : "string",
-                    "example" : "Everything for the left handed man, woman, and child!"
+                  "description": {
+                    "type": "string",
+                    "example": "Everything for the left handed man, woman, and child!"
                   }
                 }
               }
             }
           }
         },
-        "responses" : {
-          "200" : {
-            "description" : "entity created"
+        "responses": {
+          "200": {
+            "description": "entity created"
           },
-          "401" : {
-            "description" : "Unauthorized"
+          "401": {
+            "description": "Unauthorized"
           },
-          "422" : {
-            "description" : "Invalid input"
+          "422": {
+            "description": "Invalid input"
           },
-          "500" : {
-            "description" : "Server error"
+          "500": {
+            "description": "Server error"
           }
         }
       },
-      "get" : {
-        "tags" : [ "entity" ],
-        "summary" : "returns all system entities",
-        "description" : "By passing in the appropriate options, you can search for\navailable entities in the system\n",
-        "parameters" : [ {
-          "in" : "header",
-          "name" : "token",
-          "required" : true,
-          "schema" : {
-            "type" : "string",
-            "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "search results matching criteria",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "object",
-                  "properties" : {
-                    "_meta" : {
-                      "type" : "object",
-                      "properties" : {
-                        "total" : {
-                          "type" : "number",
-                          "example" : 1
-                        }
-                      }
-                    },
-                    "results" : {
-                      "type" : "array",
-                      "items" : {
-                        "$ref" : "#/components/schemas/EntityItem"
-                      }
-                    }
-                  }
-                }
-              }
+      "get": {
+        "tags": [
+          "entity"
+        ],
+        "summary": "returns all system entities",
+        "description": "By passing in the appropriate options, you can search for\navailable entities in the system\n",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "token",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
             }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "search results matching criteria"
           },
-          "401" : {
-            "description" : "Unauthorized"
+          "401": {
+            "description": "Unauthorized"
           },
-          "500" : {
-            "description" : "Server error"
+          "500": {
+            "description": "Server error"
           }
         }
       },
-      "put" : {
-        "tags" : [ "entity" ],
-        "summary" : "updates any single system entity",
-        "description" : "By sending a valid payload you can update an entity.",
-        "parameters" : [ {
-          "in" : "header",
-          "name" : "token",
-          "required" : true,
-          "schema" : {
-            "type" : "string",
-            "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
+      "put": {
+        "tags": [
+          "entity"
+        ],
+        "summary": "updates any single system entity",
+        "description": "By sending a valid payload you can update an entity.",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "token",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
+            }
           }
-        } ],
-        "requestBody" : {
-          "description" : "The body of the payload",
-          "required" : true,
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "type" : "object",
-                "required" : [ "id" ],
-                "properties" : {
-                  "id" : {
-                    "type" : "string",
-                    "format" : "uuid",
-                    "example" : "05533f95-b440-4f9d-876d-653636dce0c8"
+        ],
+        "requestBody": {
+          "description": "The body of the payload",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "id"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "format": "uuid",
+                    "example": "05533f95-b440-4f9d-876d-653636dce0c8"
                   },
-                  "name" : {
-                    "type" : "string",
-                    "example" : "The Leftorium"
+                  "name": {
+                    "type": "string",
+                    "example": "The Leftorium"
                   },
-                  "address" : {
-                    "type" : "object",
-                    "properties" : {
-                      "street" : {
-                        "type" : "array",
-                        "items" : {
-                          "type" : "string",
-                          "example" : "123 Anyplace St."
+                  "address": {
+                    "type": "object",
+                    "properties": {
+                      "street": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "example": "123 Anyplace St."
                         }
                       },
-                      "city" : {
-                        "type" : "string",
-                        "example" : "Baltimore"
+                      "city": {
+                        "type": "string",
+                        "example": "Baltimore"
                       },
-                      "state" : {
-                        "type" : "string",
-                        "example" : "MD"
+                      "state": {
+                        "type": "string",
+                        "example": "MD"
                       },
-                      "zip" : {
-                        "type" : "string",
-                        "example" : "12345"
+                      "zip": {
+                        "type": "string",
+                        "example": "12345"
                       }
                     }
                   },
-                  "phone" : {
-                    "type" : "array",
-                    "items" : {
-                      "type" : "object",
-                      "properties" : {
-                        "address" : {
-                          "type" : "string",
-                          "example" : "0987654321"
+                  "phone": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "address": {
+                          "type": "string",
+                          "example": "0987654321"
                         },
-                        "isPrimary" : {
-                          "type" : "boolean",
-                          "example" : true
-                        }
-                      }
-                    }
-                  },
-                  "email" : {
-                    "type" : "array",
-                    "items" : {
-                      "type" : "object",
-                      "properties" : {
-                        "address" : {
-                          "type" : "string",
-                          "format" : "email",
-                          "example" : "hello@leftorium.com"
-                        },
-                        "isPrimary" : {
-                          "type" : "boolean",
-                          "example" : true
+                        "isPrimary": {
+                          "type": "boolean",
+                          "example": true
                         }
                       }
                     }
                   },
-                  "checkIn" : {
-                    "type" : "array",
-                    "items" : {
-                      "type" : "object",
-                      "properties" : {
-                        "updatedAt" : {
-                          "type" : "string",
-                          "format" : "date-time",
-                          "example" : "2020-01-21T13:45:52.348Z"
+                  "email": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "address": {
+                          "type": "string",
+                          "format": "email",
+                          "example": "hello@leftorium.com"
                         },
-                        "status" : {
-                          "type" : "string",
-                          "example" : "Safe"
+                        "isPrimary": {
+                          "type": "boolean",
+                          "example": true
+                        }
+                      }
+                    }
+                  },
+                  "checkIn": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "updatedAt": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2020-01-21T13:45:52.348Z"
                         },
-                        "UserId" : {
-                          "type" : "string",
-                          "format" : "uuid",
-                          "example" : "4d9721a2-07f8-45ac-9570-682f4774cfa5"
+                        "status": {
+                          "type": "string",
+                          "example": "Safe"
                         },
-                        "ContactId" : {
-                          "type" : "string",
-                          "format" : "uuid",
-                          "example" : "4d9721a2-07f8-45ac-9570-682f4774cfa5"
+                        "UserId": {
+                          "type": "string",
+                          "format": "uuid",
+                          "example": "4d9721a2-07f8-45ac-9570-682f4774cfa5"
                         },
-                        "questionnaire" : {
-                          "type" : "object",
-                          "properties" : {
-                            "id" : {
-                              "type" : "number",
-                              "example" : 1
+                        "ContactId": {
+                          "type": "string",
+                          "format": "uuid",
+                          "example": "4d9721a2-07f8-45ac-9570-682f4774cfa5"
+                        },
+                        "questionnaire": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "number",
+                              "example": 1
                             },
-                            "question1" : {
-                              "type" : "string",
-                              "example" : "They have left handed can openers"
+                            "question1": {
+                              "type": "string",
+                              "example": "They have left handed can openers"
                             },
-                            "question2" : {
-                              "type" : "boolean",
-                              "example" : false
+                            "question2": {
+                              "type": "boolean",
+                              "example": false
                             }
                           }
                         },
-                        "notes" : {
-                          "type" : "string",
-                          "example" : "Everything is okilly dokilly"
+                        "notes": {
+                          "type": "string",
+                          "example": "Everything is okilly dokilly"
                         }
                       }
                     }
                   },
-                  "entities" : {
-                    "type" : "string",
-                    "example" : [{"id":""},{"id":"","title":""}]
+                  "contacts": {
+                    "type": "string",
+                    "example": [
+                      {
+                        "id": ""
+                      },
+                      {
+                        "id": "",
+                        "title": ""
+                      }
+                    ]
                   },
-                  "description" : {
-                    "type" : "string",
-                    "example" : "Everything for the left handed man, woman, and child!"
+                  "description": {
+                    "type": "string",
+                    "example": "Everything for the left handed man, woman, and child!"
                   }
                 }
               }
             }
           }
         },
-        "responses" : {
-          "200" : {
-            "description" : "entity updated"
+        "responses": {
+          "200": {
+            "description": "entity updated"
           },
-          "401" : {
-            "description" : "Unauthorized"
+          "401": {
+            "description": "Unauthorized"
           },
-          "422" : {
-            "description" : "Invalid input"
+          "422": {
+            "description": "Invalid input"
           },
-          "500" : {
-            "description" : "Server error"
+          "500": {
+            "description": "Server error"
           }
         }
       }
     },
-    "/entity/{entity_id}" : {
-      "get" : {
-        "tags" : [ "entity" ],
-        "summary" : "returns a single system entity",
-        "description" : "By passing the entity id, you can lookup an entity.",
-        "parameters" : [ {
-          "in" : "path",
-          "name" : "entity_id",
-          "schema" : {
-            "type" : "string",
-            "format" : "uuid"
+    "/entity/{entity_id}": {
+      "get": {
+        "tags": [
+          "entity"
+        ],
+        "summary": "returns a single system entity",
+        "description": "By passing the entity id, you can lookup an entity.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "entity_id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "description": "id of the entity"
           },
-          "required" : true,
-          "description" : "id of the entity"
-        }, {
-          "in" : "header",
-          "name" : "token",
-          "required" : true,
-          "schema" : {
-            "type" : "string",
-            "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
+          {
+            "in": "header",
+            "name": "token",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
+            }
           }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "the entity object",
-            "content" : {
-              "session/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/EntityItem"
+        ],
+        "responses": {
+          "200": {
+            "description": "the entity object",
+            "content": {
+              "session/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntityItem"
                 }
               }
             }
           },
-          "401" : {
-            "description" : "Unauthorized"
+          "401": {
+            "description": "Unauthorized"
           },
-          "422" : {
-            "description" : "Invalid input"
+          "422": {
+            "description": "Invalid input"
           },
-          "500" : {
-            "description" : "Server error"
+          "500": {
+            "description": "Server error"
           }
         }
       },
-      "delete" : {
-        "tags" : [ "entity" ],
-        "summary" : "deletes a single system entity",
-        "description" : "By sending a valid payload you can delete a user.",
-        "parameters" : [ {
-          "in" : "path",
-          "name" : "entity_id",
-          "schema" : {
-            "type" : "string",
-            "format" : "uuid"
+      "delete": {
+        "tags": [
+          "entity"
+        ],
+        "summary": "deletes a single system entity",
+        "description": "By sending a valid payload you can delete a user.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "entity_id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "description": "the id of the entity to delete."
           },
-          "required" : true,
-          "description" : "the id of the entity to delete."
-        }, {
-          "in" : "header",
-          "name" : "token",
-          "required" : true,
-          "schema" : {
-            "type" : "string",
-            "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
+          {
+            "in": "header",
+            "name": "token",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
+            }
           }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "entity_id deleted"
+        ],
+        "responses": {
+          "200": {
+            "description": "entity_id deleted"
           },
-          "401" : {
-            "description" : "Unauthorized"
+          "401": {
+            "description": "Unauthorized"
           },
-          "422" : {
-            "description" : "Invalid input"
+          "422": {
+            "description": "Invalid input"
           },
-          "500" : {
-            "description" : "Server error"
+          "500": {
+            "description": "Server error"
           }
         }
       }
     },
-    "/entity/link/{entity_id}" : {
-      "post" : {
-        "tags" : [ "entity" ],
-        "summary" : "links an entity with a list of given contacts",
-        "description" : "By passing the entity id and list of contacts, you can link the entity to each contact.",
-        "parameters" : [ {
-          "in" : "path",
-          "name" : "entity_id",
-          "schema" : {
-            "type" : "string",
-            "format" : "uuid"
+    "/entity/link/{entity_id}": {
+      "post": {
+        "tags": [
+          "entity"
+        ],
+        "summary": "links an entity with a list of given contacts",
+        "description": "By passing the entity id and list of contacts, you can link the entity to each contact.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "entity_id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "description": "id of the entity"
           },
-          "required" : true,
-          "description" : "id of the entity"
-        }, {
-          "in" : "header",
-          "name" : "token",
-          "required" : true,
-          "schema" : {
-            "type" : "string",
-            "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
+          {
+            "in": "header",
+            "name": "token",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
+            }
           }
-        } ],
-        "requestBody" : {
-          "description" : "The body of the payload",
-          "required" : true,
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "type" : "object",
-                "required" : [ "contacts" ],
-                "properties" : {
-                  "contacts" : {
-                    "type" : "string",
-                    "example" : [{"id":""},{"id":"","title":""}]
+        ],
+        "requestBody": {
+          "description": "The body of the payload",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "contacts"
+                ],
+                "properties": {
+                  "contacts": {
+                    "type": "string",
+                    "example": [
+                      {
+                        "id": ""
+                      },
+                      {
+                        "id": "",
+                        "title": ""
+                      }
+                    ]
                   }
                 }
               }
             }
           }
         },
-        "responses" : {
-          "200" : {
-            "description" : "Successful/already exists"
+        "responses": {
+          "200": {
+            "description": "Successful/already exists"
           },
-          "401" : {
-            "description" : "Unauthorized"
+          "401": {
+            "description": "Unauthorized"
           },
-          "422" : {
-            "description" : "Invalid input"
+          "422": {
+            "description": "Invalid input"
           },
-          "500" : {
-            "description" : "Server error"
+          "500": {
+            "description": "Server error"
           }
         }
       }
     },
-    "/entity/unlink/{entity_id}" : {
-      "post" : {
-        "tags" : [ "entity" ],
-        "summary" : "unlinks an entity from a list of given contacts",
-        "description" : "By passing the entity id and list of contacts, you can unlink the entity from each contact.",
-        "parameters" : [ {
-          "in" : "path",
-          "name" : "entity_id",
-          "schema" : {
-            "type" : "string",
-            "format" : "uuid"
+    "/entity/unlink/{entity_id}": {
+      "post": {
+        "tags": [
+          "entity"
+        ],
+        "summary": "unlinks an entity from a list of given contacts",
+        "description": "By passing the entity id and list of contacts, you can unlink the entity from each contact.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "entity_id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "description": "id of the entity"
           },
-          "required" : true,
-          "description" : "id of the entity"
-        }, {
-          "in" : "header",
-          "name" : "token",
-          "required" : true,
-          "schema" : {
-            "type" : "string",
-            "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
+          {
+            "in": "header",
+            "name": "token",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
+            }
           }
-        } ],
-        "requestBody" : {
-          "description" : "The body of the payload",
-          "required" : true,
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "type" : "object",
-                "required" : [ "contacts" ],
-                "properties" : {
-                  "contacts" : {
-                    "type" : "string",
-                    "example" : [{"id":""},{"id":""}]
+        ],
+        "requestBody": {
+          "description": "The body of the payload",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "contacts"
+                ],
+                "properties": {
+                  "contacts": {
+                    "type": "string",
+                    "example": [
+                      {
+                        "id": ""
+                      },
+                      {
+                        "id": ""
+                      }
+                    ]
                   }
                 }
               }
             }
           }
         },
-        "responses" : {
-          "200" : {
-            "description" : "Successful/already exists"
+        "responses": {
+          "200": {
+            "description": "Successful/already exists"
           },
-          "401" : {
-            "description" : "Unauthorized"
+          "401": {
+            "description": "Unauthorized"
           },
-          "422" : {
-            "description" : "Invalid input"
+          "422": {
+            "description": "Invalid input"
           },
-          "500" : {
-            "description" : "Server error"
+          "500": {
+            "description": "Server error"
           }
         }
       }
     },
-    "/contact" : {
-      "post" : {
-        "tags" : [ "contact" ],
-        "summary" : "creates a new contact",
-        "description" : "The new contact endpoint.",
-        "requestBody" : {
-          "description" : "The body of the payload",
-          "required" : true,
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "type" : "object",
-                "required" : [ "name" ],
-                "properties" : {
-                  "name" : {
-                    "type" : "string",
-                    "example" : "The Leftorium"
+    "/contact": {
+      "post": {
+        "tags": [
+          "contact"
+        ],
+        "summary": "creates a new contact",
+        "description": "The new contact endpoint.",
+        "requestBody": {
+          "description": "The body of the payload",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "name"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "The Leftorium"
                   },
-                  "address" : {
-                    "type" : "object",
-                    "properties" : {
-                      "street" : {
-                        "type" : "array",
-                        "items" : {
-                          "type" : "string",
-                          "example" : "123 Anyplace St."
+                  "address": {
+                    "type": "object",
+                    "properties": {
+                      "street": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "example": "123 Anyplace St."
                         }
                       },
-                      "city" : {
-                        "type" : "string",
-                        "example" : "Baltimore"
+                      "city": {
+                        "type": "string",
+                        "example": "Baltimore"
                       },
-                      "state" : {
-                        "type" : "string",
-                        "example" : "MD"
+                      "state": {
+                        "type": "string",
+                        "example": "MD"
                       },
-                      "zip" : {
-                        "type" : "string",
-                        "example" : "12345"
+                      "zip": {
+                        "type": "string",
+                        "example": "12345"
                       }
                     }
                   },
-                  "phone" : {
-                    "type" : "array",
-                    "items" : {
-                      "type" : "object",
-                      "properties" : {
-                        "address" : {
-                          "type" : "string",
-                          "example" : "0987654321"
+                  "phone": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "address": {
+                          "type": "string",
+                          "example": "0987654321"
                         },
-                        "isPrimary" : {
-                          "type" : "boolean",
-                          "example" : true
+                        "isPrimary": {
+                          "type": "boolean",
+                          "example": true
                         }
                       }
                     }
                   },
-                  "email" : {
-                    "type" : "array",
-                    "items" : {
-                      "type" : "object",
-                      "properties" : {
-                        "address" : {
-                          "type" : "string",
-                          "format" : "email",
-                          "example" : "hello@leftorium.com"
+                  "email": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "address": {
+                          "type": "string",
+                          "format": "email",
+                          "example": "hello@leftorium.com"
                         },
-                        "isPrimary" : {
-                          "type" : "boolean",
-                          "example" : true
+                        "isPrimary": {
+                          "type": "boolean",
+                          "example": true
                         }
                       }
                     }
                   },
-                  "UserID" : {
-                    "type" : "string",
-                    "format" : "uuid",
-                    "example" : "abafa852-ecd0-4d57-9083-85f4dfd9c402"
+                  "UserID": {
+                    "type": "string",
+                    "format": "uuid",
+                    "example": "abafa852-ecd0-4d57-9083-85f4dfd9c402"
                   },
-                  "entities" : {
-                    "type" : "string",
-                    "example" : [{"id":""},{"id":"","title":""}]
+                  "entities": {
+                    "type": "string",
+                    "example": [
+                      {
+                        "id": ""
+                      },
+                      {
+                        "id": "",
+                        "title": ""
+                      }
+                    ]
                   }
                 }
               }
             }
           }
         },
-        "responses" : {
-          "200" : {
-            "description" : "contact created"
+        "responses": {
+          "200": {
+            "description": "contact created"
           },
-          "401" : {
-            "description" : "Unauthorized"
+          "401": {
+            "description": "Unauthorized"
           },
-          "422" : {
-            "description" : "Invalid input"
+          "422": {
+            "description": "Invalid input"
           },
-          "500" : {
-            "description" : "Server error"
+          "500": {
+            "description": "Server error"
           }
         }
       },
-      "get" : {
-        "tags" : [ "contact" ],
-        "summary" : "returns all system contacts",
-        "description" : "By passing in the appropriate options, you can search for\navailable contacts in the system\n",
-        "parameters" : [ {
-          "in" : "header",
-          "name" : "token",
-          "required" : true,
-          "schema" : {
-            "type" : "string",
-            "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
+      "get": {
+        "tags": [
+          "contact"
+        ],
+        "summary": "returns all system contacts",
+        "description": "By passing in the appropriate options, you can search for\navailable contacts in the system\n",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "token",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
+            }
           }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "search results matching criteria",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "object",
-                  "properties" : {
-                    "_meta" : {
-                      "type" : "object",
-                      "properties" : {
-                        "total" : {
-                          "type" : "number",
-                          "example" : 1
+        ],
+        "responses": {
+          "200": {
+            "description": "search results matching criteria",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "_meta": {
+                      "type": "object",
+                      "properties": {
+                        "total": {
+                          "type": "number",
+                          "example": 1
                         }
                       }
                     },
-                    "results" : {
-                      "type" : "array",
-                      "items" : {
-                        "$ref" : "#/components/schemas/ContactItem"
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ContactItem"
                       }
                     }
                   }
@@ -1212,650 +1293,690 @@
               }
             }
           },
-          "400" : {
-            "description" : "Invalid input"
+          "400": {
+            "description": "Invalid input"
           },
-          "401" : {
-            "description" : "Unauthorized"
+          "401": {
+            "description": "Unauthorized"
           },
-          "500" : {
-            "description" : "Server error"
+          "500": {
+            "description": "Server error"
           }
         }
       },
-      "put" : {
-        "tags" : [ "contact" ],
-        "summary" : "updates any single system contact",
-        "description" : "By sending a valid payload you can update an contact.",
-        "parameters" : [ {
-          "in" : "header",
-          "name" : "token",
-          "required" : true,
-          "schema" : {
-            "type" : "string",
-            "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
+      "put": {
+        "tags": [
+          "contact"
+        ],
+        "summary": "updates any single system contact",
+        "description": "By sending a valid payload you can update a contact.",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "token",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
+            }
           }
-        } ],
-        "requestBody" : {
-          "description" : "The body of the payload",
-          "required" : true,
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "type" : "object",
-                "required" : [ "id" ],
-                "properties" : {
-                  "id" : {
-                    "type" : "string",
-                    "format" : "uuid",
-                    "example" : "05533f95-b440-4f9d-876d-653636dce0c8"
+        ],
+        "requestBody": {
+          "description": "The body of the payload",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "id"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "format": "uuid",
+                    "example": "05533f95-b440-4f9d-876d-653636dce0c8"
                   },
-                  "name" : {
-                    "type" : "string",
-                    "example" : "The Leftorium"
+                  "name": {
+                    "type": "string",
+                    "example": "The Leftorium"
                   },
-                  "address" : {
-                    "type" : "object",
-                    "properties" : {
-                      "street" : {
-                        "type" : "array",
-                        "items" : {
-                          "type" : "string",
-                          "example" : "123 Anyplace St."
+                  "address": {
+                    "type": "object",
+                    "properties": {
+                      "street": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "example": "123 Anyplace St."
                         }
                       },
-                      "city" : {
-                        "type" : "string",
-                        "example" : "Baltimore"
+                      "city": {
+                        "type": "string",
+                        "example": "Baltimore"
                       },
-                      "state" : {
-                        "type" : "string",
-                        "example" : "MD"
+                      "state": {
+                        "type": "string",
+                        "example": "MD"
                       },
-                      "zip" : {
-                        "type" : "string",
-                        "example" : "12345"
+                      "zip": {
+                        "type": "string",
+                        "example": "12345"
                       }
                     }
                   },
-                  "phone" : {
-                    "type" : "array",
-                    "items" : {
-                      "type" : "object",
-                      "properties" : {
-                        "address" : {
-                          "type" : "string",
-                          "example" : "0987654321"
+                  "phone": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "address": {
+                          "type": "string",
+                          "example": "0987654321"
                         },
-                        "isPrimary" : {
-                          "type" : "boolean",
-                          "example" : true
+                        "isPrimary": {
+                          "type": "boolean",
+                          "example": true
                         }
                       }
                     }
                   },
-                  "email" : {
-                    "type" : "array",
-                    "items" : {
-                      "type" : "object",
-                      "properties" : {
-                        "address" : {
-                          "type" : "string",
-                          "format" : "email",
-                          "example" : "hello@leftorium.com"
+                  "email": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "address": {
+                          "type": "string",
+                          "format": "email",
+                          "example": "hello@leftorium.com"
                         },
-                        "isPrimary" : {
-                          "type" : "boolean",
-                          "example" : true
+                        "isPrimary": {
+                          "type": "boolean",
+                          "example": true
                         }
                       }
                     }
                   },
-                  "UserID" : {
-                    "type" : "string",
-                    "format" : "uuid",
-                    "example" : "abafa852-ecd0-4d57-9083-85f4dfd9c402"
+                  "UserID": {
+                    "type": "string",
+                    "format": "uuid",
+                    "example": "abafa852-ecd0-4d57-9083-85f4dfd9c402"
                   },
-                  "entities" : {
-                    "type" : "string",
-                    "example" : [{"id":""},{"id":"","title":""}]
+                  "entities": {
+                    "type": "string",
+                    "example": [
+                      {
+                        "id": ""
+                      },
+                      {
+                        "id": "",
+                        "title": ""
+                      }
+                    ]
                   }
                 }
               }
             }
           }
         },
-        "responses" : {
-          "200" : {
-            "description" : "contact updated"
+        "responses": {
+          "200": {
+            "description": "contact updated"
           },
-          "401" : {
-            "description" : "Unauthorized"
+          "401": {
+            "description": "Unauthorized"
           },
-          "422" : {
-            "description" : "Invalid input"
+          "422": {
+            "description": "Invalid input"
           },
-          "500" : {
-            "description" : "Server error"
+          "500": {
+            "description": "Server error"
           }
         }
       }
     },
-    "/contact/{contact_id}" : {
-      "get" : {
-        "tags" : [ "contact" ],
-        "summary" : "returns a single system contact",
-        "description" : "By passing the contact id, you can lookup an contact.",
-        "parameters" : [ {
-          "in" : "path",
-          "name" : "contact_id",
-          "schema" : {
-            "type" : "string",
-            "format" : "uuid"
+    "/contact/{contact_id}": {
+      "get": {
+        "tags": [
+          "contact"
+        ],
+        "summary": "returns a single system contact",
+        "description": "By passing the contact id, you can lookup a contact.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "contact_id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "description": "id of the contact"
           },
-          "required" : true,
-          "description" : "id of the contact"
-        }, {
-          "in" : "header",
-          "name" : "token",
-          "required" : true,
-          "schema" : {
-            "type" : "string",
-            "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
+          {
+            "in": "header",
+            "name": "token",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
+            }
           }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "the contact object",
-            "content" : {
-              "session/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ContactItem"
+        ],
+        "responses": {
+          "200": {
+            "description": "the contact object",
+            "content": {
+              "session/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContactItem"
                 }
               }
             }
           },
-          "401" : {
-            "description" : "Unauthorized"
+          "401": {
+            "description": "Unauthorized"
           },
-          "422" : {
-            "description" : "Invalid input"
+          "422": {
+            "description": "Invalid input"
           },
-          "500" : {
-            "description" : "Server error"
+          "500": {
+            "description": "Server error"
           }
         }
       },
-      "delete" : {
-        "tags" : [ "contact" ],
-        "summary" : "deletes a single system contact",
-        "description" : "By sending a valid payload you can delete a user.",
-        "parameters" : [ {
-          "in" : "path",
-          "name" : "contact_id",
-          "schema" : {
-            "type" : "string",
-            "format" : "uuid"
+      "delete": {
+        "tags": [
+          "contact"
+        ],
+        "summary": "deletes a single system contact",
+        "description": "By sending a valid payload you can delete a user.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "contact_id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "description": "the id of the contact to delete."
           },
-          "required" : true,
-          "description" : "the id of the contact to delete."
-        }, {
-          "in" : "header",
-          "name" : "token",
-          "required" : true,
-          "schema" : {
-            "type" : "string",
-            "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
+          {
+            "in": "header",
+            "name": "token",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
+            }
           }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "contact_id deleted"
+        ],
+        "responses": {
+          "200": {
+            "description": "contact_id deleted"
           },
-          "401" : {
-            "description" : "Unauthorized"
+          "401": {
+            "description": "Unauthorized"
           },
-          "422" : {
-            "description" : "Invalid input"
+          "422": {
+            "description": "Invalid input"
           },
-          "500" : {
-            "description" : "Server error"
+          "500": {
+            "description": "Server error"
           }
         }
       }
     },
-    "/contact/link/{contact_id}" : {
-      "post" : {
-        "tags" : [ "contact" ],
-        "summary" : "links a contact with a list of given entities",
-        "description" : "By passing the contact id and list of entities, you can link the contact to each entity.",
-        "parameters" : [ {
-          "in" : "path",
-          "name" : "contact_id",
-          "schema" : {
-            "type" : "string",
-            "format" : "uuid"
+    "/contact/link/{contact_id}": {
+      "post": {
+        "tags": [
+          "contact"
+        ],
+        "summary": "links a contact with a list of given entities",
+        "description": "By passing the contact id and list of entities, you can link the contact to each entity.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "contact_id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "description": "id of the contact"
           },
-          "required" : true,
-          "description" : "id of the contact"
-        }, {
-          "in" : "header",
-          "name" : "token",
-          "required" : true,
-          "schema" : {
-            "type" : "string",
-            "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
+          {
+            "in": "header",
+            "name": "token",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
+            }
           }
-        } ],
-        "requestBody" : {
-          "description" : "The body of the payload",
-          "required" : true,
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "type" : "object",
-                "required" : [ "entities" ],
-                "properties" : {
-                  "entities" : {
-                    "type" : "string",
-                    "example" : [{"id":""},{"id":"","title":""}]
+        ],
+        "requestBody": {
+          "description": "The body of the payload",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "entities"
+                ],
+                "properties": {
+                  "entities": {
+                    "type": "string",
+                    "example": [
+                      {
+                        "id": ""
+                      },
+                      {
+                        "id": "",
+                        "title": ""
+                      }
+                    ]
                   }
                 }
               }
             }
           }
         },
-        "responses" : {
-          "200" : {
-            "description" : "Successful/already exists"
+        "responses": {
+          "200": {
+            "description": "Successful/already exists"
           },
-          "401" : {
-            "description" : "Unauthorized"
+          "401": {
+            "description": "Unauthorized"
           },
-          "422" : {
-            "description" : "Invalid input"
+          "422": {
+            "description": "Invalid input"
           },
-          "500" : {
-            "description" : "Server error"
+          "500": {
+            "description": "Server error"
           }
         }
       }
     },
-    "/contact/unlink/{contact_id}" : {
-      "post" : {
-        "tags" : [ "contact" ],
-        "summary" : "unlinks a contact from a list of given entities",
-        "description" : "By passing the contact id and list of entities, you can unlink the contact from each entity.",
-        "parameters" : [ {
-          "in" : "path",
-          "name" : "contact_id",
-          "schema" : {
-            "type" : "string",
-            "format" : "uuid"
+    "/contact/unlink/{contact_id}": {
+      "post": {
+        "tags": [
+          "contact"
+        ],
+        "summary": "unlinks a contact from a list of given entities",
+        "description": "By passing the contact id and list of entities, you can unlink the contact from each entity.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "contact_id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "description": "id of the contact"
           },
-          "required" : true,
-          "description" : "id of the contact"
-        }, {
-          "in" : "header",
-          "name" : "token",
-          "required" : true,
-          "schema" : {
-            "type" : "string",
-            "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
+          {
+            "in": "header",
+            "name": "token",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
+            }
           }
-        } ],
-        "requestBody" : {
-          "description" : "The body of the payload",
-          "required" : true,
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "type" : "object",
-                "required" : [ "entities" ],
-                "properties" : {
-                  "entities" : {
-                    "type" : "string",
-                    "example" : [{"id":""},{"id":""}]
+        ],
+        "requestBody": {
+          "description": "The body of the payload",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "entities"
+                ],
+                "properties": {
+                  "entities": {
+                    "type": "string",
+                    "example": [
+                      {
+                        "id": ""
+                      },
+                      {
+                        "id": ""
+                      }
+                    ]
                   }
                 }
               }
             }
           }
         },
-        "responses" : {
-          "200" : {
-            "description" : "Successful/already exists"
+        "responses": {
+          "200": {
+            "description": "Successful/already exists"
           },
-          "401" : {
-            "description" : "Unauthorized"
+          "401": {
+            "description": "Unauthorized"
           },
-          "422" : {
-            "description" : "Invalid input"
+          "422": {
+            "description": "Invalid input"
           },
-          "500" : {
-            "description" : "Server error"
+          "500": {
+            "description": "Server error"
           }
         }
       }
     },
-    "/csv/{model_type}" : {
-      "get" : {
-        "tags" : [ "csv" ],
-        "summary" : "returns a single system contact",
-        "description" : "By passing the contact id, you can lookup an contact.",
-        "parameters" : [ {
-          "in" : "path",
-          "name" : "model_type",
-          "schema" : {
-            "type" : "string"
+    "/csv/{model_type}": {
+      "get": {
+        "tags": [
+          "csv"
+        ],
+        "summary": "returns a comma separated list of the model_type requested",
+        "description": "By passing the model_type, you are returned a comma separated list of that model_type.  Valid model types are Entity, EntityContact, Contact, User, UserRole.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "model_type",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "type of model you want a csv data dump for.  Options are Contact, Entity, EntityContact, User, and UserRole."
           },
-          "required" : true,
-          "description" : "type of model you want a csv data dump for"
-        }, {
-          "in" : "header",
-          "name" : "token",
-          "required" : true,
-          "schema" : {
-            "type" : "string",
-            "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "the csv data dump",
-            "content" : {
-              "text/plain" : {
-                "schema" : {
-                  "type" : "string"
-                }
-              }
+          {
+            "in": "header",
+            "name": "token",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
             }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "the csv data dump with column headers"
           },
-          "401" : {
-            "description" : "Unauthorized"
+          "401": {
+            "description": "Unauthorized"
           },
-          "422" : {
-            "description" : "Invalid input"
+          "422": {
+            "description": "Invalid input"
           },
-          "500" : {
-            "description" : "Server error"
+          "500": {
+            "description": "Server error"
           }
         }
       }
     }
   },
-  "components" : {
-    "schemas" : {
-      "HealthcheckItem" : {
-        "type" : "object",
-        "required" : [ "uptime", "environment", "version", "requestId" ],
-        "properties" : {
-          "uptime" : {
-            "type" : "string",
-            "example" : "42:42:42"
+  "components": {
+    "schemas": {
+      "HealthcheckItem": {
+        "type": "object",
+        "required": [
+          "uptime",
+          "environment",
+          "version",
+          "requestId"
+        ],
+        "properties": {
+          "uptime": {
+            "type": "string",
+            "example": "42:42:42"
           },
-          "environment" : {
-            "type" : "string",
-            "example" : "dev"
+          "environment": {
+            "type": "string",
+            "example": "dev"
           },
-          "version" : {
-            "type" : "string",
-            "example" : "0.0.1"
+          "version": {
+            "type": "string",
+            "example": "0.0.1"
           },
-          "requestId" : {
-            "type" : "string",
-            "format" : "uuid",
-            "example" : "602e1bd9-3eb1-4a26-a0d1-6bf08e8c0a66"
+          "requestId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "602e1bd9-3eb1-4a26-a0d1-6bf08e8c0a66"
           }
         }
       },
-      "UserItem" : {
-        "type" : "object",
-        "required" : [ "email" ],
-        "properties" : {
-          "id" : {
-            "type" : "string",
-            "format" : "uuid",
-            "example" : "4d9721a2-07f8-45ac-9570-682f4774cfa5"
+      "UserItem": {
+        "type": "object",
+        "required": [
+          "email"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "4d9721a2-07f8-45ac-9570-682f4774cfa5"
           },
-          "email" : {
-            "type" : "string",
-            "format" : "email",
-            "example" : "homer.simpson@sfpp.com"
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "homer.simpson@sfpp.com"
           },
-          "displayNamme" : {
-            "type" : "string",
-            "example" : "Homer Simpson"
+          "displayNamme": {
+            "type": "string",
+            "example": "Homer Simpson"
           },
-          "phone" : {
-            "type" : "string",
-            "example" : "1234567890"
+          "phone": {
+            "type": "string",
+            "example": "1234567890"
           },
-          "createdAt" : {
-            "type" : "string",
-            "format" : "date-time",
-            "example" : "2020-01-21T13:45:52.348Z"
+          "attributes": {
+            "type": "string",
+            "example": null
           },
-          "updatedAt" : {
-            "type" : "string",
-            "format" : "date-time",
-            "example" : "2020-01-21T13:45:52.348Z"
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2020-01-21T13:45:52.348Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2020-01-21T13:45:52.348Z"
+          },
+          "roles": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "example": "user"
+            }
           }
         }
       },
-      "UserRoleItem" : {
-        "type" : "array",
-        "items" : {
-          "type" : "string"
+      "UserRoleItem": {
+        "type": "array",
+        "items": {
+          "type": "string"
         },
-        "minItems" : 3,
-        "maxItems" : 3
+        "minItems": 3,
+        "maxItems": 3
       },
-      "EntityItem" : {
-        "type" : "object",
-        "properties" : {
-          "id" : {
-            "type" : "string",
-            "format" : "uuid",
-            "example" : "c2fb852c-17fd-4e2b-9ea4-78128af9a5e9"
+      "EntityItem": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "c2fb852c-17fd-4e2b-9ea4-78128af9a5e9"
           },
-          "name" : {
-            "type" : "string",
-            "example" : "The Leftorium"
+          "name": {
+            "type": "string",
+            "example": "The Leftorium"
           },
-          "address" : {
-            "type" : "object",
-            "properties" : {
-              "address" : {
-                "type" : "array",
-                "items" : {
-                  "type" : "string",
-                  "example" : "123 Anyplace St."
+          "type": {
+            "type": "string",
+            "example": "Test"
+          },
+          "address": {
+            "type": "object",
+            "properties": {
+              "address": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "example": "123 Anyplace St."
                 }
               },
-              "city" : {
-                "type" : "string",
-                "example" : "Baltimore"
+              "city": {
+                "type": "string",
+                "example": "Baltimore"
               },
-              "state" : {
-                "type" : "string",
-                "example" : "MD"
+              "state": {
+                "type": "string",
+                "example": "MD"
               },
-              "zip" : {
-                "type" : "string",
-                "example" : "12345"
+              "zip": {
+                "type": "string",
+                "example": "12345"
               }
             }
           },
-          "phone" : {
-            "type" : "array",
-            "items" : {
-              "type" : "object",
-              "properties" : {
-                "address" : {
-                  "type" : "string",
-                  "example" : "0987654321"
+          "checkIn": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "updatedAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "example": "2020-01-21T13:45:52.348Z"
                 },
-                "isPrimary" : {
-                  "type" : "boolean",
-                  "example" : true
-                }
-              }
-            }
-          },
-          "email" : {
-            "type" : "array",
-            "items" : {
-              "type" : "object",
-              "properties" : {
-                "address" : {
-                  "type" : "string",
-                  "format" : "email",
-                  "example" : "hello@leftorium.com"
+                "status": {
+                  "type": "string",
+                  "example": "Safe"
                 },
-                "isPrimary" : {
-                  "type" : "boolean",
-                  "example" : true
-                }
-              }
-            }
-          },
-          "checkIn" : {
-            "type" : "array",
-            "items" : {
-              "type" : "object",
-              "properties" : {
-                "updatedAt" : {
-                  "type" : "string",
-                  "format" : "date-time",
-                  "example" : "2020-01-21T13:45:52.348Z"
+                "UserId": {
+                  "type": "string",
+                  "format": "uuid",
+                  "example": "4d9721a2-07f8-45ac-9570-682f4774cfa5"
                 },
-                "status" : {
-                  "type" : "string",
-                  "example" : "Safe"
+                "ContactId": {
+                  "type": "string",
+                  "format": "uuid",
+                  "example": "4d9721a2-07f8-45ac-9570-682f4774cfa5"
                 },
-                "UserId" : {
-                  "type" : "string",
-                  "format" : "uuid",
-                  "example" : "4d9721a2-07f8-45ac-9570-682f4774cfa5"
-                },
-                "ContactId" : {
-                  "type" : "string",
-                  "format" : "uuid",
-                  "example" : "4d9721a2-07f8-45ac-9570-682f4774cfa5"
-                },
-                "questionnaire" : {
-                  "type" : "object",
-                  "properties" : {
-                    "id" : {
-                      "type" : "number",
-                      "example" : 1
+                "questionnaire": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "number",
+                      "example": 1
                     },
-                    "question1" : {
-                      "type" : "string",
-                      "example" : "They have left handed can openers"
+                    "question1": {
+                      "type": "string",
+                      "example": "They have left handed can openers"
                     },
-                    "question2" : {
-                      "type" : "boolean",
-                      "example" : false
+                    "question2": {
+                      "type": "boolean",
+                      "example": false
                     }
                   }
                 },
-                "notes" : {
-                  "type" : "string",
-                  "example" : "Everything is okilly dokilly"
+                "notes": {
+                  "type": "string",
+                  "example": "Everything is okilly dokilly"
                 }
               }
             }
           },
-          "contacts" : {
-            "type" : "array",
-            "items" : {
-              "type" : "object",
-              "properties" : null,
-              "$ref" : "#/components/schemas/ContactItem"
+          "contacts": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": null,
+              "$ref": "#/components/schemas/ContactItem"
             }
           },
-          "description" : {
-            "type" : "string",
-            "example" : "Everything for the left handed man, woman, and child!"
+          "description": {
+            "type": "string",
+            "example": "Everything for the left handed man, woman, and child!"
           },
-          "createdAt" : {
-            "type" : "string",
-            "format" : "date-time",
-            "example" : "2020-01-21T13:45:52.348Z"
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2020-01-21T13:45:52.348Z"
           },
-          "updatedAt" : {
-            "type" : "string",
-            "format" : "date-time",
-            "example" : "2020-01-21T13:45:52.348Z"
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2020-01-21T13:45:52.348Z"
           }
         }
       },
-      "ContactItem" : {
-        "type" : "object",
-        "properties" : {
-          "id" : {
-            "type" : "string",
-            "format" : "uuid",
-            "example" : "abafa852-ecd0-4d57-9083-85f4dfd9c402"
+      "ContactItem": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "abafa852-ecd0-4d57-9083-85f4dfd9c402"
           },
-          "UserID" : {
-            "type" : "string",
-            "format" : "uuid",
-            "example" : "abafa852-ecd0-4d57-9083-85f4dfd9c402"
+          "UserID": {
+            "type": "string",
+            "format": "uuid",
+            "example": "abafa852-ecd0-4d57-9083-85f4dfd9c402"
           },
-          "EntityId" : {
-            "type" : "string",
-            "format" : "uuid",
-            "example" : "c2fb852c-17fd-4e2b-9ea4-78128af9a5e9"
+          "EntityId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "c2fb852c-17fd-4e2b-9ea4-78128af9a5e9"
           },
-          "name" : {
-            "type" : "string",
-            "example" : "Ned Flanders"
+          "name": {
+            "type": "string",
+            "example": "Ned Flanders"
           },
-          "phone" : {
-            "type" : "array",
-            "items" : {
-              "type" : "object",
-              "properties" : {
-                "address" : {
-                  "type" : "string",
-                  "example" : "0654987321"
+          "phone": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "address": {
+                  "type": "string",
+                  "example": "0654987321"
                 },
-                "isPrimary" : {
-                  "type" : "boolean",
-                  "example" : true
+                "isPrimary": {
+                  "type": "boolean",
+                  "example": true
                 }
               }
             }
           },
-          "email" : {
-            "type" : "array",
-            "items" : {
-              "type" : "object",
-              "properties" : {
-                "address" : {
-                  "type" : "string",
-                  "format" : "email",
-                  "example" : "ned.flanders@leftorium.com"
+          "email": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "address": {
+                  "type": "string",
+                  "format": "email",
+                  "example": "ned.flanders@leftorium.com"
                 },
-                "isPrimary" : {
-                  "type" : "boolean",
-                  "example" : true
+                "isPrimary": {
+                  "type": "boolean",
+                  "example": true
                 }
               }
             }
           },
-          "createdAt" : {
-            "type" : "string",
-            "format" : "date-time",
-            "example" : "2020-01-21T13:45:52.348Z"
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2020-01-21T13:45:52.348Z"
           },
-          "updatedAt" : {
-            "type" : "string",
-            "format" : "date-time",
-            "example" : "2020-01-21T13:45:52.348Z"
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2020-01-21T13:45:52.348Z"
           }
         }
       }
