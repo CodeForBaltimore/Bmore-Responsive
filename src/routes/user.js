@@ -174,7 +174,7 @@ router.put('/', utils.authMiddleware, async (req, res) => {
 	let code;
 	let message;
 	try {
-		if (validator.isEmail(req.body.email) && req.body.password !== undefined) {
+		if (validator.isEmail(req.body.email)) {
 			/** @todo add email and phone update options */
 			const { email, password, displayName, phone, attributes } = req.body;
 			const user = await req.context.models.User.findOne({
