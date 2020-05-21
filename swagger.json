@@ -1,17 +1,15 @@
 {
-  "openapi": "3.0.0",
-  "servers": [
-    {
-      "description": "Localhost",
-      "url": "http://localhost:3000"
-    }
-  ],
-  "info": {
-    "description": "An emergency response and contact management API. Add BYPASS_LOGIN=true to .env to Bypass the need for tokens.",
-    "version": "1.1.0",
-    "title": "Bmore Responsive",
-    "contact": {
-      "email": "hello@codeforbaltimore.org"
+  "openapi" : "3.0.0",
+  "servers" : [ {
+    "description" : "Localhost",
+    "url" : "http://localhost:3000"
+  } ],
+  "info" : {
+    "description" : "An emergency response and contact management API.",
+    "version" : "1.1.2",
+    "title" : "Bmore Responsive",
+    "contact" : {
+      "email" : "hello@codeforbaltimore.org"
     },
     "license": {
       "name": "Apache 2.0",
