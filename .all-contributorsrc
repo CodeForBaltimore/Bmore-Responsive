@@ -153,6 +153,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "msmith125",
+      "name": "msmith125",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/58228205?v=4",
+      "profile": "https://github.com/msmith125",
+      "contributions": [
+        "test"
+      ]
     }
   ],
   "contributorsPerLine": 7,
