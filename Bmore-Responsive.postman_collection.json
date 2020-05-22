@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "c0693306-4e20-4fda-b114-cb59b9057a5c",
+		"_postman_id": "5c9f1841-0cc0-4617-b8e6-c4b6e75ae4e1",
 		"name": "Bmore-Responsive",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -14,7 +14,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "19989e9e-11ee-476a-b986-5be021e89a45",
+								"id": "219716e8-7dd9-49f9-a9a7-1c5a88fb0f1d",
 								"exec": [
 									"//grab the token and save it into \"token\" env variable",
 									"pm.environment.set(\"token\",pm.response.text());",
@@ -68,7 +68,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "19a429d8-ad47-4502-ab20-9fda4c54ea87",
+								"id": "90984e83-722a-417b-b692-6bd515a461c2",
 								"exec": [
 									"// grab the id of the first contatc returned for use in subsequent transactions",
 									"var jsonData = pm.response.json();",
@@ -110,7 +110,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "3908e851-991d-4e9a-8255-ba21abdef273",
+								"id": "33118c9b-539c-403a-9e75-ba3e53660754",
 								"exec": [
 									"//confirm that request returns a success code of 200",
 									"pm.test(\"Status code is 200\", function () {",
@@ -156,7 +156,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "e6385331-050e-4ae5-94ff-3388f161bb55",
+								"id": "10b3a1ab-be98-435f-ac9c-4c7352899ab4",
 								"exec": [
 									"//get the email of the new user from the request and save it to env variable",
 									"//this will allow deletion of this in the Delete transaction",
@@ -214,7 +214,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "9d93e390-dc13-42a1-8b78-c683b6c31e58",
+								"id": "91495b4a-79c2-442a-ac79-31c207a01230",
 								"exec": [
 									"//confirm that request returns a success code of 200",
 									"pm.test(\"Status code is 200\", function () {",
@@ -261,7 +261,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "13bf75ad-caf0-4fa9-afd7-f6d2a23dae15",
+								"id": "185b88f3-11e8-471b-8c8d-8cf8998bdf28",
 								"exec": [
 									"//confirm that request returns a success code of 200",
 									"pm.test(\"Status code is 200\", function () {",
@@ -306,7 +306,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "822834c8-3772-4bd1-9ec8-65e3f441455d",
+								"id": "c283d1c6-521e-47b3-a42e-8ef73887e456",
 								"exec": [
 									"//confirm that request returns a success code of 200",
 									"pm.test(\"Status code is 200\", function () {",
@@ -344,7 +344,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "041e221d-c931-4b22-884a-73fefd1c1b80",
+								"id": "0d83ae1d-ee90-4423-b983-0c27be4b1444",
 								"exec": [
 									"//confirm that request returns a success code of 200",
 									"pm.test(\"Status code is 200\", function () {",
@@ -391,7 +391,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "db7d2227-79fe-4dc9-bfee-a97248e53e12",
+								"id": "014bda63-9370-442b-a39e-210ed613daa1",
 								"exec": [
 									"//confirm that request returns a success code of 200",
 									"pm.test(\"Status code is 200\", function () {",
@@ -413,7 +413,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"role\": \"test2\",\n  \"path\": \"/test\",\n  \"method\": \"GET\"\n}"
+							"raw": "{\n  \"role\": \"test4\",\n  \"path\": \"/test\",\n  \"method\": \"GET\"\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/userRole/delete",
@@ -440,7 +440,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "376871ec-6bdf-4315-af89-90886bff9317",
+								"id": "e3170d55-2e22-4806-8601-e0cd9c4a2789",
 								"exec": [
 									"// grab the id of the first contatc returned for use in subsequent transactions",
 									"var jsonData = pm.response.json();",
@@ -484,7 +484,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "075e31f9-3255-460a-9fa4-b112db37f39a",
+								"id": "91113927-a8e3-412f-ad0e-da9d4c132823",
 								"exec": [
 									"//confirm that request returns a success code of 200",
 									"pm.test(\"Status code is 200\", function () {",
@@ -523,7 +523,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "fa562b7d-4783-4cbb-a06b-e7b774023591",
+								"id": "a8e42906-8df4-422b-a0a5-87309152ebd5",
 								"exec": [
 									"//get the 36 character id of the new contact and save it to env variable",
 									"//this will allow deletion of this in the Delete transaction",
@@ -574,7 +574,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "6f1765bb-101a-40d0-904f-37af9aa96558",
+								"id": "57c9b88a-7325-4bcd-8111-1305a240d27b",
 								"exec": [
 									"//confirm that request returns a success code of 200",
 									"pm.test(\"Status code is 200\", function () {",
@@ -621,7 +621,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "7e59699f-e52f-47ac-b2aa-05fedf731131",
+								"id": "7f202d9f-a2d4-4eca-ae7d-2bc61647922e",
 								"exec": [
 									"//confirm that request returns a success code of 200",
 									"pm.test(\"Status code is 200\", function () {",
@@ -660,7 +660,7 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "e50ba8bc-02c6-40ba-ae51-57fa584d8aee",
+						"id": "2ef10104-33d5-413f-a0ac-36073ccd51f1",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -670,7 +670,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "194a84e5-96bd-4efa-afa6-a7f770d99d85",
+						"id": "42023829-b057-4876-8e80-4f9f1ab1ba13",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -689,7 +689,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "64a0b1b0-b208-4ad5-a1cd-2bed78440b07",
+								"id": "9eb9e86a-11a8-456a-9140-5ae203a9265e",
 								"exec": [
 									"// grab the id of the first two entities returned for use in subsequent transactions",
 									"var jsonData = pm.response.json();",
@@ -732,7 +732,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "126b51f5-5c6a-40eb-95b6-b0316f2e2e2e",
+								"id": "b13eb7e4-fd6c-48b4-b0e9-c3f0953621ec",
 								"exec": [
 									"//confirm that request returns a success code of 200",
 									"pm.test(\"Status code is 200\", function () {",
@@ -771,7 +771,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "76ea05ba-36d2-45b2-acfa-425f1029860d",
+								"id": "33527c0c-7336-4fc4-947d-99ef0f63a749",
 								"exec": [
 									"//get the 36 character id of the new entity and save it to env variable",
 									"//this will allow deletion of this in the Delete transaction",
@@ -822,7 +822,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "2393125b-9337-436e-ad40-816eed71e98a",
+								"id": "c25a1e69-041c-47cb-8927-fa0a89cac7a0",
 								"exec": [
 									"//confirm that request returns a success code of 200",
 									"pm.test(\"Status code is 200\", function () {",
@@ -869,7 +869,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "0c54a785-ee1e-4cb0-b9bb-b290937b50ff",
+								"id": "10c242ed-44c5-48b9-88e1-41c0875a8366",
 								"exec": [
 									"//confirm that request returns a success code of 200",
 									"pm.test(\"Status code is 200\", function () {",
@@ -920,7 +920,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "1831285f-51de-45fb-9a68-e3c281951a44",
+								"id": "c7862374-5a56-4816-a3ca-acabee21526f",
 								"exec": [
 									"//confirm that request returns a success code of 200",
 									"pm.test(\"Status code is 200\", function () {",
@@ -969,7 +969,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "63c5ec2a-d368-4014-9ffa-2ac4a4bce1a6",
+								"id": "fbde5fc8-da26-469e-910d-c1cdf2e36762",
 								"exec": [
 									"//confirm that request returns a success code of 200",
 									"pm.test(\"Status code is 200\", function () {",
@@ -1018,7 +1018,7 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "79b9e2be-9773-4ed5-87d9-46fa27c2d92e",
+						"id": "4ba9e88a-35fd-4771-8a21-d4a44c240607",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -1028,7 +1028,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "5c697ba8-81eb-487b-99f6-ab624dc9d589",
+						"id": "43c16ff7-ebeb-4be0-bd3d-23db60fb9cab",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -1047,7 +1047,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "737b2c37-bff3-45b8-b01a-02fdcca9e012",
+								"id": "3b39f2b4-dab4-4596-b832-2eee44379edc",
 								"exec": [
 									"//confirm that request returns a success code of 200",
 									"pm.test(\"Status code is 200\", function () {",
@@ -1088,12 +1088,58 @@
 					"response": []
 				},
 				{
+					"name": "EntityContact CSV",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7ba2f508-9a49-4407-8564-aec9a1d3abf8",
+								"exec": [
+									"//confirm that request returns a success code of 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/csv/EntityContact",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"csv",
+								"EntityContact"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Entity CSV",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
-								"id": "8f8f78ba-eb6f-4c06-9939-7e0e7d2af5af",
+								"id": "4dc16f66-5cb7-473c-a1b8-859f6db8c23b",
 								"exec": [
 									"//confirm that request returns a success code of 200",
 									"pm.test(\"Status code is 200\", function () {",
@@ -1139,7 +1185,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5b84cbe0-f036-45bf-b973-f9bf869b5cb8",
+								"id": "7a127ecf-9889-4041-9555-f30aac9773b1",
 								"exec": [
 									"//confirm that request returns a success code of 200",
 									"pm.test(\"Status code is 200\", function () {",
@@ -1185,7 +1231,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "7781e1ff-7c1f-4544-a554-063b098e08bb",
+								"id": "cc990e85-10f6-41d5-95b4-04b85e33cd47",
 								"exec": [
 									"//confirm that request returns a success code of 200",
 									"pm.test(\"Status code is 200\", function () {",
@@ -1230,7 +1276,7 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "63407654-a4a9-4402-9e72-011815893577",
+						"id": "00e5a161-ff53-4671-8b41-b79f930f30e4",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -1240,7 +1286,4427 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "1c17cf82-30be-4bd0-9efb-89e228067f49",
+						"id": "e7ecd064-4a63-4503-8a28-6ca1afb21983",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "ResponseCheck user",
+			"item": [
+				{
+					"name": "Login with malformed email address",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "024f8991-cf9d-4af9-9b7b-9b77c4ab12de",
+								"exec": [
+									"//confirm that request returns a success code of 422",
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"{{malformedUsername}}\",\n\t\"password\": \"{{testAdminPassword}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login with admin user bad pass",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d9a64257-a22d-45da-801f-10a0c95443ea",
+								"exec": [
+									"//confirm that request returns a success code of 403",
+									"pm.test(\"Status code is 403\", function () {",
+									"    pm.response.to.have.status(403);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"{{testAdminUsername}}\",\n\t\"password\": \"{{badPassword}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login with nonexistent userid",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "aad1201b-6092-441b-9dce-5200181fcb0b",
+								"exec": [
+									"//confirm that request returns a success code of 403",
+									"pm.test(\"Status code is 403 Forbidden\", function () {",
+									"    pm.response.to.have.status(403);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"{{badUsername}}\",\n\t\"password\": \"{{testAdminPassword}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All Users No Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0e06cc10-f95d-47f8-8c06-d8aeeae5d106",
+								"exec": [
+									"//confirm that request returns a success code of 401",
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "",
+								"type": "text",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/user",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All Users Bad Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7c0d7615-6d56-4a48-ae34-59a544c865e5",
+								"exec": [
+									"//confirm that request returns a success code of 401",
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"type": "text",
+								"value": "{{badToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/user",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Single User Bad Format",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "04825a39-ece9-4333-bd7f-a9a285c0a57f",
+								"exec": [
+									"//confirm that request returns a success code of 422",
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user/{{malformedUsername}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								"{{malformedUsername}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Single User Bad Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "26a09789-87d4-48cf-bd6e-223ec9ea2e00",
+								"exec": [
+									"//confirm that request returns a success code of 401",
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{badToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user/{{firstUserEmail}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								"{{firstUserEmail}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Single User Does Not Exist",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c9fa9fdb-c7a7-4ab5-9f5c-8e0baf5a6f18",
+								"exec": [
+									"//confirm that request returns a success code of 422",
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user/{{badUsername}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								"{{badUsername}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Single User No Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "888ee966-2feb-4e94-ad46-bde6017b85c3",
+								"exec": [
+									"//confirm that request returns a success code of 401",
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user/{{firstUserEmail}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								"{{firstUserEmail}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create user Already exists",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "675a0644-aa06-42a9-8a97-62c8855dd401",
+								"exec": [
+									"//confirm that request returns a success code of 500",
+									"pm.test(\"Status code is 500\", function () {",
+									"    pm.response.to.have.status(500);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"homer.simpson@sfpp.com\",\n\t\"password\": \"donuts\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create user No username",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "10dc08fc-b857-4401-862f-17dec7872a9a",
+								"exec": [
+									"//confirm that request returns a success code of 500",
+									"pm.test(\"Status code is 500\", function () {",
+									"    pm.response.to.have.status(500);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"password\": \"donuts\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create user Empty password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "68d145b9-1a11-407b-b58c-def2bd04682d",
+								"exec": [
+									"//confirm that request returns a success code of 500",
+									"pm.test(\"Status code is 500\", function () {",
+									"    pm.response.to.have.status(500);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"marge.simpson@sfpp.com\",\n\t\"password\": \"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create user Empty username",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "76bee113-8bde-46c4-afc2-c28f0fbd340c",
+								"exec": [
+									"//confirm that request returns a success code of 422",
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"\",\n\t\"password\": \"donuts\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create user No Password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4fd87541-2aec-47ea-a237-f742c1cf8eb3",
+								"exec": [
+									"//confirm that request returns a success code of 500",
+									"pm.test(\"Status code is 500\", function () {",
+									"    pm.response.to.have.status(500);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"margeb.simpson@sfpp.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create user Bad token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a6d830f8-5089-4e78-bd63-e3265f1751ac",
+								"exec": [
+									"//confirm that request returns a success code of 401",
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "token",
+								"value": "{{badToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"marge.simpson@sfpp.com\",\n\t\"password\": \"donuts\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create user No token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "87b3798d-7256-4099-b1ff-693e3e744789",
+								"exec": [
+									"//confirm that request returns a success code of 401",
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"margec.simpson@sfpp.com\",\n\t\"password\": \"donuts\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create user Bad Email Format",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "31a6daa0-3bef-4d46-8f1a-3f20e76e4232",
+								"exec": [
+									"//confirm that request returns a success code of 422",
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"marge.simpsonsfpp.com\",\n\t\"password\": \"donuts\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User Bad token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d2f21761-43d0-4412-b949-b6bb65136432",
+								"exec": [
+									"//confirm that request returns a success code of 401",
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{badToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"{{testAdminUsername}}\",\n\t\"displayName\": \"Updated Name\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User No token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a2585118-b663-4c5b-8924-5a1bb9e3a72a",
+								"exec": [
+									"//confirm that request returns a success code of 401",
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"{{testAdminUsername}}\",\n\t\"displayName\": \"Updated Name\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User Bad Email Format",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ae703ca6-078d-4557-9fce-6a90b3ce30f3",
+								"exec": [
+									"//confirm that request returns a success code of 422",
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"{{malformedUsername}}\",\n\t\"displayName\": \"Updated Name\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User Nonexistent User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "963950ef-29cf-4013-9389-4829076ed7ab",
+								"exec": [
+									"//confirm that request returns a success code of 422",
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"{{badUsername}}\",\n\t\"displayName\": \"Updated Name\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User Bad Format",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7b47478d-0d83-4169-95e4-fe4d305bdea7",
+								"exec": [
+									"//confirm that request returns a success code of 422",
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"{{testAdminUsername}}\",\n\t\"displayName\": \"Updated Name\",\n\t\"badformat\" : \"badformat\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletes User Bad token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9648d782-5d1b-4d18-aa57-0d0f19ea470b",
+								"exec": [
+									"//confirm that request returns a success code of 401",
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{badToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/user/{{newUserEmail}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								"{{newUserEmail}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletes User No token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "da079b6f-7d58-4c46-9589-78e078cf6458",
+								"exec": [
+									"//confirm that request returns a success code of 401",
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/user/{{newUserEmail}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								"{{newUserEmail}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletes User Bad Email Format",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b6768ec8-74f7-40f3-84af-a7debca7667e",
+								"exec": [
+									"//confirm that request returns a success code of 422",
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/user/{{malformedUsername}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								"{{malformedUsername}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletes User Nonexistent User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b64b3408-38bb-4b01-8732-d4bfea50360f",
+								"exec": [
+									"//confirm that request returns a success code of 500",
+									"pm.test(\"Status code is 500\", function () {",
+									"    pm.response.to.have.status(500);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/user/{{badUsername}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								"{{badUsername}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login with admin to prevent 429",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1826e130-2361-48c7-8f57-53e60c638b12",
+								"exec": [
+									"//grab the token and save it into \"token\" env variable",
+									"pm.environment.set(\"token\",pm.response.text());",
+									"",
+									"",
+									"//confirm that request returns a success code of 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"{{testAdminUsername}}\",\n\t\"password\": \"{{testAdminPassword}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "ResponseCheck userRole",
+			"item": [
+				{
+					"name": "All roles No token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6e94f1be-e881-4d54-b86f-b5be0f979c26",
+								"exec": [
+									"//confirm that request returns a success code of 401",
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/userRole",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"userRole"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All roles Bad token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f84eeae3-e621-4056-8666-93e5633dc7e6",
+								"exec": [
+									"//confirm that request returns a success code of 401",
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{badToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/userRole",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"userRole"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create role No token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7414622e-337f-4c1b-bc12-a2cce62b9eeb",
+								"exec": [
+									"//confirm that request returns a success code of 401",
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"role\": \"test45\",\n  \"path\": \"/test\",\n  \"method\": \"GET\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/userRole",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"userRole"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create role Bad token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "141f0cab-566c-4392-bc7d-7cc2f2bcfa59",
+								"exec": [
+									"//confirm that request returns a success code of 401",
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{badToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"role\": \"test46\",\n  \"path\": \"/test\",\n  \"method\": \"GET\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/userRole",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"userRole"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create role Empty role",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d6314117-e305-425a-b262-6ee791854880",
+								"exec": [
+									"//confirm that request returns a success code of 422",
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"role\": \"\",\n  \"path\": \"/test\",\n  \"method\": \"GET\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/userRole",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"userRole"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create role Empty path",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "be7dfd9b-337a-497d-8139-d2ab19fd4494",
+								"exec": [
+									"//confirm that request returns a success code of 422",
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"role\": \"test49\",\n  \"path\": \"\",\n  \"method\": \"GET\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/userRole",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"userRole"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create role Empty method",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "50806b23-10d8-4cf0-b5b2-e9d57a54e13f",
+								"exec": [
+									"//confirm that request returns a success code of 422",
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"role\": \"test51\",\n  \"path\": \"/test\",\n  \"method\": \"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/userRole",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"userRole"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create role Bad format",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a06a125b-9b5b-4c90-b98f-d351973424d1",
+								"exec": [
+									"//confirm that request returns a success code of 422",
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"role\": \"test400\",\n  \"method\": \"GET\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/userRole",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"userRole"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create role Already exists",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "84e03814-bbeb-4e69-9783-2dbf6a04abf6",
+								"exec": [
+									"//confirm that request returns a success code of 422",
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"role\": \"test4\",\n  \"path\": \"/test\",\n  \"method\": \"GET\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/userRole",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"userRole"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Removes a role No token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0790f0fa-4408-4b88-93cc-fd266f97e936",
+								"exec": [
+									"//confirm that request returns a success code 401",
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"role\": \"test2\",\n  \"path\": \"/test\",\n  \"method\": \"GET\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/userRole/delete",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"userRole",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Removes a role Bad token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "eb9be4e4-5092-4712-b8e8-1b7cfa0b0c94",
+								"exec": [
+									"//confirm that request returns a success code of 401",
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{badToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"role\": \"test2\",\n  \"path\": \"/test\",\n  \"method\": \"GET\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/userRole/delete",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"userRole",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login with admin to prevent 429",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "267f2b43-5704-4559-8c7c-809a302e9b2c",
+								"exec": [
+									"//grab the token and save it into \"token\" env variable",
+									"pm.environment.set(\"token\",pm.response.text());",
+									"",
+									"",
+									"//confirm that request returns a success code of 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"{{testAdminUsername}}\",\n\t\"password\": \"{{testAdminPassword}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Removes a role Role does not exist",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2616fc2b-9e31-40a3-95a9-e37ba551e7fe",
+								"exec": [
+									"//confirm that request returns a success code of 422",
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"role\": \"test2\",\n  \"path\": \"/test\",\n  \"method\": \"GET\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/userRole/delete",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"userRole",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Removes a role Bad Format",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "90ed908b-f0f4-49ef-91f9-24177d2aba18",
+								"exec": [
+									"//confirm that request returns a success code of 422",
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"role\": \"test2\",\n  \"method\": \"GET\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/userRole/delete",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"userRole",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "ResponseCheck contact",
+			"item": [
+				{
+					"name": "All Contacts No token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2899c5af-790d-4a6f-af5c-5a9645c57eb6",
+								"exec": [
+									"//confirm that request returns a success code of 401",
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/contact",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"contact"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All Contacts Bad token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "94e95f31-fe92-41dc-bea7-ca8cda27ed79",
+								"exec": [
+									"//confirm that request returns a success code of 401",
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"type": "text",
+								"value": "{{badToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/contact",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"contact"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Single Contact No token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a9d2d6f9-75f7-42c0-b7dd-342d0505eded",
+								"exec": [
+									"//confirm that request returns a success code of 401",
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/contact/{{firstContactId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"contact",
+								"{{firstContactId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Single Contact Bad token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6970882a-1cf8-433b-a2c6-205650f92ceb",
+								"exec": [
+									"//confirm that request returns a success code of 401",
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"type": "text",
+								"value": "{{badToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/contact/{{firstContactId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"contact",
+								"{{firstContactId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Single Contact Does not exist",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "737aa5a2-3cb1-4f62-8d88-5cc5435fb36b",
+								"exec": [
+									"//confirm that request returns a success code of 422",
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/contact/0f56e2e-9e8e-4d8e-a938-64f9ff2a419",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"contact",
+								"0f56e2e-9e8e-4d8e-a938-64f9ff2a419"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Contact No token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "96f939a5-b9cd-4eda-b32c-8f78658ce4d3",
+								"exec": [
+									"//confirm that request returns a success code of 401",
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Rod Flanders\",\n  \"email\": [\n    {\n      \"address\": \"rod.flanders@leftorium.com\",\n      \"isPrimary\": \"true\"\n    }\n  ],\n  \"phone\": [\n    {\n      \"number\": \"12345551212\",\n      \"isPrimary\": \"true\"\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/contact",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"contact"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Contact Bad token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "820ad7a2-b7e0-4d20-96b6-192176432967",
+								"exec": [
+									"//confirm that request returns a success code of 401",
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{badToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Rod Flanders\",\n  \"email\": [\n    {\n      \"address\": \"rod.flanders@leftorium.com\",\n      \"isPrimary\": \"true\"\n    }\n  ],\n  \"phone\": [\n    {\n      \"number\": \"12345551212\",\n      \"isPrimary\": \"true\"\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/contact",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"contact"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login with admin to prevent 429",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e74bc4eb-3be2-4605-8fab-5104930566ae",
+								"exec": [
+									"//grab the token and save it into \"token\" env variable",
+									"pm.environment.set(\"token\",pm.response.text());",
+									"",
+									"",
+									"//confirm that request returns a success code of 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"{{testAdminUsername}}\",\n\t\"password\": \"{{testAdminPassword}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Contact Empty Name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "dedfbe03-28b0-4527-ab9a-4c57d299cfec",
+								"exec": [
+									"//confirm that request returns a success code of 422",
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"\",\n  \"email\": [\n    {\n      \"address\": \"rod.flanders@leftorium.com\",\n      \"isPrimary\": \"true\"\n    }\n  ],\n  \"phone\": [\n    {\n      \"number\": \"12345551212\",\n      \"isPrimary\": \"true\"\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/contact",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"contact"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Contact Bad Format",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ead93685-76e6-4eed-8858-7ddc21b46d50",
+								"exec": [
+									"//confirm that request returns a success code of 503",
+									"pm.test(\"Status code is 503\", function () {",
+									"    pm.response.to.have.status(503);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Rod Flanders\",\n  \"email\": [\n    {\n      \"address\": \"rod.flanders@leftorium.com\",\n      \"isPrimary\": \"true\",\n    }\n  ]\n  \"phone\": [\n    {\n      \"number\": \"12345551212\",\n      \"isPrimary\": \"true\"\n    }\n  ],\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/contact",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"contact"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Contact For testing good",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a16bec50-f82b-4d25-86d9-ef698f752c78",
+								"exec": [
+									"//get the 36 character id of the new contact and save it to env variable",
+									"//this will allow deletion of this in the Delete transaction",
+									"pm.environment.set(\"newTestContactId\", pm.response.text().slice(0,36));",
+									"",
+									"//confirm that request returns a success code of 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"TestContact\",\n  \"email\": [\n    {\n      \"address\": \"rod.flanders@leftorium.com\",\n      \"isPrimary\": \"true\"\n    }\n  ],\n  \"phone\": [\n    {\n      \"number\": \"12345551212\",\n      \"isPrimary\": \"true\"\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/contact",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"contact"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Contact No token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e8ee35fd-02b0-48f8-9b2f-e5346057d4ba",
+								"exec": [
+									"//confirm that request returns a success code of 401",
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": \"{{firstContactId}}\",\n  \"name\": \"Rod Flanders\",\n  \"email\": [\n    {\n      \"address\": \"rod.flanders@leftorium.com\",\n      \"isPrimary\": \"true\"\n    },\n    {\n      \"address\": \"nrod@church.org\"\n    }\n  ],\n  \"phone\": [\n    {\n      \"number\": \"4105551212\",\n      \"isPrimary\": \"true\"\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/contact",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"contact"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Contact Bad token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6353b863-5a8f-4eee-ab20-c0a6d21de006",
+								"exec": [
+									"//confirm that request returns a success code of 401",
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{badToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": \"{{firstContactId}}\",\n  \"name\": \"Rod Flanders\",\n  \"email\": [\n    {\n      \"address\": \"rod.flanders@leftorium.com\",\n      \"isPrimary\": \"true\"\n    },\n    {\n      \"address\": \"nrod@church.org\"\n    }\n  ],\n  \"phone\": [\n    {\n      \"number\": \"4105551212\",\n      \"isPrimary\": \"true\"\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/contact",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"contact"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Contact Does not exist",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "919fc81f-210e-4383-9d07-bd1495347199",
+								"exec": [
+									"//confirm that request returns a success code of 400",
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": \"{{firstEntityId}}\",\n  \"name\": \"Rod Flanders\",\n  \"email\": [\n    {\n      \"address\": \"rod.flanders@leftorium.com\",\n      \"isPrimary\": \"true\"\n    },\n    {\n      \"address\": \"nrod@church.org\"\n    }\n  ],\n  \"phone\": [\n    {\n      \"number\": \"4105551212\",\n      \"isPrimary\": \"true\"\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/contact",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"contact"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Contact Bad Contact Id format",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6ba12b20-d635-4455-ac82-38daa00a0b07",
+								"exec": [
+									"//confirm that request returns a success code of 422",
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": \"badcontact\",\n  \"name\": \"Rod Flanders\",\n  \"email\": [\n    {\n      \"address\": \"rod.flanders@leftorium.com\",\n      \"isPrimary\": \"true\"\n    },\n    {\n      \"address\": \"nrod@church.org\"\n    }\n  ],\n  \"phone\": [\n    {\n      \"number\": \"4105551212\",\n      \"isPrimary\": \"true\"\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/contact",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"contact"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletes Contact No token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d128474f-ad6c-4857-a55e-8eb9644ed286",
+								"exec": [
+									"//confirm that request returns a success code of 401",
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/contact/{{newContactId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"contact",
+								"{{newContactId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletes Contact Bad token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2d150f08-e96b-4ddc-82f5-59cc7500ceb6",
+								"exec": [
+									"//confirm that request returns a success code of 401",
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{badToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/contact/{{newContactId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"contact",
+								"{{newContactId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletes Contact Does not exist",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9f1ee3d8-e1b8-4f91-8731-5562e6820ee1",
+								"exec": [
+									"//confirm that request returns a success code of 500",
+									"pm.test(\"Status code is 500\", function () {",
+									"    pm.response.to.have.status(500);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/contact/{{newContactId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"contact",
+								"{{newContactId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletes Contact Bad Input",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f4645afa-7be5-4db9-8903-c17693ae2a75",
+								"exec": [
+									"//confirm that request returns a success code of 422",
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/contact/badinput",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"contact",
+								"badinput"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login with admin to prevent 429 b",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ca6d81c7-e1b2-45c2-b0f9-65a7e9a93136",
+								"exec": [
+									"//grab the token and save it into \"token\" env variable",
+									"pm.environment.set(\"token\",pm.response.text());",
+									"",
+									"",
+									"//confirm that request returns a success code of 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"{{testAdminUsername}}\",\n\t\"password\": \"{{testAdminPassword}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "This folder contains calls to excercise the contact endpoint.  Please note that the these calls are expected to be made in order as some subsequent examples rely on values derived from previous calls. For exacmple the \"Get Single Contact\" retrieves the first contact returned from the previous \"Get All Contacts\" transaction.",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "6907f97c-cb5c-440b-bd32-5d10aa00783e",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "027550bf-f7b6-446e-9698-ea99de8e21f4",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "ResponseCheck entity",
+			"item": [
+				{
+					"name": "All Entities No token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "614f96dd-7650-4e46-8248-cacc549bdfe6",
+								"exec": [
+									"//confirm that request returns a success code of 401",
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/entity",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"entity"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All Entities Bad token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b3d8794b-3294-4e7d-ab8a-0cc3b14eefbd",
+								"exec": [
+									"//confirm that request returns a success code of 401",
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{badToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/entity",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"entity"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Single Entity No token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8f82aeda-ab06-414b-b1d2-415eac925f7e",
+								"exec": [
+									"//confirm that request returns a success code of 401",
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/entity/{{firstEntityId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"entity",
+								"{{firstEntityId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Single Entity Bad token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cec5ca5b-bce0-42c9-8ece-57436e91929e",
+								"exec": [
+									"//confirm that request returns a success code of 401",
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{badToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/entity/{{firstEntityId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"entity",
+								"{{firstEntityId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Single Entity Bad format",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "32e14e2e-fcca-4842-8237-61636f45cba6",
+								"exec": [
+									"//confirm that request returns a success code of 422",
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/entity/badFormat",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"entity",
+								"badFormat"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login with admin to prevent 429",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "48eb740d-ee12-4ea7-a81b-250c59717b90",
+								"exec": [
+									"//grab the token and save it into \"token\" env variable",
+									"pm.environment.set(\"token\",pm.response.text());",
+									"",
+									"",
+									"//confirm that request returns a success code of 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"{{testAdminUsername}}\",\n\t\"password\": \"{{testAdminPassword}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Entity No token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6af28439-ba0c-4a82-92d3-c91468e5c63f",
+								"exec": [
+									"//confirm that request returns a success code of 401",
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Krustyland\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/entity",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"entity"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Entity Bad token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6228c977-9d77-4d71-8b2c-7483eb2952f4",
+								"exec": [
+									"//confirm that request returns a success code of 401",
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{badToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Krustyland\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/entity",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"entity"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Entity Empty Name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "89db9515-0040-4826-a37d-66ab7fc67534",
+								"exec": [
+									"//confirm that request returns a success code of 422",
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/entity",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"entity"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Entity Bad Format",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6d1a62b5-b286-4022-847b-1ffb86a728d4",
+								"exec": [
+									"//confirm that request returns a success code of 503",
+									"pm.test(\"Status code is 503\", function () {",
+									"    pm.response.to.have.status(503);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Krustyland\",\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/entity",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"entity"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Entity Good For Testing",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "66a6486b-dd47-44e9-86ab-a0767b0a2cd9",
+								"exec": [
+									"//get the 36 character id of the new entity and save it to env variable",
+									"//this will allow deletion of this in the Delete transaction",
+									"pm.environment.set(\"newTestEntityId\", pm.response.text().slice(0,36));",
+									"",
+									"//confirm that request returns a success code of 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Krustyland\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/entity",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"entity"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Entity No token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "51b94314-33f4-479f-960e-4b06e3d5844d",
+								"exec": [
+									"//confirm that request returns a success code of 401",
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "   {\n   \t\t\"id\": \"{{newEntityId}}\",\n        \"email\": [\n            {\n                \"address\": \"hello@krustyland.com\",\n                \"isPrimary\": \"true\"\n            }\n        ]\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/entity",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"entity"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Entity Bad token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e3813039-a7c1-4049-a44b-909c2f427ac5",
+								"exec": [
+									"//confirm that request returns a success code of 401",
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{badToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "   {\n   \t\t\"id\": \"{{newEntityId}}\",\n        \"email\": [\n            {\n                \"address\": \"hello@krustyland.com\",\n                \"isPrimary\": \"true\"\n            }\n        ]\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/entity",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"entity"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Entity Bad Format",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "28bf519c-fb64-4fa1-828f-c3a28caffcb3",
+								"exec": [
+									"//confirm that request returns a success code of 503",
+									"pm.test(\"Status code is 503\", function () {",
+									"    pm.response.to.have.status(503);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "   {\n   \t\t\"id\": \"{{newEntityId}}\",\n        \"email\": [\n            {\n                \"address\": \"hello@krustyland.com\",,\n                \"isPrimary\": \"true\"\n            }\n        ]\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/entity",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"entity"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login with admin to prevent 429 b",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "702b84b0-bf6f-4858-80a2-a25fc050f1f9",
+								"exec": [
+									"//grab the token and save it into \"token\" env variable",
+									"pm.environment.set(\"token\",pm.response.text());",
+									"",
+									"",
+									"//confirm that request returns a success code of 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"{{testAdminUsername}}\",\n\t\"password\": \"{{testAdminPassword}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Entity Does Not Exist",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e65d7390-0720-4fcb-91a1-9a4341279557",
+								"exec": [
+									"//confirm that request returns a success code of 500",
+									"pm.test(\"Status code is 500\", function () {",
+									"    pm.response.to.have.status(500);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "   {\n   \t\t\"id\": \"{{newContactId}}\",\n        \"email\": [\n            {\n                \"address\": \"hello@krustyland.com\",\n                \"isPrimary\": \"true\"\n            }\n        ]\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/entity",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"entity"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Entity Wrong Id Format",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b4e72b77-50e2-4fd2-882b-1dd76848f74a",
+								"exec": [
+									"//confirm that request returns a success code of 422",
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "   {\n   \t\t\"id\": \"badformat\",\n        \"email\": [\n            {\n                \"address\": \"hello@krustyland.com\",\n                \"isPrimary\": \"true\"\n            }\n        ]\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/entity",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"entity"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletes Entity No token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6be4c2eb-9d60-4716-b74e-42e91386a711",
+								"exec": [
+									"//confirm that request returns a success code of 401",
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/entity/{{newEntityId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"entity",
+								"{{newEntityId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletes Entity Bad token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ae2b9a19-a6f7-4e6f-aa18-999bd25e22f1",
+								"exec": [
+									"//confirm that request returns a success code of 401",
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{badToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/entity/{{newEntityId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"entity",
+								"{{newEntityId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletes Entity Does not exist",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1885ba4e-e6dd-45fd-bb47-e3f79b8e25d1",
+								"exec": [
+									"//confirm that request returns a success code of 503",
+									"pm.test(\"Status code is 503\", function () {",
+									"    pm.response.to.have.status(503);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/entity/{{newContactId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"entity",
+								"{{newContactId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletes Entity Wrong format",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "00dcda1b-104a-477d-83fe-47d35fe5bd0b",
+								"exec": [
+									"//confirm that request returns a success code of 422",
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/entity/badformat",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"entity",
+								"badformat"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "ResponseCheck links",
+			"item": [
+				{
+					"name": "Link Contact to Entities No token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c5e8fe3e-12c0-45eb-b777-26a63c248dac",
+								"exec": [
+									"//confirm that request returns a success code of 401",
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"entities\": [\n    {\n      \"id\": \"{{firstEntityId}}\"\n    },\n    {\n      \"id\": \"{{secondEntityId}}\",\n      \"title\": \"Owner\"\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/contact/link/{{firstContactId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"contact",
+								"link",
+								"{{firstContactId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Link Contact to Entities Bad token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f8527cdb-7266-4c69-965a-5d7b1c4b248f",
+								"exec": [
+									"//confirm that request returns a success code of 401",
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"type": "text",
+								"value": "{{badToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"entities\": [\n    {\n      \"id\": \"{{firstEntityId}}\"\n    },\n    {\n      \"id\": \"{{secondEntityId}}\",\n      \"title\": \"Owner\"\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/contact/link/{{firstContactId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"contact",
+								"link",
+								"{{firstContactId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Link Contact to Entities Contact Does not Exist",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7f31ff35-ed03-4c04-9fe0-de8d38ac02a4",
+								"exec": [
+									"//confirm that request returns a success code of 500",
+									"pm.test(\"Status code is 500\", function () {",
+									"    pm.response.to.have.status(500);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"entities\": [\n    {\n      \"id\": \"{{firstEntityId}}\"\n    },\n    {\n      \"id\": \"{{secondEntityId}}\",\n      \"title\": \"Owner\"\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/contact/link/{{firstEntityId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"contact",
+								"link",
+								"{{firstEntityId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Link Contact to Entities Entity Does not Exist",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "070556db-f6e9-45fc-8dc7-935b1e7f6a74",
+								"exec": [
+									"//confirm that request returns a success code of 500",
+									"pm.test(\"Status code is 500\", function () {",
+									"    pm.response.to.have.status(500);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"entities\": [\n    {\n      \"id\": \"{{firstContactId}}\"\n    },\n    {\n      \"id\": \"{{secondEntityId}}\",\n      \"title\": \"Owner\"\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/contact/link/{{firstContactId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"contact",
+								"link",
+								"{{firstContactId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Link Contact to Entities Bad Format",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "23d005b9-413b-4442-bad6-14867e3f1f6f",
+								"exec": [
+									"//confirm that request returns a success code of 503",
+									"pm.test(\"Status code is 503\", function () {",
+									"    pm.response.to.have.status(503);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"entities\": [\n    {\n      \"id\": \"{{firstEntityId}}\"\n    },\n    {\n      \"id\": \"{{secondEntityId}}\",,\n      \"title\": \"Owner\"\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/contact/link/{{firstContactId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"contact",
+								"link",
+								"{{firstContactId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login with admin to prevent 429",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "480750cd-7a58-4924-bd81-937c0ead7473",
+								"exec": [
+									"//grab the token and save it into \"token\" env variable",
+									"pm.environment.set(\"token\",pm.response.text());",
+									"",
+									"",
+									"//confirm that request returns a success code of 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"{{testAdminUsername}}\",\n\t\"password\": \"{{testAdminPassword}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Link Entity to Contacts No token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "02cf2a45-6471-4bb2-b248-e4c386073d3f",
+								"exec": [
+									"//confirm that request returns a success code of 401",
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"contacts\": [\n    {\n      \"id\": \"{{firstContactId}}\"\n    },\n    {\n      \"id\": \"{{secondContactId}}\",\n      \"title\": \"Owner\"\n    }\n  ]\n}\n\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/entity/link/{{firstEntityId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"entity",
+								"link",
+								"{{firstEntityId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Link Entity to Contacts Bad token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cd9946bd-9e65-47e6-b1ad-af188e411c90",
+								"exec": [
+									"//confirm that request returns a success code of 401",
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{badToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"contacts\": [\n    {\n      \"id\": \"{{firstContactId}}\"\n    },\n    {\n      \"id\": \"{{secondContactId}}\",\n      \"title\": \"Owner\"\n    }\n  ]\n}\n\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/entity/link/{{firstEntityId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"entity",
+								"link",
+								"{{firstEntityId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Link Entity to Contacts Contact Does not Exist",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "07315f00-1bca-4183-80f7-d1b095739916",
+								"exec": [
+									"//confirm that request returns a success code of 500",
+									"pm.test(\"Status code is 500\", function () {",
+									"    pm.response.to.have.status(500);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"contacts\": [\n    {\n      \"id\": \"{{firstEntityId}}\"\n    },\n    {\n      \"id\": \"{{secondContactId}}\",\n      \"title\": \"Owner\"\n    }\n  ]\n}\n\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/entity/link/{{firstEntityId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"entity",
+								"link",
+								"{{firstEntityId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Link Entity to Contacts Entity Does not Exist",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1fc77da1-ff5e-4e47-89ec-b24dfc4a5216",
+								"exec": [
+									"//confirm that request returns a success code of 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"contacts\": [\n    {\n      \"id\": \"{{firstContactId}}\"\n    },\n    {\n      \"id\": \"{{secondContactId}}\",\n      \"title\": \"Owner\"\n    }\n  ]\n}\n\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/entity/link/{{firstContactId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"entity",
+								"link",
+								"{{firstContactId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Link Entity to Contacts Bad Format",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d14afa06-7ca9-4d24-aa80-525a87ae1dde",
+								"exec": [
+									"//confirm that request returns a success code of 503",
+									"pm.test(\"Status code is 503\", function () {",
+									"    pm.response.to.have.status(503);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"contacts\": [\n    {\n      \"id\": \"{{firstContactId}}\"\n    },\n    {\n      \"id\": \"{{secondContactId}}\",,\n      \"title\": \"Owner\"\n    }\n  ]\n}\n\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/entity/link/{{firstEntityId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"entity",
+								"link",
+								"{{firstEntityId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "These calls are exampled on how to create relationships between contacts and entities.  These are put in their own folder in postman as they two sample calls require that Get All Contacts and Get All Entities have already been run.",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "a7d99847-031d-440e-87d4-cd17de40028b",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "334b8609-96e9-4585-9e71-8dce853d030d",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "ResponseCheck csv",
+			"item": [
+				{
+					"name": "Contact CSV No token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ecd52e18-d2d5-4ffe-8f53-caf000d0119c",
+								"exec": [
+									"//confirm that request returns a success code of 401",
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/csv/Contact",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"csv",
+								"Contact"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "EntityContact CSV Bad token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "98221d89-d770-4603-a3e1-1ac4976224dc",
+								"exec": [
+									"//confirm that request returns a success code of 401",
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{badToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/csv/Contact",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"csv",
+								"Contact"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CSV Invalid Option",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "235d38ca-0ad1-4594-9a3e-c41be8ebe995",
+								"exec": [
+									"//confirm that request returns a success code of 422",
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/csv/EntityBad",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"csv",
+								"EntityBad"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "558b39ed-44f5-4ff2-87b9-a674d3105168",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "1e812751-af5e-4f34-9373-6a024fca33c8",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -1256,7 +5722,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "ad699e86-0ff1-48e2-96aa-a339d48e14a1",
+						"id": "b9e22f89-a56f-4584-b1e6-477c4d5eafd2",
 						"exec": [
 							"//confirm that request returns a success code of 200",
 							"pm.test(\"Status code is 200\", function () {",
@@ -1300,7 +5766,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "3a7ed56b-06c9-4ed2-80df-1e3499f06ecd",
+				"id": "1c7bb78d-ff84-413d-bca1-daeb2f76dd20",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -1310,7 +5776,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "eef185d7-4e91-4ea5-b251-1383ee21ef28",
+				"id": "910af051-c569-49ad-90d1-0b42202aac3c",
 				"type": "text/javascript",
 				"exec": [
 					""
