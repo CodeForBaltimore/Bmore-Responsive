@@ -5,7 +5,7 @@ import utils from '../utils';
 import email from '../email';
 
 const router = new Router();
-const loginLimiter = rateLimit({
+const loginLimiter = (process.env.NODE_ENV !== 'production') ? '' : rateLimit({
 	windowMs: 60 * 60 * 1000,
 	max: 5,
 	message: "Too many login attempts for this IP. Please try again later."
