@@ -1,4 +1,18 @@
 site_name: Bmore-Responsive Wiki
 
+nav:
+  - 'Home': 'index.md'
+  - 'Users Guide':
+    - 'Quick Start - Less than 10 min': 'QuickStart.md'
+    - 'Slow Start - Advanced Config': 'SlowStart.md'
+    - 'How to Use': 'HowToUse.md'
+  - 'Developers Guide':
+    - 'Developer Intro': 'DevIntro.md'
+    - 'Technical Specification': 'TECH_SPEC.md'
+    - 'How to Contribute': 'HowToContribute.md'
+  - 'Temp Stuff - To Be Removed from Wiki Menu':
+    - 'Homeless Content': 'scratch.md'
+    - 'Repo Primary README': 'https://github.com/CodeForBaltimore/Bmore-Responsive/blob/master/README.md'
+
 theme:
     name: readthedocs
