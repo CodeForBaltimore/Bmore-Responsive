@@ -31,6 +31,7 @@ if (process.env.NODE_ENV === 'production') {
 const sequelize = new Sequelize(
 	dbUrl,
 	{
+		logging: false,
 		dialect: 'postgres',
 		dialectOptions: dialectOptions
 	}
