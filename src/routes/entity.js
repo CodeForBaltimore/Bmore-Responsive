@@ -53,7 +53,7 @@ router.post('/', async (req, res) => {
 	let code;
 	let message;
 	try {
-		if (req.body.name !== undefined) {
+		if (req.body.name !== undefined && req.body.name !== '') {
 			let { name, address, phone, email, checkIn, contacts } = req.body;
 
 			if (!checkIn) {
