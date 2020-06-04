@@ -9,6 +9,10 @@ describe('Utils Tests', () => {
         expect(utils.formatTime(1)).to.equal('00:00:01');
         done();
     });
+    it('should return a role', async () => {
+        const e = await utils.loadCasbin();
+        assert.isNotNull(await e.getRolesForUser('homer.simpson@sfpp.com'),'returns roles')
+    });
 });
 
 describe('Utils Login Tests', () => {

@@ -35,9 +35,9 @@ const formatTime = seconds => {
  * @returns {Object}
  */
 const loadCasbin = async () => {
-	let dialectOptions;
-	if (process.env.NODE_ENV === 'production') {
-		dialectOptions = {
+	const dialectOptions = (process.env.NODE_ENV === 'production') ?
+		{
+			logging: false,
 			ssl: {
 				rejectUnauthorized: true,
 				ca: [rdsCa],
@@ -48,8 +48,7 @@ const loadCasbin = async () => {
 					}
 				}
 			}
-		};
-	}
+		} : { logging: false };
 	const a = await SequelizeAdapter.newAdapter(
 		dbUrl(),
 		{
@@ -78,7 +77,6 @@ const validateToken = async req => {
 	if (req.headers.token) {
 		try {
 			const decoded = jwt.verify(req.headers.token, process.env.JWT_KEY);
-			console.log(decoded)
 			const now = new Date();
 			if (now.getTime() < decoded.exp * 1000) {
 				const user = (decoded.type === 'contact') ? await req.context.models.Contact.findById(decoded.userId) : await req.context.models.User.findByPk(decoded.userId);
@@ -118,9 +116,9 @@ const validateRoles = async (req) => {
  * @param {*} res the response object
  * @param {*} next the next handler in the chain
  */
-const authMiddleware = async (req, res, next) => { 
+const authMiddleware = async (req, res, next) => {
 	let authed = false;
-	
+
 	if (process.env.BYPASS_LOGIN) {
 		authed = process.env.BYPASS_LOGIN;
 	} else {
@@ -128,7 +126,7 @@ const authMiddleware = async (req, res, next) => {
 		if (authed) {
 			authed = await validateRoles(req);
 		}
-	} 
+	}
 
 	if (authed) {
 		next();
@@ -183,9 +181,9 @@ const encryptPassword = (password, salt) => {
  */
 const getToken = async (userId, email, type, expiresIn = '1d') => {
 	const token = jwt.sign(
-		{userId, email, type},
+		{ userId, email, type },
 		process.env.JWT_KEY,
-		{expiresIn}
+		{ expiresIn }
 	);
 	return token;
 };
@@ -214,13 +212,13 @@ const validateEmails = async emails => {
  */
 const validatePassword = pass => {
 	const options = {
-		uppercase    : 1,  // A through Z
-		lowercase    : 1,  // a through z
-		special      : 1,  // ! @ # $ & *
-		digit        : 1,  // 0 through 9
-		min          : 8,  // minumum number of characters
+		uppercase: 1,  // A through Z
+		lowercase: 1,  // a through z
+		special: 1,  // ! @ # $ & *
+		digit: 1,  // 0 through 9
+		min: 8,  // minumum number of characters
 	}
-
+	console.log(complexity.check(pass, options))
 	return complexity.check(pass, options)
 }
 

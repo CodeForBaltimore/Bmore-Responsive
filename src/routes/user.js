@@ -147,6 +147,7 @@ router.post('/', utils.authMiddleware, async (req, res) => {
 	let code;
 	let message;
 	try {
+		console.log(req.body.password)
 		if (validator.isEmail(req.body.email) && utils.validatePassword(req.body.password)) {
 			const { email, password, roles } = req.body;
 			const user = await req.context.models.User.create({ email: email.toLowerCase(), password });
