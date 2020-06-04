@@ -6,22 +6,22 @@ An API to drive disaster and emergency response systems.
 <!-- TOC -->
 
 - [Bmore Responsive](#bmore-responsive)
-    - [Documentation](#documentation)
-        - [API Spec](#api-spec)
-        - [Database Documentation](#database-documentation)
-        - [Infrastructure and Deployment](#infrastructure-and-deployment)
+  - [Documentation](#documentation)
+    - [API Spec](#api-spec)
+    - [Database Documentation](#database-documentation)
+    - [Infrastructure and Deployment](#infrastructure-and-deployment)
 - [Setup](#setup)
-    - [Node and Express setup](#node-and-express-setup)
-    - [Environment variables](#environment-variables)
-        - [Example .env](#example-env)
-    - [PostgreSQL](#postgresql)
-        - [Sequelize](#sequelize)
-    - [Docker](#docker)
-        - [docker-compose](#docker-compose)
+  - [Node and Express setup](#node-and-express-setup)
+  - [Environment variables](#environment-variables)
+    - [Example .env](#example-env)
+  - [PostgreSQL](#postgresql)
+    - [Sequelize](#sequelize)
+  - [Docker](#docker)
+    - [docker-compose](#docker-compose)
 - [Using this product](#using-this-product)
-    - [Testing](#testing)
+  - [Testing](#testing)
 - [Sources and Links](#sources-and-links)
-    - [Contributors ✨](#contributors-)
+  - [Contributors ✨](#contributors-)
 
 <!-- /TOC -->
 
@@ -86,6 +86,8 @@ The various variables are defined as follows:
 - `SMTP_PORT` = _optional_ port number for the SMTP server used to send notification emails
 - `SMTP_USER` = _optional_ username for the SMTP server used to send notification emails
 - `SMTP_PASSWORD` = _optional_ password for the SMTP server used to send notification emails
+- `URL` = _optional_ the URL for your front-end application
+- `TEST_EMAIL` = _optional_ the email you wish to send tests to
 - `BYPASS_LOGIN` = _optional_  Allows you to hit the endpoints locally without having to login. If you wish to bypass the login process during local dev, set this to `true`.
 
 _We do not recommend using the default options for PostgreSQL. The above values are provided as examples. It is more secure to create your own credentials._
@@ -104,6 +106,8 @@ JWT_KEY=test123
 DATABASE_URL=postgres://postgres:postgres@localhost:5432/postgres
 DATABASE_SCHEMA=public
 BYPASS_LOGIN=true
+URL=http://localhost:8080
+TEST_EMAIL=jason@codeforbaltimore.org
 ```
 
 ## PostgreSQL
