@@ -6,7 +6,7 @@
   } ],
   "info" : {
     "description" : "An emergency response and contact management API.",
-    "version" : "1.1.2",
+    "version" : "1.2.0",
     "title" : "Bmore Responsive",
     "contact" : {
       "email" : "hello@codeforbaltimore.org"
@@ -510,7 +510,7 @@
             "application/json" : {
               "schema" : {
                 "type" : "object",
-                "required" : [ "name" ],
+                "required" : [ "name", "type" ],
                 "properties" : {
                   "name" : {
                     "type" : "string",
@@ -543,63 +543,6 @@
                         "example" : "12345"
                       }
                     }
-                  },
-                  "checkIn" : {
-                    "type" : "array",
-                    "items" : {
-                      "type" : "object",
-                      "properties" : {
-                        "updatedAt" : {
-                          "type" : "string",
-                          "format" : "date-time",
-                          "example" : "2020-01-21T13:45:52.348Z"
-                        },
-                        "status" : {
-                          "type" : "string",
-                          "example" : "Safe"
-                        },
-                        "UserId" : {
-                          "type" : "string",
-                          "format" : "uuid",
-                          "example" : "4d9721a2-07f8-45ac-9570-682f4774cfa5"
-                        },
-                        "ContactId" : {
-                          "type" : "string",
-                          "format" : "uuid",
-                          "example" : "abafa852-ecd0-4d57-9083-85f4dfd9c402"
-                        },
-                        "questionnaire" : {
-                          "type" : "object",
-                          "properties" : {
-                            "id" : {
-                              "type" : "number",
-                              "example" : 1
-                            },
-                            "question1" : {
-                              "type" : "string",
-                              "example" : "They have left handed can openers"
-                            },
-                            "question2" : {
-                              "type" : "boolean",
-                              "example" : false
-                            }
-                          }
-                        },
-                        "notes" : {
-                          "type" : "string",
-                          "example" : "Everything is okilly dokilly"
-                        }
-                      }
-                    }
-                  },
-                  "contacts" : {
-                    "type" : "string",
-                    "example" : [ {
-                      "id" : ""
-                    }, {
-                      "id" : "",
-                      "title" : ""
-                    } ]
                   },
                   "description" : {
                     "type" : "string",
@@ -752,15 +695,6 @@
                         }
                       }
                     }
-                  },
-                  "contacts" : {
-                    "type" : "string",
-                    "example" : [ {
-                      "id" : ""
-                    }, {
-                      "id" : "",
-                      "title" : ""
-                    } ]
                   },
                   "description" : {
                     "type" : "string",
@@ -1487,7 +1421,7 @@
       "get" : {
         "tags" : [ "csv" ],
         "summary" : "returns a comma separated list of the model_type requested",
-        "description" : "By passing the model_type, you are returned a comma separated list of that model_type.  Valid model types are Entity, EntityContact, Contact, User, UserRole.",
+        "description" : "By passing the model_type, you are returned a comma separated list of that model_type.  Valid model types are Entity, EntityContact, and Contact.",
         "parameters" : [ {
           "in" : "path",
           "name" : "model_type",
@@ -1495,7 +1429,7 @@
             "type" : "string"
           },
           "required" : true,
-          "description" : "type of model you want a csv data dump for.  Options are Contact, Entity, EntityContact, User, and UserRole."
+          "description" : "type of model you want a csv data dump for.  Options are Contact, Entity, and EntityContact."
         }, {
           "in" : "header",
           "name" : "token",
@@ -1686,14 +1620,6 @@
                   "example" : "Everything is okilly dokilly"
                 }
               }
-            }
-          },
-          "contacts" : {
-            "type" : "array",
-            "items" : {
-              "type" : "object",
-              "properties" : null,
-              "$ref" : "#/components/schemas/ContactItem"
             }
           },
           "description" : {

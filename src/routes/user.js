@@ -37,6 +37,7 @@ router.post('/login', loginLimiter, async (req, res) => {
 	return utils.response(res, code, message);
 });
 
+// Password reset
 router.post('/reset/:email', loginLimiter, async(req, res) => {
 	let code;
 	let message;
@@ -146,7 +147,7 @@ router.post('/', utils.authMiddleware, async (req, res) => {
 	let code;
 	let message;
 	try {
-		if (validator.isEmail(req.body.email)) {
+		if (validator.isEmail(req.body.email) && utils.validatePassword(req.body.password)) {
 			const { email, password, roles } = req.body;
 			const user = await req.context.models.User.create({ email: email.toLowerCase(), password });
 
@@ -192,7 +193,7 @@ router.put('/', utils.authMiddleware, async (req, res) => {
 				const roles = await e.getRolesForUser(req.context.me.email);
 	
 				if (password) {
-					if (req.context.me.email === email || roles.includes('admin')) {
+					if (req.context.me.email === email || roles.includes('admin') && utils.validatePassword(password)) {
 						user.password = password;
 					}
 				}

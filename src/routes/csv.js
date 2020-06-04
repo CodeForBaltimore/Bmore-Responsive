@@ -12,9 +12,10 @@ router.get('/:model_type', async (req, res) => {
     let message;
     const modelType = req.params.model_type;
     try {
-        if(req.context.models.hasOwnProperty(modelType)){
+        if(req.context.models.hasOwnProperty(modelType) && modelType !== 'User' && modelType !== 'UserRole'){
             //todo add filtering
             const results = await req.context.models[modelType].findAll({raw:true});
+            console.log(results)
 
             const processedResults = await utils.processResults(results, modelType);
 
