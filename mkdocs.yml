@@ -1,0 +1,7 @@
+site_name: Project Template
+theme: 
+    name: readthedocs
+plugins:
+    - swagger
+extra:
+    swagger_url: 'https://raw.githubusercontent.com/CodeForBaltimore/Bmore-Responsive/master/swagger.json'
