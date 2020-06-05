@@ -187,7 +187,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/c-w-allen"><img src="https://avatars0.githubusercontent.com/u/64177457?v=4" width="100px;" alt=""/><br /><sub><b>c-w-allen</b></sub></a><br /><a href="https://github.com/CodeForBaltimore/Bmore-Responsive/commits?author=c-w-allen" title="Code">💻</a></td>
   </tr>
   <tr>
-    <td align="center"><a href="https://github.com/msmith125"><img src="https://avatars2.githubusercontent.com/u/58228205?v=4" width="100px;" alt=""/><br /><sub><b>msmith125</b></sub></a><br /><a href="https://github.com/CodeForBaltimore/Bmore-Responsive/commits?author=msmith125" title="Tests">⚠️</a></td>
+    <td align="center"><a href="https://github.com/msmith125"><img src="https://avatars2.githubusercontent.com/u/58228205?v=4" width="100px;" alt=""/><br /><sub><b>msmith125</b></sub></a><br /><a href="https://github.com/CodeForBaltimore/Bmore-Responsive/commits?author=msmith125" title="Tests">⚠️</a> <a href="https://github.com/CodeForBaltimore/Bmore-Responsive/pulls?q=is%3Apr+reviewed-by%3Amsmith125" title="Reviewed Pull Requests">👀</a></td>
   </tr>
 </table>
 
