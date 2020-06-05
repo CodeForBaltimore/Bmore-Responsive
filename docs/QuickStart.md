@@ -1,6 +1,6 @@
 # Quick Start
 
-This brief guide will get you up and running your own copy of Bmore Responsive with sample data so you can get familiar with the solution by using it directly. The approach below is just one way to get Bmore Responsive running.  For other approaches and more detail, please see the [Slow Start Guide](SlowStart.md) section of the Users' Guide.
+This brief guide will get you up and running your own copy of Bmore Responsive with sample data so you can get familiar with the solution by using it directly. The approach below is just one way to get Bmore Responsive running.  For other approaches and more detail on configuration, please see the [Slow Start Guide](SlowStart.md) section of the Users' Guide.
 
 
 ## Step 0 - Download code from github

@@ -15,7 +15,7 @@ Bmore-Responsive provides the following primary features via a secure REST API:
 - User account and role management to enable secure authentication and authorization
 - Export of any data via CSV
 
-
+<<TODO: Conclude with reference to QuickStart and/or Wiki>>
 
 
 
