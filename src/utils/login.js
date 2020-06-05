@@ -7,7 +7,7 @@ import app from "..";
 class Login {
     constructor() {
         this.role = randomWords();
-        this.user = { email: `${randomWords()}@test.test`, password: randomWords(), roles: [this.role] };
+        this.user = { email: `${randomWords()}@test.test`, password: `Abcdefg42!`, roles: [this.role] };
         this.methods = [
             `GET`,
             `POST`,

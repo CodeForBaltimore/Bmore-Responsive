@@ -53,8 +53,8 @@ router.post('/', async (req, res) => {
 	let code;
 	let message;
 	try {
-		if (req.body.name !== undefined && req.body.name !== '') {
-			let { name, address, phone, email, checkIn, contacts } = req.body;
+		if (req.body.name !== undefined && req.body.name !== '' && req.body.type !== undefined && req.body.type !== '') {
+			let { name, type, address, phone, email, checkIn, contacts } = req.body;
 
 			if (!checkIn) {
 				checkIn = {
@@ -65,7 +65,7 @@ router.post('/', async (req, res) => {
 				}
 			}
 
-			const entity = await req.context.models.Entity.create({ name, address, email, phone, checkIn });
+			const entity = await req.context.models.Entity.create({ name, type, address, email, phone, checkIn });
 			if (contacts) {
 				for(const contact of contacts) {
 					const ec = {

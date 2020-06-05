@@ -48,6 +48,14 @@ const entityContact = (sequelize, DataTypes) => {
         }
     }
 
+    EntityContact.findByEntityId = async (entityId) => {
+        const entries = await EntityContact.findAll({
+            where: {entityId}
+        });
+
+        return entries;
+    }
+
     return EntityContact;
 };
 
