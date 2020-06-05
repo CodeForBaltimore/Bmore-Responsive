@@ -1233,22 +1233,6 @@
               "schema" : {
                 "type" : "object",
                 "properties" : {
-                  "entityIds" : {
-                    "type" : "array",
-                    "items" : {
-                      "type" : "string",
-                      "format" : "uuid",
-                      "example" : "05533f95-b440-4f9d-876d-653636dce0c8"
-                    }
-                  },
-                  "contactIds" : {
-                    "type" : "array",
-                    "items" : {
-                      "type" : "string",
-                      "format" : "uuid",
-                      "example" : "05533f95-b440-4f9d-876d-653636dce0c8"
-                    }
-                  },
                   "relationshipTitle" : {
                     "type" : "array",
                     "items" : {

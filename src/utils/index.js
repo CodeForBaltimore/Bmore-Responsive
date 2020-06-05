@@ -50,11 +50,11 @@ const loadCasbin = async () => {
 			}
 		} : { logging: false };
 	const a = await SequelizeAdapter.newAdapter(
-		dbUrl(),
 		{
+			...dbUrl(),
 			logging: false,
 			dialect: 'postgres',
-			dialectOptions: dialectOptions
+			dialectOptions
 		}
 	);
 
