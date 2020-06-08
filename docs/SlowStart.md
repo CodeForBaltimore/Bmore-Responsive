@@ -20,11 +20,30 @@ _We do not recommend using the default options for PostgreSQL. The above values 
 
 ## Deploying to AWS
 
-If you want to deploy to AWS, we have included a `terraform` option. For more information on how to use this feature, please see the [Terraform README](../terraform/README.md).  <TODO: Fix this link or move content from README to here>
+If you want to deploy to AWS, we have included a `terraform` option. For more information on how to use this feature, please see the README in `/terraform`.
 
-## Running in Docker 
+<TODO: Consider migrating terraform docs to be here or do some sort of INCLUDE to reuse the content>  
 
-Here's how to run Bmore Responsive within a Docker container. <TODO: This sections needs some attention>
+## Running in Docker
+
+You can build and run the application in Docker locally by running the following commands:
+```
+docker build -t bmoreres .
+docker run -d -p 3000:3000 --env-file=.env bmoreres
+```
+Note that `DATABASE_URL` host location will be different depending on what OS you're using. On Mac it is `docker.for.mac.host.internal` and on Windows it is `docker.for.win.host.internal` if using `docker-compose` it will be `db`. Please see [Example .env](#example-env) for more information.
+
+Alternatively you can manually set the environment variables and not use a `.env` file by setting the following vars:
+```
+-e NODE_ENV=development
+-e PORT=3000
+-e JWT_KEY=<your JWT phrase>
+-e DATABASE_URL=<your connection string>
+-e DATABASE_DATABASE_SCHEMA=<your database schema>
+```
+
+### docker-compose
+To use the `docker-compose.yml` file included you will first need to set [environment variables](#environment-variables). You **MUST** set your `DATABASE_HOST` to `db` to use the `docker-compose` solution. It is not recommended to use `docker-compose` for any reason other than to test a solution for a separate front-end component.
 
 **Warning**: If you are running Docker Toolbox instead of Docker Desktop (likely meaning you are running Windows 10 Home, not Professional) you will need to change your `.env` to reflect Docker running on a VM:
 

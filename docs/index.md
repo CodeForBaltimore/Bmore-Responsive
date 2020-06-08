@@ -8,6 +8,10 @@ A simple, flexible API to support emergency response coordination.  Sample use c
 - identifying hospitals lacking power during a natural disaster
 - assuring safety of hikers in a national park during a snow storm
 
+This system will make use of digital services and modern methodologies to automate and simplify parts of the check-in process
+to help the municipality prioritize its call/check-in list and response plan. Additionally, the system will validate contact
+information regularly during non-emergency times to ensure the municipality has the most up-to-date information for each entity.
+
 ## What does it do?
 
 Bmore-Responsive provides the following primary features via a secure REST API:

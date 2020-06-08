@@ -19,18 +19,7 @@ The Bmore Responsive API provides security by limiting use of nearly all feature
 
 _Note: If you have used the db-seed script, you'll already have a user account created that will enable you to login.  This default login is username `homer.simpson@sfpp.com` and password `donuts`._
 
-## Authorization
-
-The Bmore Responsive API supports authorization by restricting access by role and/or user.
-
-
-Insert Default permissions table
-
-
-
-## Access management
-
-
+<TODO: Add subsections to describe common tasks like adding user, adding role, setting/changing access, adding entity, relating contact to entity, etc...>
 
 
 ## Seed and re-seed the database
