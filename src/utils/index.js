@@ -3,6 +3,8 @@
 import crypto from 'crypto';
 import validator from 'validator';
 import fs from 'fs';
+import jwt from 'jsonwebtoken';
+import complexity from 'complexity'
 import { newEnforcer } from 'casbin';
 import { SequelizeAdapter } from 'casbin-sequelize-adapter';
 
@@ -33,9 +35,9 @@ const formatTime = seconds => {
  * @returns {Object}
  */
 const loadCasbin = async () => {
-	let dialectOptions;
-	if (process.env.NODE_ENV === 'production') {
-		dialectOptions = {
+	const dialectOptions = (process.env.NODE_ENV === 'production') ?
+		{
+			logging: false,
 			ssl: {
 				rejectUnauthorized: true,
 				ca: [rdsCa],
@@ -46,13 +48,13 @@ const loadCasbin = async () => {
 					}
 				}
 			}
-		};
-	}
+		} : { logging: false };
 	const a = await SequelizeAdapter.newAdapter(
-		dbUrl(),
 		{
+			...dbUrl(),
+			logging: false,
 			dialect: 'postgres',
-			dialectOptions: dialectOptions
+			dialectOptions
 		}
 	);
 
@@ -60,7 +62,7 @@ const loadCasbin = async () => {
 }
 
 /**
- * Validates a user login token.
+ * Checks a user login token.
  *
  * This validates a user token. If the token is invalid the request will immediately be rejected back with a 401.
  *
@@ -69,13 +71,24 @@ const loadCasbin = async () => {
  *
  * @return {Boolean}
  */
-const validateToken = async (req) => {
-	const authorized = await req.context.models.User.validateToken(req.headers.token);
-	if (authorized) {
-		req.context.me = authorized; // add user object to context
-		return true;
-	}
 
+const validateToken = async req => {
+	/** @todo check if it is a token at all */
+	if (req.headers.token) {
+		try {
+			const decoded = jwt.verify(req.headers.token, process.env.JWT_KEY);
+			const now = new Date();
+			if (now.getTime() < decoded.exp * 1000) {
+				const user = (decoded.type === 'contact') ? await req.context.models.Contact.findById(decoded.userId) : await req.context.models.User.findByPk(decoded.userId);
+				if (user) {
+					req.context.me = user;
+					return true;
+				}
+			}
+		} catch (e) {
+			console.error(e);
+		}
+	}
 	return false;
 };
 
@@ -90,7 +103,9 @@ const validateRoles = async (req) => {
 	const e = await loadCasbin();
 	const { originalUrl: path, method } = req;
 
-	const isAllowed = await e.enforce(req.context.me.email, path, method);
+	/** @todo refactor this... */
+	const email = (req.context.me.email[0].address !== undefined) ? req.context.me.email[0].address : req.context.me.email;
+	const isAllowed = await e.enforce(email, path, method);
 	return isAllowed;
 }
 
@@ -101,9 +116,9 @@ const validateRoles = async (req) => {
  * @param {*} res the response object
  * @param {*} next the next handler in the chain
  */
-const authMiddleware = async (req, res, next) => { 
+const authMiddleware = async (req, res, next) => {
 	let authed = false;
-	
+
 	if (process.env.BYPASS_LOGIN) {
 		authed = process.env.BYPASS_LOGIN;
 	} else {
@@ -111,7 +126,7 @@ const authMiddleware = async (req, res, next) => {
 		if (authed) {
 			authed = await validateRoles(req);
 		}
-	} 
+	}
 
 	if (authed) {
 		next();
@@ -156,6 +171,24 @@ const encryptPassword = (password, salt) => {
 };
 
 /**
+ * Generates a JWT
+ * 
+ * @param {int} userId 
+ * @param {String} email 
+ * @param {String} expiresIn 
+ * 
+ * @returns {String}
+ */
+const getToken = async (userId, email, type, expiresIn = '1d') => {
+	const token = jwt.sign(
+		{ userId, email, type },
+		process.env.JWT_KEY,
+		{ expiresIn }
+	);
+	return token;
+};
+
+/**
  * Checks array of emails for validitiy
  * 
  * @param {Array} emails
@@ -168,6 +201,25 @@ const validateEmails = async emails => {
 	}
 
 	return true;
+}
+
+/**
+ * Checks the user's new password for complexity
+ * 
+ * @param {String} pass 
+ * 
+ * @return {Boolean}
+ */
+const validatePassword = pass => {
+	const options = {
+		uppercase: 1,  // A through Z
+		lowercase: 1,  // a through z
+		special: 1,  // ! @ # $ & *
+		digit: 1,  // 0 through 9
+		min: 8,  // minumum number of characters
+	}
+	console.log(complexity.check(pass, options))
+	return complexity.check(pass, options)
 }
 
 /**
@@ -209,7 +261,9 @@ export default {
 	authMiddleware,
 	response,
 	encryptPassword,
+	getToken,
 	validateEmails,
+	validatePassword,
 	processResults,
 	dbUrl
 };

@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "c0693306-4e20-4fda-b114-cb59b9057a5c",
+		"_postman_id": "3be53e97-52ac-405f-b40f-23073f619002",
 		"name": "Bmore-Responsive",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -14,7 +14,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "19989e9e-11ee-476a-b986-5be021e89a45",
+								"id": "eefedb7b-ba34-4e05-8cc4-550978d36b42",
 								"exec": [
 									"//grab the token and save it into \"token\" env variable",
 									"pm.environment.set(\"token\",pm.response.text());",
@@ -68,7 +68,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "19a429d8-ad47-4502-ab20-9fda4c54ea87",
+								"id": "98e1706d-e8ba-4f25-9b3a-28e3477a3bb2",
 								"exec": [
 									"// grab the id of the first contatc returned for use in subsequent transactions",
 									"var jsonData = pm.response.json();",
@@ -110,7 +110,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "3908e851-991d-4e9a-8255-ba21abdef273",
+								"id": "bb50b172-b46b-4767-b477-cb8adf0bdda6",
 								"exec": [
 									"//confirm that request returns a success code of 200",
 									"pm.test(\"Status code is 200\", function () {",
@@ -156,7 +156,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "e6385331-050e-4ae5-94ff-3388f161bb55",
+								"id": "e7b60b04-969a-4216-9e43-f80967078377",
 								"exec": [
 									"//get the email of the new user from the request and save it to env variable",
 									"//this will allow deletion of this in the Delete transaction",
@@ -214,7 +214,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "9d93e390-dc13-42a1-8b78-c683b6c31e58",
+								"id": "d5de1aa5-dbc8-4d35-a450-786aa0eb23d4",
 								"exec": [
 									"//confirm that request returns a success code of 200",
 									"pm.test(\"Status code is 200\", function () {",
@@ -261,7 +261,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "13bf75ad-caf0-4fa9-afd7-f6d2a23dae15",
+								"id": "2498d8d3-1234-4047-88f4-6aee2605d8e5",
 								"exec": [
 									"//confirm that request returns a success code of 200",
 									"pm.test(\"Status code is 200\", function () {",
@@ -306,7 +306,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "822834c8-3772-4bd1-9ec8-65e3f441455d",
+								"id": "df88b7d3-46c0-4a2b-942d-8b5ea908d3b2",
 								"exec": [
 									"//confirm that request returns a success code of 200",
 									"pm.test(\"Status code is 200\", function () {",
@@ -344,7 +344,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "041e221d-c931-4b22-884a-73fefd1c1b80",
+								"id": "c79b4c2d-6a47-4214-923c-27f3ea5659e6",
 								"exec": [
 									"//confirm that request returns a success code of 200",
 									"pm.test(\"Status code is 200\", function () {",
@@ -391,7 +391,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "db7d2227-79fe-4dc9-bfee-a97248e53e12",
+								"id": "b66ebdbd-bbce-4b2b-a4e5-853d2c8fae85",
 								"exec": [
 									"//confirm that request returns a success code of 200",
 									"pm.test(\"Status code is 200\", function () {",
@@ -440,7 +440,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "376871ec-6bdf-4315-af89-90886bff9317",
+								"id": "d64ec855-28e6-4eef-983b-e58d2402c451",
 								"exec": [
 									"// grab the id of the first contatc returned for use in subsequent transactions",
 									"var jsonData = pm.response.json();",
@@ -484,7 +484,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "075e31f9-3255-460a-9fa4-b112db37f39a",
+								"id": "7d3b66de-29cb-4a97-9937-8042d23ec44b",
 								"exec": [
 									"//confirm that request returns a success code of 200",
 									"pm.test(\"Status code is 200\", function () {",
@@ -523,7 +523,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "fa562b7d-4783-4cbb-a06b-e7b774023591",
+								"id": "21bec72c-9fe8-4afc-b11d-cd837f3f9a36",
 								"exec": [
 									"//get the 36 character id of the new contact and save it to env variable",
 									"//this will allow deletion of this in the Delete transaction",
@@ -569,12 +569,64 @@
 					"response": []
 				},
 				{
+					"name": "Contact Send",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b38d3eef-47f0-4f9e-a710-d82c4fef5492",
+								"exec": [
+									"//get the 36 character id of the new contact and save it to env variable",
+									"//this will allow deletion of this in the Delete transaction",
+									"pm.environment.set(\"newContactId\", pm.response.text().slice(0,36));",
+									"",
+									"//confirm that request returns a success code of 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"relationshipTitle\": [\"Primary Contact\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/contact/send",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"contact",
+								"send"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Update Contact",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
-								"id": "6f1765bb-101a-40d0-904f-37af9aa96558",
+								"id": "fc1c434b-cc59-4e91-a823-6860602bd128",
 								"exec": [
 									"//confirm that request returns a success code of 200",
 									"pm.test(\"Status code is 200\", function () {",
@@ -621,7 +673,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "7e59699f-e52f-47ac-b2aa-05fedf731131",
+								"id": "788ddd37-f714-440f-9103-97fecceec6af",
 								"exec": [
 									"//confirm that request returns a success code of 200",
 									"pm.test(\"Status code is 200\", function () {",
@@ -660,7 +712,7 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "e50ba8bc-02c6-40ba-ae51-57fa584d8aee",
+						"id": "a9a6fb59-1c5c-4d20-b3ca-9c3d84a3f4dc",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -670,7 +722,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "194a84e5-96bd-4efa-afa6-a7f770d99d85",
+						"id": "50e1126f-2406-420f-b6a1-96e43971b85f",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -689,7 +741,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "64a0b1b0-b208-4ad5-a1cd-2bed78440b07",
+								"id": "d5a5284c-53a9-43ca-ba8d-832c9c98be4d",
 								"exec": [
 									"// grab the id of the first two entities returned for use in subsequent transactions",
 									"var jsonData = pm.response.json();",
@@ -732,7 +784,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "126b51f5-5c6a-40eb-95b6-b0316f2e2e2e",
+								"id": "fe787d2f-da5e-4cef-bbbd-9b0104bb9dfc",
 								"exec": [
 									"//confirm that request returns a success code of 200",
 									"pm.test(\"Status code is 200\", function () {",
@@ -771,7 +823,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "76ea05ba-36d2-45b2-acfa-425f1029860d",
+								"id": "4ff4b107-c439-4432-86b6-b0b5e79ee991",
 								"exec": [
 									"//get the 36 character id of the new entity and save it to env variable",
 									"//this will allow deletion of this in the Delete transaction",
@@ -822,7 +874,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "2393125b-9337-436e-ad40-816eed71e98a",
+								"id": "8cbc3938-6cf0-4faa-8dac-c899288cd72f",
 								"exec": [
 									"//confirm that request returns a success code of 200",
 									"pm.test(\"Status code is 200\", function () {",
@@ -869,7 +921,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "0c54a785-ee1e-4cb0-b9bb-b290937b50ff",
+								"id": "6ba7b41b-83bf-457e-939c-ec65c809ebc9",
 								"exec": [
 									"//confirm that request returns a success code of 200",
 									"pm.test(\"Status code is 200\", function () {",
@@ -920,7 +972,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "1831285f-51de-45fb-9a68-e3c281951a44",
+								"id": "c7df8851-5ddf-4567-8caf-16207b1f83f3",
 								"exec": [
 									"//confirm that request returns a success code of 200",
 									"pm.test(\"Status code is 200\", function () {",
@@ -969,7 +1021,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "63c5ec2a-d368-4014-9ffa-2ac4a4bce1a6",
+								"id": "45cb9cec-1aab-4fa8-9851-62138204c03e",
 								"exec": [
 									"//confirm that request returns a success code of 200",
 									"pm.test(\"Status code is 200\", function () {",
@@ -1018,7 +1070,7 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "79b9e2be-9773-4ed5-87d9-46fa27c2d92e",
+						"id": "c5f74aa2-191d-442c-b57f-f6d75fa8b78a",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -1028,7 +1080,134 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "5c697ba8-81eb-487b-99f6-ab624dc9d589",
+						"id": "dab3358a-6e1e-49c5-8177-134315247a9a",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "unlinks",
+			"item": [
+				{
+					"name": "Unlink Contact to Entities",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "339e72dd-0d08-48d0-ab59-7a0cc3b16799",
+								"exec": [
+									"//confirm that request returns a success code of 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"entities\": [\n    {\n      \"id\": \"{{firstEntityId}}\"\n    },\n    {\n      \"id\": \"{{secondEntityId}}\",\n      \"title\": \"Owner\"\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/contact/unlink/{{firstContactId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"contact",
+								"unlink",
+								"{{firstContactId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Unlink Entity to Contacts",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8ec628f0-3fb6-4a0c-88eb-7325dbfb6cfc",
+								"exec": [
+									"//confirm that request returns a success code of 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"contacts\": [\n    {\n      \"id\": \"{{firstContactId}}\"\n    },\n    {\n      \"id\": \"{{secondContactId}}\",\n      \"title\": \"Owner\"\n    }\n  ]\n}\n\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/entity/unlink/{{firstEntityId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"entity",
+								"unlink",
+								"{{firstEntityId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "These calls are exampled on how to create relationships between contacts and entities.  These are put in their own folder in postman as they two sample calls require that Get All Contacts and Get All Entities have already been run.",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "1043a0a5-3f65-4f0c-87b4-5cac16ff9bd7",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "30492179-c737-494a-8db0-97e28436d888",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -1047,7 +1226,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "737b2c37-bff3-45b8-b01a-02fdcca9e012",
+								"id": "21a85667-7ad4-4a68-a2cf-281da224806a",
 								"exec": [
 									"//confirm that request returns a success code of 200",
 									"pm.test(\"Status code is 200\", function () {",
@@ -1093,7 +1272,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "8f8f78ba-eb6f-4c06-9939-7e0e7d2af5af",
+								"id": "8ec4b7b3-1ac7-4edc-b1d5-0d4ba0456e84",
 								"exec": [
 									"//confirm that request returns a success code of 200",
 									"pm.test(\"Status code is 200\", function () {",
@@ -1132,105 +1311,13 @@
 						}
 					},
 					"response": []
-				},
-				{
-					"name": "User CSV",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "5b84cbe0-f036-45bf-b973-f9bf869b5cb8",
-								"exec": [
-									"//confirm that request returns a success code of 200",
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "{{baseUrl}}/csv/User",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"csv",
-								"User"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "UserRole CSV",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "7781e1ff-7c1f-4544-a554-063b098e08bb",
-								"exec": [
-									"//confirm that request returns a success code of 200",
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "{{baseUrl}}/csv/UserRole",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"csv",
-								"UserRole"
-							]
-						}
-					},
-					"response": []
 				}
 			],
 			"event": [
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "63407654-a4a9-4402-9e72-011815893577",
+						"id": "29e2cbbb-c919-45c8-b74e-cc4a77de1a38",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -1240,7 +1327,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "1c17cf82-30be-4bd0-9efb-89e228067f49",
+						"id": "cc457e20-3ed2-4898-9bbb-fb698eccf2d4",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -1256,7 +1343,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "ad699e86-0ff1-48e2-96aa-a339d48e14a1",
+						"id": "7d5b1979-b61c-4d4d-b506-bb880b279875",
 						"exec": [
 							"//confirm that request returns a success code of 200",
 							"pm.test(\"Status code is 200\", function () {",
@@ -1300,7 +1387,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "3a7ed56b-06c9-4ed2-80df-1e3499f06ecd",
+				"id": "79586dee-3afa-4b22-b259-e3e63f4e4e15",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -1310,7 +1397,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "eef185d7-4e91-4ea5-b251-1383ee21ef28",
+				"id": "8a795a8f-64a9-4311-bb01-2b3e0a109f80",
 				"type": "text/javascript",
 				"exec": [
 					""

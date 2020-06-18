@@ -12,6 +12,7 @@ const entity = {
       number: (Math.floor(Math.random() * Math.floor(100000000000))).toString()
     }
   ],
+  type: 'Test',
   email: [
     {
       address: `${randomWords()}@test.test`
@@ -64,7 +65,7 @@ describe('Entity negative tests', () => {
   it('should not create a entity', (done) => {
     request(app)
       .post('/entity')
-      .send({ email: randomWords() })
+      .send({ name: '' })
       .set('Accept', 'application/json')
       .expect('Content-Type', 'text/html; charset=utf-8')
       .expect(422)

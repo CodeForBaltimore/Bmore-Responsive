@@ -5,9 +5,10 @@ import utils from '../utils';
 import email from '../email';
 
 const router = new Router();
+const max = (process.env.NODE_ENV !== 'production') ? 50000 : 5;
 const loginLimiter = rateLimit({
 	windowMs: 60 * 60 * 1000,
-	max: 5,
+	max: max,
 	message: "Too many login attempts for this IP. Please try again later."
 });
 
@@ -36,6 +37,7 @@ router.post('/login', loginLimiter, async (req, res) => {
 	return utils.response(res, code, message);
 });
 
+// Password reset
 router.post('/reset/:email', loginLimiter, async(req, res) => {
 	let code;
 	let message;
@@ -145,7 +147,7 @@ router.post('/', utils.authMiddleware, async (req, res) => {
 	let code;
 	let message;
 	try {
-		if (validator.isEmail(req.body.email)) {
+		if (validator.isEmail(req.body.email) && utils.validatePassword(req.body.password)) {
 			const { email, password, roles } = req.body;
 			const user = await req.context.models.User.create({ email: email.toLowerCase(), password });
 
@@ -174,7 +176,7 @@ router.put('/', utils.authMiddleware, async (req, res) => {
 	let code;
 	let message;
 	try {
-		if (validator.isEmail(req.body.email) && req.body.password !== undefined) {
+		if (validator.isEmail(req.body.email)) {
 			/** @todo add email and phone update options */
 			const { email, password, displayName, phone, attributes } = req.body;
 			const user = await req.context.models.User.findOne({
@@ -186,20 +188,22 @@ router.put('/', utils.authMiddleware, async (req, res) => {
 			
 
 			/** @todo when roles are added make sure only admin or relevant user can change password */
-			const e = await utils.loadCasbin();
-			const roles = await e.getRolesForUser(req.context.me.email);
-
-			if (password) {
-				if (req.context.me.email === email || roles.includes('admin')) {
-					user.password = password;
-				}
-			}
-
-			/** @todo this is half-baked. Once updating users is available through the front-end this should be revisited. */
-			if (roles !== undefined) {
+			if (!process.env.BYPASS_LOGIN) {
 				const e = await utils.loadCasbin();
-				for (const role of roles) {
-					await e.addRoleForUser(email.toLowerCase(), role);
+				const roles = await e.getRolesForUser(req.context.me.email);
+	
+				if (password) {
+					if (req.context.me.email === email || roles.includes('admin') && utils.validatePassword(password)) {
+						user.password = password;
+					}
+				}
+
+				/** @todo this is half-baked. Once updating users is available through the front-end this should be revisited. */
+				if (roles !== undefined) {
+					const e = await utils.loadCasbin();
+					for (const role of roles) {
+						await e.addRoleForUser(email.toLowerCase(), role);
+					}
 				}
 			}
 
@@ -235,6 +239,11 @@ router.delete('/:email', utils.authMiddleware, async (req, res) => {
 					email: req.params.email.toLowerCase()
 				}
 			});
+
+			const e = await utils.loadCasbin();
+			await e.deleteRolesForUser(req.params.email.toLowerCase());
+
+
 			await user.destroy();
 
 			code = 200;

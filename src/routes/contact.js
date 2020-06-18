@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import validator from 'validator';
+import email from '../email';
 import utils from '../utils';
 
 const router = new Router();
@@ -56,7 +57,7 @@ router.post('/', async (req, res) => {
 	let contact;
 	let ec;
 	try {
-		if (req.body.name !== undefined) {
+		if (req.body.name !== undefined && req.body.name !== '') {
 			const { name, phone, email, UserId, entities, attributes } = req.body;
 
 			// Validating emails 
@@ -84,6 +85,54 @@ router.post('/', async (req, res) => {
 		} else {
 			code = 422;
 		}
+	} catch (e) {
+		console.error(e);
+		code = 500;
+	}
+
+	return utils.response(res, code, message);
+});
+
+// Sends emails to contacts based on body
+router.post('/send', async (req, res) => {
+	let code;
+	let message;
+	const emails = [];
+
+	try {
+		/** @todo allow for passing entity and contact arrays */
+		const { entityIds, contactIds, relationshipTitle } = req.body;
+		
+		if (entityIds === undefined && contactIds === undefined) {
+			const whereClause = (relationshipTitle !== undefined) ? {where: {relationshipTitle}} : {};
+			const associations = await req.context.models.EntityContact.findAll(whereClause);
+
+			for (const association of associations) {
+				const contact = await req.context.models.Contact.findById(association.contactId);
+
+				if (contact.email !== null) {
+					const entity = await req.context.models.Entity.findById(association.entityId);
+					// short-lived temporary token that only lasts one hour
+					const temporaryToken = await utils.getToken(contact.id, contact.email[0].address, 'contact');
+
+					emails.push({
+						email: contact.email[0].address,
+						name: contact.name,
+						entityName: entity.name,
+						entityId: association.entityId,
+						relationshipTitle: association.relationshipTitle,
+						token: temporaryToken
+					});
+				}
+			}
+		}
+
+		emails.forEach(async (e) => {
+			email.sendContactCheckInEmail(e);
+		})
+
+		code = 200;
+		message = 'contacts emailed';
 	} catch (e) {
 		console.error(e);
 		code = 500;

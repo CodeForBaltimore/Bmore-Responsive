@@ -25,22 +25,22 @@ Bmore-Responsive provides the following primary features via a secure REST API:
 <!-- TOC -->
 
 - [Bmore Responsive](#bmore-responsive)
-    - [Documentation](#documentation)
-        - [API Spec](#api-spec)
-        - [Database Documentation](#database-documentation)
-        - [Infrastructure and Deployment](#infrastructure-and-deployment)
+  - [Documentation](#documentation)
+    - [API Spec](#api-spec)
+    - [Database Documentation](#database-documentation)
+    - [Infrastructure and Deployment](#infrastructure-and-deployment)
 - [Setup](#setup)
-    - [Node and Express setup](#node-and-express-setup)
-    - [Environment variables](#environment-variables)
-        - [Example .env](#example-env)
-    - [PostgreSQL](#postgresql)
-        - [Sequelize](#sequelize)
-    - [Docker](#docker)
-        - [docker-compose](#docker-compose)
+  - [Node and Express setup](#node-and-express-setup)
+  - [Environment variables](#environment-variables)
+    - [Example .env](#example-env)
+  - [PostgreSQL](#postgresql)
+    - [Sequelize](#sequelize)
+  - [Docker](#docker)
+    - [docker-compose](#docker-compose)
 - [Using this product](#using-this-product)
-    - [Testing](#testing)
+  - [Testing](#testing)
 - [Sources and Links](#sources-and-links)
-    - [Contributors ✨](#contributors-)
+  - [Contributors ✨](#contributors-)
 
 <!-- /TOC -->
 
@@ -90,6 +90,8 @@ The various variables are defined as follows:
 - `SMTP_PORT` = _optional_ port number for the SMTP server used to send notification emails
 - `SMTP_USER` = _optional_ username for the SMTP server used to send notification emails
 - `SMTP_PASSWORD` = _optional_ password for the SMTP server used to send notification emails
+- `URL` = _optional_ the URL for your front-end application
+- `TEST_EMAIL` = _optional_ the email you wish to send tests to
 - `BYPASS_LOGIN` = _optional_  Allows you to hit the endpoints locally without having to login. If you wish to bypass the login process during local dev, set this to `true`.
 
 _We do not recommend using the default options for PostgreSQL. The above values are provided as examples. It is more secure to create your own credentials._
@@ -108,6 +110,8 @@ JWT_KEY=test123
 DATABASE_URL=postgres://postgres:postgres@localhost:5432/postgres
 DATABASE_SCHEMA=public
 BYPASS_LOGIN=true
+URL=http://localhost:8080
+TEST_EMAIL=jason@codeforbaltimore.org
 ```
 
 ## PostgreSQL
@@ -184,10 +188,10 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/seancrim23"><img src="https://avatars1.githubusercontent.com/u/48462417?v=4" width="100px;" alt=""/><br /><sub><b>Sean Crim</b></sub></a><br /><a href="https://github.com/CodeForBaltimore/Bmore-Responsive/commits?author=seancrim23" title="Code">💻</a> <a href="https://github.com/CodeForBaltimore/Bmore-Responsive/pulls?q=is%3Apr+reviewed-by%3Aseancrim23" title="Reviewed Pull Requests">👀</a></td>
     <td align="center"><a href="https://github.com/carorm"><img src="https://avatars2.githubusercontent.com/u/8696896?v=4" width="100px;" alt=""/><br /><sub><b>carorm</b></sub></a><br /><a href="https://github.com/CodeForBaltimore/Bmore-Responsive/commits?author=carorm" title="Tests">⚠️</a> <a href="https://github.com/CodeForBaltimore/Bmore-Responsive/pulls?q=is%3Apr+reviewed-by%3Acarorm" title="Reviewed Pull Requests">👀</a></td>
     <td align="center"><a href="https://github.com/blakenan-bellese"><img src="https://avatars1.githubusercontent.com/u/61432973?v=4" width="100px;" alt=""/><br /><sub><b>blakenan-bellese</b></sub></a><br /><a href="#ideas-blakenan-bellese" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/CodeForBaltimore/Bmore-Responsive/commits?author=blakenan-bellese" title="Tests">⚠️</a> <a href="https://github.com/CodeForBaltimore/Bmore-Responsive/commits?author=blakenan-bellese" title="Documentation">📖</a></td>
-    <td align="center"><a href="https://github.com/c-w-allen"><img src="https://avatars0.githubusercontent.com/u/64177457?v=4" width="100px;" alt=""/><br /><sub><b>c-w-allen</b></sub></a><br /><a href="https://github.com/CodeForBaltimore/Bmore-Responsive/commits?author=c-w-allen" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/c-w-allen"><img src="https://avatars0.githubusercontent.com/u/64177457?v=4" width="100px;" alt=""/><br /><sub><b>c-w-allen</b></sub></a><br /><a href="https://github.com/CodeForBaltimore/Bmore-Responsive/commits?author=c-w-allen" title="Code">💻</a> <a href="https://github.com/CodeForBaltimore/Bmore-Responsive/pulls?q=is%3Apr+reviewed-by%3Ac-w-allen" title="Reviewed Pull Requests">👀</a></td>
   </tr>
   <tr>
-    <td align="center"><a href="https://github.com/msmith125"><img src="https://avatars2.githubusercontent.com/u/58228205?v=4" width="100px;" alt=""/><br /><sub><b>msmith125</b></sub></a><br /><a href="https://github.com/CodeForBaltimore/Bmore-Responsive/commits?author=msmith125" title="Tests">⚠️</a></td>
+    <td align="center"><a href="https://github.com/msmith125"><img src="https://avatars2.githubusercontent.com/u/58228205?v=4" width="100px;" alt=""/><br /><sub><b>msmith125</b></sub></a><br /><a href="https://github.com/CodeForBaltimore/Bmore-Responsive/commits?author=msmith125" title="Tests">⚠️</a> <a href="https://github.com/CodeForBaltimore/Bmore-Responsive/pulls?q=is%3Apr+reviewed-by%3Amsmith125" title="Reviewed Pull Requests">👀</a></td>
   </tr>
 </table>
 

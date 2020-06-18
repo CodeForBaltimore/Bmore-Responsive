@@ -58,39 +58,14 @@ const user = (sequelize, DataTypes) => {
 		}
 	};
 
-	/**
-	 * Validates a login token.
-	 *
-	 * @param {String} token The login token from the user.
-	 *
-	 * @return {Boolean}
-	 */
-	User.validateToken = async token => {
-		/** @todo check if it is a token at all */
-		if (token) {
-			try {
-				const decoded = jwt.verify(token, process.env.JWT_KEY);
-				const now = new Date();
-				if (now.getTime() < decoded.exp * 1000) {
-					const user = await User.findByPk(decoded.userId);
-					if (user) {
-						return user;
-					}
-				}
-			} catch (e) {
-				console.error(e);
-			}
-		}
-		return false;
-	};
-
 	User.decodeToken = async token => {
 		return jwt.verify(token, process.env.JWT_KEY);
 	}
 
+	/** @todo deprecate this */
 	User.getToken = async (userId, email, expiresIn = '1d') => {
 		const token = jwt.sign(
-			{userId, email},
+			{userId, email, type: 'user'},
 			process.env.JWT_KEY,
 			{expiresIn}
 		);
