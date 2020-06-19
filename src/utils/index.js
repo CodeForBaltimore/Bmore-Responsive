@@ -48,21 +48,17 @@ const loadCasbin = async () => {
 					}
 				}
 			}
-		} : { logging: false };
+		} : '';
+	const ConnectionOptions = dbUrl();
 	const a = await SequelizeAdapter.newAdapter(
-		{
-			...dbUrl(),
-			logging: false,
-			dialect: 'postgres',
-			dialectOptions
-		}
+		dbUrl()
 	);
 
 	return await newEnforcer(casbinConf, a);
 }
 
 /**
- * Checks a user login token.
+ * Checks a user login token.`
  *
  * This validates a user token. If the token is invalid the request will immediately be rejected back with a 401.
  *
@@ -218,7 +214,6 @@ const validatePassword = pass => {
 		digit: 1,  // 0 through 9
 		min: 8,  // minumum number of characters
 	}
-	console.log(complexity.check(pass, options))
 	return complexity.check(pass, options)
 }
 

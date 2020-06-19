@@ -27,7 +27,6 @@ const sendMail = async (to, subject, html, text) => {
       text, // plain text body
       html // html body
     });
-    console.log("Email sent: %s", info.messageId);
   } catch (e) {
     console.error(e);
   }
@@ -68,7 +67,7 @@ const sendContactCheckInEmail = async (info) => {
         nunjucks.render("contact_check_in_html.njk", { emailTitle, emailContents, entityLink }),
         nunjucks.render("contact_check_in_text.njk", { emailTitle, emailContents, entityLink })
       );
-      console.log(info.email)
+      
       return true;
     }
   } catch (e) {

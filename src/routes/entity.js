@@ -148,7 +148,7 @@ router.put('/', async (req, res) => {
 
 			if (contacts) {
 				for(const contact of contacts) {
-					ec = {
+					const ec = {
 						entityId: entity.id,
 						contactId: contact.id
 					}
