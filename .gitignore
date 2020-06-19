@@ -114,3 +114,6 @@ dist
 .terraform
 *.plan
 *.out
+
+# MKDocs Wiki
+site/
