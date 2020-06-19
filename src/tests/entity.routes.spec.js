@@ -12,6 +12,7 @@ const entity = {
       number: (Math.floor(Math.random() * Math.floor(100000000000))).toString()
     }
   ],
+  type: 'Test',
   email: [
     {
       address: `${randomWords()}@test.test`

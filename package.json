@@ -1,6 +1,6 @@
 {
   "name": "bmore-responsive",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "description": "An API-driven CRM (Civic Relationship Management) system.",
   "main": "src/index.js",
   "directories": {
@@ -37,9 +37,10 @@
   "dependencies": {
     "@babel/core": "7.9.6",
     "@babel/node": "7.8.7",
-    "casbin": "4.5.0",
+    "casbin": "4.7.2",
     "casbin-sequelize-adapter": "2.1.0",
     "chai": "4.2.0",
+    "complexity": "0.0.6",
     "cors": "2.8.5",
     "crypto": "1.0.1",
     "dotenv": "8.2.0",
@@ -57,8 +58,8 @@
     "nunjucks": "^3.2.1",
     "pg": "7.18.2",
     "random-words": "1.1.1",
-    "sequelize": "5.21.8",
-    "snyk": "^1.316.2",
+    "sequelize": "5.21.9",
+    "snyk": "^1.320.3",
     "supertest": "4.0.2",
     "swagger-ui-express": "4.1.4",
     "tls": "0.0.1",

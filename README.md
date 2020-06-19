@@ -1,46 +1,50 @@
 [![Build Status](https://travis-ci.org/CodeForBaltimore/Bmore-Responsive.svg?branch=master)](https://travis-ci.org/CodeForBaltimore/Bmore-Responsive) [![codecov](https://codecov.io/gh/CodeForBaltimore/Bmore-Responsive/branch/master/graph/badge.svg)](https://codecov.io/gh/CodeForBaltimore/Bmore-Responsive)
 
 # Bmore Responsive
-An API to drive disaster and emergency response systems.
+A simple, flexible API to support emergency response coordination.  Sample use cases include:
+
+- keeping track of local nursing home status and needs during a global pandemic
+- identifying hospitals lacking power during a natural disaster
+- assuring safety of hikers in a national park during a snow storm
+
+Bmore-Responsive provides the following primary features via a secure REST API:
+
+- Maintain set of Entities (could be hospitals, nursing homes, campers, etc)
+- Maintain set of Contacts for Entities (people who can provide status/need info for entities)
+- Capture of status/need information about Entities
+- User account and role management to enable secure authentication and authorization
+- Export of any data via CSV
+
+<<TODO: Conclude with reference to QuickStart and/or Wiki>>
+
+
+
+
+## --- Old README content below, Refactored version above ----
 
 <!-- TOC -->
 
 - [Bmore Responsive](#bmore-responsive)
-    - [Documentation](#documentation)
-        - [API Spec](#api-spec)
-        - [Database Documentation](#database-documentation)
-        - [Infrastructure and Deployment](#infrastructure-and-deployment)
+  - [Documentation](#documentation)
+    - [API Spec](#api-spec)
+    - [Database Documentation](#database-documentation)
+    - [Infrastructure and Deployment](#infrastructure-and-deployment)
 - [Setup](#setup)
-    - [Node and Express setup](#node-and-express-setup)
-    - [Environment variables](#environment-variables)
-        - [Example .env](#example-env)
-    - [PostgreSQL](#postgresql)
-        - [Sequelize](#sequelize)
-    - [Docker](#docker)
-        - [docker-compose](#docker-compose)
+  - [Node and Express setup](#node-and-express-setup)
+  - [Environment variables](#environment-variables)
+    - [Example .env](#example-env)
+  - [PostgreSQL](#postgresql)
+    - [Sequelize](#sequelize)
+  - [Docker](#docker)
+    - [docker-compose](#docker-compose)
 - [Using this product](#using-this-product)
-    - [Testing](#testing)
+  - [Testing](#testing)
 - [Sources and Links](#sources-and-links)
-    - [Contributors ✨](#contributors-)
+  - [Contributors ✨](#contributors-)
 
 <!-- /TOC -->
 
-## Documentation
-Detailed documents describing this project and its use are available in this repository. The documentation currently available is as follows:
--   [Best Practices](/docs/Best_Practices.md)
--   [Code of Conduct](/docs/Code_of_Conduct.md)
--   [Sequelize](/sequelize/README.md)
--   [Tech Spec](/docs/Tech_Spec.md)
--   [Terraform](/terraform/README.md)
 
-### API Spec
-Our API spec is on Swagger. You can view it here https://app.swaggerhub.com/apis/codeforbaltimore/bmoreResponsive or you can find the `swagger.json` file in our `docs` folder and use it via http://localhost:3000/api-docs/ when the app is running locally.  
-
-### Database Documentation
-Our database documentation can be found in the `/sequelize` directory or you can [click here](/sequelize/README.md)
-
-### Infrastructure and Deployment
-We have included a `terraform` option to deploy to AWS. For more information on how to use this feature, please see the [terraform](/terraform/README.md) directory.
 
 # Setup
 This setup section will focus on setting up the local dev environment. For more detailed instructions for how to deploy this to a production environment please see the section above this one :point_up:
@@ -59,7 +63,7 @@ This application is designed to work as an API driven by Express. To setup your 
 ```
 npm install
 ```
-Once all dependencies are installed you will need to setup some environment variables to interact with your database and application. 
+Once all dependencies are installed you will need to setup some environment variables to interact with your database and application.
 
 ## Environment variables
 You will need to set some local environment variables to run this application. This is true even if you're using Docker.
@@ -77,20 +81,22 @@ The `DATABASE_URL` is not a very clear var name, and the string is broken down a
 An example of the `DATABASE_URL` would be `DATABASE_URL=postgres://postgres:postgres@localhost:5432/postgres`
 
 The various variables are defined as follows:
-- `NODE_ENV` = The label for your environment. 
+- `NODE_ENV` = The label for your environment.
 - `PORT` = The local port you wish to run on. Defaults to `3000`.
 - `DATABASE_URL` = The URL string for your db connection. For example: `postgres://user:pass@example.com:5432/dbname`
 - `DATABASE_SCHEMA` = Your local database schema. Postgres default is `public`.
-- `JWT_KEY` = A secret value to generate JWT's locally. 
+- `JWT_KEY` = A secret value to generate JWT's locally.
 - `SMTP_HOST` = _optional_ hostname for the SMTP server used to send notification emails
 - `SMTP_PORT` = _optional_ port number for the SMTP server used to send notification emails
 - `SMTP_USER` = _optional_ username for the SMTP server used to send notification emails
 - `SMTP_PASSWORD` = _optional_ password for the SMTP server used to send notification emails
+- `URL` = _optional_ the URL for your front-end application
+- `TEST_EMAIL` = _optional_ the email you wish to send tests to
 - `BYPASS_LOGIN` = _optional_  Allows you to hit the endpoints locally without having to login. If you wish to bypass the login process during local dev, set this to `true`.
 
 _We do not recommend using the default options for PostgreSQL. The above values are provided as examples. It is more secure to create your own credentials._
 
-**Warning**: If you are running Docker Toolbox instead of Docker Desktop (likely meaning you are running Windows 10 Home, not Professional) you will need to change your `.env` to reflect Docker running on a VM: 
+**Warning**: If you are running Docker Toolbox instead of Docker Desktop (likely meaning you are running Windows 10 Home, not Professional) you will need to change your `.env` to reflect Docker running on a VM:
 - `DATABASE_HOST`: The IP address Docker is running on. You can find this by running `docker-machine ip` but it's usually `192.168.99.100` instead of `localhost`
 - `DATABASE_URL`: This will need to be adjusted as well, for example `DATABASE_URL=postgres://postgres:postgres@localhost:5432/postgres` would become `DATABASE_URL=postgres://postgres:postgres@192.168.99.100:5432/postgres`
 
@@ -104,6 +110,8 @@ JWT_KEY=test123
 DATABASE_URL=postgres://postgres:postgres@localhost:5432/postgres
 DATABASE_SCHEMA=public
 BYPASS_LOGIN=true
+URL=http://localhost:8080
+TEST_EMAIL=jason@codeforbaltimore.org
 ```
 
 ## PostgreSQL
@@ -119,7 +127,7 @@ If you're running a database in another way then we trust you can sort it out on
 ### Sequelize
 To properly start the application the database needs to be built by Sequlize ahead of time. To do that run the following commands
 1. You must create your database tables without running the application by running `npm run db-create` first.
-2. _optional_ You can now seed your database if you wish by running `npm run db-seed`. 
+2. _optional_ You can now seed your database if you wish by running `npm run db-seed`.
 
 Example `/migrations` and `/seeders` scripts have been supplied. You can rollback your all seeded data at any time by running `npm run db-unseed` and delete all created tables with `npm run db-delete`.
 
@@ -134,17 +142,17 @@ Note that `DATABASE_URL` host location will be different depending on what OS yo
 Alternatively you can manually set the environment variables and not use a `.env` file by setting the following vars:
 ```
 -e NODE_ENV=development
--e PORT=3000 
+-e PORT=3000
 -e JWT_KEY=<your JWT phrase>
 -e DATABASE_URL=<your connection string>
 -e DATABASE_DATABASE_SCHEMA=<your database schema>
 ```
 
 ### docker-compose
-To use the `docker-compose.yml` file included you will first need to set [environment variables](#environment-variables). You **MUST** set your `DATABASE_HOST` to `db` to use the `docker-compose` solution. It is not recommended to use `docker-compose` for any reason other than to test a solution for a separate front-end component. 
+To use the `docker-compose.yml` file included you will first need to set [environment variables](#environment-variables). You **MUST** set your `DATABASE_HOST` to `db` to use the `docker-compose` solution. It is not recommended to use `docker-compose` for any reason other than to test a solution for a separate front-end component.
 
 # Using this product
-You may use this product to create and manage users for your front-end. 
+You may use this product to create and manage users for your front-end.
 
 To run the application--after the above steps are completed--run `npm start`.
 
@@ -180,10 +188,10 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/seancrim23"><img src="https://avatars1.githubusercontent.com/u/48462417?v=4" width="100px;" alt=""/><br /><sub><b>Sean Crim</b></sub></a><br /><a href="https://github.com/CodeForBaltimore/Bmore-Responsive/commits?author=seancrim23" title="Code">💻</a> <a href="https://github.com/CodeForBaltimore/Bmore-Responsive/pulls?q=is%3Apr+reviewed-by%3Aseancrim23" title="Reviewed Pull Requests">👀</a></td>
     <td align="center"><a href="https://github.com/carorm"><img src="https://avatars2.githubusercontent.com/u/8696896?v=4" width="100px;" alt=""/><br /><sub><b>carorm</b></sub></a><br /><a href="https://github.com/CodeForBaltimore/Bmore-Responsive/commits?author=carorm" title="Tests">⚠️</a> <a href="https://github.com/CodeForBaltimore/Bmore-Responsive/pulls?q=is%3Apr+reviewed-by%3Acarorm" title="Reviewed Pull Requests">👀</a></td>
     <td align="center"><a href="https://github.com/blakenan-bellese"><img src="https://avatars1.githubusercontent.com/u/61432973?v=4" width="100px;" alt=""/><br /><sub><b>blakenan-bellese</b></sub></a><br /><a href="#ideas-blakenan-bellese" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/CodeForBaltimore/Bmore-Responsive/commits?author=blakenan-bellese" title="Tests">⚠️</a> <a href="https://github.com/CodeForBaltimore/Bmore-Responsive/commits?author=blakenan-bellese" title="Documentation">📖</a></td>
-    <td align="center"><a href="https://github.com/c-w-allen"><img src="https://avatars0.githubusercontent.com/u/64177457?v=4" width="100px;" alt=""/><br /><sub><b>c-w-allen</b></sub></a><br /><a href="https://github.com/CodeForBaltimore/Bmore-Responsive/commits?author=c-w-allen" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/c-w-allen"><img src="https://avatars0.githubusercontent.com/u/64177457?v=4" width="100px;" alt=""/><br /><sub><b>c-w-allen</b></sub></a><br /><a href="https://github.com/CodeForBaltimore/Bmore-Responsive/commits?author=c-w-allen" title="Code">💻</a> <a href="https://github.com/CodeForBaltimore/Bmore-Responsive/pulls?q=is%3Apr+reviewed-by%3Ac-w-allen" title="Reviewed Pull Requests">👀</a></td>
   </tr>
   <tr>
-    <td align="center"><a href="https://github.com/msmith125"><img src="https://avatars2.githubusercontent.com/u/58228205?v=4" width="100px;" alt=""/><br /><sub><b>msmith125</b></sub></a><br /><a href="https://github.com/CodeForBaltimore/Bmore-Responsive/commits?author=msmith125" title="Tests">⚠️</a></td>
+    <td align="center"><a href="https://github.com/msmith125"><img src="https://avatars2.githubusercontent.com/u/58228205?v=4" width="100px;" alt=""/><br /><sub><b>msmith125</b></sub></a><br /><a href="https://github.com/CodeForBaltimore/Bmore-Responsive/commits?author=msmith125" title="Tests">⚠️</a> <a href="https://github.com/CodeForBaltimore/Bmore-Responsive/pulls?q=is%3Apr+reviewed-by%3Amsmith125" title="Reviewed Pull Requests">👀</a></td>
   </tr>
 </table>
 
