@@ -1,0 +1,17 @@
+site_name: Bmore-Responsive Wiki
+
+nav:
+  - 'Home': 'index.md'
+  - 'For Users':
+    - 'Quick Start - Less than 10 min': 'QuickStart.md'
+    - 'Slow Start - Advanced Config': 'SlowStart.md'
+    - 'Users Guide': 'HowToUse.md'
+  - 'For Developers':
+    - 'Developer Overview': 'DevIntro.md'
+    - 'Best Practices': 'Best_Practices.md'
+  - 'For Everyone':
+    - 'About Bmore Responsive': 'about.md'
+    - 'Code of Conduct': 'Code_of_Conduct.md'
+
+theme:
+    name: readthedocs

@@ -14,19 +14,6 @@ describe('CSV Dump Positive Tests', () => {
         await authed.destroyToken();
     });
 
-    it('Positive Test for CSV Dump on User ', (done) => {
-        request(app)
-            .get('/csv/User')
-            .set('Accept', 'application/json')
-            .set('token', token)
-            .expect('Content-Type', 'text/html; charset=utf-8')
-            .expect(200)
-            .end((err, res) => {
-                if (err) return done(err);
-                done();
-            });
-    });
-
     it('Positive Test for CSV Dump on Entity', (done) => {
         request(app)
             .get('/csv/Entity')

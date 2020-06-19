@@ -5,7 +5,7 @@ import { Login } from '../utils/login';
 import app from '..';
 
 const { expect } = chai;
-const user = { email: `${randomWords()}@test.test`, password: randomWords(), roles: ["admin"] };
+const user = { email: `${randomWords()}@test.test`, password: `Abcdefg42!`, roles: ["admin"] };
 
 describe('User positive tests', () => {
     const authed = new Login();
