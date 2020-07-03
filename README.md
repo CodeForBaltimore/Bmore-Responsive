@@ -192,6 +192,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   </tr>
   <tr>
     <td align="center"><a href="https://github.com/msmith125"><img src="https://avatars2.githubusercontent.com/u/58228205?v=4" width="100px;" alt=""/><br /><sub><b>msmith125</b></sub></a><br /><a href="https://github.com/CodeForBaltimore/Bmore-Responsive/commits?author=msmith125" title="Tests">⚠️</a> <a href="https://github.com/CodeForBaltimore/Bmore-Responsive/pulls?q=is%3Apr+reviewed-by%3Amsmith125" title="Reviewed Pull Requests">👀</a></td>
+    <td align="center"><a href="https://github.com/mpiroc"><img src="https://avatars2.githubusercontent.com/u/1623344?v=4" width="100px;" alt=""/><br /><sub><b>Matthew Pirocchi</b></sub></a><br /><a href="#infra-mpiroc" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
   </tr>
 </table>
 

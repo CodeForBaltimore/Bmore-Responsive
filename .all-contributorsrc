@@ -164,6 +164,15 @@
         "test",
         "review"
       ]
+    },
+    {
+      "login": "mpiroc",
+      "name": "Matthew Pirocchi",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/1623344?v=4",
+      "profile": "https://github.com/mpiroc",
+      "contributions": [
+        "infra"
+      ]
     }
   ],
   "contributorsPerLine": 7,
