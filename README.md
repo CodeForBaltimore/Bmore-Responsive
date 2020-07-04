@@ -25,10 +25,7 @@ Bmore-Responsive provides the following primary features via a secure REST API:
 <!-- TOC -->
 
 - [Bmore Responsive](#bmore-responsive)
-  - [Documentation](#documentation)
-    - [API Spec](#api-spec)
-    - [Database Documentation](#database-documentation)
-    - [Infrastructure and Deployment](#infrastructure-and-deployment)
+  - [--- Old README content below, Refactored version above ----](#----old-readme-content-below-refactored-version-above-----)
 - [Setup](#setup)
   - [Node and Express setup](#node-and-express-setup)
   - [Environment variables](#environment-variables)
@@ -86,6 +83,11 @@ The various variables are defined as follows:
 - `DATABASE_URL` = The URL string for your db connection. For example: `postgres://user:pass@example.com:5432/dbname`
 - `DATABASE_SCHEMA` = Your local database schema. Postgres default is `public`.
 - `JWT_KEY` = A secret value to generate JWT's locally.
+- `URL` = The API URL
+- `DATABASE_USERNAME` = _optional for local dev_ Your database username.
+- `DATABASE_PASSWORD` = _optional for local dev_ Your database password.
+- `DATABASE_HOST` = _optional for local dev_ Your database host.
+- `DATABASE_PORT` = _optional for local dev_ Your database port.
 - `SMTP_HOST` = _optional_ hostname for the SMTP server used to send notification emails
 - `SMTP_PORT` = _optional_ port number for the SMTP server used to send notification emails
 - `SMTP_USER` = _optional_ username for the SMTP server used to send notification emails

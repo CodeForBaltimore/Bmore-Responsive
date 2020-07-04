@@ -45,6 +45,18 @@ describe('Contact positive tests', () => {
         done();
       });
   });
+  it('should delete a contact', (done) => {
+    request(app)
+      .delete(`/contact/${contact.email}`)
+      .set('Accept', 'application/json')
+      .expect('Content-Type', 'text/html; charset=utf-8')
+      .expect(200)
+      .end((err, res) => {
+        if (err) return done(err);
+        // expect(res.text).to.equal(`Invalid input`);
+        done();
+      });
+  });
   it('should get all contacts', (done) => {
     request(app)
       .get(`/contact`)

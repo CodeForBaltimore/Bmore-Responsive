@@ -1,56 +1,55 @@
-// libraries
-import request from "supertest";
-import randomWords from 'random-words';
-import utils from '.';
-import app from "..";
+import app from ".."
+import randomWords from 'random-words'
+import request from "supertest"
+import utils from '.'
 
 class Login {
     constructor() {
-        this.role = randomWords();
-        this.user = { email: `${randomWords()}@test.test`, password: `Abcdefg42!`, roles: [this.role] };
+        this.role = randomWords()
+        this.user = { email: `${randomWords()}@test.test`, password: `Abcdefg42!`, roles: [this.role] }
         this.methods = [
             `GET`,
             `POST`,
             `PUT`,
             `DELETE`
-        ];
+        ]
     }
 
     /**
      * Token setter
      */
     async setToken() {
-        this._createRole();
-        this._createUser();
+        this._createRole()
+        this._createUser()
 
-        this.token = this._login();
+        this.token = this._login()
     }
 
     /**
      * Token getter
      */
     async getToken() {
-        return this.token;
+        return this.token
     }
 
     /**
      * Destroy temp
      */
     async destroyToken() {
-        await this._destroyRole();
+        await this._destroyRole()
         
-        return await this._destroyUser();
+        return await this._destroyUser()
     }
 
     /**
      * Creates a temp role for testing.
      */
     async _createRole() {
-        const e = await utils.loadCasbin();
+        const e = await utils.loadCasbin()
 
         for (const method of this.methods) {
-            const p = [this.role, '/*', method];
-            await e.addPolicy(...p);
+            const p = [this.role, '/*', method]
+            await e.addPolicy(...p)
         }
     }
     
@@ -58,11 +57,11 @@ class Login {
      * Destroys the temp testing role.
      */
     async _destroyRole() {
-        const e = await utils.loadCasbin();
+        const e = await utils.loadCasbin()
     
         for (const method of this.methods) {
-            const p = [this.role, '/*', method];
-            await e.removePolicy(...p);
+            const p = [this.role, '/*', method]
+            await e.removePolicy(...p)
         }
     }
     
@@ -74,8 +73,8 @@ class Login {
             .post('/user')
             .send(this.user)
             .set('Accept', 'application/json')
-            .expect('Content-Type', 'text/html; charset=utf-8')
-            .expect(200);
+            .expect('Content-Type', 'text/html charset=utf-8')
+            .expect(200)
     }
     
     /**
@@ -85,10 +84,10 @@ class Login {
         const response = await request(app)
             .delete(`/user/${this.user.email}`)
             .set('Accept', 'application/json')
-            .expect('Content-Type', 'text/html; charset=utf-8')
-            .expect(200);
+            .expect('Content-Type', 'text/html charset=utf-8')
+            .expect(200)
             
-        return response.text;
+        return response.text
     }
     
     /**
@@ -99,11 +98,11 @@ class Login {
             .post('/user/login')
             .send(this.user)
             .set('Accept', 'application/json')
-            .expect('Content-Type', 'text/html; charset=utf-8')
-            .expect(200);
+            .expect('Content-Type', 'text/html charset=utf-8')
+            .expect(200)
 
-        return response.text;
-    };
+        return response.text
+    }
 }
 
-exports.Login = Login;
+exports.Login = Login
