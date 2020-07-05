@@ -163,20 +163,6 @@ describe('Contact positive tests', () => {
         done()
       })
   })
-})
-
-describe('Contact negative tests', () => {
-  const authed = new Login()
-  let token
-  let userId
-
-  before(async () => {
-    await authed.setToken()
-    token = await authed.getToken()
-  })
-  after(async () => {
-    await authed.destroyToken()
-  })
 
   it('should not create a contact with null name', done => {
     request(app)

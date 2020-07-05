@@ -125,19 +125,6 @@ describe('Entity positive tests', () => {
         done()
       })
   })
-})
-
-describe('Entity negative tests', () => {
-  const authed = new Login()
-  let token
-
-  before(async () => {
-    await authed.setToken()
-    token = await authed.getToken()
-  })
-  after(async () => {
-    await authed.destroyToken()
-  })
   it('should not create a entity', (done) => {
     request(app)
       .post('/entity')

@@ -1,8 +1,8 @@
-import chai from 'chai';
-import request from 'supertest';
-import app from '..';
+import chai from 'chai'
+import request from 'supertest'
+import app from '..'
 
-const {expect} = chai;
+const {expect} = chai
 
 describe('API Integration Tests', () => {
 	it('should return uptime', done => {
@@ -10,84 +10,84 @@ describe('API Integration Tests', () => {
 			.get('/health')
 			.end((err, res) => {
 				if (err) {
-					console.error(`IT uptime error: ${err}`);
+					console.error(`IT uptime error: ${err}`)
 				}
 
-				expect(res.body.uptime).to.be.ok;
-				expect(res.statusCode).to.equal(200);
-				done();
-			});
-	});
+				expect(res.body.uptime).to.be.ok
+				expect(res.statusCode).to.equal(200)
+				done()
+			})
+	})
 	it('should return environment', done => {
 		request(app)
 			.get('/health')
 			.end((err, res) => {
 				if (err) {
-					console.error(`IT environment error: ${err}`);
+					console.error(`IT environment error: ${err}`)
 				}
 
-				expect(res.body.environment).to.be.ok;
-				expect(res.statusCode).to.equal(200);
-				done();
-			});
-	});
+				expect(res.body.environment).to.be.ok
+				expect(res.statusCode).to.equal(200)
+				done()
+			})
+	})
 	it('should return version number', done => {
 		request(app)
 			.get('/health')
 			.end((err, res) => {
 				if (err) {
-					console.error(`IT version error: ${err}`);
+					console.error(`IT version error: ${err}`)
 				}
 
-				expect(res.body.version).to.be.ok;
-				expect(res.statusCode).to.equal(200);
-				done();
-			});
-	});
+				expect(res.body.version).to.be.ok
+				expect(res.statusCode).to.equal(200)
+				done()
+			})
+	})
 	it('should return request id', done => {
 		request(app)
 			.get('/health')
 			.end((err, res) => {
 				if (err) {
-					console.error(`IT version error: ${err}`);
+					console.error(`IT version error: ${err}`)
 				}
 
-				expect(res.body.requestId).to.be.ok;
-				expect(res.statusCode).to.equal(200);
-				done();
-			});
-	});
-	it('should redirect home request', done => {
+				expect(res.body.requestId).to.be.ok
+				expect(res.statusCode).to.equal(200)
+				done()
+			})
+	})
+	it('should serve home request', done => {
 		request(app)
 			.get('/')
 			.end((err, res) => {
 				if (err) {
-					console.error(`IT version error: ${err}`);
+					console.error(`IT version error: ${err}`)
 				}
-				expect(res.statusCode).to.equal(302);
-				done();
-			});
-	});
+				expect(res.statusCode).to.equal(200)
+				done()
+			})
+	})
 	it('should redirect help request', done => {
 		request(app)
 			.get('/help')
 			.end((err, res) => {
 				if (err) {
-					console.error(`IT version error: ${err}`);
+					console.error(`IT version error: ${err}`)
 				}
-				expect(res.statusCode).to.equal(302);
-				done();
-			});
-	});
+				expect(res.statusCode).to.equal(302)
+				done()
+			})
+	})
 	it('should return swagger', done => {
 		request(app)
 			.get('/api-docs/')
 			.end((err, res) => {
 				if (err) {
-					console.error(`IT version error: ${err}`);
+					console.error(`IT version error: ${err}`)
 				}
-				expect(res.statusCode).to.equal(200);
-				done();
-			});
-	});
-});
+				expect(res.statusCode).to.equal(200)
+				done()
+			})
+	})
+})

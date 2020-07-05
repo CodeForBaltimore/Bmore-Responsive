@@ -8,6 +8,7 @@ import nunjucks from 'nunjucks'
 import requestId from 'express-request-id'
 import rateLimit from 'express-rate-limit'
 import routes from './routes'
+import serveIndex from 'serve-index'
 import swaggerDocument from '../swagger.json'
 import swaggerUi from 'swagger-ui-express'
 import utils from './utils'
@@ -19,7 +20,7 @@ const swaggerOptions = {
 }
 const apiLimiter = rateLimit({
 	windowMs: 15 * 60 * 1000, // 15 minutes
-	max: 100
+	max: 1000
 })
 
 nunjucks.configure('mail_templates', { autoescape: true })
@@ -32,7 +33,7 @@ app.use(cors())
 app.use(helmet())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-if (process.env.NODE_ENV !== 'production') app.use(apiLimiter)
+if (process.env.NODE_ENV === 'production') app.use(apiLimiter)
 
 // Custom middleware
 app.use(async (req, res, next) => {
@@ -44,11 +45,8 @@ app.use(async (req, res, next) => {
 })
 
 // Helper endpoints
-app.get('/', (req, res) => {
-	res.redirect('/api-docs/')
-})
 app.get('/help', (req, res) => {
-	res.redirect('/api-docs/')
+	res.redirect('/')
 })
 app.use('/api-docs', apiLimiter, swaggerUi.serve, swaggerUi.setup(swaggerDocument, swaggerOptions))
 app.use('/health', (req, res) => {
@@ -65,15 +63,22 @@ Object.entries(routes).forEach(([key, value]) => {
 	app.use(`/${key}`, value)
 })
 
+// Handle docs requests
+const docsLimit= rateLimit({
+	windowMs: 15 * 60 * 1000, // 15 minutes
+	max: 100000
+})
+app.use('/', docsLimit, express.static('site'), serveIndex('site'))
+
 // Handle 404
 app.use((req, res) => {
-	return res.status(404).send("404: Not Found.")
+	return res.status(404).send("Not Found")
 })
 
 // Handle 503
 app.use((error, req, res, next) => {
 	console.error(error)
-	return res.status(503).send("503: Service Unavailable")
+	return res.status(503).send("Service Unavailable")
 })
 
 // Starting Express and connecting to PostgreSQL

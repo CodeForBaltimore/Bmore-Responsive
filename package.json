@@ -7,7 +7,7 @@
     "doc": "docs"
   },
   "scripts": {
-    "start": "nodemon --exec babel-node src/index.js",
+    "start": "mkdocs build --clean && nodemon --exec babel-node src/index.js",
     "test": "nyc mocha --require @babel/register --require @babel/polyfill \"src/tests/**/*.spec.js\" --exit",
     "lint": "xo --ignore **/*.spec.js",
     "format": "xo --fix --ignore **/*.spec.js",
@@ -15,8 +15,6 @@
     "db-delete": "sequelize db:migrate:undo:all",
     "db-seed": "sequelize db:seed:all",
     "db-unseed": "sequelize db:seed:undo:all",
-    "contributors:add": "all-contributors add",
-    "contributors:generate": "all-contributors generate",
     "snyk-protect": "snyk protect",
     "prepare": "npm run snyk-protect"
   },
@@ -59,6 +57,7 @@
     "pg": "7.18.2",
     "random-words": "1.1.1",
     "sequelize": "5.21.11",
+    "serve-index": "1.9.1",
     "snyk": "^1.332.1",
     "supertest": "4.0.2",
     "swagger-ui-express": "4.1.4",

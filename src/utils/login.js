@@ -74,11 +74,11 @@ class Login {
    * Creates a temp user for testing.
    */
   async _createUser() {
-    const user = await models.User.create({ email: this.user.email.toLowerCase(), password: this.user.password });
+    const user = await models.User.create({ email: this.user.email.toLowerCase(), password: this.user.password })
     this.user.id = user.id
     
-    const e = await utils.loadCasbin();
-    await e.addRoleForUser(this.user.email.toLowerCase(), this.role);
+    const e = await utils.loadCasbin()
+    await e.addRoleForUser(this.user.email.toLowerCase(), this.role)
   }
 
   /**
@@ -89,12 +89,12 @@ class Login {
       where: {
         email: this.user.email.toLowerCase()
       }
-    });
+    })
 
-    const e = await utils.loadCasbin();
-    await e.deleteRolesForUser(this.user.email.toLowerCase());
+    const e = await utils.loadCasbin()
+    await e.deleteRolesForUser(this.user.email.toLowerCase())
 
-    await user.destroy();
+    await user.destroy()
   }
 
   /**
