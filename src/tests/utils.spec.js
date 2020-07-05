@@ -10,9 +10,12 @@ describe('Utils Tests', () => {
     expect(utils.formatTime(1)).to.equal('00:00:01')
     done()
   })
-  it('should return a role', async () => {
-    const e = await utils.loadCasbin()
-    assert.isNotNull(await e.getRolesForUser('homer.simpson@sfpp.com'), 'returns roles')
+  it('should validate passwords', done => {
+    const valid = utils.validatePassword('Abcdef123$')
+    expect(valid).to.be.true
+    const invalid = utils.validatePassword('abc123')
+    expect(invalid).to.be.false
+    done()
   })
 })
 
@@ -21,7 +24,7 @@ describe('Class Tests', () => {
     expect(new Login()).to.be.an.instanceof(Login)
     done()
   })
-  it('should be an instance of Response', (done) => {
+  it('should be an instance of Response', done => {
     expect(new utils.Response()).to.be.an.instanceof(Response)
     done()
   })

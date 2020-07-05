@@ -39,6 +39,7 @@ router.get('/', async (req, res) => {
     // Temp fix for JSON types and Sequelize.
     let results = []
     if (req.query.type === 'email') {
+      console.log(req.query.value)
       for (const contact of contacts) {
         for (const email of contact.email) {
           if (email.address === req.query.value) {
@@ -161,6 +162,12 @@ router.post('/send', async (req, res) => {
       const whereClause = (relationshipTitle !== undefined) ? { where: { relationshipTitle } } : {}
       const associations = await models.EntityContact.findAll(whereClause)
 
+      if (associations.length < 1) {
+        response.setCode(400)
+        response.setMessage('No contacts to email')
+        return res.status(response.getCode()).send(response.getMessage())
+      }
+
       for (const association of associations) {
         const contact = await models.Contact.findById(association.contactId)
 
@@ -185,7 +192,7 @@ router.post('/send', async (req, res) => {
       email.sendContactCheckInEmail(e)
     })
 
-    response.setMessage('contacts emailed')
+    response.setMessage('Contacts emailed')
   } catch (e) {
     console.error(e)
     response.setCode(500)
@@ -201,16 +208,6 @@ router.put('/', async (req, res) => {
     if (validator.isUUID(req.body.id)) {
       const { id, name, phone, email, UserId, entities, attributes } = req.body
 
-      // Validating emails 
-      if (email) {
-        const goodEmail = await utils.validateEmails(email)
-        if (!goodEmail) {
-          response.setCode(400)
-          response.setMessage('Bad email')
-          return res.status(response.getCode()).send(response.getMessage())
-        }
-      }
-
       const contact = await models.Contact.findOne({
         where: {
           id: id
@@ -220,6 +217,16 @@ router.put('/', async (req, res) => {
       if (!contact) {
         response.setCode(404)
         return res.status(response.getCode()).send(response.getMessage())
+      }
+
+      // Validating emails 
+      if (email) {
+        const goodEmail = await utils.validateEmails(email)
+        if (!goodEmail) {
+          response.setCode(400)
+          response.setMessage('Bad email')
+          return res.status(response.getCode()).send(response.getMessage())
+        }
       }
 
       contact.name = (name) ? name : contact.name

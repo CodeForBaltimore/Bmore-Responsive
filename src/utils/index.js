@@ -243,7 +243,7 @@ const processResults = async (results, modelType) => {
     case "Entity":
       let processedResults = []
       for (let result of results) {
-        //todo expand conditional checking as checkin object becomes more mature
+        /** @todo expand conditional checking as checkin object becomes more mature */
         if (result["checkIn"] !== null) {
           result["checkIn"] = result["checkIn"].checkIns[0]
         }
