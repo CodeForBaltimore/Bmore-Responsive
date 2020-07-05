@@ -31,7 +31,7 @@ describe('CSV Dump Positive Tests', () => {
             .get('/csv/Contact')
             .set('Accept', 'application/json')
             .set('token', token)
-            .expect('Content-Type', 'text/html charset=utf-8')
+            // .expect('Content-Type', 'text/html; charset=utf-8')
             .expect(200)
             .end((err, res) => {
                 if (err) return done(err)
@@ -45,7 +45,7 @@ describe('CSV Dump Negative Tests', () => {
         request(app)
             .get('/csv/contact')
             .set('Accept', 'application/json')
-            .expect('Content-Type', 'text/html charset=utf-8')
+            .expect('Content-Type', 'text/html; charset=utf-8')
             .expect(422)
             .end((err, res) => {
                 if (err) return done(err)
@@ -57,7 +57,7 @@ describe('CSV Dump Negative Tests', () => {
         request(app)
             .get('/csv/entity')
             .set('Accept', 'application/json')
-            .expect('Content-Type', 'text/html charset=utf-8')
+            .expect('Content-Type', 'text/html; charset=utf-8')
             .expect(422)
             .end((err, res) => {
                 if (err) return done(err)
@@ -69,7 +69,7 @@ describe('CSV Dump Negative Tests', () => {
         request(app)
             .get('/csv/user')
             .set('Accept', 'application/json')
-            .expect('Content-Type', 'text/html charset=utf-8')
+            .expect('Content-Type', 'text/html; charset=utf-8')
             .expect(422)
             .end((err, res) => {
                 if (err) return done(err)
@@ -81,7 +81,7 @@ describe('CSV Dump Negative Tests', () => {
         request(app)
             .get('/csv/userRole')
             .set('Accept', 'application/json')
-            .expect('Content-Type', 'text/html charset=utf-8')
+            .expect('Content-Type', 'text/html; charset=utf-8')
             .expect(422)
             .end((err, res) => {
                 if (err) return done(err)
@@ -93,7 +93,7 @@ describe('CSV Dump Negative Tests', () => {
         request(app)
             .get('/csv/')
             .set('Accept', 'application/json')
-            .expect('Content-Type', 'text/html charset=utf-8')
+            .expect('Content-Type', 'text/html; charset=utf-8')
             .expect(404)
             .end((err, res) => {
                 if (err) return done(err)
@@ -105,7 +105,7 @@ describe('CSV Dump Negative Tests', () => {
         request(app)
             .get('/csv/%^&&!@&#)(@*&#()@*&)(*&)(*&(@&#)(!&*#)(*&!@#()*&()*!@&#()*&#&))*&(&()*&#!!@#!@#!@#)(&*)(*&)(*!&#')
             .set('Accept', 'application/json')
-            .expect('Content-Type', 'text/html charset=utf-8')
+            .expect('Content-Type', 'text/html; charset=utf-8')
             .expect(503)
             .end((err, res) => {
                 if (err) return done(err)

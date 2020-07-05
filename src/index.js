@@ -37,8 +37,7 @@ if (process.env.NODE_ENV !== 'production') app.use(apiLimiter)
 // Custom middleware
 app.use(async (req, res, next) => {
 	req.context = {
-    models,
-    response: new utils.Response(res)
+    models
 	}
 
 	next()
