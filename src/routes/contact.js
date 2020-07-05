@@ -19,18 +19,17 @@ router.get('/', async (req, res) => {
         response.setCode(400)
         response.setMessage('Invalid query parameters')
         return res.status(response.getCode()).send(response.getMessage())
+      }
+      if (types.indexOf(req.query.type) < 0) {
+        response.setCode(400)
+        response.setMessage('Invalid query type')
+        return res.status(response.getCode()).send(response.getMessage())
+      }
+
+      if (jsonTypes.indexOf(req.query.type) > -1) {
+        /** @todo add Sequelize proper WHERE statement for traversing JSON */
       } else {
-        if (jsonTypes.indexOf(req.query.type) > -1) {
-          /** @todo add Sequelize proper WHERE statement for traversing JSON */
-        } else {
-          if (types.indexOf(req.query.type) < 0) {
-            response.setCode(400)
-            response.setMessage('Invalid query type')
-            return res.status(response.getCode()).send(response.getMessage())
-          } else {
-            where[req.query.type] = req.query.value
-          }
-        }
+        where[req.query.type] = req.query.value
       }
     }
 

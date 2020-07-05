@@ -4,7 +4,6 @@ import randomWords from 'random-words'
 import uuid from 'uuid4'
 import { Login } from '../utils/login'
 import app from '..'
-// import { random } from 'lodash'
 
 const { expect } = chai
 const contact = {
@@ -136,6 +135,18 @@ describe('Contact positive tests', () => {
       .end((err, res) => {
         if (err) return done(err)
         expect(res.text).to.equal(`${contact.id} updated`)
+        done()
+      })
+  })
+  it('Positive Test for CSV Dump on Contact', (done) => {
+    request(app)
+      .get('/csv/Contact')
+      .set('Accept', 'application/json')
+      .set('token', token)
+      .expect('Content-Type', 'text/html; charset=utf-8')
+      .expect(200)
+      .end((err, res) => {
+        if (err) return done(err)
         done()
       })
   })
