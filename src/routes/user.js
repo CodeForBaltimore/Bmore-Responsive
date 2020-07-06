@@ -152,7 +152,6 @@ router.post('/', utils.authMiddleware, async (req, res) => {
 					await e.addRoleForUser(email.toLowerCase(), role)
 				}
 			}
-
 			
 			response.setMessage(user.email + ' created')
 		} else {

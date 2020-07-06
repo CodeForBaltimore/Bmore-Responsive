@@ -17,18 +17,40 @@ const contact = {
     {
       address: `${randomWords()}@test.test`
     }
-  ]
+  ],
+  entities: []
+}
+const entity = {
+  name: randomWords(),
+  type: 'Test'
 }
 
-describe('Contact positive tests', () => {
+describe('Contact tests', () => {
   const authed = new Login()
   let token
 
   before(async () => {
     await authed.setToken()
     token = await authed.getToken()
+
+    const entityResponse = await request(app)
+      .post('/entity')
+      .send(entity)
+      .set('Accept', 'application/json')
+      .set('token', token)
+      .expect('Content-Type', 'text/html; charset=utf-8')
+      .expect(201)
+
+    entity.id = entityResponse.text.replace(' created', '')
+    contact.entities.push({ id: entity.id, title: 'test' })
   })
   after(async () => {
+    await request(app)
+      .delete(`/entity/${entity.id}`)
+      .set('Accept', 'application/json')
+      .set('token', token)
+      .expect('Content-Type', 'text/html; charset=utf-8')
+      .expect(200)
     await authed.destroyToken()
   })
 
@@ -108,6 +130,23 @@ describe('Contact positive tests', () => {
         done()
       })
   })
+  it('Sending email to entity contacts', done => {
+    try {
+      request(app)
+        .post('/contact/send')
+        .set('Accept', 'application/json')
+        .set('token', token)
+        .expect('Content-Type', 'text/html; charset=utf-8')
+        .expect(200)
+        .end((err, res) => {
+          if (err) return done(err)
+          expect(res.text).to.equal('Contacts emailed')
+          done()
+        })
+      } catch(e) {
+        console.error(e)
+      }
+  })
   it('should not update a contact with invalid email', done => {
     contact.email[0].address = randomWords()
     request(app)
@@ -135,6 +174,96 @@ describe('Contact positive tests', () => {
       .end((err, res) => {
         if (err) return done(err)
         expect(res.text).to.equal(`${contact.id} updated`)
+        done()
+      })
+  })
+  it('should add an entity to a contact', done => {
+    const entityIds = { entities: [{ id: entity.id, title: 'test' }] }
+    request(app)
+      .post(`/contact/link/${contact.id}`)
+      .set('Accept', 'application/json')
+      .set('token', token)
+      .send(entityIds)
+      .expect('Content-Type', 'text/html; charset=utf-8')
+      .expect(200)
+      .end((err, res) => {
+        if (err) return done(err)
+        expect(res.text).to.equal(`Linking successful/already exists for contact with ID ${contact.id}`)
+        done()
+      })
+  })
+  it('should not add an entity to a contact with invalid entity id', done => {
+    const entityIds = { entities: [{ id: uuid() }] }
+    request(app)
+      .post(`/contact/link/${contact.id}`)
+      .set('Accept', 'application/json')
+      .set('token', token)
+      .send(entityIds)
+      .expect('Content-Type', 'text/html; charset=utf-8')
+      .expect(400)
+      .end((err, res) => {
+        if (err) return done(err)
+        expect(res.text).to.equal(`Bad entities or contact id`)
+        done()
+      })
+  })
+  it('should not add an entity to a contact with invalid contact id', done => {
+    const entityIds = { entities: [{ id: uuid() }] }
+    request(app)
+      .post(`/contact/link/abc123`)
+      .set('Accept', 'application/json')
+      .set('token', token)
+      .send(entityIds)
+      .expect('Content-Type', 'text/html; charset=utf-8')
+      .expect(400)
+      .end((err, res) => {
+        if (err) return done(err)
+        expect(res.text).to.equal(`Bad Request`)
+        done()
+      })
+  })
+  it('should not remove an entity to a contact with invalid entity id', done => {
+    const entityIds = { entities: [{ id: uuid() }] }
+    request(app)
+      .post(`/contact/unlink/${contact.id}`)
+      .set('Accept', 'application/json')
+      .set('token', token)
+      .send(entityIds)
+      .expect('Content-Type', 'text/html; charset=utf-8')
+      .expect(400)
+      .end((err, res) => {
+        if (err) return done(err)
+        expect(res.text).to.equal(`Bad link sent`)
+        done()
+      })
+  })
+  it('should not add an entity to a contact with invalid contact id', done => {
+    const entityIds = { entities: [{ id: uuid() }] }
+    request(app)
+      .post(`/contact/unlink/abc123`)
+      .set('Accept', 'application/json')
+      .set('token', token)
+      .send(entityIds)
+      .expect('Content-Type', 'text/html; charset=utf-8')
+      .expect(400)
+      .end((err, res) => {
+        if (err) return done(err)
+        expect(res.text).to.equal(`Bad Request`)
+        done()
+      })
+  })
+  it('should unlink the entity and contact', done => {
+    const entityIds = { entities: [{ id: entity.id }] }
+    request(app)
+      .post(`/contact/unlink/${contact.id}`)
+      .set('Accept', 'application/json')
+      .set('token', token)
+      .send(entityIds)
+      .expect('Content-Type', 'text/html; charset=utf-8')
+      .expect(200)
+      .end((err, res) => {
+        if (err) return done(err)
+        expect(res.text).to.equal(`Unlinking successful for contact with ID ${contact.id}`)
         done()
       })
   })
@@ -239,20 +368,6 @@ describe('Contact positive tests', () => {
       .end((err, res) => {
         if (err) return done(err)
         expect(res.text).to.equal('Not Found')
-        done()
-      })
-  })
-  it('should not send emails', done => {
-    request(app)
-      .post(`/contact/send`)
-      .set('Accept', 'application/json')
-      .set('token', token)
-      .send(contact)
-      .expect('Content-Type', 'text/html; charset=utf-8')
-      .expect(400)
-      .end((err, res) => {
-        if (err) return done(err)
-        expect(res.text).to.equal(`No contacts to email`)
         done()
       })
   })

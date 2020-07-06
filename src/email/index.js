@@ -57,19 +57,17 @@ const sendForgotPassword = async (userEmail, resetPasswordToken) => {
 
 const sendContactCheckInEmail = async (info) => {
   try {
-    if (process.env.NODE_ENV === 'production' || process.env.TEST_EMAIL !== undefined && process.env.TEST_EMAIL === info.email) {
-      const entityLink = `${process.env.FRONT_END_URL}/checkin/${info.entityId}?token=${info.token}`
-      const emailTitle = `${info.entityName} Check In`
-      const emailContents = `Hello ${info.name}! It is time to update the status of ${info.entityName}. Please click the link below to check in.`
-      await sendMail(
-        info.email,
-        emailTitle,
-        nunjucks.render("contact_check_in_html.njk", { emailTitle, emailContents, entityLink }),
-        nunjucks.render("contact_check_in_text.njk", { emailTitle, emailContents, entityLink })
-      )
-      
-      return true
-    }
+    const entityLink = `${process.env.URL}/checkin/${info.entityId}?token=${info.token}`
+    const emailTitle = `${info.entityName} Check In`
+    const emailContents = `Hello ${info.name}! It is time to update the status of ${info.entityName}. Please click the link below to check in.`
+    await sendMail(
+      info.email,
+      emailTitle,
+      nunjucks.render("contact_check_in_html.njk", { emailTitle, emailContents, entityLink }),
+      nunjucks.render("contact_check_in_text.njk", { emailTitle, emailContents, entityLink })
+    )
+
+    return true
   } catch (e) {
     console.error(e)
   }

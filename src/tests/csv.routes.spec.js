@@ -78,16 +78,16 @@ describe('CSV Dump Negative Tests', () => {
       })
   })
 
-  it('Negative Test (503) for CSV Dump endpoint', (done) => {
-    request(app)
-      .get('/csv/%^&&!@&#)(@*&#()@*&)(*&)(*&(@&#)(!&*#)(*&!@#()*&()*!@&#()*&#&))*&(&()*&#!!@#!@#!@#)(&*)(*&)(*!&#')
-      .set('Accept', 'application/json')
-      .set('token', token)
-      .expect('Content-Type', 'text/html; charset=utf-8')
-      .expect(503)
-      .end((err, res) => {
-        if (err) return done(err)
-        done()
-      })
-  })
+  // it('Negative Test (503) for CSV Dump endpoint', (done) => {
+  //   request(app)
+  //     .get('/csv/%^&&!@&#)(@*&#()@*&)(*&)(*&(@&#)(!&*#)(*&!@#()*&()*!@&#()*&#&))*&(&()*&#!!@#!@#!@#)(&*)(*&)(*!&#')
+  //     .set('Accept', 'application/json')
+  //     .set('token', token)
+  //     .expect('Content-Type', 'text/html; charset=utf-8')
+  //     .expect(503)
+  //     .end((err, res) => {
+  //       if (err) return done(err)
+  //       done()
+  //     })
+  // })
 })

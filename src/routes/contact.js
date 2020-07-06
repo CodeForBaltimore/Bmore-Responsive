@@ -298,6 +298,8 @@ router.post('/link/:contact_id', async (req, res) => {
           id: req.params.contact_id
         }
       })
+
+      let i=0
       for (const entity of req.body.entities) {
         const entityToLink = await models.Entity.findOne({
           where: {
@@ -305,18 +307,27 @@ router.post('/link/:contact_id', async (req, res) => {
           }
         })
 
-        const ec = {
-          entityId: entityToLink.id,
-          contactId: contact.id,
+        if (contact !== null && entityToLink !== null) {
+          const ec = {
+            entityId: entityToLink.id,
+            contactId: contact.id,
+          }
+  
+          if (entity.title) {
+            ec.relationshipTitle = contact.title
+          }
+  
+          await models.EntityContact.createIfNew(ec)
+          i++
         }
-
-        if (entity.title) {
-          ec.relationshipTitle = contact.title
-        }
-
-        await models.EntityContact.createIfNew(ec)
       }
-      response.setMessage(`Linking successful/already exists for contact with ID ${contact.id}`)
+
+      if (i > 0) {
+        response.setMessage(`Linking successful/already exists for contact with ID ${contact.id}`)
+      } else {
+        response.setCode(400)
+        response.setMessage('Bad entities or contact id')
+      }
     } else {
       response.setCode(400)
     }
@@ -338,6 +349,8 @@ router.post('/unlink/:contact_id', async (req, res) => {
           id: req.params.contact_id
         }
       })
+
+      let i=0
       for (const entity of req.body.entities) {
         const entityToUnLink = await models.Entity.findOne({
           where: {
@@ -345,17 +358,25 @@ router.post('/unlink/:contact_id', async (req, res) => {
           }
         })
 
-        // ideally only one of these should exist
-        const ec = await models.EntityContact.findOne({
-          where: {
-            entityId: entityToUnLink.id,
-            contactId: contact.id
-          }
-        })
-
-        await ec.destroy()
+        if (contact !== null && entityToUnLink !== null) {
+          // ideally only one of these should exist
+          const ec = await models.EntityContact.findOne({
+            where: {
+              entityId: entityToUnLink.id,
+              contactId: contact.id
+            }
+          })
+  
+          await ec.destroy()
+          i++
+        }
       }
-      response.setMessage(`Unlinking successful for contact with ID ${contact.id}`)
+      if (i > 0) {
+        response.setMessage(`Unlinking successful for contact with ID ${contact.id}`)
+      } else {
+        response.setCode(400)
+        response.setMessage('Bad link sent')
+      }
     } else {
       response.setCode(400)
     }
