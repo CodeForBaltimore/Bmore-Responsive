@@ -1,312 +1,391 @@
-import { Router } from 'express';
-import validator from 'validator';
-import email from '../email';
-import utils from '../utils';
+import email from '../email'
+import models from '../models'
+import utils from '../utils'
+import validator from 'validator'
+import { Router } from 'express'
 
-const router = new Router();
+const router = new Router()
 router.use(utils.authMiddleware)
 
-// Gets all contacts.
+// Gets all or searches on all contacts.
 router.get('/', async (req, res) => {
-	let code;
-	let message;
-	try {
-		const contacts = await req.context.models.Contact.findAll({
-		});
+  const response = new utils.Response()
+  try {
+    const where = {}
+    const types = ['email', 'name', 'phone']
+    const jsonTypes = ['email', 'phone']
+    if (Object.keys(req.query).length > 0) {
+      if (req.query.type === undefined || req.query.value === undefined) {
+        response.setCode(400)
+        response.setMessage('Invalid query parameters')
+        return res.status(response.getCode()).send(response.getMessage())
+      }
+      if (types.indexOf(req.query.type) < 0) {
+        response.setCode(400)
+        response.setMessage('Invalid query type')
+        return res.status(response.getCode()).send(response.getMessage())
+      }
 
-		code = 200;
-		message = {
-			_meta: {
-				total: contacts.length
-			},
-			results: contacts
-		};
-	} catch (e) {
-		console.error(e);
-		code = 500;
-	}
+      if (jsonTypes.indexOf(req.query.type) > -1) {
+        /** @todo add Sequelize proper WHERE statement for traversing JSON */
+      } else {
+        where[req.query.type] = req.query.value
+      }
+    }
 
-	return utils.response(res, code, message);
-});
+    const contacts = await models.Contact.findAll({ where })
+
+    // Temp fix for JSON types and Sequelize.
+    let results = []
+    if (req.query.type === 'email') {
+      console.log(req.query.value)
+      for (const contact of contacts) {
+        for (const email of contact.email) {
+          if (email.address === req.query.value) {
+            results.push(contact)
+          }
+        }
+      }
+    }
+    if (req.query.type === 'phone') {
+      for (const contact of contacts) {
+        for (const phone of contact.phone) {
+          if (phone.number === req.query.value) {
+            results.push(contact)
+          }
+        }
+      }
+    }
+    if (jsonTypes.indexOf(req.query.type) < 0) results = contacts
+    // end temp solution
+
+    response.setMessage({
+      _meta: {
+        // total: contacts.length
+        total: Object.keys(results).length
+      },
+      // results: contacts
+      results
+    })
+  } catch (e) {
+    console.error(e)
+    response.setCode(500)
+  }
+
+  return res.status(response.getCode()).send(response.getMessage())
+})
 
 // Gets a specific contact.
 router.get('/:contact_id', async (req, res) => {
-	let code;
-	let message;
-	try {
-		if (validator.isUUID(req.params.contact_id)) {
-			const contact = await req.context.models.Contact.findContactWithAssociatedEntities(req.params.contact_id);
+  const response = new utils.Response()
+  try {
+    if (validator.isUUID(req.params.contact_id)) {
+      const contact = await models.Contact.findContactWithAssociatedEntities(req.params.contact_id)
 
-			code = 200;
-			message = contact;
-		} else {
-			code = 422;
-		}
-	} catch (e) {
-		console.error(e);
-		code = 500;
-	}
+      if (contact === null) {
+        response.setCode(404)
+      } else {
+        response.setMessage(contact)
+      }
+    } else {
+      response.setCode(400)
+      response.setMessage('Invalid UUID')
+    }
+  } catch (e) {
+    console.error(e)
+    response.setCode(500)
+  }
 
-	return utils.response(res, code, message);
-});
+  return res.status(response.getCode()).send(response.getMessage())
+})
 
 // Creates a new contact.
 router.post('/', async (req, res) => {
-	let code;
-	let message;
-	let contact;
-	let ec;
-	try {
-		if (req.body.name !== undefined && req.body.name !== '') {
-			const { name, phone, email, UserId, entities, attributes } = req.body;
+  const response = new utils.Response()
+  try {
+    if (req.body.name !== undefined && req.body.name !== '') {
+      const { name, phone, email, UserId, entities, attributes } = req.body
 
-			// Validating emails 
-			if (email) {
-				const goodEmail = utils.validateEmails(email);
-				if (!goodEmail) return utils.response(res, 422);
-			}
+      // Validating emails 
+      if (email) {
+        const goodEmail = await utils.validateEmails(email)
+        if (!goodEmail) {
+          response.setCode(400)
+          response.setMessage('Bad email')
+          return res.status(response.getCode()).send(response.getMessage())
+        }
+      }
 
-			contact = await req.context.models.Contact.create({ name, email, phone, UserId, attributes });
-			if (entities) {
-				for(const entity of entities) {
-					ec = {
-						entityId: entity.id,
-						contactId: contact.id
-					}
-					if (entity.title) {
-						ec.relationshipTitle = entity.title;
-					}
-					await req.context.models.EntityContact.createIfNew(ec);
-				}
-			}
+      const contact = await models.Contact.create({ name, email, phone, UserId, attributes })
+      let ec
 
-			code = 200;
-			message = contact.id + ' created';
-		} else {
-			code = 422;
-		}
-	} catch (e) {
-		console.error(e);
-		code = 500;
-	}
+      if (entities) {
+        for (const entity of entities) {
+          ec = {
+            entityId: entity.id,
+            contactId: contact.id
+          }
+          if (entity.title) {
+            ec.relationshipTitle = entity.title
+          }
+          await models.EntityContact.createIfNew(ec)
+        }
+      }
 
-	return utils.response(res, code, message);
-});
+      response.setCode(201)
+      response.setMessage(contact.id + ' created')
+      response.setHeaders({
+        Location: `${req.protocol}://${req.get('host')}/contact/${contact.id}`
+      })
+    } else {
+      response.setCode(400)
+    }
+  } catch (e) {
+    console.error(e)
+    response.setCode(500)
+  }
+
+  if (response.getHeaders() !== null) res.set(response.getHeaders())
+  return res.status(response.getCode()).send(response.getMessage())
+})
 
 // Sends emails to contacts based on body
 router.post('/send', async (req, res) => {
-	let code;
-	let message;
-	const emails = [];
+  const response = new utils.Response()
+  try {
+    /** @todo allow for passing entity and contact arrays */
+    const emails = []
+    const { entityIds, contactIds, relationshipTitle } = req.body
 
-	try {
-		/** @todo allow for passing entity and contact arrays */
-		const { entityIds, contactIds, relationshipTitle } = req.body;
-		
-		if (entityIds === undefined && contactIds === undefined) {
-			const whereClause = (relationshipTitle !== undefined) ? {where: {relationshipTitle}} : {};
-			const associations = await req.context.models.EntityContact.findAll(whereClause);
+    if (entityIds === undefined && contactIds === undefined) {
+      const whereClause = (relationshipTitle !== undefined) ? { where: { relationshipTitle } } : {}
+      const associations = await models.EntityContact.findAll(whereClause)
 
-			for (const association of associations) {
-				const contact = await req.context.models.Contact.findById(association.contactId);
+      if (associations.length < 1) {
+        response.setCode(400)
+        response.setMessage('No contacts to email')
+        return res.status(response.getCode()).send(response.getMessage())
+      }
 
-				if (contact.email !== null) {
-					const entity = await req.context.models.Entity.findById(association.entityId);
-					// short-lived temporary token that only lasts one hour
-					const temporaryToken = await utils.getToken(contact.id, contact.email[0].address, 'contact');
+      for (const association of associations) {
+        const contact = await models.Contact.findById(association.contactId)
 
-					emails.push({
-						email: contact.email[0].address,
-						name: contact.name,
-						entityName: entity.name,
-						entityId: association.entityId,
-						relationshipTitle: association.relationshipTitle,
-						token: temporaryToken
-					});
-				}
-			}
-		}
+        if (contact.email !== null) {
+          const entity = await models.Entity.findById(association.entityId)
+          // short-lived temporary token that only lasts one hour
+          const temporaryToken = await utils.getToken(contact.id, contact.email[0].address, 'contact')
 
-		emails.forEach(async (e) => {
-			email.sendContactCheckInEmail(e);
-		})
+          emails.push({
+            email: contact.email[0].address,
+            name: contact.name,
+            entityName: entity.name,
+            entityId: association.entityId,
+            relationshipTitle: association.relationshipTitle,
+            token: temporaryToken
+          })
+        }
+      }
+    }
 
-		code = 200;
-		message = 'contacts emailed';
-	} catch (e) {
-		console.error(e);
-		code = 500;
-	}
+    emails.forEach(async (e) => {
+      email.sendContactCheckInEmail(e)
+    })
 
-	return utils.response(res, code, message);
-});
+    response.setMessage('Contacts emailed')
+  } catch (e) {
+    console.error(e)
+    response.setCode(500)
+  }
+
+  return res.status(response.getCode()).send(response.getMessage())
+})
 
 // Updates any contact.
 router.put('/', async (req, res) => {
-	let code;
-	let message;
-	let ec;
-	try {
-		if (validator.isUUID(req.body.id)) {
-			const { id, name, phone, email, UserId, entities, attributes } = req.body;
+  const response = new utils.Response()
+  try {
+    if (validator.isUUID(req.body.id)) {
+      const { id, name, phone, email, UserId, entities, attributes } = req.body
 
-			// Validating emails 
-			if (email) {
-				const goodEmail = await utils.validateEmails(email);
-				if (!goodEmail) return utils.response(res, 422);
-			}
+      const contact = await models.Contact.findOne({
+        where: {
+          id: id
+        }
+      })
 
-			const contact = await req.context.models.Contact.findOne({
-				where: {
-					id: id
-				}
-			});
+      if (!contact) {
+        response.setCode(404)
+        return res.status(response.getCode()).send(response.getMessage())
+      }
 
-			if (!contact) return utils.response(res, 400, message);
+      // Validating emails 
+      if (email) {
+        const goodEmail = await utils.validateEmails(email)
+        if (!goodEmail) {
+          response.setCode(400)
+          response.setMessage('Bad email')
+          return res.status(response.getCode()).send(response.getMessage())
+        }
+      }
 
-			contact.name = (name) ? name : contact.name;
-			contact.phone = (phone) ? phone : contact.phone;
-			contact.email = (email) ? email : contact.email;
-			contact.UserId = (UserId) ? UserId : contact.UserId;
-			contact.updatedAt = new Date();
-			contact.attributes = (attributes) ? attributes : contact.attributes
+      contact.name = (name) ? name : contact.name
+      contact.phone = (phone) ? phone : contact.phone
+      contact.email = (email) ? email : contact.email
+      contact.UserId = (UserId) ? UserId : contact.UserId
+      contact.updatedAt = new Date()
+      contact.attributes = (attributes) ? attributes : contact.attributes
 
-			await contact.save();
+      await contact.save()
+      let ec
 
-			if (entities) {
-				for(const entity of entities) {
-					ec = {
-						entityId: entity.id,
-						contactId: contact.id
-					}
-					if (entity.title) {
-						ec.relationshipTitle = entity.title;
-					}
-					await req.context.models.EntityContact.createIfNew(ec);
-				}
-			}
+      if (entities) {
+        for (const entity of entities) {
+          ec = {
+            entityId: entity.id,
+            contactId: contact.id
+          }
+          if (entity.title) {
+            ec.relationshipTitle = entity.title
+          }
+          await models.EntityContact.createIfNew(ec)
+        }
+      }
 
-			code = 200;
-			message = contact.id + ' updated';
-		} else {
-			code = 422;
-		}
-	
-	} catch (e) {
-		console.error(e);
-		code = 500;
-	}
+      response.setMessage(contact.id + ' updated')
+    } else {
+      response.setCode(400)
+    }
 
-	return utils.response(res, code, message);
-});
+  } catch (e) {
+    console.error(e)
+    response.setCode(500)
+  }
+
+  return res.status(response.getCode()).send(response.getMessage())
+})
 
 // Deletes a contact.
 router.delete('/:contact_id', async (req, res) => {
-	let code;
-	let message;
-	try {
-		if (validator.isUUID(req.params.contact_id)) {
-			const contact = await req.context.models.Contact.findOne({
-				where: {
-					id: req.params.contact_id
-				}
-			});
-			await contact.destroy();
+  const response = new utils.Response()
+  try {
+    if (validator.isUUID(req.params.contact_id)) {
+      const contact = await models.Contact.findOne({
+        where: {
+          id: req.params.contact_id
+        }
+      })
+      await contact.destroy()
 
-			code = 200;
-			message = req.params.contact_id + ' deleted';
-		} else {
-			code = 422;
-		}
-	} catch (e) {
-		console.error(e);
-		code = 500;
-	}
+      response.setMessage(req.params.contact_id + ' deleted')
+    } else {
+      response.setCode(400)
+    }
+  } catch (e) {
+    console.error(e)
+    response.setCode(500)
+  }
 
-	return utils.response(res, code, message);
-});
+  return res.status(response.getCode()).send(response.getMessage())
+})
 
 // links contact with list of entities
 router.post('/link/:contact_id', async (req, res) => {
-	let code;
-	let message;
-	try {
-		if (validator.isUUID(req.params.contact_id)) {
-			const contact = await req.context.models.Contact.findOne({
-				where: {
-					id: req.params.contact_id
-				}
-			});
-			for(const entity of req.body.entities) {
-				const entityToLink = await req.context.models.Entity.findOne({
-					where: {
-						id: entity.id
-					}
-				});
+  const response = new utils.Response()
+  try {
+    if (validator.isUUID(req.params.contact_id)) {
+      const contact = await models.Contact.findOne({
+        where: {
+          id: req.params.contact_id
+        }
+      })
 
-				const ec = {
-					entityId: entityToLink.id,
-					contactId: contact.id,
-				};
+      let i=0
+      for (const entity of req.body.entities) {
+        const entityToLink = await models.Entity.findOne({
+          where: {
+            id: entity.id
+          }
+        })
 
-				if (entity.title) {
-					ec.relationshipTitle = contact.title;
-				}
-				
-				await req.context.models.EntityContact.createIfNew(ec);
-			}
-			message = `Linking successful/already exists for contact with ID ${contact.id}`;
-			code = 200;
-		} else {
-			code = 422;
-		}
-	} catch (e) {
-		console.error(e);
-		code = 500;
-	}
+        if (contact !== null && entityToLink !== null) {
+          const ec = {
+            entityId: entityToLink.id,
+            contactId: contact.id,
+          }
+  
+          if (entity.title) {
+            ec.relationshipTitle = contact.title
+          }
+  
+          await models.EntityContact.createIfNew(ec)
+          i++
+        }
+      }
 
-	return utils.response(res, code, message);
-});
+      if (i > 0) {
+        response.setMessage(`Linking successful/already exists for contact with ID ${contact.id}`)
+      } else {
+        response.setCode(400)
+        response.setMessage('Bad entities or contact id')
+      }
+    } else {
+      response.setCode(400)
+    }
+  } catch (e) {
+    console.error(e)
+    response.setCode(500)
+  }
+
+  return res.status(response.getCode()).send(response.getMessage())
+})
 
 // unlinks contact with list of entities
 router.post('/unlink/:contact_id', async (req, res) => {
-	let code;
-	let message;
-	try {
-		if (validator.isUUID(req.params.contact_id)) {
-			const contact = await req.context.models.Contact.findOne({
-				where: {
-					id: req.params.contact_id
-				}
-			});
-			for(const entity of req.body.entities) {
-				const entityToUnLink = await req.context.models.Entity.findOne({
-					where: {
-						id: entity.id
-					}
-				});
+  const response = new utils.Response()
+  try {
+    if (validator.isUUID(req.params.contact_id)) {
+      const contact = await models.Contact.findOne({
+        where: {
+          id: req.params.contact_id
+        }
+      })
 
-				// ideally only one of these should exist
-				const ec = await req.context.models.EntityContact.findOne({
-					where: {
-						entityId: entityToUnLink.id,
-						contactId: contact.id
-					}
-				});
+      let i=0
+      for (const entity of req.body.entities) {
+        const entityToUnLink = await models.Entity.findOne({
+          where: {
+            id: entity.id
+          }
+        })
 
-				await ec.destroy();
-			}
-			message = `Unlinking successful for contact with ID ${contact.id}`;
-			code = 200;
-		} else {
-			code = 422;
-		}
-	} catch (e) {
-		console.error(e);
-		code = 500;
-	}
+        if (contact !== null && entityToUnLink !== null) {
+          // ideally only one of these should exist
+          const ec = await models.EntityContact.findOne({
+            where: {
+              entityId: entityToUnLink.id,
+              contactId: contact.id
+            }
+          })
+  
+          await ec.destroy()
+          i++
+        }
+      }
+      if (i > 0) {
+        response.setMessage(`Unlinking successful for contact with ID ${contact.id}`)
+      } else {
+        response.setCode(400)
+        response.setMessage('Bad link sent')
+      }
+    } else {
+      response.setCode(400)
+    }
+  } catch (e) {
+    console.error(e)
+    response.setCode(500)
+  }
 
-	return utils.response(res, code, message);
-});
+  return res.status(response.getCode()).send(response.getMessage())
+})
 
-export default router;
+export default router

@@ -1,4 +1,4 @@
-import { UUIDV4 } from "sequelize";
+import { UUIDV4 } from "sequelize"
 
 const entityContact = (sequelize, DataTypes) => {
     // Defining our EntityContact object.
@@ -30,7 +30,7 @@ const entityContact = (sequelize, DataTypes) => {
         },
         {
             schema: process.env.DATABASE_SCHEMA
-        });
+        })
 
     EntityContact.createIfNew = async (ec) => {
         let whereQuery = { 
@@ -38,11 +38,11 @@ const entityContact = (sequelize, DataTypes) => {
             contactId: ec.contactId,
         }
         if (ec.relationshipTitle) {
-            whereQuery.relationshipTitle = ec.relationshipTitle;
+            whereQuery.relationshipTitle = ec.relationshipTitle
         }
         const ecObject = await EntityContact.findOne({
             where: whereQuery
-        });
+        })
         if (!ecObject) {
             await EntityContact.create(ec)
         }
@@ -51,12 +51,12 @@ const entityContact = (sequelize, DataTypes) => {
     EntityContact.findByEntityId = async (entityId) => {
         const entries = await EntityContact.findAll({
             where: {entityId}
-        });
+        })
 
-        return entries;
+        return entries
     }
 
-    return EntityContact;
-};
+    return EntityContact
+}
 
 export default entityContact;

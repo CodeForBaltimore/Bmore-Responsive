@@ -1,60 +1,78 @@
-import { Router } from 'express';
-import validator from 'validator';
-import utils from '../utils';
+import { Router } from 'express'
+import validator from 'validator'
+import utils from '../utils'
 
-const router = new Router();
-router.use(utils.authMiddleware);
+const router = new Router()
+router.use(utils.authMiddleware)
 
-// Gets all entities.
+// Gets all or searches on all entities.
 router.get('/', async (req, res) => {
-	let code;
-	let message;
+  const response = new utils.Response()
 	try {
-		const entities = await req.context.models.Entity.findAll();
+    const where = {}
+    const types = ['name', 'type']
 
-		code = 200;
-		message = {
+    if (Object.keys(req.query).length > 0) {
+      if (req.query.type === undefined || req.query.value === undefined) {
+        response.setCode(400)
+        response.setMessage('Invalid query parameters')
+        return res.status(response.getCode()).send(response.getMessage())
+      }
+      if (types.indexOf(req.query.type) < 0) {
+        response.setCode(400)
+        response.setMessage('Invalid query type')
+        return res.status(response.getCode()).send(response.getMessage())
+      }
+
+      where[req.query.type] = req.query.value
+    }
+
+		const entities = await req.context.models.Entity.findAll({ where })
+
+		response.setMessage({
 			_meta: {
 				total: entities.length
 			},
 			results: entities
-		};
+		})
 	} catch (e) {
-		console.error(e);
-		code = 500;
+		console.error(e)
+		response.setCode(500)
 	}
 
-	return utils.response(res, code, message);
-});
+	return res.status(response.getCode()).send(response.getMessage())
+})
 
 // Gets a specific entity.
 router.get('/:entity_id', async (req, res) => {
-	let code;
-	let message;
+  const response = new utils.Response()
 	try {
 		if (validator.isUUID(req.params.entity_id)) {
-			const entity = await req.context.models.Entity.findEntityWithAssociatedContacts(req.params.entity_id);
+			const entity = await req.context.models.Entity.findEntityWithAssociatedContacts(req.params.entity_id)
 
-			code = 200;
-			message = entity;
+			if (entity === null) {
+        response.setCode(404)
+      } else {
+        response.setMessage(entity)
+      }
 		} else {
-			code = 422;
+			response.setCode(400)
+      response.setMessage('Invalid UUID')
 		}
 	} catch (e) {
-		console.error(e);
-		code = 500;
+		console.error(e)
+		response.setCode(500)
 	}
 
-	return utils.response(res, code, message);
-});
+	return res.status(response.getCode()).send(response.getMessage())
+})
 
 // Creates a new entity.
 router.post('/', async (req, res) => {
-	let code;
-	let message;
+  const response = new utils.Response()
 	try {
 		if (req.body.name !== undefined && req.body.name !== '' && req.body.type !== undefined && req.body.type !== '') {
-			let { name, type, address, phone, email, checkIn, contacts } = req.body;
+			let { name, type, address, phone, email, checkIn, contacts } = req.body
 
 			if (!checkIn) {
 				checkIn = {
@@ -65,7 +83,7 @@ router.post('/', async (req, res) => {
 				}
 			}
 
-			const entity = await req.context.models.Entity.create({ name, type, address, email, phone, checkIn });
+			const entity = await req.context.models.Entity.create({ name, type, address, email, phone, checkIn })
 			if (contacts) {
 				for(const contact of contacts) {
 					const ec = {
@@ -73,48 +91,56 @@ router.post('/', async (req, res) => {
 						contactId: contact.id
 					}
 					if (contact.title) {
-						ec.relationshipTitle = contact.title;
+						ec.relationshipTitle = contact.title
 					}
-					await req.context.models.EntityContact.createIfNew(ec);
+					await req.context.models.EntityContact.createIfNew(ec)
 				}
 			}
 
-			code = 200;
-			message = entity.id + ' created';
+			response.setCode(201)
+			response.setMessage(entity.id + ' created')
+      response.setHeaders({
+        Location: `${req.protocol}://${req.get('host')}/entity/${entity.id}`
+      })
 		} else {
-			code = 422;
+			response.setCode(400)
 		}
 	} catch (e) {
-		console.error(e);
-		code = 500;
+		console.error(e)
+		response.setCode(500)
 	}
 
-	return utils.response(res, code, message);
-});
+  if (response.getHeaders() !== null) res.set(response.getHeaders())
+	return res.status(response.getCode()).send(response.getMessage())
+})
 
 // Updates any entity.
 router.put('/', async (req, res) => {
-	let code;
-	let message;
+  const response = new utils.Response()
 	try {
 		if (validator.isUUID(req.body.id)) {
-			let { id, name, type, address, phone, email, checkIn, contacts } = req.body;
+			let { id, name, type, address, phone, email, checkIn, contacts } = req.body
 
 			/** @todo validate emails */
 			// Validating emails 
-			// if (await !utils.validateEmails(email)) res.status(500).send('Server error');
+			// if (await !utils.validateEmails(email)) res.status(500).send('Server error')
 
 			let entity = await req.context.models.Entity.findOne({
 				where: {
 					id: id
 				}
-			});
+			})
 
-			entity.name = (name) ? name : entity.name;
-			entity.type = (type) ? type : entity.type;
-			entity.address = (address) ? address : entity.address;
-			entity.phone = (phone) ? phone : entity.phone;
-			entity.email = (email) ? email : entity.email;
+      if (!entity) {
+        response.setCode(404)
+        return res.status(response.getCode()).send(response.getMessage())
+      }
+
+			entity.name = (name) ? name : entity.name
+			entity.type = (type) ? type : entity.type
+			entity.address = (address) ? address : entity.address
+			entity.phone = (phone) ? phone : entity.phone
+			entity.email = (email) ? email : entity.email
 			/** @todo validate checkIn JSON */
 			if (entity.checkIn === null && checkIn) {
 				const checkIns = {
@@ -126,10 +152,10 @@ router.put('/', async (req, res) => {
 					]
 				}
 
-				entity.checkIn = checkIns;
+				entity.checkIn = checkIns
 			} else if (entity.checkIn !== null && checkIn) {
-				let checkIns = entity.checkIn.checkIns;
-				checkIns.push(checkIn);
+				let checkIns = entity.checkIn.checkIns
+				checkIns.push(checkIn)
 				let total = entity.checkIn._meta.total + 1
 
 				const update = {
@@ -139,12 +165,12 @@ router.put('/', async (req, res) => {
 					checkIns: checkIns
 				}
 
-				entity.checkIn = update;
+				entity.checkIn = update
 			}
 
-			entity.updatedAt = new Date();
+			entity.updatedAt = new Date()
 
-			await entity.save();
+			await entity.save()
 
 			if (contacts) {
 				for(const contact of contacts) {
@@ -153,112 +179,108 @@ router.put('/', async (req, res) => {
 						contactId: contact.id
 					}
 					if (contact.title) {
-						ec.relationshipTitle = contact.title;
+						ec.relationshipTitle = contact.title
 					}
-					await req.context.models.EntityContact.createIfNew(ec);
+					await req.context.models.EntityContact.createIfNew(ec)
 				}
 			}
 
-			code = 200;
-			message = entity.id + ' updated';
+			response.setMessage(entity.id + ' updated')
 		} else {
-			code = 422;
+			response.setCode(400)
 		}
 	
 	} catch (e) {
-		console.error(e);
-		code = 500;
+		console.error(e)
+		response.setCode(500)
 	}
 
-	return utils.response(res, code, message);
-});
+	return res.status(response.getCode()).send(response.getMessage())
+})
 
 // Deletes a entity.
 router.delete('/:entity_id', async (req, res) => {
-	let code;
-	let message;
+  const response = new utils.Response()
 	try {
 		if (validator.isUUID(req.params.entity_id)) {
 			const entity = await req.context.models.Entity.findOne({
 				where: {
 					id: req.params.entity_id
 				}
-			});
-			await entity.destroy();
+			})
+			await entity.destroy()
 
-			code = 200;
-			message = req.params.entity_id + ' deleted';
+			
+			response.setMessage(req.params.entity_id + ' deleted')
 		} else {
-			code = 422;
+			response.setCode(400)
 		}
 	} catch (e) {
-		console.error(e);
-		code = 500;
+		console.error(e)
+		response.setCode(500)
 	}
 
-	return utils.response(res, code, message);
-});
+	return res.status(response.getCode()).send(response.getMessage())
+})
 
 // links entity with list of contacts
 router.post('/link/:entity_id', async (req, res) => {
-	let code;
-	let message;
+  const response = new utils.Response()
 	try {
 		if (validator.isUUID(req.params.entity_id)) {
 			const entity = await req.context.models.Entity.findOne({
 				where: {
 					id: req.params.entity_id
 				}
-			});
+			})
 			for(const contact of req.body.contacts) {
 				const contactToLink = await req.context.models.Contact.findOne({
 					where: {
 						id: contact.id
 					}
-				});
+				})
 
 				const ec = {
 					entityId: entity.id,
 					contactId: contactToLink.id
-				};
-
-				if (contact.title) {
-					ec.relationshipTitle = contact.title;
 				}
 
-				await req.context.models.EntityContact.createIfNew(ec);
+				if (contact.title) {
+					ec.relationshipTitle = contact.title
+				}
+
+				await req.context.models.EntityContact.createIfNew(ec)
 			}
-			message = `Linking successful/already exists for entity with ID ${entity.id}`;
-			code = 200;
+			response.setMessage(`Linking successful/already exists for entity with ID ${entity.id}`)
+			
 		} else {
-			code = 422;
+			response.setCode(400)
 		}
 	} catch (e) {
-		console.error(e);
-		code = 500;
+		console.error(e)
+		response.setCode(500)
 	}
 
-	return utils.response(res, code, message);
-});
+	return res.status(response.getCode()).send(response.getMessage())
+})
 
 // unlinks entity with list of contacts
 router.post('/unlink/:entity_id', async (req, res) => {
-	let code;
-	let message;
+  const response = new utils.Response()
 	try {
 		if (validator.isUUID(req.params.entity_id)) {
 			const entity = await req.context.models.Entity.findOne({
 				where: {
 					id: req.params.entity_id
 				}
-			});
+			})
 
 			for(const contact of req.body.contacts) {
 				const contactToUnLink = await req.context.models.Contact.findOne({
 					where: {
 						id: contact.id
 					}
-				});
+				})
 
 				// ideally only one of these should exist
 				const ec = await req.context.models.EntityContact.findOne({
@@ -266,21 +288,21 @@ router.post('/unlink/:entity_id', async (req, res) => {
 						entityId: entity.id,
 						contactId: contactToUnLink.id
 					}
-				});
+				})
 
-				await ec.destroy();
+				await ec.destroy()
 			}
-			message = `Unlinking successful for entity with ID ${entity.id}`;
-			code = 200;
+			response.setMessage(`Unlinking successful for entity with ID ${entity.id}`)
+			
 		} else {
-			code = 422;
+			response.setCode(400)
 		}
 	} catch (e) {
-		console.error(e);
-		code = 500;
+		console.error(e)
+		response.setCode(500)
 	}
 
-	return utils.response(res, code, message)
-});
+	return res.status(response.getCode()).send(response.getMessage())
+})
 
-export default router;
+export default router

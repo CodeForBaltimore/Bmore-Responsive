@@ -24,6 +24,10 @@ If you want to deploy to AWS, we have included a `terraform` option. For more in
 
 <TODO: Consider migrating terraform docs to be here or do some sort of INCLUDE to reuse the content>  
 
+## SMTP
+
+To send emails with the system you will need to setup your SMTP sever and set the relevant `SMTP_*` variables. For testing we recommend using [Ethereal](https://ethereal.email/)
+
 ## Running in Docker
 
 You can build and run the application in Docker locally by running the following commands:

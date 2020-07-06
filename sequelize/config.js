@@ -1,6 +1,7 @@
 require('dotenv').config();
 const fs = require('fs');
 const rdsCa = fs.readFileSync('./rds-combined-ca-bundle.pem');
+const utils = require('../src/utils');
 
 module.exports = {
 	development: {
