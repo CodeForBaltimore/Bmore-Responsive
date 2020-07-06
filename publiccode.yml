@@ -3,7 +3,7 @@ publiccodeYmlVersion: "0.2"
 name: Bmore-Responsive
 url: "https://github.com/CodeForBaltimore/Bmore-Responsive.git"
 landingUrl: "https://github.com/CodeForBaltimore/Bmore-Responsive"
-softwareVersion: "1.2.0"   
+softwareVersion: "1.3.0"   
 releaseDate: "2020-04-06"
 platforms:
   - web

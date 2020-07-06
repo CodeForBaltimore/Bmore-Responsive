@@ -1,10 +1,11 @@
-import chai from 'chai';
-import request from 'supertest';
-import randomWords from 'random-words';
-import { Login } from '../utils/login';
-import app from '..';
+import chai from 'chai'
+import request from 'supertest'
+import randomWords from 'random-words'
+import uuid from 'uuid4'
+import { Login } from '../utils/login'
+import app from '..'
 
-const { expect } = chai;
+const { expect } = chai
 const contact = {
   name: randomWords(),
   phone: [
@@ -16,36 +17,55 @@ const contact = {
     {
       address: `${randomWords()}@test.test`
     }
-  ]
-};
+  ],
+  entities: []
+}
+const entity = {
+  name: randomWords(),
+  type: 'Test'
+}
 
-describe('Contact positive tests', () => {
-  const authed = new Login();
-  let token;
+describe('Contact tests', () => {
+  const authed = new Login()
+  let token
 
   before(async () => {
-    await authed.setToken();
-    token = authed.getToken();
-  });
-  after(async () => {
-    await authed.destroyToken();
-  });
+    await authed.setToken()
+    token = await authed.getToken()
 
-  it('should create a contact', (done) => {
-    request(app)
-      .post('/contact')
+    const entityResponse = await request(app)
+      .post('/entity')
+      .send(entity)
+      .set('Accept', 'application/json')
+      .set('token', token)
+      .expect('Content-Type', 'text/html; charset=utf-8')
+      .expect(201)
+
+    entity.id = entityResponse.text.replace(' created', '')
+    contact.entities.push({ id: entity.id, title: 'test' })
+  })
+  after(async () => {
+    await request(app)
+      .delete(`/entity/${entity.id}`)
+      .set('Accept', 'application/json')
+      .set('token', token)
+      .expect('Content-Type', 'text/html; charset=utf-8')
+      .expect(200)
+    await authed.destroyToken()
+  })
+
+  it('should create a contact', async () => {
+    const response = await request(app)
+    .post('/contact')
       .set('Accept', 'application/json')
       .set('token', token)
       .send(contact)
       .expect('Content-Type', 'text/html; charset=utf-8')
-      .expect(200)
-      .end((err, res) => {
-        if (err) return done(err);
-        // expect(res.text).to.equal(`${contact.name} created`);
-        done();
-      });
-  });
-  it('should get all contacts', (done) => {
+      .expect(201)
+
+    contact.id = response.text.replace(' created', '')
+  })
+  it('should get all contacts', done => {
     request(app)
       .get(`/contact`)
       .set('Accept', 'application/json')
@@ -53,64 +73,345 @@ describe('Contact positive tests', () => {
       .expect('Content-Type', 'application/json; charset=utf-8')
       .expect(200)
       .end((err, res) => {
-        if (err) return done(err);
-        expect(res.body._meta.total).to.be.greaterThan(0);
-        done();
-      });
-  });
-});
-
-describe('Contact negative tests', () => {
-  it('should not create a contact', (done) => {
+        if (err) return done(err)
+        expect(res.body._meta.total).to.be.greaterThan(0)
+        done()
+      })
+  })
+  it('should search on all contacts by name', done => {
     request(app)
-      .post('/contact')
+      .get(`/contact?type=name&value=${contact.name}`)
       .set('Accept', 'application/json')
-      .send({ name: '' })
-      .expect('Content-Type', 'text/html; charset=utf-8')
-      .expect(422)
+      .set('token', token)
+      .expect('Content-Type', 'application/json; charset=utf-8')
+      .expect(200)
       .end((err, res) => {
-        if (err) return done(err);
-        expect(res.text).to.equal('Invalid input')
-        done();
-      });
-  });
-  it('should not get a single contact', (done) => {
+        if (err) return done(err)
+        expect(res.body._meta.total).to.be.greaterThan(0)
+        done()
+      })
+  })
+  it('should search on all contacts by email', done => {
     request(app)
-      .get(`/contact/${contact.email}`)
+      .get(`/contact?type=email&value=${contact.email[0].address}`)
       .set('Accept', 'application/json')
-      .expect(422)
+      .set('token', token)
+      .expect('Content-Type', 'application/json; charset=utf-8')
+      .expect(200)
       .end((err, res) => {
-        if (err) return done(err);
-        expect(res.body.email).to.be.an('undefined');
-        done();
-      });
-  });
-  it('should not update a contact', (done) => {
-    contact.email = randomWords();
-    contact.id = randomWords();
+        if (err) return done(err)
+        expect(res.body._meta.total).to.be.greaterThan(0)
+        done()
+      })
+  })
+  it('should search on all contacts by phone', done => {
+    request(app)
+      .get(`/contact?type=phone&value=${contact.phone[0].number}`)
+      .set('Accept', 'application/json')
+      .set('token', token)
+      .expect('Content-Type', 'application/json; charset=utf-8')
+      .expect(200)
+      .end((err, res) => {
+        if (err) return done(err)
+        expect(res.body._meta.total).to.be.greaterThan(0)
+        done()
+      })
+  })
+  it('should get a single contact', done => {
+    request(app)
+      .get(`/contact/${contact.id}`)
+      .set('Accept', 'application/json')
+      .set('token', token)
+      .expect('Content-Type', 'application/json; charset=utf-8')
+      .expect(200)
+      .end((err, res) => {
+        if (err) return done(err)
+        expect(res.body.name).to.equal(contact.name)
+        done()
+      })
+  })
+  it('Sending email to entity contacts', done => {
+    try {
+      request(app)
+        .post('/contact/send')
+        .set('Accept', 'application/json')
+        .set('token', token)
+        .expect('Content-Type', 'text/html; charset=utf-8')
+        .expect(200)
+        .end((err, res) => {
+          if (err) return done(err)
+          expect(res.text).to.equal('Contacts emailed')
+          done()
+        })
+      } catch(e) {
+        console.error(e)
+      }
+  })
+  it('should not update a contact with invalid email', done => {
+    contact.email[0].address = randomWords()
     request(app)
       .put('/contact')
       .set('Accept', 'application/json')
+      .set('token', token)
       .send(contact)
       .expect('Content-Type', 'text/html; charset=utf-8')
-      .expect(422)
+      .expect(400)
       .end((err, res) => {
-        if (err) return done(err);
-        expect(res.text).to.equal(`Invalid input`);
-        done();
-      });
-  });
-  it('should not delete a contact', (done) => {
-    contact.email = randomWords();
+        if (err) return done(err)
+        expect(res.text).to.equal('Bad email')
+        done()
+      })
+  })
+  it('should update a contact', done => {
+    contact.email[0].address = `${randomWords()}@test.test`
+    request(app)
+      .put(`/contact`)
+      .set('Accept', 'application/json')
+      .set('token', token)
+      .send(contact)
+      .expect('Content-Type', 'text/html; charset=utf-8')
+      .expect(200)
+      .end((err, res) => {
+        if (err) return done(err)
+        expect(res.text).to.equal(`${contact.id} updated`)
+        done()
+      })
+  })
+  it('should add an entity to a contact', done => {
+    const entityIds = { entities: [{ id: entity.id, title: 'test' }] }
+    request(app)
+      .post(`/contact/link/${contact.id}`)
+      .set('Accept', 'application/json')
+      .set('token', token)
+      .send(entityIds)
+      .expect('Content-Type', 'text/html; charset=utf-8')
+      .expect(200)
+      .end((err, res) => {
+        if (err) return done(err)
+        expect(res.text).to.equal(`Linking successful/already exists for contact with ID ${contact.id}`)
+        done()
+      })
+  })
+  it('should not add an entity to a contact with invalid entity id', done => {
+    const entityIds = { entities: [{ id: uuid() }] }
+    request(app)
+      .post(`/contact/link/${contact.id}`)
+      .set('Accept', 'application/json')
+      .set('token', token)
+      .send(entityIds)
+      .expect('Content-Type', 'text/html; charset=utf-8')
+      .expect(400)
+      .end((err, res) => {
+        if (err) return done(err)
+        expect(res.text).to.equal(`Bad entities or contact id`)
+        done()
+      })
+  })
+  it('should not add an entity to a contact with invalid contact id', done => {
+    const entityIds = { entities: [{ id: uuid() }] }
+    request(app)
+      .post(`/contact/link/abc123`)
+      .set('Accept', 'application/json')
+      .set('token', token)
+      .send(entityIds)
+      .expect('Content-Type', 'text/html; charset=utf-8')
+      .expect(400)
+      .end((err, res) => {
+        if (err) return done(err)
+        expect(res.text).to.equal(`Bad Request`)
+        done()
+      })
+  })
+  it('should not remove an entity to a contact with invalid entity id', done => {
+    const entityIds = { entities: [{ id: uuid() }] }
+    request(app)
+      .post(`/contact/unlink/${contact.id}`)
+      .set('Accept', 'application/json')
+      .set('token', token)
+      .send(entityIds)
+      .expect('Content-Type', 'text/html; charset=utf-8')
+      .expect(400)
+      .end((err, res) => {
+        if (err) return done(err)
+        expect(res.text).to.equal(`Bad link sent`)
+        done()
+      })
+  })
+  it('should not add an entity to a contact with invalid contact id', done => {
+    const entityIds = { entities: [{ id: uuid() }] }
+    request(app)
+      .post(`/contact/unlink/abc123`)
+      .set('Accept', 'application/json')
+      .set('token', token)
+      .send(entityIds)
+      .expect('Content-Type', 'text/html; charset=utf-8')
+      .expect(400)
+      .end((err, res) => {
+        if (err) return done(err)
+        expect(res.text).to.equal(`Bad Request`)
+        done()
+      })
+  })
+  it('should unlink the entity and contact', done => {
+    const entityIds = { entities: [{ id: entity.id }] }
+    request(app)
+      .post(`/contact/unlink/${contact.id}`)
+      .set('Accept', 'application/json')
+      .set('token', token)
+      .send(entityIds)
+      .expect('Content-Type', 'text/html; charset=utf-8')
+      .expect(200)
+      .end((err, res) => {
+        if (err) return done(err)
+        expect(res.text).to.equal(`Unlinking successful for contact with ID ${contact.id}`)
+        done()
+      })
+  })
+  it('Positive Test for CSV Dump on Contact', (done) => {
+    request(app)
+      .get('/csv/Contact')
+      .set('Accept', 'application/json')
+      .set('token', token)
+      .expect('Content-Type', 'text/html; charset=utf-8')
+      .expect(200)
+      .end((err, res) => {
+        if (err) return done(err)
+        done()
+      })
+  })
+  it('should delete a contact', done => {
+    request(app)
+      .delete(`/contact/${contact.id}`)
+      .set('Accept', 'application/json')
+      .set('token', token)
+      .expect('Content-Type', 'text/html; charset=utf-8')
+      .expect(200)
+      .end((err, res) => {
+        if (err) return done(err)
+        expect(res.text).to.equal(`${contact.id} deleted`)
+        done()
+      })
+  })
+
+  it('should not create a contact with null name', done => {
+    request(app)
+      .post('/contact')
+      .set('Accept', 'application/json')
+      .set('token', token)
+      .send({ name: '' })
+      .expect('Content-Type', 'text/html; charset=utf-8')
+      .expect(400)
+      .end((err, res) => {
+        if (err) return done(err)
+        expect(res.text).to.equal('Bad Request')
+        done()
+      })
+  })
+  it('should not create a contact with invalid email', done => {
+    request(app)
+      .post('/contact')
+      .set('Accept', 'application/json')
+      .set('token', token)
+      .send({ name: randomWords(), email: [{address: randomWords()}] })
+      .expect('Content-Type', 'text/html; charset=utf-8')
+      .expect(400)
+      .end((err, res) => {
+        if (err) return done(err)
+        expect(res.text).to.equal('Bad email')
+        done()
+      })
+  })
+  it('should not search for contacts with bad param types', done => {
+    request(app)
+      .get(`/contact?test=test`)
+      .set('Accept', 'application/json')
+      .set('token', token)
+      .expect('Content-Type', 'text/html; charset=utf-8')
+      .expect(400)
+      .end((err, res) => {
+        if (err) return done(err)
+        expect(res.text).to.equal('Invalid query parameters')
+        done()
+      })
+  })
+  it('should not search for contacts with bad param values', done => {
+    request(app)
+      .get(`/contact?type=test&value=test`)
+      .set('Accept', 'application/json')
+      .set('token', token)
+      .expect('Content-Type', 'text/html; charset=utf-8')
+      .expect(400)
+      .end((err, res) => {
+        if (err) return done(err)
+        expect(res.text).to.equal('Invalid query type')
+        done()
+      })
+  })
+  it('should not get a single contact with invalid UUID', done => {
+    request(app)
+      .get(`/contact/${contact.email}`)
+      .set('Accept', 'application/json')
+      .set('token', token)
+      .expect(400)
+      .end((err, res) => {
+        if (err) return done(err)
+        expect(res.body.email).to.be.an('undefined')
+        done()
+      })
+  })
+  it('should not get a single contact with valid UUID', done => {
+    request(app)
+      .get(`/contact/${uuid()}`)
+      .set('Accept', 'application/json')
+      .set('token', token)
+      .expect(404)
+      .end((err, res) => {
+        if (err) return done(err)
+        expect(res.text).to.equal('Not Found')
+        done()
+      })
+  })
+  it('should not update a contact without valid UUID', done => {
+    contact.id = randomWords()
+    request(app)
+      .put('/contact')
+      .set('Accept', 'application/json')
+      .set('token', token)
+      .send(contact)
+      .expect('Content-Type', 'text/html; charset=utf-8')
+      .expect(400)
+      .end((err, res) => {
+        if (err) return done(err)
+        expect(res.text).to.equal(`Bad Request`)
+        done()
+      })
+  })
+  it('should not update a single contact with valid UUID', done => {
+    contact.id = uuid()
+    request(app)
+      .put(`/contact`)
+      .set('Accept', 'application/json')
+      .set('token', token)
+      .send(contact)
+      .expect(404)
+      .end((err, res) => {
+        if (err) return done(err)
+        expect(res.text).to.equal('Not Found')
+        done()
+      })
+  })
+  it('should not delete a contact', done => {
+    contact.email = randomWords()
     request(app)
       .delete(`/contact/${contact.email}`)
       .set('Accept', 'application/json')
+      .set('token', token)
       .expect('Content-Type', 'text/html; charset=utf-8')
-      .expect(422)
+      .expect(400)
       .end((err, res) => {
-        if (err) return done(err);
-        expect(res.text).to.equal(`Invalid input`);
-        done();
-      });
-  });
-});
+        if (err) return done(err)
+        expect(res.text).to.equal(`Bad Request`)
+        done()
+      })
+  })
+})
