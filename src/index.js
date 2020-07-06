@@ -8,7 +8,6 @@ import nunjucks from 'nunjucks'
 import requestId from 'express-request-id'
 import rateLimit from 'express-rate-limit'
 import routes from './routes'
-import serveIndex from 'serve-index'
 import swaggerDocument from '../swagger.json'
 import swaggerUi from 'swagger-ui-express'
 import utils from './utils'
@@ -20,7 +19,7 @@ const swaggerOptions = {
 }
 const apiLimiter = rateLimit({
 	windowMs: 15 * 60 * 1000, // 15 minutes
-	max: 1000
+	max: 100
 })
 
 nunjucks.configure('mail_templates', { autoescape: true })
@@ -38,7 +37,8 @@ if (process.env.NODE_ENV === 'production') app.use(apiLimiter)
 // Custom middleware
 app.use(async (req, res, next) => {
 	req.context = {
-    models
+    models,
+    // e: await utils.loadCasbin()
 	}
 
 	next()

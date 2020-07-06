@@ -79,6 +79,11 @@ class Login {
     
     const e = await utils.loadCasbin()
     await e.addRoleForUser(this.user.email.toLowerCase(), this.role)
+    // await models.UserRole.create({
+    //   ptype: 'g',
+    //   v0: this.email.toLowerCase(),
+    //   v1: this.role
+    // })
   }
 
   /**
@@ -93,6 +98,15 @@ class Login {
 
     const e = await utils.loadCasbin()
     await e.deleteRolesForUser(this.user.email.toLowerCase())
+    // const roles = await models.UserRole.findAll({
+    //   where: {
+    //     v0: this.email.toLowerCase()
+    //   }
+    // })
+
+    // for (const role of roles) {
+    //   await role.destroy()
+    // }
 
     await user.destroy()
   }

@@ -33,7 +33,7 @@ const sequelize = new Sequelize(
 	{
 		logging: false,
 		dialect: 'postgres',
-		dialectOptions: dialectOptions
+		dialectOptions
 	}
 )
 const basename = path.basename(__filename)

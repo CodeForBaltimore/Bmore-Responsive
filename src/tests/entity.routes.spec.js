@@ -177,7 +177,7 @@ describe('Entity positive tests', () => {
         done()
       })
   })
-  it('should not get a single contact with valid UUID', done => {
+  it('should not get a single entity with valid UUID', done => {
     request(app)
       .get(`/entity/${uuid()}`)
       .set('Accept', 'application/json')

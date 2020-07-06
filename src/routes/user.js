@@ -8,7 +8,7 @@ const router = new Router()
 const max = (process.env.NODE_ENV !== 'production') ? 50000 : 5
 const loginLimiter = rateLimit({
 	windowMs: 60 * 60 * 1000,
-	max: max,
+	max,
 	message: "Too many login attempts for this IP. Please try again later."
 })
 
@@ -149,7 +149,12 @@ router.post('/', utils.authMiddleware, async (req, res) => {
 			if (roles !== undefined) {
 				const e = await utils.loadCasbin()
 				for (const role of roles) {
-					await e.addRoleForUser(email.toLowerCase(), role)
+          await e.addRoleForUser(email.toLowerCase(), role)
+          // await req.context.models.UserRole.create({
+          //   ptype: 'g',
+          //   v0: email.toLowerCase(),
+          //   v1: role
+          // })
 				}
 			}
 			
@@ -233,8 +238,16 @@ router.delete('/:email', utils.authMiddleware, async (req, res) => {
 			})
 
 			const e = await utils.loadCasbin()
-			await e.deleteRolesForUser(req.params.email.toLowerCase())
+      await e.deleteRolesForUser(req.params.email.toLowerCase())
+      // const roles = await req.context.models.UserRole.findAll({
+      //   where: {
+      //     v0: req.params.email.toLowerCase()
+      //   }
+      // })
 
+      // for (const role of roles) {
+      //   await role.destroy()
+      // }
 
 			await user.destroy()
 
