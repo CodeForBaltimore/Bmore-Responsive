@@ -15,6 +15,12 @@ Bmore-Responsive provides the following primary features via a secure REST API:
 - User account and role management to enable secure authentication and authorization
 - Export of any data via CSV
 
+## Getting Started
+
+For information on how to get started using this product visit our documentation Wiki at https://codeforbaltimore.github.io/Bmore-Responsive/
+- [Quick Start](https://codeforbaltimore.github.io/Bmore-Responsive/QuickStart/)
+- [Slow Start](https://codeforbaltimore.github.io/Bmore-Responsive/SlowStart/)
+
 # Sources and Links
 We are also building a front-end application called [Healthcare Rollcall](https://github.com/CodeForBaltimore/Healthcare-Rollcall) to interact with this backend API. To view that project, or to contribute to it, please visit the repo here: https://github.com/CodeForBaltimore/Healthcare-Rollcall
 
