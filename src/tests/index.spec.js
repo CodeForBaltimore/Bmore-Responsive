@@ -64,7 +64,7 @@ describe('API Integration Tests', () => {
 				if (err) {
 					console.error(`IT version error: ${err}`)
 				}
-				expect(res.statusCode).to.equal(200)
+				expect(res.statusCode).to.equal(302)
 				done()
 			})
 	})

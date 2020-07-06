@@ -7,7 +7,7 @@
     "doc": "docs"
   },
   "scripts": {
-    "start": "mkdocs build --clean && nodemon --exec babel-node src/index.js",
+    "start": "nodemon --exec babel-node src/index.js",
     "test": "nyc mocha --require @babel/register --require @babel/polyfill \"src/tests/**/*.spec.js\" --exit",
     "lint": "xo --ignore **/*.spec.js",
     "format": "xo --fix --ignore **/*.spec.js",

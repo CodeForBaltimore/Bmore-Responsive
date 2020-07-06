@@ -45,8 +45,11 @@ app.use(async (req, res, next) => {
 })
 
 // Helper endpoints
+app.get('/', (req, res) => {
+	res.redirect('/api-docs')
+})
 app.get('/help', (req, res) => {
-	res.redirect('/')
+	res.redirect('/api-docs')
 })
 app.use('/api-docs', apiLimiter, swaggerUi.serve, swaggerUi.setup(swaggerDocument, swaggerOptions))
 app.use('/health', (req, res) => {
@@ -68,7 +71,6 @@ const docsLimit= rateLimit({
 	windowMs: 15 * 60 * 1000, // 15 minutes
 	max: 100000
 })
-app.use('/', docsLimit, express.static('site'), serveIndex('site'))
 
 // Handle 404
 app.use((req, res) => {
