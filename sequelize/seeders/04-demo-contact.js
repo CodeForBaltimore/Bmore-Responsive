@@ -1,20 +1,20 @@
-const uuid = require('uuid4');
-const randomWords = require('random-words');
-const contacts = require('../data/contact.json');
+const uuid = require('uuid4')
+const randomWords = require('random-words')
+const contacts = require('../data/contact.json')
 
 module.exports = {
 	up: async queryInterface => {
 		for (const element of contacts) {
-			const id = uuid();
+			const id = uuid()
 			
-			element.id = id;
-			element.createdAt = new Date();
-			element.updatedAt = new Date();
-			element.email = JSON.stringify(element.email);
-			element.phone = JSON.stringify(element.phone);
+			element.id = id
+			element.createdAt = new Date()
+			element.updatedAt = new Date()
+			element.email = JSON.stringify(element.email)
+			element.phone = JSON.stringify(element.phone)
 		}
 
-		let i = 0;
+		let i = 0
 		do {
 			const entityNames = [
 				"Springfield Bowlorama",
@@ -40,8 +40,8 @@ module.exports = {
 				"Springfield Tire Yard",
 				"The Murderhorn",
 				"Nuclear Lake"
-			];
-			let name = randomWords();
+			]
+			let name = randomWords()
 
 			let contact = {
 				id: uuid(),
@@ -60,15 +60,15 @@ module.exports = {
 					isPrimary: true
 				  }
 				])
-			};
+			}
 
-			contacts.push(contact);
-			i++;
-		} while (i < 18);
+			contacts.push(contact)
+			i++
+		} while (i < 18)
 
-		return queryInterface.bulkInsert('Contacts', contacts);
+		return queryInterface.bulkInsert('Contacts', contacts)
 	},
 	down: queryInterface => {
-		return queryInterface.bulkDelete('Contacts', null, {});
+		return queryInterface.bulkDelete('Contacts', null, {})
 	}
-};
+}

@@ -27,14 +27,14 @@ data "template_file" "cfb_ecs_task_definition" {
   vars = {
     image_address        = module.ecs_cluster.cfb_registry
     s3_bucket            = module.s3.output_bucket_name
-    vue_app_base_api_url = "bmoreres.codeforbaltimore.org"
+    vue_app_base_api_url = var.api_url
     node_env             = "production"
     database_host        = module.db.this_db_instance_address
     database_user        = module.db.this_db_instance_username
     //    database_password_arn = aws_secretsmanager_secret_version.db_password.arn
     database_port     = module.db.this_db_instance_port
     database_name     = "healthcareRollcallDB"
-    jwt_key           = "abc123"
+    jwt_key           = var.jwt_key
     bypass_login      = "false"
     aws_region        = var.aws_region
     database_password = var.db_password
@@ -141,7 +141,7 @@ module "asg" {
   min_size               = 3
   max_size               = 6
   instance_count         = 3
-  instance_type          = "t3.medium"
+  instance_type          = "t2.micro"
   user_data              = data.template_file.user_data.rendered
   cluster_name           = "bmore-responsive-cluster"
   subnet_ids             = module.vpc.subnet_ids
@@ -153,7 +153,7 @@ module "db" {
   source                 = "../../modules/db"
   resource_suffix        = random_pet.random_pet.id
   engine_version         = "10.6"
-  instance_class         = "db.t3.medium"
+  instance_class         = "db.t2.small"
   username               = "cfb_user"
   password               = var.db_password
   port                   = "5432"
