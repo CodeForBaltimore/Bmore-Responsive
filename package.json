@@ -1,6 +1,6 @@
 {
   "name": "bmore-responsive",
-  "version": "1.2.0",
+  "version": "1.3.1",
   "description": "An API-driven CRM (Civic Relationship Management) system.",
   "main": "src/index.js",
   "directories": {
@@ -15,8 +15,6 @@
     "db-delete": "sequelize db:migrate:undo:all",
     "db-seed": "sequelize db:seed:all",
     "db-unseed": "sequelize db:seed:undo:all",
-    "contributors:add": "all-contributors add",
-    "contributors:generate": "all-contributors generate",
     "snyk-protect": "snyk protect",
     "prepare": "npm run snyk-protect"
   },
@@ -58,7 +56,7 @@
     "nunjucks": "^3.2.1",
     "pg": "7.18.2",
     "random-words": "1.1.1",
-    "sequelize": "5.21.11",
+    "sequelize": "5.21.12",
     "snyk": "^1.332.1",
     "supertest": "4.0.2",
     "swagger-ui-express": "4.1.4",

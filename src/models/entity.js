@@ -1,5 +1,5 @@
-import { UUIDV4 } from "sequelize";
-import models from "./index";
+import { UUIDV4 } from "sequelize"
+import models from "./index"
 
 const entity = (sequelize, DataTypes) => {
     // Defining our entity table and setting Entity object.
@@ -38,7 +38,7 @@ const entity = (sequelize, DataTypes) => {
     },
     {
         schema: process.env.DATABASE_SCHEMA
-    });
+    })
 
     Entity.associate = models => {
         Entity.belongsToMany(models.Contact, {
@@ -46,33 +46,33 @@ const entity = (sequelize, DataTypes) => {
             as: "contacts",
             foreignKey: "entityId",
             otherKey: "contactId"
-        });
+        })
     }
 
     Entity.findById = async (id) => {
         const entity = await Entity.findOne({
             where: { id }
-        });
+        })
         
-        return entity;
-    };
+        return entity
+    }
 
     Entity.findByName = async (name) => {
         const entity = await Entity.findOne({
             where: { name }
-        });
+        })
         
-        return entity;
-    };
+        return entity
+    }
 
     Entity.findContacts = async (id) => {
         const entity = await Entity.findOne({
             where: { id }
-        });
+        })
 
-        const contacts = await entity.getContacts();
+        const contacts = await entity.getContacts()
 
-        return contacts;
+        return contacts
     }
 
     Entity.findEntityWithAssociatedContacts = async (entityId) => {
@@ -89,12 +89,12 @@ const entity = (sequelize, DataTypes) => {
                     attributes: ["relationshipTitle"]
                 }
             }]
-        });
+        })
 
-        return entityContacts;
-    };
+        return entityContacts
+    }
 
-    return Entity;
-};
+    return Entity
+}
 
 export default entity;

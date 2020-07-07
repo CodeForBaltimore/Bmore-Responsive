@@ -43,6 +43,7 @@ technologies:
 - [Node.js](https://nodejs.org/en/)
 - [Express.js](https://expressjs.com/)
 - [Sequelize](https://sequelize.org/v3/)
+- [Casbin](https://casbin.org/en/)
 - [Docker](https://www.docker.com/)
 - [Terraform](https://www.terraform.io/)
 
