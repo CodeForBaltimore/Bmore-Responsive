@@ -14,6 +14,16 @@ variable "smtp_password" {
   default = null
 }
 
+variable "jwt_key" {
+  type    = string
+  default = "abc123"
+}
+
+variable "api_url" {
+  type    = string
+  default = null
+}
+
 variable "public_hosted_zone_name" {}
 
 variable "waf_whitelist_cidrs" {

@@ -6,7 +6,7 @@
   } ],
   "info" : {
     "description" : "An emergency response and contact management API.",
-    "version" : "1.2.0",
+    "version" : "1.3.1",
     "title" : "Bmore Responsive",
     "contact" : {
       "email" : "hello@codeforbaltimore.org"
@@ -1038,7 +1038,7 @@
       },
       "get" : {
         "tags" : [ "contact" ],
-        "summary" : "returns all system contacts",
+        "summary" : "returns all, or searched for, system contacts",
         "description" : "By passing in the appropriate options, you can search for\navailable contacts in the system\n",
         "parameters" : [ {
           "in" : "header",
@@ -1048,6 +1048,30 @@
             "type" : "string",
             "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
           }
+        }, {
+          "in" : "query",
+          "name" : "type",
+          "schema" : {
+            "type" : "string",
+            "example" : "email"
+          },
+          "description" : "The type of field you are searching on"
+        }, {
+          "in" : "query",
+          "name" : "value",
+          "schema" : {
+            "type" : "string",
+            "example" : "ned.flanders@leftorium.com"
+          },
+          "description" : "The value you are searching for"
+        }, {
+          "in" : "query",
+          "name" : "limit",
+          "schema" : {
+            "type" : "integer",
+            "example" : 10
+          },
+          "description" : "The maximum number of values you want returned"
         } ],
         "responses" : {
           "200" : {
