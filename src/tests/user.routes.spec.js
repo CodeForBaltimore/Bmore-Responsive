@@ -3,11 +3,12 @@ import request from 'supertest'
 import randomWords from 'random-words'
 import { Login } from '../utils/login'
 import app from '..'
+import { random } from 'lodash'
 
 const { expect } = chai
 const user = { email: `${randomWords()}@test.test`, password: `Abcdefg42!`, roles: ["admin"] }
 
-describe('User positive tests', () => {
+describe('User tests', () => {
   const authed = new Login()
   let token
 
@@ -19,6 +20,32 @@ describe('User positive tests', () => {
     await authed.destroyToken()
   })
 
+  it('should not login', (done) => {
+    request(app)
+      .post('/user/login')
+      .send({ email: `${randomWords()}@test.test`, password: `Abcdefg12!` })
+      .set('Accept', 'application/json')
+      .expect('Content-Type', 'text/html; charset=utf-8')
+      .expect(403)
+      .end((err, res) => {
+        if (err) return done(err)
+        expect(res.text).to.equal(`Forbidden`)
+        done()
+      })
+  })
+  it('should not login with invalid email', (done) => {
+    request(app)
+      .post('/user/login')
+      .send({ email: randomWords(), password: `Abcdefg12!` })
+      .set('Accept', 'application/json')
+      .expect('Content-Type', 'text/html; charset=utf-8')
+      .expect(400)
+      .end((err, res) => {
+        if (err) return done(err)
+        expect(res.text).to.equal(`Bad Request`)
+        done()
+      })
+  })
   it('should get all users', (done) => {
     request(app)
       .get(`/user`)
@@ -61,7 +88,6 @@ describe('User positive tests', () => {
         done()
       })
   })
-  //          Test will need some more work.
   it('should update a user', (done) => {
     user.displayName = randomWords()
     request(app)
@@ -74,6 +100,45 @@ describe('User positive tests', () => {
       .end((err, res) => {
         if (err) return done(err)
         expect(res.text).to.equal(`${user.email} updated`)
+        done()
+      })
+  })
+  it('should request a reset of the password', (done) => {
+    request(app)
+      .post(`/user/reset/${user.email}`)
+      .send(user)
+      .set('Accept', 'application/json')
+      .expect('Content-Type', 'text/html; charset=utf-8')
+      .expect(200)
+      .end((err, res) => {
+        if (err) return done(err)
+        expect(res.text).to.equal(`Password reset email sent`)
+        done()
+      })
+  })
+  it('should request a reset of the password even with invalid email', (done) => {
+    request(app)
+      .post(`/user/reset/${randomWords()}@test.test`)
+      .send(user)
+      .set('Accept', 'application/json')
+      .expect('Content-Type', 'text/html; charset=utf-8')
+      .expect(200)
+      .end((err, res) => {
+        if (err) return done(err)
+        expect(res.text).to.equal(`Password reset email sent`)
+        done()
+      })
+  })
+  it('should not request a reset of the password with invalid email format', (done) => {
+    request(app)
+      .post(`/user/reset/${randomWords()}`)
+      .send(user)
+      .set('Accept', 'application/json')
+      .expect('Content-Type', 'text/html; charset=utf-8')
+      .expect(400)
+      .end((err, res) => {
+        if (err) return done(err)
+        expect(res.text).to.equal(`Bad Request`)
         done()
       })
   })

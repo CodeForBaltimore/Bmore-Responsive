@@ -65,16 +65,6 @@ const entity = (sequelize, DataTypes) => {
         return entity
     }
 
-    Entity.findContacts = async (id) => {
-        const entity = await Entity.findOne({
-            where: { id }
-        })
-
-        const contacts = await entity.getContacts()
-
-        return contacts
-    }
-
     Entity.findEntityWithAssociatedContacts = async (entityId) => {
         const entityContacts = await Entity.findOne({
             where: { id: entityId },
