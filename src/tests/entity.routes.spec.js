@@ -9,7 +9,10 @@ const { expect } = chai
 const entity = {
   name: randomWords(),
   type: 'Test',
-  contacts: []
+  contacts: [],
+  attributes: {
+    notes: 'test'
+  }
 }
 const contact = {
   name: randomWords(),
