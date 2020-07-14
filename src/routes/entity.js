@@ -119,7 +119,7 @@ router.put('/', async (req, res) => {
   const response = new utils.Response()
 	try {
 		if (validator.isUUID(req.body.id)) {
-			let { id, name, type, address, phone, email, checkIn, contacts } = req.body
+			let { id, name, type, address, phone, email, checkIn, contacts, attributes } = req.body
 
 			/** @todo validate emails */
 			// Validating emails 
@@ -140,7 +140,8 @@ router.put('/', async (req, res) => {
 			entity.type = (type) ? type : entity.type
 			entity.address = (address) ? address : entity.address
 			entity.phone = (phone) ? phone : entity.phone
-			entity.email = (email) ? email : entity.email
+      entity.email = (email) ? email : entity.email
+      entity.attributes = (attributes) ? attributes : entity.attributes
 			/** @todo validate checkIn JSON */
 			if (entity.checkIn === null && checkIn) {
 				const checkIns = {
