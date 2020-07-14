@@ -27,6 +27,11 @@
     },
     {
         "role": "user",
+        "path": "/entity/*",
+        "method": "GET"
+    },
+    {
+        "role": "user",
         "path": "/entity",
         "method": "POST"
     },
@@ -38,6 +43,11 @@
     {
         "role": "user",
         "path": "/contact",
+        "method": "GET"
+    },
+    {
+        "role": "user",
+        "path": "/contact/*",
         "method": "GET"
     },
     {

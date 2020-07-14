@@ -8,18 +8,52 @@ import app from '..'
 const { expect } = chai
 const entity = {
   name: randomWords(),
-  type: 'Test'
+  type: 'Test',
+  contacts: [],
+  attributes: {
+    notes: 'test'
+  }
+}
+const contact = {
+  name: randomWords(),
+  phone: [
+    {
+      number: (Math.floor(Math.random() * Math.floor(100000000000))).toString()
+    }
+  ],
+  email: [
+    {
+      address: `${randomWords()}@test.test`
+    }
+  ]
 }
 
-describe('Entity positive tests', () => {
+describe('Entity tests', () => {
   const authed = new Login()
   let token
 
   before(async () => {
     await authed.setToken()
     token = await authed.getToken()
+
+    const contactResponse = await request(app)
+      .post('/contact')
+      .set('Accept', 'application/json')
+      .set('token', token)
+      .send(contact)
+      .expect('Content-Type', 'text/html; charset=utf-8')
+      .expect(201)
+
+    contact.id = contactResponse.text.replace(' created', '')
+    entity.contacts.push({ id: contact.id, title: 'test' })
   })
   after(async () => {
+    await request(app)
+      .delete(`/contact/${contact.id}`)
+      .set('Accept', 'application/json')
+      .set('token', token)
+      .expect('Content-Type', 'text/html; charset=utf-8')
+      .expect(200)
     await authed.destroyToken()
   })
 
@@ -88,6 +122,7 @@ describe('Entity positive tests', () => {
   })
   it('should update an entity', done => {
     entity.name = randomWords()
+    entity.checkIn = { test: 'test' }
     request(app)
       .put(`/entity`)
       .set('Accept', 'application/json')
@@ -98,6 +133,69 @@ describe('Entity positive tests', () => {
       .end((err, res) => {
         if (err) return done(err)
         expect(res.text).to.equal(`${entity.id} updated`)
+        done()
+      })
+  })
+  it('should add an contact to an entity', done => {
+    const contactIds = { contacts: [{ id: contact.id, title: 'test' }] }
+    request(app)
+      .post(`/entity/link/${entity.id}`)
+      .set('Accept', 'application/json')
+      .set('token', token)
+      .send(contactIds)
+      .expect('Content-Type', 'text/html; charset=utf-8')
+      .expect(200)
+      .end((err, res) => {
+        if (err) return done(err)
+        expect(res.text).to.equal(`Linking successful/already exists for entity with ID ${entity.id}`)
+        done()
+      })
+  })
+  it('should not add an contact to an entity', done => {
+    const contactIds = { contacts: [{ id: uuid() }] }
+    request(app)
+      .post(`/entity/link/abc123`)
+      .set('Accept', 'application/json')
+      .set('token', token)
+      .send(contactIds)
+      .expect('Content-Type', 'text/html; charset=utf-8')
+      .expect(400)
+      .end((err, res) => {
+        if (err) return done(err)
+        expect(res.text).to.equal(`Bad Request`)
+        done()
+      })
+  })
+
+
+
+  it('should remove a contact from an entity', done => {
+    const contactIds = { contacts: [{ id: contact.id, title: 'test' }] }
+    request(app)
+      .post(`/entity/unlink/${entity.id}`)
+      .set('Accept', 'application/json')
+      .set('token', token)
+      .send(contactIds)
+      .expect('Content-Type', 'text/html; charset=utf-8')
+      .expect(200)
+      .end((err, res) => {
+        if (err) return done(err)
+        expect(res.text).to.equal(`Unlinking successful for entity with ID ${entity.id}`)
+        done()
+      })
+  })
+  it('should not remove a contact from an entity', done => {
+    const contactIds = { contacts: [{ id: uuid() }] }
+    request(app)
+      .post(`/entity/unlink/abc123`)
+      .set('Accept', 'application/json')
+      .set('token', token)
+      .send(contactIds)
+      .expect('Content-Type', 'text/html; charset=utf-8')
+      .expect(400)
+      .end((err, res) => {
+        if (err) return done(err)
+        expect(res.text).to.equal(`Bad Request`)
         done()
       })
   })
