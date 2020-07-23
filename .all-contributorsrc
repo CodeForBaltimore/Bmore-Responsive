@@ -162,6 +162,15 @@
       "contributions": [
         "infra"
       ]
+    },
+    {
+      "login": "mschechter-bellese",
+      "name": "Michael Schechter",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/61873300?v=4",
+      "profile": "https://bellese.io/",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
