@@ -31,35 +31,48 @@ const formatTime = seconds => {
   return pad(hours) + ':' + pad(minutes) + ':' + pad(secs)
 }
 
+// Reusable adapter for database connection reuse
+var adapter
+
 /**
  * Loads Casbin for role validation
  * 
  * @returns {Object}
  */
 const loadCasbin = async () => {
-  const a = (process.env.NODE_ENV === 'production') ? await SequelizeAdapter.newAdapter({
-    database: process.env.DATABASE_NAME,
-    username: process.env.DATABASE_USERNAME,
-    password: process.env.DATABASE_PASSWORD,
-    host: process.env.DATABASE_HOST,
-    logging: false,
-    dialect: 'postgres',
-    dialectOptions: {
+  if (!adapter) {
+    adapter = (process.env.NODE_ENV === 'production') ? await SequelizeAdapter.newAdapter({
+      database: process.env.DATABASE_NAME,
+      username: process.env.DATABASE_USERNAME,
+      password: process.env.DATABASE_PASSWORD,
+      port: process.env.DATABASE_PORT,
+      host: process.env.DATABASE_HOST,
       logging: false,
-      ssl: {
-        rejectUnauthorized: true,
-        ca: [rdsCa],
-        checkServerIdentity: (host, cert) => {
-          const error = tls.checkServerIdentity(host, cert)
-          if (error && !cert.subject.CN.endsWith('.rds.amazonaws.com')) {
-            return error
+      dialect: 'postgres',
+      dialectOptions: {
+        logging: false,
+        ssl: {
+          rejectUnauthorized: true,
+          ca: [rdsCa],
+          checkServerIdentity: (host, cert) => {
+            const error = tls.checkServerIdentity(host, cert)
+            if (error && !cert.subject.CN.endsWith('.rds.amazonaws.com')) {
+              return error
+            }
           }
         }
       }
-    }
-  }) : await SequelizeAdapter.newAdapter(dbUrl())
+    }) : await SequelizeAdapter.newAdapter({
+      database: process.env.DATABASE_NAME,
+      username: process.env.DATABASE_USERNAME,
+      password: process.env.DATABASE_PASSWORD,
+      port: process.env.DATABASE_PORT,
+      host: process.env.DATABASE_HOST,
+      dialect: 'postgres'
+    })
+  }
 
-  return await newEnforcer(casbinConf, a)
+  return await newEnforcer(casbinConf, adapter)
 }
 
 /**
@@ -247,24 +260,14 @@ const processResults = async (results, modelType) => {
   }
 }
 
-const dbUrl = () => {
-  if (process.env.DATABASE_URL) {
-    return process.env.DATABASE_URL
-  } else {
-    return `postgres://${process.env.DATABASE_USERNAME}:${process.env.DATABASE_PASSWORD}@${process.env.DATABASE_HOST}:${process.env.DATABASE_PORT}/${process.env.DATABASE_NAME}`
-  }
-}
-
 export default {
   authMiddleware,
-  dbUrl,
   encryptPassword,
   formatTime,
   getToken,
   loadCasbin,
   processResults,
   Response,
-  // response,
   validateEmails,
   validatePassword
 }

@@ -6,7 +6,6 @@ import tls from 'tls'
 import utils from '../utils'
 
 const rdsCa = fs.readFileSync('./rds-combined-ca-bundle.pem')
-const dbUrl = utils.dbUrl()
 
 // Securing our db connection if prod
 /** @todo allow other options besides RDS */
@@ -29,9 +28,13 @@ if (process.env.NODE_ENV === 'production') {
 
 // Initializes the database.
 const sequelize = new Sequelize(
-	dbUrl,
 	{
-		logging: false,
+		database: process.env.DATABASE_NAME,
+		username: process.env.DATABASE_USERNAME,
+		password: process.env.DATABASE_PASSWORD,
+		port: process.env.DATABASE_PORT,
+		host: process.env.DATABASE_HOST,
+  	    logging: false,
 		dialect: 'postgres',
 		dialectOptions
 	}
