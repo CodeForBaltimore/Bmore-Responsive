@@ -41,19 +41,10 @@ var adapter
  */
 const loadCasbin = async () => {
   if (!adapter) {
-    // Initialize with common options
-    const options = {
-      database: process.env.DATABASE_NAME,
-      username: process.env.DATABASE_USERNAME,
-      password: process.env.DATABASE_PASSWORD,
-      port: process.env.DATABASE_PORT,
-      host: process.env.DATABASE_HOST,
-      dialect: 'postgres'}
 
-    // Update with production options if needed
+    let dialectOptions
     if (process.env.NODE_ENV === 'production') {
-      options.logging = false
-      options.dialectOptions = {
+      dialectOptions = {
         logging: false,
         ssl: {
           rejectUnauthorized: true,
@@ -68,7 +59,16 @@ const loadCasbin = async () => {
       }
     }
 
-    adapter = await SequelizeAdapter.newAdapter(options);
+    adapter = await SequelizeAdapter.newAdapter({
+      database: process.env.DATABASE_NAME,
+      username: process.env.DATABASE_USERNAME,
+      password: process.env.DATABASE_PASSWORD,
+      port: process.env.DATABASE_PORT,
+      host: process.env.DATABASE_HOST,
+      logging: process.env.NODE_ENV === 'production',
+      dialect: 'postgres',
+      dialectOptions
+    });
   }
 
   return await newEnforcer(casbinConf, adapter)
@@ -148,13 +148,13 @@ const authMiddleware = async (req, res, next) => {
 }
 
 /**
-	 * Salts and hashes a password.
-	 *
-	 * @param {String} password The unhashed or salted password.
-	 * @param {String} salt The password salt for this user.
-	 *
-	 * @return {String} The secured password.
-	 */
+   * Salts and hashes a password.
+   *
+   * @param {String} password The unhashed or salted password.
+   * @param {String} salt The password salt for this user.
+   *
+   * @return {String} The secured password.
+   */
 const encryptPassword = (password, salt) => {
   return crypto
     .createHash('RSA-SHA256')
