@@ -3,7 +3,6 @@ import path from 'path'
 import fs from 'fs'
 import _ from 'lodash'
 import tls from 'tls'
-import utils from '../utils'
 
 const rdsCa = fs.readFileSync('./rds-combined-ca-bundle.pem')
 
