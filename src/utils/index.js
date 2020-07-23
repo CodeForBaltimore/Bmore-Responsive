@@ -72,12 +72,13 @@ const loadCasbin = async () => {
  *
  * @return {Boolean}
  */
-
 const validateToken = async req => {
   /** @todo check if it is a token at all */
-  if (req.headers.token) {
+  var authHeader = req.headers['authorization'] || ''
+  var authToken = authHeader.split(/\s+/).pop() || req.headers.token
+  if (authToken) {
     try {
-      const decoded = jwt.verify(req.headers.token, process.env.JWT_KEY)
+      const decoded = jwt.verify(authToken, process.env.JWT_KEY)
       const now = new Date()
       if (now.getTime() < decoded.exp * 1000) {
         const user = (decoded.type === 'contact') ? await req.context.models.Contact.findById(decoded.userId) : await req.context.models.User.findByPk(decoded.userId)

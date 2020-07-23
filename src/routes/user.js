@@ -20,7 +20,6 @@ router.post('/login', loginLimiter, async (req, res) => {
 		if (validator.isEmail(email)) {
 			const token = await req.context.models.User.findByLogin(email.toLowerCase(), password)
 			if (token) {
-				
 				response.setMessage(token)
 			} else {
 				response.setCode(403)
