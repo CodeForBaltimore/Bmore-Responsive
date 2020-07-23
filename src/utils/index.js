@@ -31,7 +31,7 @@ const formatTime = seconds => {
   return pad(hours) + ':' + pad(minutes) + ':' + pad(secs)
 }
 
-// Reusable adapter for database connection reuse
+// Reusable adapter for minimizing database connection usage
 var adapter
 
 /**
@@ -41,15 +41,19 @@ var adapter
  */
 const loadCasbin = async () => {
   if (!adapter) {
-    adapter = (process.env.NODE_ENV === 'production') ? await SequelizeAdapter.newAdapter({
+    // Initialize with common options
+    const options = {
       database: process.env.DATABASE_NAME,
       username: process.env.DATABASE_USERNAME,
       password: process.env.DATABASE_PASSWORD,
       port: process.env.DATABASE_PORT,
       host: process.env.DATABASE_HOST,
-      logging: false,
-      dialect: 'postgres',
-      dialectOptions: {
+      dialect: 'postgres'}
+
+    // Update with production options if needed
+    if (process.env.NODE_ENV === 'production') {
+      options.logging = false
+      options.dialectOptions = {
         logging: false,
         ssl: {
           rejectUnauthorized: true,
@@ -62,14 +66,9 @@ const loadCasbin = async () => {
           }
         }
       }
-    }) : await SequelizeAdapter.newAdapter({
-      database: process.env.DATABASE_NAME,
-      username: process.env.DATABASE_USERNAME,
-      password: process.env.DATABASE_PASSWORD,
-      port: process.env.DATABASE_PORT,
-      host: process.env.DATABASE_HOST,
-      dialect: 'postgres'
-    })
+    }
+
+    adapter = await SequelizeAdapter.newAdapter(options);
   }
 
   return await newEnforcer(casbinConf, adapter)
@@ -85,7 +84,6 @@ const loadCasbin = async () => {
  *
  * @return {Boolean}
  */
-
 const validateToken = async req => {
   /** @todo check if it is a token at all */
   if (req.headers.token) {
