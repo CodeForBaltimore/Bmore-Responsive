@@ -143,27 +143,8 @@ const authMiddleware = async (req, res, next) => {
   if (authed) {
     next()
   } else {
-    response(res, 401, "Unauthorized")
+    res.status(401).send("Unauthorized")
   }
-}
-
-/**
- * 
- * @param {*} res the response object
- * @param {Number} code the response code 
- * @param {String} message a custom response message
- */
-const response = (res, code, message) => {
-  const codes = {
-    200: message,
-    400: "Bad Request",
-    401: "Unauthorized",
-    403: "Forbidden",
-    422: "Invalid input",
-    500: "Server error"
-  }
-
-  return res.status(code).send(codes[code])
 }
 
 /**
