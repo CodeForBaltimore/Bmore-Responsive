@@ -1,6 +1,6 @@
 const userRole = (sequelize, DataTypes) => {
     // Defining our userRole table and setting UserRole object.
-    const UserRole = sequelize.define('casbin_rule', {
+    const UserRole = sequelize.define('casbin_rules', {
         id: {
             allowNull: false,
             autoIncrement: true,
