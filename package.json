@@ -56,7 +56,7 @@
     "nunjucks": "^3.2.1",
     "pg": "7.18.2",
     "random-words": "1.1.1",
-    "sequelize": "5.22.0",
+    "sequelize": "5.22.3",
     "snyk": "^1.337.0",
     "supertest": "4.0.2",
     "swagger-ui-express": "4.1.4",
