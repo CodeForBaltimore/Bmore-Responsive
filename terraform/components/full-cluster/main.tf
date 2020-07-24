@@ -67,7 +67,11 @@ data "template_file" "seed_user_data" {
   template = file("userdata_db_seed.sh.tpl")
   vars = {
     seed_data_bucket = "seed-data-cfb-aws"
-    database_url = "postgres://${module.db.this_db_instance_username}:${var.db_password}@${module.db.this_db_instance_address}:${module.db.this_db_instance_port}/healthcareRollcallDB"
+    database_username = "${module.db.this_db_instance_username}"
+    database_password = "${var.db_password}"
+    database_hostname = "${module.db.this_db_instance_address}"
+    database_port = "${module.db.this_db_instance_port}"
+    database_name = "healthcareRollcallDB"
     database_schema = "public"
   }
 }
