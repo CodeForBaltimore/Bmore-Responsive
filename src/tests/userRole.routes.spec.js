@@ -4,7 +4,7 @@ import { Login } from '../utils/login'
 import app from '..'
 
 const { expect, assert } = chai
-const role = { role: 'test', path: '/test', method: 'GET' }
+const role = { role: 'test' + Date.now(), path: '/test', method: 'GET' }
 
 describe('User roles positive tests', () => {
   const authed = new Login()

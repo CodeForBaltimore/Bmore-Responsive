@@ -8,6 +8,7 @@ class Response {
       401: 'Unauthorized',
       403: 'Forbidden',
       404: 'Not Found',
+      429: 'Too many requests',
       500: 'Internal Server Error'
     }
     this.message = 'OK'

@@ -5,11 +5,19 @@ const utils = require('../src/utils');
 
 module.exports = {
 	development: {
-		use_env_variable: 'DATABASE_URL',
+		database: process.env.DATABASE_NAME,
+		username: process.env.DATABASE_USERNAME,
+		password: process.env.DATABASE_PASSWORD,
+		port: process.env.DATABASE_PORT,
+		host: process.env.DATABASE_HOST,
 		dialect: 'postgres',
 	},
 	production: {
-		use_env_variable: 'DATABASE_URL',
+		database: process.env.DATABASE_NAME,
+		username: process.env.DATABASE_USERNAME,
+		password: process.env.DATABASE_PASSWORD,
+		port: process.env.DATABASE_PORT,
+		host: process.env.DATABASE_HOST,
 		dialect: 'postgres',
 		dialectOptions: {
 			ssl: {
