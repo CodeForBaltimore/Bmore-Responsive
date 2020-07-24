@@ -24,12 +24,16 @@ You'll need to create a text file named `.env` in your Bmore-Responsive director
 NODE_ENV=development
 PORT=3000
 JWT_KEY=test123
-DATABASE_URL=postgres://postgres:postgres@localhost:5432/postgres
+DATABASE_HOST=localhost
+DATABASE_PORT=5432
+DATABASE_USERNAME=postgres
+DATABASE_PASSWORD=postgres
+DATABASE_NAME=postgres
 DATABASE_SCHEMA=public
 BYPASS_LOGIN=true
 ```
 
-*Note: The DATABASE_URL above asserts that your username and password for your DB are both `postgres` as the URL format is generally `postgres://user:pass@example.com:5432/dbname`.*  _We highly recommend_ *changing these values in this step and the following step.*
+*Note: The settings above assume that your username and password for your DB are both `postgres`.*  _We highly recommend_ *changing these values in this step and the following step.*
 
 ## Step 4 - Start Up a Database
 
