@@ -24,6 +24,8 @@ For information on how to get started using this product visit our documentation
 # Sources and Links
 We are also building a front-end application called [Healthcare Rollcall](https://github.com/CodeForBaltimore/Healthcare-Rollcall) to interact with this backend API. To view that project, or to contribute to it, please visit the repo here: https://github.com/CodeForBaltimore/Healthcare-Rollcall
 
+- Dockerhub: https://hub.docker.com/r/codeforbaltimore/bmore-responsive
+
 ## Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
@@ -63,5 +65,5 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
 
 <p align="center">
-    <img src="docs/img/CfB.png" width="400">
+    <img src="https://raw.githubusercontent.com/CodeForBaltimore/Bmore-Responsive/master/docs/img/CfB.png" width="400">
 </p>
