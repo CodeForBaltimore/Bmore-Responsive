@@ -31,35 +31,47 @@ const formatTime = seconds => {
   return pad(hours) + ':' + pad(minutes) + ':' + pad(secs)
 }
 
+// Reusable adapter for minimizing database connection usage
+var adapter
+
 /**
  * Loads Casbin for role validation
  * 
  * @returns {Object}
  */
 const loadCasbin = async () => {
-  const a = (process.env.NODE_ENV === 'production') ? await SequelizeAdapter.newAdapter({
-    database: process.env.DATABASE_NAME,
-    username: process.env.DATABASE_USERNAME,
-    password: process.env.DATABASE_PASSWORD,
-    host: process.env.DATABASE_HOST,
-    logging: false,
-    dialect: 'postgres',
-    dialectOptions: {
-      logging: false,
-      ssl: {
-        rejectUnauthorized: true,
-        ca: [rdsCa],
-        checkServerIdentity: (host, cert) => {
-          const error = tls.checkServerIdentity(host, cert)
-          if (error && !cert.subject.CN.endsWith('.rds.amazonaws.com')) {
-            return error
+  if (!adapter) {
+
+    let dialectOptions
+    if (process.env.NODE_ENV === 'production') {
+      dialectOptions = {
+        logging: false,
+        ssl: {
+          rejectUnauthorized: true,
+          ca: [rdsCa],
+          checkServerIdentity: (host, cert) => {
+            const error = tls.checkServerIdentity(host, cert)
+            if (error && !cert.subject.CN.endsWith('.rds.amazonaws.com')) {
+              return error
+            }
           }
         }
       }
     }
-  }) : await SequelizeAdapter.newAdapter(dbUrl())
 
-  return await newEnforcer(casbinConf, a)
+    adapter = await SequelizeAdapter.newAdapter({
+      database: process.env.DATABASE_NAME,
+      username: process.env.DATABASE_USERNAME,
+      password: process.env.DATABASE_PASSWORD,
+      port: process.env.DATABASE_PORT,
+      host: process.env.DATABASE_HOST,
+      logging: process.env.NODE_ENV === 'production',
+      dialect: 'postgres',
+      dialectOptions
+    });
+  }
+
+  return await newEnforcer(casbinConf, adapter)
 }
 
 /**
@@ -133,37 +145,18 @@ const authMiddleware = async (req, res, next) => {
   if (authed) {
     next()
   } else {
-    response(res, 401, "Unauthorized")
+    res.status(401).send("Unauthorized")
   }
 }
 
 /**
- * 
- * @param {*} res the response object
- * @param {Number} code the response code 
- * @param {String} message a custom response message
- */
-const response = (res, code, message) => {
-  const codes = {
-    200: message,
-    400: "Bad Request",
-    401: "Unauthorized",
-    403: "Forbidden",
-    422: "Invalid input",
-    500: "Server error"
-  }
-
-  return res.status(code).send(codes[code])
-}
-
-/**
-	 * Salts and hashes a password.
-	 *
-	 * @param {String} password The unhashed or salted password.
-	 * @param {String} salt The password salt for this user.
-	 *
-	 * @return {String} The secured password.
-	 */
+   * Salts and hashes a password.
+   *
+   * @param {String} password The unhashed or salted password.
+   * @param {String} salt The password salt for this user.
+   *
+   * @return {String} The secured password.
+   */
 const encryptPassword = (password, salt) => {
   return crypto
     .createHash('RSA-SHA256')
@@ -248,24 +241,14 @@ const processResults = async (results, modelType) => {
   }
 }
 
-const dbUrl = () => {
-  if (process.env.DATABASE_URL) {
-    return process.env.DATABASE_URL
-  } else {
-    return `postgres://${process.env.DATABASE_USERNAME}:${process.env.DATABASE_PASSWORD}@${process.env.DATABASE_HOST}:${process.env.DATABASE_PORT}/${process.env.DATABASE_NAME}`
-  }
-}
-
 export default {
   authMiddleware,
-  dbUrl,
   encryptPassword,
   formatTime,
   getToken,
   loadCasbin,
   processResults,
   Response,
-  // response,
   validateEmails,
   validatePassword
 }

@@ -29,10 +29,13 @@ module.exports = {
 
       if (element.roles !== undefined) {
         for (const role of element.roles) {
-          const dbUrl = process.env.DATABASE_URL
           const a = await csa.SequelizeAdapter.newAdapter(
-            dbUrl,
             {
+              database: process.env.DATABASE_NAME,
+              username: process.env.DATABASE_USERNAME,
+              password: process.env.DATABASE_PASSWORD,
+              port: process.env.DATABASE_PORT,
+              host: process.env.DATABASE_HOST,
               dialect: 'postgres'
             }
           )

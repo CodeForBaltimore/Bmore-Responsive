@@ -21,7 +21,11 @@ aws s3 cp s3://${seed_data_bucket} ~/ --recursive
 cd root/seeder/
 npm install
 touch .env
-echo 'DATABASE_URL=${database_url}
+echo 'DATABASE_HOST=${database_host}
+DATABASE_PORT=${database_port}
+DATABASE_USERNAME=${database_username}
+DATABASE_PASSWORD=${database_password}
+DATABASE_NAME=${database_name}
 DATABASE_SCHEMA=${database_schema}
 ' >> ./.env
 npm run db-delete
