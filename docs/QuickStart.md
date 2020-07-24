@@ -51,11 +51,11 @@ To populate the DB with sample users, entities and contacts that may resemble th
 
 ## Step 6 - Run Server
 
-To run the application run `npm start`.  Your terminal output should end with a line like `Bmore Responsive is available at http://localhost:5000`
+To run the application run `npm start`.  Your terminal output should end with a line like `Bmore Responsive is available at http://localhost:3000`
 
 ## Step 7 - Confirm Success
 
-To confirm the server is running, just point your browser to [http://localhost:5000/entity](http://localhost:5000/entity) (or just add "/entity" to the URL from the previous step).  A response like the sample below lets you know your server is healthy.
+To confirm the server is running, just point your browser to [http://localhost:3000/entity](http://localhost:3000/entity) (or just add "/entity" to the URL from the previous step).  A response like the sample below lets you know your server is healthy.
 
 ```
 {
