@@ -24,12 +24,16 @@ You'll need to create a text file named `.env` in your Bmore-Responsive director
 NODE_ENV=development
 PORT=3000
 JWT_KEY=test123
-DATABASE_URL=postgres://postgres:postgres@localhost:5432/postgres
+DATABASE_HOST=localhost
+DATABASE_PORT=5432
+DATABASE_USERNAME=postgres
+DATABASE_PASSWORD=postgres
+DATABASE_NAME=postgres
 DATABASE_SCHEMA=public
 BYPASS_LOGIN=true
 ```
 
-*Note: The DATABASE_URL above asserts that your username and password for your DB are both `postgres` as the URL format is generally `postgres://user:pass@example.com:5432/dbname`.*  _We highly recommend_ *changing these values in this step and the following step.*
+*Note: The settings above assume that your username and password for your DB are both `postgres`.*  _We highly recommend_ *changing these values in this step and the following step.*
 
 ## Step 4 - Start Up a Database
 
@@ -47,11 +51,11 @@ To populate the DB with sample users, entities and contacts that may resemble th
 
 ## Step 6 - Run Server
 
-To run the application run `npm start`.  Your terminal output should end with a line like `Bmore Responsive is available at http://localhost:5000`
+To run the application run `npm start`.  Your terminal output should end with a line like `Bmore Responsive is available at http://localhost:3000`
 
 ## Step 7 - Confirm Success
 
-To confirm the server is running, just point your browser to [http://localhost:5000/entity](http://localhost:5000/entity) (or just add "/entity" to the URL from the previous step).  A response like the sample below lets you know your server is healthy.
+To confirm the server is running, just point your browser to [http://localhost:3000/entity](http://localhost:3000/entity) (or just add "/entity" to the URL from the previous step).  A response like the sample below lets you know your server is healthy.
 
 ```
 {
