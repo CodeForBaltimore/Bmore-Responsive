@@ -66,12 +66,6 @@ Object.entries(routes).forEach(([key, value]) => {
   app.use(`/${key}`, value)
 })
 
-// Handle docs requests
-// const docsLimit= rateLimit({
-//   windowMs: 15 * 60 * 1000, // 15 minutes
-//   max: 100000
-// })
-
 // Handle 404
 app.use((req, res) => {
   return res.status(404).send('Not Found')

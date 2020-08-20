@@ -239,21 +239,6 @@ describe('Contact tests', function() {
         done()
       })
   })
-  // it('should not add an entity to a contact with invalid contact id', function(done) {
-  //   const entityIds = { entities: [{ id: uuid() }] }
-  //   request(app)
-  //     .post('/contact/unlink/abc123')
-  //     .set('Accept', 'application/json')
-  //     .set('authorization', authHeader)
-  //     .send(entityIds)
-  //     .expect('Content-Type', 'text/html; charset=utf-8')
-  //     .expect(400)
-  //     .end((err, res) => {
-  //       if (err) return done(err)
-  //       expect(res.text).to.equal('Bad Request')
-  //       done()
-  //     })
-  // })
   it('should unlink the entity and contact', function(done) {
     const entityIds = { entities: [{ id: entity.id }] }
     request(app)
