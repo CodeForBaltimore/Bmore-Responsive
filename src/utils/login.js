@@ -42,10 +42,6 @@ class Login {
     return await this._destroyUser()
   }
 
-  getUserId() {
-    return this.user.id
-  }
-
   /**
    * Creates a temp role for testing.
    */
