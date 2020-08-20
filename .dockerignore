@@ -126,8 +126,9 @@ docker/
 docs/
 
 # Misc
-.travis.yml
-.pre-commit-config.yaml
 .all-contributorsrc
+.eslintrc.yml
+.pre-commit-config.yaml
+.travis.yml
 civic.json
 publiccode.yml

@@ -28,11 +28,11 @@ const contact = {
   ]
 }
 
-describe('Entity tests', () => {
+describe('Entity tests', function() {
   const authed = new Login()
   let token
 
-  before(async () => {
+  before(async function() {
     await authed.setToken()
     token = await authed.getToken()
 
@@ -47,7 +47,7 @@ describe('Entity tests', () => {
     contact.id = contactResponse.text.replace(' created', '')
     entity.contacts.push({ id: contact.id, title: 'test' })
   })
-  after(async () => {
+  after(async function() {
     await request(app)
       .delete(`/contact/${contact.id}`)
       .set('Accept', 'application/json')
@@ -57,7 +57,7 @@ describe('Entity tests', () => {
     await authed.destroyToken()
   })
 
-  it('should create a entity', async () => {
+  it('should create a entity', async function() {
     const response = await request(app)
       .post('/entity')
       .send(entity)
@@ -68,9 +68,9 @@ describe('Entity tests', () => {
 
     entity.id = response.text.replace(' created', '')
   })
-  it('should get all entities', (done) => {
+  it('should get all entities', function(done) {
     request(app)
-      .get(`/entity`)
+      .get('/entity')
       .set('Accept', 'application/json')
       .set('token', token)
       .expect('Content-Type', 'application/json; charset=utf-8')
@@ -81,7 +81,7 @@ describe('Entity tests', () => {
         done()
       })
   })
-  it('should search on all entities by name', done => {
+  it('should search on all entities by name', function(done) {
     request(app)
       .get(`/entity?type=name&value=${entity.name}`)
       .set('Accept', 'application/json')
@@ -94,9 +94,9 @@ describe('Entity tests', () => {
         done()
       })
   })
-  it('should search on all entities by type', done => {
+  it('should search on all entities by type', function(done) {
     request(app)
-      .get(`/entity?type=type&value=Test`)
+      .get('/entity?type=type&value=Test')
       .set('Accept', 'application/json')
       .set('token', token)
       .expect('Content-Type', 'application/json; charset=utf-8')
@@ -107,7 +107,7 @@ describe('Entity tests', () => {
         done()
       })
   })
-  it('should get a single entity', done => {
+  it('should get a single entity', function(done) {
     request(app)
       .get(`/entity/${entity.id}`)
       .set('Accept', 'application/json')
@@ -120,11 +120,11 @@ describe('Entity tests', () => {
         done()
       })
   })
-  it('should update an entity', done => {
+  it('should update an entity', function(done) {
     entity.name = randomWords()
     entity.checkIn = { test: 'test' }
     request(app)
-      .put(`/entity`)
+      .put('/entity')
       .set('Accept', 'application/json')
       .set('token', token)
       .send(entity)
@@ -136,7 +136,7 @@ describe('Entity tests', () => {
         done()
       })
   })
-  it('should add an contact to an entity', done => {
+  it('should add an contact to an entity', function(done) {
     const contactIds = { contacts: [{ id: contact.id, title: 'test' }] }
     request(app)
       .post(`/entity/link/${entity.id}`)
@@ -151,10 +151,10 @@ describe('Entity tests', () => {
         done()
       })
   })
-  it('should not add an contact to an entity', done => {
+  it('should not add an contact to an entity', function(done) {
     const contactIds = { contacts: [{ id: uuid() }] }
     request(app)
-      .post(`/entity/link/abc123`)
+      .post('/entity/link/abc123')
       .set('Accept', 'application/json')
       .set('token', token)
       .send(contactIds)
@@ -162,14 +162,14 @@ describe('Entity tests', () => {
       .expect(400)
       .end((err, res) => {
         if (err) return done(err)
-        expect(res.text).to.equal(`Bad Request`)
+        expect(res.text).to.equal('Bad Request')
         done()
       })
   })
 
 
 
-  it('should remove a contact from an entity', done => {
+  it('should remove a contact from an entity', function(done) {
     const contactIds = { contacts: [{ id: contact.id, title: 'test' }] }
     request(app)
       .post(`/entity/unlink/${entity.id}`)
@@ -184,10 +184,10 @@ describe('Entity tests', () => {
         done()
       })
   })
-  it('should not remove a contact from an entity', done => {
+  it('should not remove a contact from an entity', function(done) {
     const contactIds = { contacts: [{ id: uuid() }] }
     request(app)
-      .post(`/entity/unlink/abc123`)
+      .post('/entity/unlink/abc123')
       .set('Accept', 'application/json')
       .set('token', token)
       .send(contactIds)
@@ -195,22 +195,23 @@ describe('Entity tests', () => {
       .expect(400)
       .end((err, res) => {
         if (err) return done(err)
-        expect(res.text).to.equal(`Bad Request`)
+        expect(res.text).to.equal('Bad Request')
         done()
       })
   })
-  it('Positive Test for CSV Dump on Entity', (done) => {
+  it('Positive Test for CSV Dump on Entity', function(done) {
     request(app)
       .get('/csv/Entity')
       .set('Accept', 'application/json')
       .set('token', token)
       .expect(200)
+      // eslint-disable-next-line no-unused-vars
       .end((err, res) => {
         if (err) return done(err)
         done()
       })
   })
-  it('should delete an entity', done => {
+  it('should delete an entity', function(done) {
     request(app)
       .delete(`/entity/${entity.id}`)
       .set('Accept', 'application/json')
@@ -223,7 +224,7 @@ describe('Entity tests', () => {
         done()
       })
   })
-  it('should not create a entity', (done) => {
+  it('should not create a entity', function(done) {
     request(app)
       .post('/entity')
       .send({ name: '' })
@@ -237,9 +238,9 @@ describe('Entity tests', () => {
         done()
       })
   })
-  it('should not search for entities with bad param types', done => {
+  it('should not search for entities with bad param types', function(done) {
     request(app)
-      .get(`/entity?test=test`)
+      .get('/entity?test=test')
       .set('Accept', 'application/json')
       .set('token', token)
       .expect('Content-Type', 'text/html; charset=utf-8')
@@ -250,9 +251,9 @@ describe('Entity tests', () => {
         done()
       })
   })
-  it('should not search for entities with bad param values', done => {
+  it('should not search for entities with bad param values', function(done) {
     request(app)
-      .get(`/entity?type=test&value=test`)
+      .get('/entity?type=test&value=test')
       .set('Accept', 'application/json')
       .set('token', token)
       .expect('Content-Type', 'text/html; charset=utf-8')
@@ -263,7 +264,7 @@ describe('Entity tests', () => {
         done()
       })
   })
-  it('should not get a single entity with invalid UUID', (done) => {
+  it('should not get a single entity with invalid UUID', function(done) {
     request(app)
       .get(`/entity/${entity.email}`)
       .set('Accept', 'application/json')
@@ -275,7 +276,7 @@ describe('Entity tests', () => {
         done()
       })
   })
-  it('should not get a single entity with valid UUID', done => {
+  it('should not get a single entity with valid UUID', function(done) {
     request(app)
       .get(`/entity/${uuid()}`)
       .set('Accept', 'application/json')
@@ -287,7 +288,7 @@ describe('Entity tests', () => {
         done()
       })
   })
-  it('should not update a entity without valid UUID', (done) => {
+  it('should not update a entity without valid UUID', function(done) {
     entity.id = randomWords()
     request(app)
       .put('/entity')
@@ -298,11 +299,11 @@ describe('Entity tests', () => {
       .expect(400)
       .end((err, res) => {
         if (err) return done(err)
-        expect(res.text).to.equal(`Bad Request`)
+        expect(res.text).to.equal('Bad Request')
         done()
       })
   })
-  it('should not update a entity with a valid UUID', (done) => {
+  it('should not update a entity with a valid UUID', function(done) {
     entity.id = uuid()
     request(app)
       .put('/entity')
@@ -313,11 +314,11 @@ describe('Entity tests', () => {
       .expect(404)
       .end((err, res) => {
         if (err) return done(err)
-        expect(res.text).to.equal(`Not Found`)
+        expect(res.text).to.equal('Not Found')
         done()
       })
   })
-  it('should not delete a entity', (done) => {
+  it('should not delete a entity', function(done) {
     entity.email = randomWords()
     request(app)
       .delete(`/entity/${entity.email}`)
@@ -327,8 +328,8 @@ describe('Entity tests', () => {
       .expect(400)
       .end((err, res) => {
         if (err) return done(err)
-        expect(res.text).to.equal(`Bad Request`)
+        expect(res.text).to.equal('Bad Request')
         done()
       })
   })
-});
+})

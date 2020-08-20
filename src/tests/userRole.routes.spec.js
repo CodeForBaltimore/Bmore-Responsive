@@ -6,19 +6,19 @@ import app from '..'
 const { expect, assert } = chai
 const role = { role: 'test' + Date.now(), path: '/test', method: 'GET' }
 
-describe('User roles positive tests', () => {
+describe('User roles positive tests', function() {
   const authed = new Login()
   let token
 
-  before(async () => {
+  before(async function() {
     await authed.setToken()
     token = await authed.getToken()
   })
-  after(async () => {
+  after(async function() {
     await authed.destroyToken()
   })
 
-  it('should create a user role', (done) => {
+  it('should create a user role', function(done) {
     request(app)
       .post('/userRole')
       .send(role)
@@ -28,13 +28,13 @@ describe('User roles positive tests', () => {
       .expect(200)
       .end((err, res) => {
         if (err) return done(err)
-        expect(res.text).to.equal(`policy created`)
+        expect(res.text).to.equal('policy created')
         done()
       })
   })
-  it('should get all user roles', (done) => {
+  it('should get all user roles', function(done) {
     request(app)
-      .get(`/userRole`)
+      .get('/userRole')
       .set('Accept', 'application/json')
       .set('token', token)
       .expect('Content-Type', 'application/json; charset=utf-8')
@@ -45,9 +45,9 @@ describe('User roles positive tests', () => {
         done()
       })
   })
-  it('should delete a user role', (done) => {
+  it('should delete a user role', function(done) {
     request(app)
-      .post(`/userRole/delete`)
+      .post('/userRole/delete')
       .send(role)
       .set('Accept', 'application/json')
       .set('token', token)
@@ -55,12 +55,12 @@ describe('User roles positive tests', () => {
       .expect(200)
       .end((err, res) => {
         if (err) return done(err)
-        expect(res.text).to.equal(`policy deleted`)
+        expect(res.text).to.equal('policy deleted')
         done()
       })
   })
 
-  it('should not create a user role', (done) => {
+  it('should not create a user role', function(done) {
     request(app)
       .post('/userRole')
       .set('Accept', 'application/json')
@@ -73,17 +73,17 @@ describe('User roles positive tests', () => {
         done()
       })
   })
-  it('should not delete a user', (done) => {
+  it('should not delete a user', function(done) {
     request(app)
-      .post(`/userRole/delete`)
+      .post('/userRole/delete')
       .set('Accept', 'application/json')
       .set('token', token)
       .expect('Content-Type', 'text/html; charset=utf-8')
       .expect(400)
       .end((err, res) => {
         if (err) return done(err)
-        expect(res.text).to.equal(`Bad Request`)
+        expect(res.text).to.equal('Bad Request')
         done()
       })
   })
-});
+})
