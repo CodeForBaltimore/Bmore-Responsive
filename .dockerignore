@@ -131,4 +131,5 @@ docs/
 .pre-commit-config.yaml
 .travis.yml
 civic.json
+codecov.yml
 publiccode.yml
