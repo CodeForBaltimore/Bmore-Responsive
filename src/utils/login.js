@@ -1,18 +1,18 @@
-import app from ".."
+import app from '..'
 import models from '../models'
 import randomWords from 'random-words'
-import request from "supertest"
+import request from 'supertest'
 import utils from '.'
 
 class Login {
   constructor() {
     this.role = randomWords()
-    this.user = { email: `${randomWords()}@test.test`, password: `Abcdefg12!`, roles: [this.role] }
+    this.user = { email: `${randomWords()}@test.test`, password: 'Abcdefg12!', roles: [this.role] }
     this.methods = [
-      `GET`,
-      `POST`,
-      `PUT`,
-      `DELETE`
+      'GET',
+      'POST',
+      'PUT',
+      'DELETE'
     ]
   }
 
@@ -40,10 +40,6 @@ class Login {
     await this._destroyRole()
 
     return await this._destroyUser()
-  }
-
-  getUserId() {
-    return this.user.id
   }
 
   /**

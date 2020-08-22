@@ -34,11 +34,11 @@ const user = (sequelize, DataTypes) => {
       type: DataTypes.JSON,
     }
   },
-    {
-      schema: process.env.DATABASE_SCHEMA
-    })
+  {
+    schema: process.env.DATABASE_SCHEMA
+  })
 
-	/**
+  /**
 	 * Looks up and validates a user by email and password.
 	 *
 	 * @param {String} login The email or email of the user.
@@ -76,7 +76,7 @@ const user = (sequelize, DataTypes) => {
     return token
   }
 
-	/**
+  /**
 	 * Generates a random salt for password security.
 	 *
 	 * @return {String} The password salt.
@@ -85,7 +85,7 @@ const user = (sequelize, DataTypes) => {
     return crypto.randomBytes(16).toString('base64')
   }
 
-	/**
+  /**
 	 * Salts and hashes a password.
 	 *
 	 * @param {String} plainText The unhashed or salted password.
