@@ -1,5 +1,5 @@
-import nodemailer from "nodemailer"
-import nunjucks from "nunjucks"
+import nodemailer from 'nodemailer'
+import nunjucks from 'nunjucks'
 
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
@@ -20,7 +20,7 @@ const transporter = nodemailer.createTransport({
  */
 const sendMail = async (to, subject, html, text) => {
   try {
-    let info = await transporter.sendMail({
+    await transporter.sendMail({
       from: `"Healthcare Roll Call" <${process.env.SMTP_USER}>`, // sender address
       to, // list of receivers
       subject, // Subject line
@@ -44,9 +44,9 @@ const sendForgotPassword = async (userEmail, resetPasswordToken) => {
     const emailResetLink = `https://healthcarerollcall.org/reset/${resetPasswordToken}`
     await sendMail(
       userEmail,
-      "Password Reset - Healthcare Roll Call",
-      nunjucks.render("forgot_password_html.njk", { emailResetLink }),
-      nunjucks.render("forgot_password_text.njk", { emailResetLink })
+      'Password Reset - Healthcare Roll Call',
+      nunjucks.render('forgot_password_html.njk', { emailResetLink }),
+      nunjucks.render('forgot_password_text.njk', { emailResetLink })
     )
     return true
   } catch (e) {
@@ -63,8 +63,8 @@ const sendContactCheckInEmail = async (info) => {
     await sendMail(
       info.email,
       emailTitle,
-      nunjucks.render("contact_check_in_html.njk", { emailTitle, emailContents, entityLink }),
-      nunjucks.render("contact_check_in_text.njk", { emailTitle, emailContents, entityLink })
+      nunjucks.render('contact_check_in_html.njk', { emailTitle, emailContents, entityLink }),
+      nunjucks.render('contact_check_in_text.njk', { emailTitle, emailContents, entityLink })
     )
 
     return true
