@@ -1,4 +1,4 @@
-import { UUIDV4 } from "sequelize"
+import { UUIDV4 } from 'sequelize'
 import models from './index'
 
 const contact = (sequelize, DataTypes) => {
@@ -32,17 +32,17 @@ const contact = (sequelize, DataTypes) => {
       type: DataTypes.JSON,
     }
   },
-    {
-      schema: process.env.DATABASE_SCHEMA
-    })
+  {
+    schema: process.env.DATABASE_SCHEMA
+  })
 
   Contact.associate = models => {
     Contact.belongsTo(models.User)
     Contact.belongsToMany(models.Entity, {
-      through: "EntityContact",
-      as: "entities",
-      foreignKey: "contactId",
-      otherKey: "entityId"
+      through: 'EntityContact',
+      as: 'entities',
+      foreignKey: 'contactId',
+      otherKey: 'entityId'
     })
   }
 
@@ -77,11 +77,11 @@ const contact = (sequelize, DataTypes) => {
         model: models.Entity,
         as: 'entities',
         required: false,
-        attributes: ["id", "name", "type", "address", "phone", "email", "checkIn", "description", "attributes"],
+        attributes: ['id', 'name', 'type', 'address', 'phone', 'email', 'checkIn', 'description', 'attributes'],
         through: {
           model: models.EntityContact,
           as: 'entityContacts',
-          attributes: ["relationshipTitle"]
+          attributes: ['relationshipTitle']
         }
       }]
     })
