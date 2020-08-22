@@ -1370,6 +1370,127 @@
         }
       }
     },
+    "/rolegrants/{email}/revoke": {
+      "post": {
+        "tags": [
+          "authorization",
+          "administration",
+          "unimplemented"
+        ],
+        "summary": "Revokes a role from a user.",
+        "description": "Revokes a user's the ability to access specific  application endpoints.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "email",
+            "description": "E-mail address of the user",
+            "example": "user@example.com",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "email"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The role to revoke.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RoleId"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "The grant was successfully revoked."
+          },
+          "400": {
+            "description": "Invalid content provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "details": [
+                    {
+                      "name": "roleName",
+                      "value": "Content does not match regular expression '[a-zA-Z]\\w{3,}'"
+                    }
+                  ],
+                  "message": "Request invalid",
+                  "statusCode": 400
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Invalid credentials",
+                  "statusCode": 401
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request forbidden.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Access not permitted",
+                  "statusCode": 403
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "details": [
+                    {
+                      "name": "Resource type",
+                      "value": "role"
+                    }
+                  ],
+                  "message": "Resource not found",
+                  "statusCode": 404
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unable to process request.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Request processing failed",
+                  "statusCode": 500
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/user/login": {
       "post": {
         "security": [],
