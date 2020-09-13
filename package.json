@@ -56,7 +56,7 @@
     "pg": "7.18.2",
     "random-words": "1.1.1",
     "sequelize": "5.22.3",
-    "snyk": "^1.369.2",
+    "snyk": "^1.381.2",
     "supertest": "4.0.2",
     "swagger-ui-express": "4.1.4",
     "tls": "0.0.1",
