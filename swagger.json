@@ -56,7 +56,7 @@
       "description": "Endpoints related to userRole"
     },
     {
-      "name": "entity",
+      "name": "entities",
       "description": "Endpoints related to entities"
     },
     {
@@ -1022,7 +1022,7 @@
         }
       }
     },
-    "/rolegrants/": {
+    "/role-grants/": {
       "post": {
         "tags": [
           "authorization",
@@ -1150,7 +1150,7 @@
         }
       }
     },
-    "/rolegrants/{email}": {
+    "/role-grants/{email}": {
       "post": {
         "tags": [
           "authorization",
@@ -1370,7 +1370,7 @@
         }
       }
     },
-    "/rolegrants/{email}/revoke": {
+    "/role-grants/{email}/revoke": {
       "post": {
         "tags": [
           "authorization",
@@ -1960,7 +1960,7 @@
           "read-only",
           "unimplemented"
         ],
-        "summary": "Retrieves all users.",
+        "summary": "Retrieves all contacts.",
         "description": "Retrieves all defined contacts in the application.",
         "responses": {
           "200": {
@@ -2098,7 +2098,7 @@
             }
           },
           "409": {
-            "description": "User already exists.",
+            "description": "Contact already exists.",
             "content": {
               "application/json": {
                 "example": {
@@ -2138,7 +2138,7 @@
           "required": true,
           "schema": {
             "type": "string",
-            "pattern": "\\w{3,}"
+            "pattern": "^\\w{3,}$"
           }
         }
       ],
@@ -2372,7 +2372,7 @@
                   "details": [
                     {
                       "name": "Resource type",
-                      "value": "user"
+                      "value": "contact"
                     }
                   ],
                   "message": "Resource not found",
@@ -2389,7 +2389,931 @@
             "content": {
               "application/json": {
                 "example": {
-                  "message": "Entity link still exist",
+                  "message": "Entity link still exists",
+                  "statusCode": 409
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unable to process request.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Request processing failed",
+                  "statusCode": 500
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/entity-types": {
+      "get": {
+        "tags": [
+          "entities",
+          "read-only",
+          "unimplemented"
+        ],
+        "summary": "Retrieves all entity types.",
+        "description": "Retrieves all defined entity types in the application.",
+        "responses": {
+          "200": {
+            "description": "The data corresponding to the created entity types.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TypeReference"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Invalid credentials",
+                  "statusCode": 401
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request forbidden.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Access not permitted",
+                  "statusCode": 403
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unable to process request.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Request processing failed",
+                  "statusCode": 500
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "entities",
+          "administration",
+          "unimplemented"
+        ],
+        "summary": "Creates a new entity type.",
+        "description": "Creates a new entity type in the application that can subsequently be used for entity classification.",
+        "requestBody": {
+          "description": "The entity type to create.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TypeReference"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The data corresponding to the created type.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TypeReference"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid content provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "details": [
+                    {
+                      "name": "name",
+                      "value": "Content is not a valid name"
+                    }
+                  ],
+                  "message": "Request invalid",
+                  "statusCode": 400
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Invalid credentials",
+                  "statusCode": 401
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request forbidden.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Access not permitted",
+                  "statusCode": 403
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "User already exists.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "An entity type with the name 'primary_care' already exists",
+                  "statusCode": 409
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unable to process request.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Request processing failed",
+                  "statusCode": 500
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/entity-types/{typeName}": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "typeName",
+          "description": "The name of the entity type.",
+          "example": "primary_care",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "pattern": "^\\w{3,}$"
+          }
+        }
+      ],
+      "get": {
+        "tags": [
+          "entities",
+          "read-only",
+          "unimplemented"
+        ],
+        "summary": "Retrieves the specified entity type.",
+        "description": "Retrieves the detailed information for the entity type.",
+        "responses": {
+          "200": {
+            "description": "The data corresponding to the created entity type.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TypeReference"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Invalid credentials",
+                  "statusCode": 401
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request forbidden.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Access not permitted",
+                  "statusCode": 403
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "details": [
+                    {
+                      "name": "Resource type",
+                      "value": "entity-type"
+                    }
+                  ],
+                  "message": "Resource not found",
+                  "statusCode": 404
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unable to process request.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Request processing failed",
+                  "statusCode": 500
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "entities",
+          "administration",
+          "unimplemented"
+        ],
+        "summary": "Modifies an entity type.",
+        "description": "Modifies the non-identifying information for the specified entity type.",
+        "requestBody": {
+          "description": "The contact information to modify.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TypeReferenceData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The data corresponding to the modified entity.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TypeReference"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Invalid credentials",
+                  "statusCode": 401
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request forbidden.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Access not permitted",
+                  "statusCode": 403
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "details": [
+                    {
+                      "name": "Resource type",
+                      "value": "entity-type"
+                    }
+                  ],
+                  "message": "Resource not found",
+                  "statusCode": 404
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unable to process request.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Request processing failed",
+                  "statusCode": 500
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "entities",
+          "administration",
+          "unimplemented"
+        ],
+        "summary": "Removes the specified entity type.",
+        "description": "Removes all information for the entity.",
+        "responses": {
+          "204": {
+            "description": "The entity type was successfully deleted."
+          },
+          "401": {
+            "description": "Invalid credentials provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Invalid credentials",
+                  "statusCode": 401
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request forbidden.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Access not permitted",
+                  "statusCode": 403
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "details": [
+                    {
+                      "name": "Resource type",
+                      "value": "entity-type"
+                    }
+                  ],
+                  "message": "Resource not found",
+                  "statusCode": 404
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Entity type is still associated with an entity.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Type still in use",
+                  "statusCode": 409
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unable to process request.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Request processing failed",
+                  "statusCode": 500
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/entities": {
+      "get": {
+        "tags": [
+          "entities",
+          "read-only",
+          "unimplemented"
+        ],
+        "summary": "Retrieves all entities.",
+        "description": "Retrieves all defined entities in the application.",
+        "responses": {
+          "200": {
+            "description": "The data corresponding to the created entities.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EntityBasicViewData"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Invalid credentials",
+                  "statusCode": 401
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request forbidden.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Access not permitted",
+                  "statusCode": 403
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unable to process request.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Request processing failed",
+                  "statusCode": 500
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "entities",
+          "administration",
+          "unimplemented"
+        ],
+        "summary": "Creates a new entity.",
+        "description": "Creates a new entity in the application that can subsequently be used for contact interactions.",
+        "requestBody": {
+          "description": "The entity to create.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EntityData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The data corresponding to the created entity.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntityViewData"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid content provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "details": [
+                    {
+                      "name": "typeName",
+                      "value": "Content is not a valid type name"
+                    }
+                  ],
+                  "message": "Request invalid",
+                  "statusCode": 400
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Invalid credentials",
+                  "statusCode": 401
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request forbidden.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Access not permitted",
+                  "statusCode": 403
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Entity already exists.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "An entity with the name 'caresouth' already exists",
+                  "statusCode": 409
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unable to process request.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Request processing failed",
+                  "statusCode": 500
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/entities/{entityName}": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "entityName",
+          "description": "The name of the entity.",
+          "example": "caresouth",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "pattern": "^\\w{3,}$"
+          }
+        }
+      ],
+      "get": {
+        "tags": [
+          "entities",
+          "read-only",
+          "unimplemented"
+        ],
+        "summary": "Retrieves the specified entity.",
+        "description": "Retrieves the detailed information for the entity.",
+        "responses": {
+          "200": {
+            "description": "The data corresponding to the created entity.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EntityViewData"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Invalid credentials",
+                  "statusCode": 401
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request forbidden.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Access not permitted",
+                  "statusCode": 403
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "details": [
+                    {
+                      "name": "Resource type",
+                      "value": "entity"
+                    }
+                  ],
+                  "message": "Resource not found",
+                  "statusCode": 404
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unable to process request.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Request processing failed",
+                  "statusCode": 500
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "entities",
+          "administration",
+          "unimplemented"
+        ],
+        "summary": "Modifies an entity.",
+        "description": "Modifies the non-identifying information for the specified entity.",
+        "requestBody": {
+          "description": "The contact information to modify.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EntityContent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The data corresponding to the modified entity.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EntityData"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Invalid credentials",
+                  "statusCode": 401
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request forbidden.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Access not permitted",
+                  "statusCode": 403
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "details": [
+                    {
+                      "name": "Resource type",
+                      "value": "entity"
+                    }
+                  ],
+                  "message": "Resource not found",
+                  "statusCode": 404
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unable to process request.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Request processing failed",
+                  "statusCode": 500
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "entities",
+          "administration",
+          "unimplemented"
+        ],
+        "summary": "Removes the specified entity.",
+        "description": "Removes all information for the entity.",
+        "responses": {
+          "204": {
+            "description": "The entity was successfully deleted."
+          },
+          "401": {
+            "description": "Invalid credentials provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Invalid credentials",
+                  "statusCode": 401
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request forbidden.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Access not permitted",
+                  "statusCode": 403
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "details": [
+                    {
+                      "name": "Resource type",
+                      "value": "entity"
+                    }
+                  ],
+                  "message": "Resource not found",
+                  "statusCode": 404
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Entity is still associated with a contact.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Contact link still exists",
                   "statusCode": 409
                 },
                 "schema": {
@@ -4305,7 +5229,7 @@
         "properties": {
           "roleName": {
             "type": "string",
-            "pattern": "[a-zA-Z]\\w{3,}",
+            "pattern": "^[a-zA-Z]\\w{3,}$",
             "description": "The name of the role.",
             "example": "role_viewer"
           }
@@ -4449,19 +5373,19 @@
         "properties": {
           "countryCode": {
             "type": "string",
-            "pattern": "\\d{1,4}",
+            "pattern": "^\\d{1,4}$",
             "description": "The country code for the phone number.",
-            "example": 98
+            "example": "98"
           },
           "number": {
             "type": "string",
-            "pattern": "\\d{6,}",
+            "pattern": "^\\d{6,}$",
             "description": "The full in-country representation for the phone number.",
-            "example": 5551212
+            "example": "5551212"
           },
           "type": {
             "type": "string",
-            "pattern": "\\w{3,}",
+            "pattern": "^\\w{3,}$",
             "example": "Work"
           }
         }
@@ -4502,13 +5426,11 @@
         ],
         "properties": {
           "phone": {
-            "type": "string",
-            "description": "The user's phone number",
             "$ref": "#/components/schemas/PhoneNumber"
           },
           "attributes": {
             "type": "array",
-            "description": "Arbitrary name-value pairs associated with the error",
+            "description": "Arbitrary name-value pairs associated with the user",
             "items": {
               "type": "object",
               "properties": {
@@ -4576,7 +5498,7 @@
           "name": {
             "type": "string",
             "description": "The name of the contact.",
-            "pattern": "\\w{3,}",
+            "pattern": "^\\w{3,}$",
             "example": "ned_flanders"
           }
         }
@@ -4587,7 +5509,7 @@
         "properties": {
           "displayName": {
             "type": "string",
-            "description": "The text to be displayed to represent the user",
+            "description": "The text to be displayed to represent the contact.",
             "example": "Ned Flanders, Esq."
           }
         }
@@ -4621,16 +5543,14 @@
               "example": "nflanders@example.com"
             }
           },
-          "primaryPhone": {
-            "description": "Primary phone number for a contact.",
+          "primaryPhoneNumber": {
             "$ref": "#/components/schemas/PhoneNumber"
           },
-          "additionalPhones": {
+          "additionalPhoneNumbers": {
             "type": "array",
-            "description": "Additional e-mail addresses associated with a contact.",
+            "description": "Additional phone numbers associated with a contact.",
             "items": {
-              "$ref": "#/components/schemas/PhoneNumber",
-              "description": "An additional phone number for a contact."
+              "$ref": "#/components/schemas/PhoneNumber"
             }
           }
         }
@@ -4668,6 +5588,172 @@
           },
           {
             "$ref": "#/components/schemas/ContactData"
+          },
+          {
+            "$ref": "#/components/schemas/AuditData"
+          }
+        ]
+      },
+      "TypeReferenceId": {
+        "type": "object",
+        "description": "An identifier for generic type information for classification.",
+        "required": [
+          "typeName"
+        ],
+        "properties": {
+          "typeName": {
+            "type": "string",
+            "description": "The name of the type.",
+            "pattern": "^\\w{3,}$",
+            "example": "primary_care"
+          }
+        }
+      },
+      "TypeReferenceData": {
+        "type": "object",
+        "description": "Descriptive type information for classification.",
+        "properties": {
+          "displayName": {
+            "type": "string",
+            "description": "The text to be displayed to represent the type.",
+            "example": "Primary Care"
+          }
+        }
+      },
+      "TypeReference": {
+        "type": "object",
+        "description": "Generic type information for classification.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/TypeReferenceId"
+          },
+          {
+            "$ref": "#/components/schemas/TypeReferenceData"
+          }
+        ]
+      },
+      "LocalAddress": {
+        "type": "object",
+        "description": "Mailing address or location.",
+        "required": [
+          "streetAddress",
+          "city",
+          "state",
+          "postalCode"
+        ],
+        "properties": {
+          "streetAddress": {
+            "type": "array",
+            "description": "The street address (can be multiple lines).",
+            "items": {
+              "minItems": 1,
+              "maxItems": 4,
+              "type": "string",
+              "example": "123 Anyplace St."
+            }
+          },
+          "city": {
+            "type": "string",
+            "description": "The city where the address is located.",
+            "example": "Baltimore"
+          },
+          "state": {
+            "type": "string",
+            "description": "The state where the address is located.",
+            "example": "MD"
+          },
+          "postalCode": {
+            "type": "string",
+            "description": "The postal code corresponding to the address.",
+            "example": "12345"
+          }
+        }
+      },
+      "EntityId": {
+        "type": "object",
+        "description": "The identifier of an entity.",
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the entity.",
+            "pattern": "^\\w{3,}$",
+            "example": "CareSouth"
+          }
+        }
+      },
+      "EntityDisplayData": {
+        "type": "object",
+        "description": "Defines entity display data.",
+        "properties": {
+          "displayName": {
+            "type": "string",
+            "description": "The text to be displayed to represent the entity.",
+            "example": "CareSouth Assisted Living"
+          }
+        }
+      },
+      "EntityContent": {
+        "type": "object",
+        "description": "Defines the content that can be provided when modifying an entity.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/EntityDisplayData"
+          },
+          {
+            "$ref": "#/components/schemas/TypeReferenceId"
+          }
+        ],
+        "required": [
+          "streetAddress"
+        ],
+        "properties": {
+          "streetAddress": {
+            "$ref": "#/components/schemas/LocalAddress"
+          },
+          "mailingAddress": {
+            "$ref": "#/components/schemas/LocalAddress"
+          }
+        }
+      },
+      "EntityData": {
+        "type": "object",
+        "description": "Defines the content that can be provided when creating an entity.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/EntityId"
+          },
+          {
+            "$ref": "#/components/schemas/EntityContent"
+          }
+        ]
+      },
+      "EntityBasicViewData": {
+        "type": "object",
+        "description": "Defines the minimal read-only content retrieved for an entity.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/EntityId"
+          },
+          {
+            "$ref": "#/components/schemas/EntityDisplayData"
+          },
+          {
+            "$ref": "#/components/schemas/TypeReferenceId"
+          }
+        ]
+      },
+      "EntityViewData": {
+        "type": "object",
+        "description": "Defines the read-only content retrieved for a contact.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/EntityId"
+          },
+          {
+            "$ref": "#/components/schemas/EntityData"
           },
           {
             "$ref": "#/components/schemas/AuditData"
