@@ -48,7 +48,7 @@
       "description": "Endpoints available to regular developers"
     },
     {
-      "name": "user",
+      "name": "users",
       "description": "Endpoints related to system users"
     },
     {
@@ -60,7 +60,7 @@
       "description": "Endpoints related to entities"
     },
     {
-      "name": "contact",
+      "name": "contacts",
       "description": "Endpoints related to contacts"
     },
     {
@@ -107,7 +107,7 @@
           "read-only",
           "unimplemented"
         ],
-        "summary": "Checks the health of the application; will be renamed.",
+        "summary": "Checks the health of the application; will be renamed to '/health'.",
         "description": "The health of individual application components is verified.",
         "responses": {
           "200": {
@@ -1494,7 +1494,7 @@
     "/users": {
       "get": {
         "tags": [
-          "user",
+          "users",
           "read-only",
           "unimplemented"
         ],
@@ -1560,7 +1560,7 @@
       },
       "post": {
         "tags": [
-          "user",
+          "users",
           "administration",
           "unimplemented"
         ],
@@ -1682,7 +1682,7 @@
       ],
       "get": {
         "tags": [
-          "user",
+          "users",
           "read-only",
           "unimplemented"
         ],
@@ -1768,7 +1768,7 @@
       },
       "put": {
         "tags": [
-          "user",
+          "users",
           "administration",
           "unimplemented"
         ],
@@ -1864,7 +1864,7 @@
       },
       "delete": {
         "tags": [
-          "user",
+          "users",
           "administration",
           "unimplemented"
         ],
@@ -1953,14 +1953,477 @@
         }
       }
     },
+    "/contacts": {
+      "get": {
+        "tags": [
+          "contacts",
+          "read-only",
+          "unimplemented"
+        ],
+        "summary": "Retrieves all users.",
+        "description": "Retrieves all defined contacts in the application.",
+        "responses": {
+          "200": {
+            "description": "The data corresponding to the created contacts.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ContactBasicViewData"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Invalid credentials",
+                  "statusCode": 401
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request forbidden.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Access not permitted",
+                  "statusCode": 403
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unable to process request.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Request processing failed",
+                  "statusCode": 500
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "contacts",
+          "administration",
+          "unimplemented"
+        ],
+        "summary": "Creates a new contact.",
+        "description": "Creates a new contact in the application that can subsequently be used for entity interactions.",
+        "requestBody": {
+          "description": "The contact to create.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContactData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The data corresponding to the created contact.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContactViewData"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid content provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "details": [
+                    {
+                      "name": "primaryEmail",
+                      "value": "Content is not a valid e-mail address"
+                    }
+                  ],
+                  "message": "Request invalid",
+                  "statusCode": 400
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Invalid credentials",
+                  "statusCode": 401
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request forbidden.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Access not permitted",
+                  "statusCode": 403
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "User already exists.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "A contact with the name 'ned_flanders' already exists",
+                  "statusCode": 409
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unable to process request.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Request processing failed",
+                  "statusCode": 500
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/contacts/{contactName}": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "contactName",
+          "description": "Name of the contact",
+          "example": "ned_flanders",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "pattern": "\\w{3,}"
+          }
+        }
+      ],
+      "get": {
+        "tags": [
+          "contacts",
+          "read-only",
+          "unimplemented"
+        ],
+        "summary": "Retrieves the specified contact.",
+        "description": "Retrieves the detailed information for the contact.",
+        "responses": {
+          "200": {
+            "description": "The data corresponding to the created contact.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ContactViewData"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Invalid credentials",
+                  "statusCode": 401
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request forbidden.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Access not permitted",
+                  "statusCode": 403
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "details": [
+                    {
+                      "name": "Resource type",
+                      "value": "contact"
+                    }
+                  ],
+                  "message": "Resource not found",
+                  "statusCode": 404
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unable to process request.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Request processing failed",
+                  "statusCode": 500
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "contacts",
+          "administration",
+          "unimplemented"
+        ],
+        "summary": "Modifies a contact.",
+        "description": "Modifies the non-identifying information for the specified contact.",
+        "requestBody": {
+          "description": "The contact information to modify.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContactContent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The data corresponding to the modified contact.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ContactData"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Invalid credentials",
+                  "statusCode": 401
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request forbidden.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Access not permitted",
+                  "statusCode": 403
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "details": [
+                    {
+                      "name": "Resource type",
+                      "value": "contact"
+                    }
+                  ],
+                  "message": "Resource not found",
+                  "statusCode": 404
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unable to process request.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Request processing failed",
+                  "statusCode": 500
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "contacts",
+          "administration",
+          "unimplemented"
+        ],
+        "summary": "Removes the specified contact.",
+        "description": "Removes all information for the contact.",
+        "responses": {
+          "204": {
+            "description": "The contact was successfully deleted."
+          },
+          "401": {
+            "description": "Invalid credentials provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Invalid credentials",
+                  "statusCode": 401
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request forbidden.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Access not permitted",
+                  "statusCode": 403
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "details": [
+                    {
+                      "name": "Resource type",
+                      "value": "user"
+                    }
+                  ],
+                  "message": "Resource not found",
+                  "statusCode": 404
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Contact is still associated with an entity.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Entity link still exist",
+                  "statusCode": 409
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unable to process request.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Request processing failed",
+                  "statusCode": 500
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/user/login": {
       "post": {
         "security": [],
         "tags": [
-          "user"
+          "users"
         ],
         "summary": "logs in a system user",
         "description": "The system login endpoint.",
+        "deprecated": true,
         "requestBody": {
           "description": "The body of the payload",
           "required": true,
@@ -2006,10 +2469,11 @@
     "/user": {
       "post": {
         "tags": [
-          "user"
+          "users"
         ],
         "summary": "creates a new user",
         "description": "The new user endpoint.  Note that displayname and phone are not written to the database.",
+        "deprecated": true,
         "requestBody": {
           "description": "The body of the payload",
           "required": true,
@@ -2069,10 +2533,11 @@
       },
       "get": {
         "tags": [
-          "user"
+          "users"
         ],
         "summary": "returns all system users",
         "description": "Returns all users within the system and their information.\n",
+        "deprecated": true,
         "parameters": [
           {
             "in": "header",
@@ -2123,10 +2588,11 @@
       },
       "put": {
         "tags": [
-          "user"
+          "users"
         ],
         "summary": "updates any single system user",
         "description": "By sending a valid payload you can update a user.  Note that displayname and phone are not stored in the database.",
+        "deprecated": true,
         "parameters": [
           {
             "in": "header",
@@ -2200,10 +2666,11 @@
     "/user/{email}": {
       "get": {
         "tags": [
-          "user"
+          "users"
         ],
         "summary": "returns a single system user",
         "description": "By passing the username, you can lookup a user.",
+        "deprecated": true,
         "parameters": [
           {
             "in": "path",
@@ -2250,10 +2717,11 @@
       },
       "delete": {
         "tags": [
-          "user"
+          "users"
         ],
         "summary": "deletes a single system user",
         "description": "By sending a valid payload you can delete a user.",
+        "deprecated": true,
         "parameters": [
           {
             "in": "path",
@@ -2299,6 +2767,7 @@
         ],
         "summary": "creates a new user role",
         "description": "The new user role endpoint.",
+        "deprecated": true,
         "parameters": [
           {
             "in": "header",
@@ -2360,6 +2829,7 @@
         ],
         "summary": "returns all system user roles",
         "description": "By passing in the appropriate options, you can search for\navailable user roles in the system\n",
+        "deprecated": true,
         "parameters": [
           {
             "in": "header",
@@ -2392,6 +2862,7 @@
         ],
         "summary": "deletes a single system user role",
         "description": "By sending a valid payload you can delete a user role.",
+        "deprecated": true,
         "parameters": [
           {
             "in": "header",
@@ -2963,10 +3434,11 @@
           }
         ],
         "tags": [
-          "contact"
+          "contacts"
         ],
         "summary": "creates a new contact",
         "description": "The new contact endpoint.",
+        "deprecated": true,
         "requestBody": {
           "description": "The body of the payload",
           "required": true,
@@ -3078,10 +3550,11 @@
       },
       "get": {
         "tags": [
-          "contact"
+          "contacts"
         ],
         "summary": "returns all, or searched for, system contacts",
         "description": "By passing in the appropriate options, you can search for\navailable contacts in the system\n",
+        "deprecated": true,
         "parameters": [
           {
             "in": "header",
@@ -3153,10 +3626,11 @@
       },
       "put": {
         "tags": [
-          "contact"
+          "contacts"
         ],
         "summary": "updates any single system contact",
         "description": "By sending a valid payload you can update a contact.",
+        "deprecated": true,
         "parameters": [
           {
             "in": "header",
@@ -3295,10 +3769,11 @@
     "/contact/send": {
       "post": {
         "tags": [
-          "contact"
+          "contacts"
         ],
         "summary": "sends a check-in email to all contacts",
         "description": "By sending a request to this endpoint, you can send an email to a single contact or all contacts based on entity or contact id. By sending entity ids you will send an email to each contact associated with each entity id passed. By passed contact ids you will send an email to each contact for each entity they are associated with. By passing nothing you will send an email to every contact and every association.",
+        "deprecated": true,
         "parameters": [
           {
             "in": "header",
@@ -3350,10 +3825,11 @@
     "/contact/{contact_id}": {
       "get": {
         "tags": [
-          "contact"
+          "contacts"
         ],
         "summary": "returns a single system contact",
         "description": "By passing the contact id, you can lookup a contact.",
+        "deprecated": true,
         "parameters": [
           {
             "in": "path",
@@ -3400,10 +3876,11 @@
       },
       "delete": {
         "tags": [
-          "contact"
+          "contacts"
         ],
         "summary": "deletes a single system contact",
         "description": "By sending a valid payload you can delete a user.",
+        "deprecated": true,
         "parameters": [
           {
             "in": "path",
@@ -3951,14 +4428,41 @@
           "createdAt": {
             "type": "string",
             "format": "date-time",
-            "description": "The time the referenced object was created",
+            "description": "The time the referenced object was created.",
             "example": "2020-01-21T13:45:52.348Z"
           },
           "updatedAt": {
             "type": "string",
             "format": "date-time",
-            "description": "The time the referenced object was last modified",
+            "description": "The time the referenced object was last modified.",
             "example": "2020-01-21T13:45:52.348Z"
+          }
+        }
+      },
+      "PhoneNumber": {
+        "type": "object",
+        "description": "A phone number.",
+        "required": [
+          "countryCode",
+          "number"
+        ],
+        "properties": {
+          "countryCode": {
+            "type": "string",
+            "pattern": "\\d{1,4}",
+            "description": "The country code for the phone number.",
+            "example": 98
+          },
+          "number": {
+            "type": "string",
+            "pattern": "\\d{6,}",
+            "description": "The full in-country representation for the phone number.",
+            "example": 5551212
+          },
+          "type": {
+            "type": "string",
+            "pattern": "\\w{3,}",
+            "example": "Work"
           }
         }
       },
@@ -3999,8 +4503,8 @@
         "properties": {
           "phone": {
             "type": "string",
-            "description": "The phone number",
-            "example": "123-456-7890"
+            "description": "The user's phone number",
+            "$ref": "#/components/schemas/PhoneNumber"
           },
           "attributes": {
             "type": "array",
@@ -4011,7 +4515,7 @@
                 "name": {
                   "type": "string",
                   "description": "The attribute name",
-                  "example":"Contact type"
+                  "example": "Contact type"
                 },
                 "value": {
                   "type": "string",
@@ -4056,6 +4560,114 @@
           },
           {
             "$ref": "#/components/schemas/UserData"
+          },
+          {
+            "$ref": "#/components/schemas/AuditData"
+          }
+        ]
+      },
+      "ContactId": {
+        "type": "object",
+        "description": "The identifier of a contact.",
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the contact.",
+            "pattern": "\\w{3,}",
+            "example": "ned_flanders"
+          }
+        }
+      },
+      "ContactDisplayData": {
+        "type": "object",
+        "description": "Defines contact display data.",
+        "properties": {
+          "displayName": {
+            "type": "string",
+            "description": "The text to be displayed to represent the user",
+            "example": "Ned Flanders, Esq."
+          }
+        }
+      },
+      "ContactContent": {
+        "type": "object",
+        "description": "Defines the content that can be provided when modifying a contact.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ContactDisplayData"
+          }
+        ],
+        "required": [
+          "primaryEmail",
+          "primaryPhone"
+        ],
+        "properties": {
+          "primaryEmail": {
+            "type": "string",
+            "format": "email",
+            "description": "Primary e-mail address for a contact.",
+            "example": "ned.flanders@example.com"
+          },
+          "additionalEmails": {
+            "type": "array",
+            "description": "Additional e-mail addresses associated with a contact.",
+            "items": {
+              "type": "string",
+              "format": "email",
+              "description": "An additional e-mail address for a contact.",
+              "example": "nflanders@example.com"
+            }
+          },
+          "primaryPhone": {
+            "description": "Primary phone number for a contact.",
+            "$ref": "#/components/schemas/PhoneNumber"
+          },
+          "additionalPhones": {
+            "type": "array",
+            "description": "Additional e-mail addresses associated with a contact.",
+            "items": {
+              "$ref": "#/components/schemas/PhoneNumber",
+              "description": "An additional phone number for a contact."
+            }
+          }
+        }
+      },
+      "ContactData": {
+        "type": "object",
+        "description": "Defines the content that can be provided when creating a contact.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ContactId"
+          },
+          {
+            "$ref": "#/components/schemas/ContactContent"
+          }
+        ]
+      },
+      "ContactBasicViewData": {
+        "type": "object",
+        "description": "Defines the minimal read-only content retrieved for a contact.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ContactId"
+          },
+          {
+            "$ref": "#/components/schemas/ContactDisplayData"
+          }
+        ]
+      },
+      "ContactViewData": {
+        "type": "object",
+        "description": "Defines the read-only content retrieved for a contact.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ContactId"
+          },
+          {
+            "$ref": "#/components/schemas/ContactData"
           },
           {
             "$ref": "#/components/schemas/AuditData"
@@ -4216,6 +4828,7 @@
       },
       "ContactItem": {
         "type": "object",
+        "deprecated": true,
         "properties": {
           "id": {
             "type": "string",
@@ -4243,7 +4856,7 @@
               "properties": {
                 "address": {
                   "type": "string",
-                  "example": 6.54987321E8
+                  "example": 654987321
                 },
                 "isPrimary": {
                   "type": "boolean",
