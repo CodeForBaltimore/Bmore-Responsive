@@ -206,10 +206,10 @@
         "description": "Used for providing focused access to contacts who are not users of the overall system, and who do not have credentials",
         "parameters": [
           {
-            "in": "path",
             "name": "email",
             "description": "E-mail address of the non-system user",
             "example": "external@example.com",
+            "in": "path",
             "required": true,
             "schema": {
               "type": "string",
@@ -471,10 +471,10 @@
     "/roles/{roleName}": {
       "parameters": [
         {
-          "in": "path",
           "name": "roleName",
           "description": "The name of the role to retrieve",
           "example": "role_viewer",
+          "in": "path",
           "required": true,
           "schema": {
             "type": "string"
@@ -757,10 +757,10 @@
     "/roles/{roleName}/addPermission": {
       "parameters": [
         {
-          "in": "path",
           "name": "roleName",
           "description": "The name of the role to modify",
           "example": "role_viewer",
+          "in": "path",
           "required": true,
           "schema": {
             "type": "string"
@@ -869,7 +869,7 @@
             "content": {
               "application/json": {
                 "example": {
-                  "message": "Permission 'role_viewer|GET|/roles/*' already exists",
+                  "message": "The permission 'GET:/roles/*' already exists for the role 'role_viewer'",
                   "statusCode": 409
                 },
                 "schema": {
@@ -898,10 +898,10 @@
     "/roles/{roleName}/removePermission": {
       "parameters": [
         {
-          "in": "path",
           "name": "roleName",
           "description": "The name of the role to modify",
           "example": "role_viewer",
+          "in": "path",
           "required": true,
           "schema": {
             "type": "string"
@@ -1161,10 +1161,10 @@
         "description": "Grants the non-system user the ability to access application endpoints.",
         "parameters": [
           {
-            "in": "path",
             "name": "email",
             "description": "E-mail address of the non-system user",
             "example": "external@example.com",
+            "in": "path",
             "required": true,
             "schema": {
               "type": "string",
@@ -1280,10 +1280,10 @@
         "description": "Retrieves all roles granted to the user.",
         "parameters": [
           {
-            "in": "path",
             "name": "email",
             "description": "E-mail address of the user",
             "example": "user@example.com",
+            "in": "path",
             "required": true,
             "schema": {
               "type": "string",
@@ -1381,10 +1381,10 @@
         "description": "Revokes a user's the ability to access specific  application endpoints.",
         "parameters": [
           {
-            "in": "path",
             "name": "email",
             "description": "E-mail address of the user",
             "example": "user@example.com",
+            "in": "path",
             "required": true,
             "schema": {
               "type": "string",
@@ -1669,10 +1669,10 @@
     "/users/{email}": {
       "parameters": [
         {
-          "in": "path",
           "name": "email",
           "description": "E-mail address of the non-system user",
           "example": "external@example.com",
+          "in": "path",
           "required": true,
           "schema": {
             "type": "string",
@@ -2131,10 +2131,10 @@
     "/contacts/{contactName}": {
       "parameters": [
         {
-          "in": "path",
           "name": "contactName",
           "description": "Name of the contact",
           "example": "ned_flanders",
+          "in": "path",
           "required": true,
           "schema": {
             "type": "string",
@@ -2518,7 +2518,7 @@
                 "example": {
                   "details": [
                     {
-                      "name": "name",
+                      "name": "typeName",
                       "value": "Content is not a valid name"
                     }
                   ],
@@ -2560,7 +2560,7 @@
             }
           },
           "409": {
-            "description": "User already exists.",
+            "description": "Entity type already exists.",
             "content": {
               "application/json": {
                 "example": {
@@ -2593,10 +2593,10 @@
     "/entity-types/{typeName}": {
       "parameters": [
         {
-          "in": "path",
           "name": "typeName",
           "description": "The name of the entity type.",
           "example": "primary_care",
+          "in": "path",
           "required": true,
           "schema": {
             "type": "string",
@@ -2699,7 +2699,7 @@
         "summary": "Modifies an entity type.",
         "description": "Modifies the non-identifying information for the specified entity type.",
         "requestBody": {
-          "description": "The contact information to modify.",
+          "description": "The entity type information to modify.",
           "content": {
             "application/json": {
               "schema": {
@@ -2710,7 +2710,7 @@
         },
         "responses": {
           "200": {
-            "description": "The data corresponding to the modified entity.",
+            "description": "The data corresponding to the modified entity type.",
             "content": {
               "application/json": {
                 "schema": {
@@ -2793,7 +2793,7 @@
           "unimplemented"
         ],
         "summary": "Removes the specified entity type.",
-        "description": "Removes all information for the entity.",
+        "description": "Removes all information for the entity type.",
         "responses": {
           "204": {
             "description": "The entity type was successfully deleted."
@@ -3021,6 +3021,26 @@
               }
             }
           },
+          "404": {
+            "description": "Resource not found.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "details": [
+                    {
+                      "name": "Resource type",
+                      "value": "entity-type-name"
+                    }
+                  ],
+                  "message": "Resource not found",
+                  "statusCode": 404
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
           "409": {
             "description": "Entity already exists.",
             "content": {
@@ -3055,10 +3075,10 @@
     "/entities/{entityName}": {
       "parameters": [
         {
-          "in": "path",
           "name": "entityName",
           "description": "The name of the entity.",
           "example": "caresouth",
+          "in": "path",
           "required": true,
           "schema": {
             "type": "string",
@@ -3314,6 +3334,917 @@
               "application/json": {
                 "example": {
                   "message": "Contact link still exists",
+                  "statusCode": 409
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unable to process request.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Request processing failed",
+                  "statusCode": 500
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/contact-associations": {
+      "get": {
+        "tags": [
+          "contacts",
+          "entities",
+          "read-only",
+          "unimplemented"
+        ],
+        "summary": "Retrieves all contact associations.",
+        "description": "Retrieves all defined contact associations in the application. Query  parameters can be used to filter the results by entity, contact, or  association type. Values provided will be treated as a logical `AND` when filtering.\n",
+        "parameters": [
+          {
+            "name": "contactName",
+            "description": "The name of an associated contact used to filter results.",
+            "example": "ned_flanders",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "pattern": "^\\w{3,}$"
+            }
+          },
+          {
+            "name": "entityName",
+            "description": "The name of an associated entity used to filter results.",
+            "example": "caresouth",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "pattern": "^\\w{3,}$"
+            }
+          },
+          {
+            "name": "typeName",
+            "description": "The name of a contact association type used to filter results.",
+            "example": "primary_contact",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "pattern": "^\\w{3,}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The data corresponding to the created contact associations.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ContactAssociationId"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Invalid credentials",
+                  "statusCode": 401
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request forbidden.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Access not permitted",
+                  "statusCode": 403
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unable to process request.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Request processing failed",
+                  "statusCode": 500
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "contacts",
+          "entities",
+          "administration",
+          "unimplemented"
+        ],
+        "summary": "Creates a new contact association.",
+        "description": "Creates a new contact association that relates a contact to an entity.",
+        "requestBody": {
+          "description": "The contact association to create.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContactAssociationId"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The data corresponding to the created type.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContactAssociation"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid content provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "details": [
+                    {
+                      "name": "typeName",
+                      "value": "Content is not a valid name"
+                    }
+                  ],
+                  "message": "Request invalid",
+                  "statusCode": 400
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Invalid credentials",
+                  "statusCode": 401
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request forbidden.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Access not permitted",
+                  "statusCode": 403
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "details": [
+                    {
+                      "name": "Resource type",
+                      "value": "contact"
+                    }
+                  ],
+                  "message": "Resource not found",
+                  "statusCode": 404
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Contact association already exists.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "An contact association for 'ned_flanders' as 'primary_contact' for 'caresouth' already exists",
+                  "statusCode": 409
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unable to process request.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Request processing failed",
+                  "statusCode": 500
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/contact-associations/{contactName}/{entityName}/{typeName}": {
+      "parameters": [
+        {
+          "name": "contactName",
+          "description": "The name of the associated contact.",
+          "example": "ned_flanders",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "pattern": "^\\w{3,}$"
+          }
+        },
+        {
+          "name": "entityName",
+          "description": "The name of the associated entity.",
+          "example": "caresouth",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "pattern": "^\\w{3,}$"
+          }
+        },
+        {
+          "name": "typeName",
+          "description": "The name of the contact association type.",
+          "example": "primary_contact",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "pattern": "^\\w{3,}$"
+          }
+        }
+      ],
+      "delete": {
+        "tags": [
+          "contacts",
+          "entities",
+          "administration",
+          "unimplemented"
+        ],
+        "summary": "Deletes a contact association.",
+        "description": "Deletes a contact association that related a contact to an entity.",
+        "responses": {
+          "204": {
+            "description": "The contact association has been deleted."
+          },
+          "400": {
+            "description": "Invalid content provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "details": [
+                    {
+                      "name": "typeName",
+                      "value": "Content is not a valid name"
+                    }
+                  ],
+                  "message": "Request invalid",
+                  "statusCode": 400
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Invalid credentials",
+                  "statusCode": 401
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request forbidden.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Access not permitted",
+                  "statusCode": 403
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Contact association does not exist.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "No matching contact association exists",
+                  "statusCode": 404
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unable to process request.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Request processing failed",
+                  "statusCode": 500
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "contacts",
+          "entities",
+          "read-only",
+          "unimplemented"
+        ],
+        "summary": "Retrieves the specified contact association.",
+        "description": "Retrieves the detailed information for the contact association.",
+        "responses": {
+          "200": {
+            "description": "The data corresponding to the created contact association.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ContactAssociation"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Invalid credentials",
+                  "statusCode": 401
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request forbidden.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Access not permitted",
+                  "statusCode": 403
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "details": [
+                    {
+                      "name": "Resource type",
+                      "value": "contact-association"
+                    }
+                  ],
+                  "message": "Resource not found",
+                  "statusCode": 404
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unable to process request.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Request processing failed",
+                  "statusCode": 500
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/contact-association-types": {
+      "get": {
+        "tags": [
+          "contacts",
+          "entities",
+          "read-only",
+          "unimplemented"
+        ],
+        "summary": "Retrieves all contact association types.",
+        "description": "Retrieves all defined contact association types in the application.",
+        "responses": {
+          "200": {
+            "description": "The data corresponding to the created contact association types.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TypeReference"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Invalid credentials",
+                  "statusCode": 401
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request forbidden.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Access not permitted",
+                  "statusCode": 403
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unable to process request.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Request processing failed",
+                  "statusCode": 500
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "contacts",
+          "entities",
+          "administration",
+          "unimplemented"
+        ],
+        "summary": "Creates a new contact association type.",
+        "description": "Creates a new contact association type in the application that can subsequently be used for contact association classification.",
+        "requestBody": {
+          "description": "The contact association type to create.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TypeReference"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The data corresponding to the created type.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TypeReference"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid content provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "details": [
+                    {
+                      "name": "typeName",
+                      "value": "Content is not a valid name"
+                    }
+                  ],
+                  "message": "Request invalid",
+                  "statusCode": 400
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Invalid credentials",
+                  "statusCode": 401
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request forbidden.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Access not permitted",
+                  "statusCode": 403
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Contact association already exists.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "An contact association type with the name 'primary_contact' already exists",
+                  "statusCode": 409
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unable to process request.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Request processing failed",
+                  "statusCode": 500
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/contact-association-types/{typeName}": {
+      "parameters": [
+        {
+          "name": "typeName",
+          "description": "The name of the contact association type.",
+          "example": "primary_contact",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "pattern": "^\\w{3,}$"
+          }
+        }
+      ],
+      "get": {
+        "tags": [
+          "contacts",
+          "entities",
+          "read-only",
+          "unimplemented"
+        ],
+        "summary": "Retrieves the specified contact association type.",
+        "description": "Retrieves the detailed information for the contact association type.",
+        "responses": {
+          "200": {
+            "description": "The data corresponding to the created contact association type.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TypeReference"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Invalid credentials",
+                  "statusCode": 401
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request forbidden.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Access not permitted",
+                  "statusCode": 403
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "details": [
+                    {
+                      "name": "Resource type",
+                      "value": "contact-association-type"
+                    }
+                  ],
+                  "message": "Resource not found",
+                  "statusCode": 404
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unable to process request.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Request processing failed",
+                  "statusCode": 500
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "contacts",
+          "entities",
+          "administration",
+          "unimplemented"
+        ],
+        "summary": "Modifies an contact association type.",
+        "description": "Modifies the non-identifying information for the specified contact association type.",
+        "requestBody": {
+          "description": "The contact association type information to modify.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TypeReferenceData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The data corresponding to the modified contact association type.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TypeReference"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Invalid credentials",
+                  "statusCode": 401
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request forbidden.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Access not permitted",
+                  "statusCode": 403
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "details": [
+                    {
+                      "name": "Resource type",
+                      "value": "contact-association-type"
+                    }
+                  ],
+                  "message": "Resource not found",
+                  "statusCode": 404
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unable to process request.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Request processing failed",
+                  "statusCode": 500
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "contacts",
+          "entities",
+          "administration",
+          "unimplemented"
+        ],
+        "summary": "Removes the specified contact association type.",
+        "description": "Removes all information for the contact association type.",
+        "responses": {
+          "204": {
+            "description": "The contact association type was successfully deleted."
+          },
+          "401": {
+            "description": "Invalid credentials provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Invalid credentials",
+                  "statusCode": 401
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request forbidden.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Access not permitted",
+                  "statusCode": 403
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "details": [
+                    {
+                      "name": "Resource type",
+                      "value": "contact-association-type"
+                    }
+                  ],
+                  "message": "Resource not found",
+                  "statusCode": 404
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Contact association type is still associated with a contact association.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Type still in use",
                   "statusCode": 409
                 },
                 "schema": {
@@ -5605,7 +6536,7 @@
             "type": "string",
             "description": "The name of the type.",
             "pattern": "^\\w{3,}$",
-            "example": "primary_care"
+            "example": "some_type"
           }
         }
       },
@@ -5680,7 +6611,7 @@
             "type": "string",
             "description": "The name of the entity.",
             "pattern": "^\\w{3,}$",
-            "example": "CareSouth"
+            "example": "caresouth"
           }
         }
       },
@@ -5759,6 +6690,46 @@
             "$ref": "#/components/schemas/AuditData"
           }
         ]
+      },
+      "ContactAssociationId": {
+        "type": "object",
+        "description": "The identifier of an association between a contact and an entity.",
+        "required": [
+          "entity",
+          "contact",
+          "associationType"
+        ],
+        "properties": {
+          "entity": {
+            "$ref": "#/components/schemas/EntityId"
+          },
+          "contact": {
+            "$ref": "#/components/schemas/ContactId"
+          },
+          "associationType": {
+            "$ref": "#/components/schemas/TypeReferenceId"
+          }
+        }
+      },
+      "ContactAssociation": {
+        "type": "object",
+        "description": "Defines the details of an association between a contact and an entity.",
+        "required": [
+          "entity",
+          "contact",
+          "associationType"
+        ],
+        "properties": {
+          "entity": {
+            "$ref": "#/components/schemas/EntityData"
+          },
+          "contact": {
+            "$ref": "#/components/schemas/ContactData"
+          },
+          "associationType": {
+            "$ref": "#/components/schemas/TypeReference"
+          }
+        }
       },
       "UserItem": {
         "type": "object",
