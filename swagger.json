@@ -52,6 +52,10 @@
       "description": "Endpoints related to system users"
     },
     {
+      "name": "email",
+      "description": "Endpoints related to e-mail management"
+    },
+    {
       "name": "userRole",
       "description": "Endpoints related to userRole"
     },
@@ -3181,7 +3185,7 @@
         "summary": "Modifies an entity.",
         "description": "Modifies the non-identifying information for the specified entity.",
         "requestBody": {
-          "description": "The contact information to modify.",
+          "description": "The entity information to modify.",
           "content": {
             "application/json": {
               "schema": {
@@ -4246,6 +4250,578 @@
                 "example": {
                   "message": "Type still in use",
                   "statusCode": 409
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unable to process request.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Request processing failed",
+                  "statusCode": 500
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/email": {
+      "post": {
+        "tags": [
+          "email",
+          "administration",
+          "unimplemented"
+        ],
+        "summary": "Send one or more e-mail messages.",
+        "description": "Sends the e-mail messages generated from the provided template. The contact association type, contact and entity information are used to filter the recipients.",
+        "requestBody": {
+          "description": "The specification to use when generating e-mail messages.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmailSpecification"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The number of e-mail messages generated for sending.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "sentMessageCount"
+                  ],
+                  "properties": {
+                    "sentMessageCount": {
+                      "type": "integer",
+                      "minimum": 0
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid content provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "details": [
+                    {
+                      "name": "typeName",
+                      "value": "Type name is not a valid association type"
+                    }
+                  ],
+                  "message": "Request invalid",
+                  "statusCode": 400
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Invalid credentials",
+                  "statusCode": 401
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request forbidden.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Access not permitted",
+                  "statusCode": 403
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "details": [
+                    {
+                      "name": "Resource type",
+                      "value": "contact"
+                    }
+                  ],
+                  "message": "Resource not found",
+                  "statusCode": 404
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unable to process request.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Request processing failed",
+                  "statusCode": 500
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/email-templates": {
+      "get": {
+        "tags": [
+          "email",
+          "read-only",
+          "unimplemented"
+        ],
+        "summary": "Retrieves all templates.",
+        "description": "Retrieves all defined e-mail templates in the application.",
+        "responses": {
+          "200": {
+            "description": "The data corresponding to the created entities.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EmailTemplateBasicViewData"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Invalid credentials",
+                  "statusCode": 401
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request forbidden.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Access not permitted",
+                  "statusCode": 403
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unable to process request.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Request processing failed",
+                  "statusCode": 500
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "email",
+          "administration",
+          "unimplemented"
+        ],
+        "summary": "Creates a new e-mail template.",
+        "description": "Creates a new e-mail template in the application that can subsequently be used for contact interactions.",
+        "requestBody": {
+          "description": "The template to create.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmailTemplateData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The data corresponding to the created template.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmailTemplateData"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid content provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "details": [
+                    {
+                      "name": "name",
+                      "value": "Content is not a valid template name"
+                    }
+                  ],
+                  "message": "Request invalid",
+                  "statusCode": 400
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Invalid credentials",
+                  "statusCode": 401
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request forbidden.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Access not permitted",
+                  "statusCode": 403
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Entity already exists.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "A template with the name 'assisted_living' already exists",
+                  "statusCode": 409
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unable to process request.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Request processing failed",
+                  "statusCode": 500
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/email-templates/{templateName}": {
+      "parameters": [
+        {
+          "name": "templateName",
+          "description": "The name of the e-mail template.",
+          "example": "assisted_living",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "pattern": "^\\w{3,}$"
+          }
+        }
+      ],
+      "get": {
+        "tags": [
+          "email",
+          "read-only",
+          "unimplemented"
+        ],
+        "summary": "Retrieves the specified e-mail template.",
+        "description": "Retrieves the detailed information for the e-mail template.",
+        "responses": {
+          "200": {
+            "description": "The data corresponding to the created e-mail template.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EmailTemplateData"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Invalid credentials",
+                  "statusCode": 401
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request forbidden.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Access not permitted",
+                  "statusCode": 403
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "details": [
+                    {
+                      "name": "Resource type",
+                      "value": "email-template"
+                    }
+                  ],
+                  "message": "Resource not found",
+                  "statusCode": 404
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unable to process request.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Request processing failed",
+                  "statusCode": 500
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "email",
+          "administration",
+          "unimplemented"
+        ],
+        "summary": "Modifies an e-mail template.",
+        "description": "Modifies the non-identifying information for the specified e-mail template.",
+        "requestBody": {
+          "description": "The e-mail template information to modify.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmailTemplateContent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The data corresponding to the modified e-mail template.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EmailTemplateData"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Invalid credentials",
+                  "statusCode": 401
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request forbidden.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Access not permitted",
+                  "statusCode": 403
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "details": [
+                    {
+                      "name": "Resource type",
+                      "value": "email-template"
+                    }
+                  ],
+                  "message": "Resource not found",
+                  "statusCode": 404
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unable to process request.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Request processing failed",
+                  "statusCode": 500
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "email",
+          "administration",
+          "unimplemented"
+        ],
+        "summary": "Removes the specified e-mail template.",
+        "description": "Removes all information for the e-mail template.",
+        "responses": {
+          "204": {
+            "description": "The e-mail template was successfully deleted."
+          },
+          "401": {
+            "description": "Invalid credentials provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Invalid credentials",
+                  "statusCode": 401
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request forbidden.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Access not permitted",
+                  "statusCode": 403
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "details": [
+                    {
+                      "name": "Resource type",
+                      "value": "email-template"
+                    }
+                  ],
+                  "message": "Resource not found",
+                  "statusCode": 404
                 },
                 "schema": {
                   "$ref": "#/components/schemas/ErrorResponse"
@@ -6731,6 +7307,97 @@
           }
         }
       },
+      "EmailSpecification": {
+        "type": "object",
+        "description": "Defines the specification for sending an e-mail.",
+        "required": [
+          "associationType",
+          "template"
+        ],
+        "properties": {
+          "template": {
+            "$ref": "#/components/schemas/EmailTemplateId"
+          },
+          "entity": {
+            "$ref": "#/components/schemas/EntityId"
+          },
+          "contact": {
+            "$ref": "#/components/schemas/ContactId"
+          },
+          "associationType": {
+            "$ref": "#/components/schemas/TypeReferenceId"
+          }
+        }
+      },
+      "EmailTemplateId": {
+        "type": "object",
+        "description": "The identifier of a e-mail template.",
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the template.",
+            "pattern": "^\\w{3,}$",
+            "example": "assisted_living"
+          }
+        }
+      },
+      "EmailTemplateDisplayData": {
+        "type": "object",
+        "description": "Defines e-mail template display data.",
+        "properties": {
+          "displayName": {
+            "type": "string",
+            "description": "The text to be displayed to represent the template.",
+            "example": "Assisted Living Check-In"
+          }
+        }
+      },
+      "EmailTemplateContent": {
+        "type": "object",
+        "description": "Defines the content that can be provided when modifying an e-mail template.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/EmailTemplateDisplayData"
+          }
+        ],
+        "required": [
+          "template"
+        ],
+        "properties": {
+          "template": {
+            "type": "string",
+            "description": "A Markdown template for an e-mail message. Substitution fields  should be included using double-brace notation, and must be named  using JSON object notation patterns (for example,  `{{entity.name}}`).\n",
+            "example": "Greetings, {{contact.displayName}}!\n\nClick [here](https://example.com/login) to log in!\n"
+          }
+        }
+      },
+      "EmailTemplateBasicViewData": {
+        "type": "object",
+        "description": "Defines the basic view of an e-mail template.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/EmailTemplateId"
+          },
+          {
+            "$ref": "#/components/schemas/EmailTemplateDisplayData"
+          }
+        ]
+      },
+      "EmailTemplateData": {
+        "type": "object",
+        "description": "Defines the details of an e-mail template.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/EmailTemplateId"
+          },
+          {
+            "$ref": "#/components/schemas/EmailTemplateContent"
+          }
+        ]
+      },
       "UserItem": {
         "type": "object",
         "deprecated": true,
@@ -6781,6 +7448,7 @@
       },
       "EntityItem": {
         "type": "object",
+        "deprecated": true,
         "properties": {
           "id": {
             "type": "string",
