@@ -68,6 +68,18 @@
       "description": "Endpoints related to contacts"
     },
     {
+      "name": "events",
+      "description": "Endpoints related to events"
+    },
+    {
+      "name": "questionnaires",
+      "description": "Endpoints related to questionnaires"
+    },
+    {
+      "name": "check-ins",
+      "description": "Endpoints related to check-ins"
+    },
+    {
       "name": "csv",
       "description": "Endpoints related to CSV data extraction"
     }
@@ -388,7 +400,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/RoleData"
+                  "$ref": "#/components/schemas/RoleViewData"
                 }
               }
             }
@@ -501,7 +513,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/RoleResourceData"
+                    "$ref": "#/components/schemas/RoleViewData"
                   }
                 }
               }
@@ -597,7 +609,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/RoleData"
+                    "$ref": "#/components/schemas/RoleViewData"
                   }
                 }
               }
@@ -795,7 +807,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/RoleData"
+                  "$ref": "#/components/schemas/RoleViewData"
                 }
               }
             }
@@ -936,7 +948,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/RoleData"
+                  "$ref": "#/components/schemas/RoleViewData"
                 }
               }
             }
@@ -2160,10 +2172,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ContactViewData"
-                  }
+                  "$ref": "#/components/schemas/ContactViewData"
                 }
               }
             }
@@ -2258,7 +2267,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/ContactData"
+                    "$ref": "#/components/schemas/ContactViewData"
                   }
                 }
               }
@@ -2436,7 +2445,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/TypeReference"
+                    "$ref": "#/components/schemas/TypeReferenceBasicViewData"
                   }
                 }
               }
@@ -2499,7 +2508,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/TypeReference"
+                "$ref": "#/components/schemas/TypeReferenceData"
               }
             }
           }
@@ -2510,7 +2519,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/TypeReference"
+                  "$ref": "#/components/schemas/TypeReferenceViewData"
                 }
               }
             }
@@ -2622,10 +2631,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/TypeReference"
-                  }
+                  "$ref": "#/components/schemas/TypeReferenceViewData"
                 }
               }
             }
@@ -2707,7 +2713,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/TypeReferenceData"
+                "$ref": "#/components/schemas/TypeReferenceContent"
               }
             }
           }
@@ -2720,7 +2726,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/TypeReference"
+                    "$ref": "#/components/schemas/TypeReferenceViewData"
                   }
                 }
               }
@@ -3104,10 +3110,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/EntityViewData"
-                  }
+                  "$ref": "#/components/schemas/EntityViewData"
                 }
               }
             }
@@ -3202,7 +3205,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/EntityData"
+                    "$ref": "#/components/schemas/EntityViewData"
                   }
                 }
               }
@@ -3488,7 +3491,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ContactAssociation"
+                  "$ref": "#/components/schemas/ContactAssociationViewData"
                 }
               }
             }
@@ -3734,10 +3737,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ContactAssociation"
-                  }
+                  "$ref": "#/components/schemas/ContactAssociationViewData"
                 }
               }
             }
@@ -3825,7 +3825,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/TypeReference"
+                    "$ref": "#/components/schemas/TypeReferenceBasicViewData"
                   }
                 }
               }
@@ -3889,7 +3889,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/TypeReference"
+                "$ref": "#/components/schemas/TypeReferenceData"
               }
             }
           }
@@ -3900,7 +3900,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/TypeReference"
+                  "$ref": "#/components/schemas/TypeReferenceViewData"
                 }
               }
             }
@@ -4013,10 +4013,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/TypeReference"
-                  }
+                  "$ref": "#/components/schemas/TypeReferenceViewData"
                 }
               }
             }
@@ -4099,7 +4096,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/TypeReferenceData"
+                "$ref": "#/components/schemas/TypeReferenceContent"
               }
             }
           }
@@ -4110,10 +4107,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/TypeReference"
-                  }
+                  "$ref": "#/components/schemas/TypeReferenceViewData"
                 }
               }
             }
@@ -4489,7 +4483,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/EmailTemplateData"
+                  "$ref": "#/components/schemas/EmailTemplateViewData"
                 }
               }
             }
@@ -4601,10 +4595,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/EmailTemplateData"
-                  }
+                  "$ref": "#/components/schemas/EmailTemplateViewData"
                 }
               }
             }
@@ -4697,10 +4688,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/EmailTemplateData"
-                  }
+                  "$ref": "#/components/schemas/EmailTemplateViewData"
                 }
               }
             }
@@ -4822,6 +4810,462 @@
                   ],
                   "message": "Resource not found",
                   "statusCode": 404
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unable to process request.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Request processing failed",
+                  "statusCode": 500
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/events": {
+      "get": {
+        "tags": [
+          "events",
+          "read-only",
+          "unimplemented"
+        ],
+        "summary": "Retrieves all events.",
+        "description": "Retrieves all defined events in the application.",
+        "responses": {
+          "200": {
+            "description": "The data corresponding to the created events.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EventBasicViewData"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Invalid credentials",
+                  "statusCode": 401
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request forbidden.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Access not permitted",
+                  "statusCode": 403
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unable to process request.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Request processing failed",
+                  "statusCode": 500
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "events",
+          "administration",
+          "unimplemented"
+        ],
+        "summary": "Creates a new event.",
+        "description": "Creates a new event in the application that can subsequently be used for check-in categorization.",
+        "requestBody": {
+          "description": "The event to create.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EventData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The data corresponding to the created event.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventViewData"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid content provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "details": [
+                    {
+                      "name": "eventName",
+                      "value": "Content is not a valid event name"
+                    }
+                  ],
+                  "message": "Request invalid",
+                  "statusCode": 400
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Invalid credentials",
+                  "statusCode": 401
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request forbidden.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Access not permitted",
+                  "statusCode": 403
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Entity already exists.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "An event with the name 'thing_in_2020' already exists",
+                  "statusCode": 409
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unable to process request.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Request processing failed",
+                  "statusCode": 500
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/events/{eventName}": {
+      "parameters": [
+        {
+          "name": "eventName",
+          "description": "The name of the event.",
+          "example": "thing_in_2020",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "pattern": "^\\w{3,}$"
+          }
+        }
+      ],
+      "get": {
+        "tags": [
+          "events",
+          "read-only",
+          "unimplemented"
+        ],
+        "summary": "Retrieves the specified event.",
+        "description": "Retrieves the detailed information for the event.",
+        "responses": {
+          "200": {
+            "description": "The data corresponding to the created event.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventViewData"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Invalid credentials",
+                  "statusCode": 401
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request forbidden.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Access not permitted",
+                  "statusCode": 403
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "details": [
+                    {
+                      "name": "Resource type",
+                      "value": "event"
+                    }
+                  ],
+                  "message": "Resource not found",
+                  "statusCode": 404
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unable to process request.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Request processing failed",
+                  "statusCode": 500
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "events",
+          "administration",
+          "unimplemented"
+        ],
+        "summary": "Modifies an event.",
+        "description": "Modifies the non-identifying information for the specified event.",
+        "requestBody": {
+          "description": "The event information to modify.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EventContent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The data corresponding to the modified event.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventViewData"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Invalid credentials",
+                  "statusCode": 401
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request forbidden.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Access not permitted",
+                  "statusCode": 403
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "details": [
+                    {
+                      "name": "Resource type",
+                      "value": "event"
+                    }
+                  ],
+                  "message": "Resource not found",
+                  "statusCode": 404
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unable to process request.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Request processing failed",
+                  "statusCode": 500
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "events",
+          "administration",
+          "unimplemented"
+        ],
+        "summary": "Removes the specified event.",
+        "description": "Removes all information for the event.",
+        "responses": {
+          "204": {
+            "description": "The event was successfully deleted."
+          },
+          "401": {
+            "description": "Invalid credentials provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Invalid credentials",
+                  "statusCode": 401
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request forbidden.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Access not permitted",
+                  "statusCode": 403
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "details": [
+                    {
+                      "name": "Resource type",
+                      "value": "event"
+                    }
+                  ],
+                  "message": "Resource not found",
+                  "statusCode": 404
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Entity is still associated with a contact.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Contact link still exists",
+                  "statusCode": 409
                 },
                 "schema": {
                   "$ref": "#/components/schemas/ErrorResponse"
@@ -6756,6 +7200,15 @@
           }
         }
       },
+      "RoleContent": {
+        "type": "object",
+        "description": "Defines the content that can be provided when modifying an authorization role.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/RoleDisplayData"
+          }
+        ]
+      },
       "RoleResource": {
         "type": "object",
         "description": "The resource that a role is intended to grant access to.",
@@ -6787,6 +7240,21 @@
           }
         }
       },
+      "RoleData": {
+        "type": "object",
+        "description": "Defines the content that can be provided when creating an authorization role.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/RoleId"
+          },
+          {
+            "$ref": "#/components/schemas/RoleContent"
+          },
+          {
+            "$ref": "#/components/schemas/RoleResourceData"
+          }
+        ]
+      },
       "RoleBasicViewData": {
         "type": "object",
         "description": "A minimal read-only view of an authorization role.",
@@ -6799,15 +7267,18 @@
           }
         ]
       },
-      "RoleData": {
+      "RoleViewData": {
         "type": "object",
-        "description": "A complete view of an authorization role.",
+        "description": "A  read-only view of an authorization role.",
         "allOf": [
           {
             "$ref": "#/components/schemas/RoleId"
           },
           {
-            "$ref": "#/components/schemas/RoleResourceData"
+            "$ref": "#/components/schemas/RoleData"
+          },
+          {
+            "$ref": "#/components/schemas/AuditData"
           }
         ]
       },
@@ -7116,7 +7587,7 @@
           }
         }
       },
-      "TypeReferenceData": {
+      "TypeReferenceDisplayData": {
         "type": "object",
         "description": "Descriptive type information for classification.",
         "properties": {
@@ -7127,15 +7598,51 @@
           }
         }
       },
-      "TypeReference": {
+      "TypeReferenceContent": {
         "type": "object",
-        "description": "Generic type information for classification.",
+        "description": "Defines the type information for modification.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/TypeReferenceDisplayData"
+          }
+        ]
+      },
+      "TypeReferenceData": {
+        "type": "object",
+        "description": "Defines the information for creating a type reference.",
         "allOf": [
           {
             "$ref": "#/components/schemas/TypeReferenceId"
           },
           {
-            "$ref": "#/components/schemas/TypeReferenceData"
+            "$ref": "#/components/schemas/TypeReferenceContent"
+          }
+        ]
+      },
+      "TypeReferenceBasicViewData": {
+        "type": "object",
+        "description": "Defines the minimal read-only content retrieved for a type reference.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/TypeReferenceId"
+          },
+          {
+            "$ref": "#/components/schemas/TypeReferenceDisplayData"
+          }
+        ]
+      },
+      "TypeReferenceViewData": {
+        "type": "object",
+        "description": "Defines the read-only content retrieved for a type reference.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/TypeReferenceId"
+          },
+          {
+            "$ref": "#/components/schemas/TypeReferenceContent"
+          },
+          {
+            "$ref": "#/components/schemas/AuditData"
           }
         ]
       },
@@ -7254,7 +7761,7 @@
       },
       "EntityViewData": {
         "type": "object",
-        "description": "Defines the read-only content retrieved for a contact.",
+        "description": "Defines the read-only content retrieved for an entity.",
         "allOf": [
           {
             "$ref": "#/components/schemas/EntityId"
@@ -7287,9 +7794,14 @@
           }
         }
       },
-      "ContactAssociation": {
+      "ContactAssociationViewData": {
         "type": "object",
         "description": "Defines the details of an association between a contact and an entity.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/AuditData"
+          }
+        ],
         "required": [
           "entity",
           "contact",
@@ -7303,7 +7815,7 @@
             "$ref": "#/components/schemas/ContactData"
           },
           "associationType": {
-            "$ref": "#/components/schemas/TypeReference"
+            "$ref": "#/components/schemas/TypeReferenceData"
           }
         }
       },
@@ -7374,6 +7886,18 @@
           }
         }
       },
+      "EmailTemplateData": {
+        "type": "object",
+        "description": "Defines the content that can be provided when creating an e-mail template.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/EmailTemplateId"
+          },
+          {
+            "$ref": "#/components/schemas/EmailTemplateContent"
+          }
+        ]
+      },
       "EmailTemplateBasicViewData": {
         "type": "object",
         "description": "Defines the basic view of an e-mail template.",
@@ -7386,15 +7910,101 @@
           }
         ]
       },
-      "EmailTemplateData": {
+      "EmailTemplateViewData": {
         "type": "object",
         "description": "Defines the details of an e-mail template.",
         "allOf": [
           {
-            "$ref": "#/components/schemas/EmailTemplateId"
+            "$ref": "#/components/schemas/EmailTemplateData"
           },
           {
-            "$ref": "#/components/schemas/EmailTemplateContent"
+            "$ref": "#/components/schemas/AuditData"
+          }
+        ]
+      },
+      "EventId": {
+        "type": "object",
+        "description": "The identifier of an event.",
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the event.",
+            "pattern": "^\\w{3,}$",
+            "example": "thing_in_2020"
+          }
+        }
+      },
+      "EventDisplayData": {
+        "type": "object",
+        "description": "Defines event display data.",
+        "properties": {
+          "displayName": {
+            "type": "string",
+            "description": "The text to be displayed to represent the event.",
+            "example": "Big Health Event"
+          }
+        }
+      },
+      "EventContent": {
+        "type": "object",
+        "description": "Defines the content that can be provided when modifying an event.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/EventDisplayData"
+          }
+        ],
+        "properties": {
+          "startDate": {
+            "type": "string",
+            "format": "date",
+            "description": "Start date of the event"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date",
+            "description": "Start date of the event"
+          }
+        }
+      },
+      "EventData": {
+        "type": "object",
+        "description": "Defines the content that can be provided when creating an entity.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/EventId"
+          },
+          {
+            "$ref": "#/components/schemas/EventContent"
+          }
+        ]
+      },
+      "EventBasicViewData": {
+        "type": "object",
+        "description": "Defines the minimal read-only content retrieved for an entity.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/EventId"
+          },
+          {
+            "$ref": "#/components/schemas/EventDisplayData"
+          }
+        ]
+      },
+      "EventViewData": {
+        "type": "object",
+        "description": "Defines the read-only content retrieved for a contact.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/EventId"
+          },
+          {
+            "$ref": "#/components/schemas/EventData"
+          },
+          {
+            "$ref": "#/components/schemas/AuditData"
           }
         ]
       },
