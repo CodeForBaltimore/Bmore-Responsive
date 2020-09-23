@@ -2,7 +2,7 @@ import email from '../email'
 import models from '../models'
 import utils from '../utils'
 import validator from 'validator'
-import { Router } from 'express'
+import {Router} from 'express'
 
 const router = new Router()
 router.use(utils.authMiddleware)
@@ -33,7 +33,7 @@ router.get('/', async (req, res) => {
       }
     }
 
-    const contacts = await models.Contact.findAll({ where })
+    const contacts = await models.Contact.findAll({where})
 
     // Temp fix for JSON types and Sequelize.
     let results = []
@@ -103,7 +103,7 @@ router.post('/', async (req, res) => {
   const response = new utils.Response()
   try {
     if (req.body.name !== undefined && req.body.name !== '') {
-      const { name, phone, email, UserId, entities, attributes } = req.body
+      const {name, phone, email, UserId, entities, attributes} = req.body
 
       // Validating emails 
       if (email) {
@@ -115,7 +115,7 @@ router.post('/', async (req, res) => {
         }
       }
 
-      const contact = await models.Contact.create({ name, email, phone, UserId, attributes })
+      const contact = await models.Contact.create({name, email, phone, UserId, attributes})
       let ec
 
       if (entities) {
@@ -154,10 +154,10 @@ router.post('/send', async (req, res) => {
   try {
     /** @todo allow for passing entity and contact arrays */
     const emails = []
-    const { entityIds, contactIds, relationshipTitle } = req.body
+    const {entityIds, contactIds, relationshipTitle} = req.body
 
     if (entityIds === undefined && contactIds === undefined) {
-      const whereClause = (relationshipTitle !== undefined) ? { where: { relationshipTitle } } : {}
+      const whereClause = (relationshipTitle !== undefined) ? {where: {relationshipTitle}} : {}
       const associations = await models.EntityContact.findAll(whereClause)
 
       if (associations.length < 1) {
@@ -190,7 +190,13 @@ router.post('/send', async (req, res) => {
       email.sendContactCheckInEmail(e)
     })
 
-    response.setMessage('Contacts emailed')
+    response.setMessage({
+      _meta: {
+        total: emails.length
+      },
+      message: 'Contacts emailed',
+      results: emails
+    })
   } catch (e) {
     console.error(e)
     response.setCode(500)
@@ -204,7 +210,7 @@ router.put('/', async (req, res) => {
   const response = new utils.Response()
   try {
     if (validator.isUUID(req.body.id)) {
-      const { id, name, phone, email, UserId, entities, attributes } = req.body
+      const {id, name, phone, email, UserId, entities, attributes} = req.body
 
       const contact = await models.Contact.findOne({
         where: {
@@ -298,7 +304,7 @@ router.post('/link/:contact_id', async (req, res) => {
         }
       })
 
-      let i=0
+      let i = 0
       for (const entity of req.body.entities) {
         const entityToLink = await models.Entity.findOne({
           where: {
@@ -311,11 +317,11 @@ router.post('/link/:contact_id', async (req, res) => {
             entityId: entityToLink.id,
             contactId: contact.id,
           }
-  
+
           if (entity.title) {
             ec.relationshipTitle = contact.title
           }
-  
+
           await models.EntityContact.createIfNew(ec)
           i++
         }
@@ -349,7 +355,7 @@ router.post('/unlink/:contact_id', async (req, res) => {
         }
       })
 
-      let i=0
+      let i = 0
       for (const entity of req.body.entities) {
         const entityToUnLink = await models.Entity.findOne({
           where: {
@@ -365,7 +371,7 @@ router.post('/unlink/:contact_id', async (req, res) => {
               contactId: contact.id
             }
           })
-  
+
           await ec.destroy()
           i++
         }
