@@ -195,7 +195,6 @@ router.post('/send', async (req, res) => {
         total: emails.length
       },
       message: 'Contacts emailed',
-      results: emails
     })
   } catch (e) {
     console.error(e)
