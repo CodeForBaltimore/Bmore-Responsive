@@ -191,10 +191,10 @@ router.post('/send', async (req, res) => {
     })
 
     response.setMessage({
-      _meta: {
+      results: {
+        message: 'Contacts emailed',
         total: emails.length
-      },
-      message: 'Contacts emailed',
+      }
     })
   } catch (e) {
     console.error(e)
