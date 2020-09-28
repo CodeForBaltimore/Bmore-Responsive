@@ -259,7 +259,7 @@ describe('Contact tests', function() {
       .get('/csv/Contact')
       .set('Accept', 'application/json')
       .set('authorization', authHeader)
-      .expect('Content-Type', 'text/html; charset=utf-8')
+      .expect('Content-Type', 'text/csv; charset=utf-8')
       .expect(200)
       // eslint-disable-next-line no-unused-vars
       .end((err, res) => {
