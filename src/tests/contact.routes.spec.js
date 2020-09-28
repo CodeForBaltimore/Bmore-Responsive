@@ -138,11 +138,11 @@ describe('Contact tests', function() {
         .post('/contact/send')
         .set('Accept', 'application/json')
         .set('authorization', authHeader)
-        .expect('Content-Type', 'text/html; charset=utf-8')
+        .expect('Content-Type', 'application/json; charset=utf-8')
         .expect(200)
         .end((err, res) => {
           if (err) return done(err)
-          expect(res.text).to.equal('Contacts emailed')
+          expect(res.body.results.message).to.equal('Contacts emailed')
           done()
         })
     } catch(e) {
