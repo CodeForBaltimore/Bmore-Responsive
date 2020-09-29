@@ -1749,6 +1749,15 @@
             "description": "type of model you want a csv data dump for.  Options are Contact, Entity, and EntityContact."
           },
           {
+            "in": "query",
+            "name": "filter",
+            "schema": {
+              "type": "string",
+              "example": "Ned Flanders"
+            },
+            "description": "The name filter of field you are searching on"
+          },
+          {
             "in": "header",
             "name": "token",
             "required": false,

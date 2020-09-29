@@ -1,6 +1,7 @@
 import {Router} from 'express'
 import utils from '../utils'
 import {parseAsync} from 'json2csv'
+import {Op} from 'sequelize'
 
 const router = new Router()
 router.use(utils.authMiddleware)
@@ -27,9 +28,19 @@ router.get('/:model_type', async (req, res) => {
     /** @todo refactor this when we change how CSV's are delivered. */
     // eslint-disable-next-line no-prototype-builtins
     if (req.context.models.hasOwnProperty(modelType) && modelType !== 'User' && modelType !== 'UserRole') {
+      let options = {raw: true}
+      req.params.status = 'Spoke to owner. No follow-up needed.'
+      // search by name if filter param is included
+      if (req.params.filter && req.params.filter.length) {
+        options.where = {
+          name: {
+            [Op.iLike]: '%' + req.params.filter + '%'
+          }
+        }
+      }
+      /** @todo add a search filter for status once data has a status field. */
 
-      /** @todo add filtering */
-      const results = await req.context.models[modelType].findAll({raw: true})
+      let results = await req.context.models[modelType].findAll(options)
 
       const processedResults = await utils.processResults(results, modelType)
       if (results.length !== 0) {
