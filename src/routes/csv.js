@@ -40,7 +40,7 @@ router.get('/:model_type', async (req, res) => {
 
       /** @todo add a search filter for status once data has a status field. */
       let results = await req.context.models[modelType].findAll(options)
-      
+
       if (results.length !== 0) {
         const processedResults = await utils.processResults(results, modelType)
         const fields = Object.keys(results[0])
