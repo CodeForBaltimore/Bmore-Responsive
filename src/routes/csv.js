@@ -37,11 +37,12 @@ router.get('/:model_type', async (req, res) => {
           }
         }
       }
+
       /** @todo add a search filter for status once data has a status field. */
       let results = await req.context.models[modelType].findAll(options)
-
-      const processedResults = await utils.processResults(results, modelType)
+      
       if (results.length !== 0) {
+        const processedResults = await utils.processResults(results, modelType)
         const fields = Object.keys(results[0])
         parseAsync(processedResults, {fields}).then(csv => {
           response.setMessage(csv)
@@ -55,6 +56,10 @@ router.get('/:model_type', async (req, res) => {
           response.setMessage('Not able to parse data: ' + err)
           return res.status(response.getCode()).send(response.getMessage())
         })
+      } else {
+        response.setCode(200)
+        response.setMessage('No results found')
+        return res.status(response.getCode()).send(response.getMessage())
       }
     } else {
       response.setCode(400)
