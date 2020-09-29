@@ -29,17 +29,15 @@ router.get('/:model_type', async (req, res) => {
     // eslint-disable-next-line no-prototype-builtins
     if (req.context.models.hasOwnProperty(modelType) && modelType !== 'User' && modelType !== 'UserRole') {
       let options = {raw: true}
-      req.params.status = 'Spoke to owner. No follow-up needed.'
-      // search by name if filter param is included
-      if (req.params.filter && req.params.filter.length) {
+      // search by name if filter query param is included
+      if (req.query && req.query.filter && req.query.filter.length) {
         options.where = {
           name: {
-            [Op.iLike]: '%' + req.params.filter + '%'
+            [Op.iLike]: '%' + req.query.filter + '%'
           }
         }
       }
       /** @todo add a search filter for status once data has a status field. */
-
       let results = await req.context.models[modelType].findAll(options)
 
       const processedResults = await utils.processResults(results, modelType)
