@@ -14,17 +14,6 @@ router.get('/:model_type', async (req, res) => {
 
   try {
 
-    if (!process.env.BYPASS_LOGIN) {
-      const e = await utils.loadCasbin()
-      const roles = await e.getRolesForUser(req.context.me.email)
-
-      if (!roles.includes('admin')) {
-        response.setCode(400)
-        response.setMessage('User is not authorized to perform this action.')
-        return res.status(response.getCode()).send(response.getMessage())
-      }
-    }
-
     /** @todo refactor this when we change how CSV's are delivered. */
     // eslint-disable-next-line no-prototype-builtins
     if (req.context.models.hasOwnProperty(modelType) && modelType !== 'User' && modelType !== 'UserRole') {
