@@ -9,7 +9,10 @@ We're assuming that you've cloned or downloaded the contents of the [Bmore Respo
 ## Step 1 - Install Required Software
 In order to follow this quick start guide you'll need to make sure you have the following software installed on your machine:
 
-- **Node.js** - You can confirm you have Node.js by executing `node -v` at a command line.  If your machine replies with a version number like `13.8.0` then you have Node.js installed.  If you need to install Node.js, head on over to [Nodejs.org](https://nodejs.org/).
+- **Node.js** - You can confirm you have Node.js by executing `node -v` at a command line.  If your machine replies with a version number like `13.8.0` then you have Node.js installed.  If you need to install Node.js, head on over to [Nodejs.org](https://nodejs.org/). 
+
+**Note:** Currently, there is known incompatibility with Node v14.X that prevents DB connectivity. DO NOT USE Node v14.x.
+
 - **Docker Desktop with DockerHub access** - Docker is not technically required to run BMore Responsive, but this guide uses Docker to get up and running quickly. You can confirm that you have Docker Desktop by executing `docker -v` at a command line.  If your machine replies with a version number like `Docker version 19.03.8, build afaca4b` then you have Docker Desktop installed. If you need to install Docker Desktop, head on over to the [Docker Desktop page](https://www.docker.com/products/docker-desktop).
 
 ## Step 2 - Install
