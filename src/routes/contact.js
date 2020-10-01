@@ -204,6 +204,54 @@ router.post('/send', async (req, res) => {
   return res.status(response.getCode()).send(response.getMessage())
 })
 
+
+router.post('/send/:type/:id', async (req, res) => {
+  const response = new utils.Response()
+
+  try {
+    if (req.params.type.toLowerCase() === 'entity') {
+      const entity = await models.Entity.findById(req.params.id)
+
+      if (entity.email !== null) {
+        const primary = entity.email.filter(e => e.isPrimary === 'true').length ? entity.email.filter(e => e.isPrimary === 'true')[0] : entity.email[0]
+        console.log(primary)
+        // short-lived temporary token that only lasts one hour
+        const temporaryToken = await utils.getToken(req.params.id, primary.address, 'Entity')
+
+        const e =  {
+          email: primary.address,
+          name: entity.name,
+          entityName: entity.name,
+          entityId: entity.id,
+          token: temporaryToken
+        }
+        email.sendContactCheckInEmail(e).then(() => {
+          response.setMessage(`${entity.name} emailed sent.`)
+          response.setCode(200)
+        }, err => {
+          response.setMessage('There was an error: ' + err)
+          response.setCode(400)
+        })
+      } else {
+        response.setMessage('Email Address not found.')
+        response.setCode(500)
+      }
+
+      response.setMessage({
+        results: {
+          message: `${entity.name} emailed.`,
+        }
+      })
+    }
+  } catch (e) {
+    console.error(e)
+    response.setCode(500)
+  }
+
+
+  return res.status(response.getCode()).send(response.getMessage())
+})
+
 // Updates any contact.
 router.put('/', async (req, res) => {
   const response = new utils.Response()
