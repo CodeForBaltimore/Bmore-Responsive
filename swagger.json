@@ -293,6 +293,735 @@
         }
       }
     },
+    "/roles": {
+      "get": {
+        "tags": [
+          "authorization",
+          "read-only",
+          "unimplemented"
+        ],
+        "summary": "Retrieves all authorization roles.",
+        "description": "Retrieves all defined roles in the application.",
+        "responses": {
+          "200": {
+            "description": "The data corresponding to the created role.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RoleBasicViewData"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Invalid credentials",
+                  "statusCode": 401
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request forbidden.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Access not permitted",
+                  "statusCode": 403
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unable to process request.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Request processing failed",
+                  "statusCode": 500
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "authorization",
+          "administration",
+          "unimplemented"
+        ],
+        "summary": "Creates a new authorization role.",
+        "description": "Creates a new role in the application that can subsequently be granted to users.",
+        "requestBody": {
+          "description": "The role to create.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RoleData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The data corresponding to the created role.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RoleData"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid content provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "details": [
+                    {
+                      "name": "roleName",
+                      "value": "Content does not match regular expression '[a-zA-Z]\\w{3,}'"
+                    }
+                  ],
+                  "message": "Request invalid",
+                  "statusCode": 400
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Invalid credentials",
+                  "statusCode": 401
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request forbidden.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Access not permitted",
+                  "statusCode": 403
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Role already exists.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Role 'role_viewer' already exists",
+                  "statusCode": 409
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unable to process request.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Request processing failed",
+                  "statusCode": 500
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/roles/{roleName}": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "roleName",
+          "description": "The name of the role to retrieve",
+          "example": "role_viewer",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "tags": [
+          "authorization",
+          "read-only",
+          "unimplemented"
+        ],
+        "summary": "Retrieves the specified authorization role.",
+        "description": "Retrieves the detailed information for the specified role.",
+        "responses": {
+          "200": {
+            "description": "The data corresponding to the created role.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RoleResourceData"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Invalid credentials",
+                  "statusCode": 401
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request forbidden.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Access not permitted",
+                  "statusCode": 403
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "details": [
+                    {
+                      "name": "Resource type",
+                      "value": "role"
+                    }
+                  ],
+                  "message": "Resource not found",
+                  "statusCode": 404
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unable to process request.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Request processing failed",
+                  "statusCode": 500
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "authorization",
+          "administration",
+          "unimplemented"
+        ],
+        "summary": "Modifies metadata for the authorization role.",
+        "description": "Modifies the non-permission information for the specified role.",
+        "requestBody": {
+          "description": "The role metadata to modify.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RoleMetadata"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The data corresponding to the modified role.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RoleData"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Invalid credentials",
+                  "statusCode": 401
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request forbidden.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Access not permitted",
+                  "statusCode": 403
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "details": [
+                    {
+                      "name": "Resource type",
+                      "value": "role"
+                    }
+                  ],
+                  "message": "Resource not found",
+                  "statusCode": 404
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unable to process request.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Request processing failed",
+                  "statusCode": 500
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "authorization",
+          "administration",
+          "unimplemented"
+        ],
+        "summary": "Removes the specified authorization role.",
+        "description": "Removes all information for the specified role.",
+        "responses": {
+          "204": {
+            "description": "The role was successfully deleted."
+          },
+          "401": {
+            "description": "Invalid credentials provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Invalid credentials",
+                  "statusCode": 401
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request forbidden.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Access not permitted",
+                  "statusCode": 403
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "details": [
+                    {
+                      "name": "Resource type",
+                      "value": "role"
+                    }
+                  ],
+                  "message": "Resource not found",
+                  "statusCode": 404
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Role is still granted.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Role grants still exist",
+                  "statusCode": 409
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unable to process request.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Request processing failed",
+                  "statusCode": 500
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/roles/{roleName}/addPermission": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "roleName",
+          "description": "The name of the role to modify",
+          "example": "role_viewer",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "tags": [
+          "authorization",
+          "administration",
+          "unimplemented"
+        ],
+        "summary": "Adds a permission to an authorization role.",
+        "description": "Adds a new permission to a role that grants access to a specific resource.",
+        "requestBody": {
+          "description": "The permission to add.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RoleResource"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The data corresponding to the modified role.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RoleData"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid content provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "details": [
+                    {
+                      "name": "roleName",
+                      "value": "Content does not match regular expression '[a-zA-Z]\\w{3,}'"
+                    }
+                  ],
+                  "message": "Request invalid",
+                  "statusCode": 400
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Invalid credentials",
+                  "statusCode": 401
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request forbidden.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Access not permitted",
+                  "statusCode": 403
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "details": [
+                    {
+                      "name": "Resource type",
+                      "value": "role"
+                    }
+                  ],
+                  "message": "Resource not found",
+                  "statusCode": 404
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Permission already exists.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Permission 'role_viewer|GET|/roles/*' already exists",
+                  "statusCode": 409
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unable to process request.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Request processing failed",
+                  "statusCode": 500
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/roles/{roleName}/removePermission": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "roleName",
+          "description": "The name of the role to modify",
+          "example": "role_viewer",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "tags": [
+          "authorization",
+          "administration",
+          "unimplemented"
+        ],
+        "summary": "Removes a permission from an authorization role.",
+        "description": "Removes an existing permission from a role that granted access to a specific resource.",
+        "requestBody": {
+          "description": "The permission to remove.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RoleResource"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The data corresponding to the modified role.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RoleData"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid content provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "details": [
+                    {
+                      "name": "roleName",
+                      "value": "Content does not match regular expression '[a-zA-Z]\\w{3,}'"
+                    }
+                  ],
+                  "message": "Request invalid",
+                  "statusCode": 400
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Invalid credentials",
+                  "statusCode": 401
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request forbidden.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Access not permitted",
+                  "statusCode": 403
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "details": [
+                    {
+                      "name": "Resource type",
+                      "value": "role"
+                    }
+                  ],
+                  "message": "Resource not found",
+                  "statusCode": 404
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unable to process request.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Request processing failed",
+                  "statusCode": 500
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/user/login": {
       "post": {
         "security": [],
@@ -2155,6 +2884,127 @@
             "maximum": 600,
             "exclusiveMaximum": true,
             "description": "The HTTP status code associated with the error"
+          }
+        }
+      },
+      "RoleId": {
+        "type": "object",
+        "description": "The identifier of the role.",
+        "required": [
+          "roleName"
+        ],
+        "properties": {
+          "roleName": {
+            "type": "string",
+            "pattern": "[a-zA-Z]\\w{3,}",
+            "description": "The name of the role.",
+            "example": "role_viewer"
+          }
+        }
+      },
+      "RoleMetadata": {
+        "type": "object",
+        "description": "Defines authorization role metadata.",
+        "required": [
+          "description"
+        ],
+        "properties": {
+          "description": {
+            "type": "string",
+            "description": "The description of the role.",
+            "example": "Users with this role can view roles"
+          }
+        }
+      },
+      "RoleResource": {
+        "type": "object",
+        "description": "The resource that a role is intended to grant access to.",
+        "required": [
+          "methods",
+          "path"
+        ],
+        "properties": {
+          "methods": {
+            "type": "array",
+            "description": "The HTTP methods corresponding to this role.",
+            "items": {
+              "type": "string",
+              "enum": [
+                "DELETE",
+                "GET",
+                "POST",
+                "PUT"
+              ],
+              "description": "An HTTP method for the corresponding resource endpoint.",
+              "example": "GET"
+            }
+          },
+          "path": {
+            "type": "string",
+            "format": "uri",
+            "description": "The relative path to the resource endpoint to grant.",
+            "example": "/roles/*"
+          }
+        }
+      },
+      "RoleBasicViewData": {
+        "type": "object",
+        "description": "A minimal read-only view of an authorization role.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/RoleId"
+          },
+          {
+            "$ref": "#/components/schemas/RoleMetadata"
+          }
+        ]
+      },
+      "RoleData": {
+        "type": "object",
+        "description": "A complete view of an authorization role.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/RoleId"
+          },
+          {
+            "$ref": "#/components/schemas/RoleResourceData"
+          }
+        ]
+      },
+      "RoleResourceData": {
+        "description": "Data for an authorization role and all associated resources.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/RoleMetadata"
+          },
+          {
+            "type": "object",
+            "description": "The role's associated resources.",
+            "properties": {
+              "resources": {
+                "type": "array",
+                "description": "The granted resources.",
+                "items": {
+                  "$ref": "#/components/schemas/RoleResource"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "RoleResourceGrant": {
+        "type": "object",
+        "description": "An authorization role",
+        "required": [
+          "roleId",
+          "roleResource"
+        ],
+        "properties": {
+          "roleId": {
+            "$ref": "#/components/schemas/RoleId"
+          },
+          "roleResource": {
+            "$ref": "#/components/schemas/RoleResource"
           }
         }
       },
