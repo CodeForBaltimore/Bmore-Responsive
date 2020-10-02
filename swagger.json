@@ -304,7 +304,7 @@
         "description": "Retrieves all defined roles in the application.",
         "responses": {
           "200": {
-            "description": "The data corresponding to the created role.",
+            "description": "The data corresponding to the created roles.",
             "content": {
               "application/json": {
                 "schema": {
@@ -573,14 +573,14 @@
           "administration",
           "unimplemented"
         ],
-        "summary": "Modifies metadata for the authorization role.",
+        "summary": "Modifies an authorization role.",
         "description": "Modifies the non-permission information for the specified role.",
         "requestBody": {
-          "description": "The role metadata to modify.",
+          "description": "The role information to modify.",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/RoleMetadata"
+                "$ref": "#/components/schemas/RoleDisplayData"
               }
             }
           }
@@ -1467,6 +1467,468 @@
                   ],
                   "message": "Resource not found",
                   "statusCode": 404
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unable to process request.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Request processing failed",
+                  "statusCode": 500
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "tags": [
+          "user",
+          "read-only",
+          "unimplemented"
+        ],
+        "summary": "Retrieves all users.",
+        "description": "Retrieves all defined users in the application.",
+        "responses": {
+          "200": {
+            "description": "The data corresponding to the created users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserBasicViewData"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Invalid credentials",
+                  "statusCode": 401
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request forbidden.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Access not permitted",
+                  "statusCode": 403
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unable to process request.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Request processing failed",
+                  "statusCode": 500
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "user",
+          "administration",
+          "unimplemented"
+        ],
+        "summary": "Creates a new user.",
+        "description": "Creates a new user in the application that can subsequently be used to authenticate.",
+        "requestBody": {
+          "description": "The user to create.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The data corresponding to the created user.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserViewData"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid content provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "details": [
+                    {
+                      "name": "email",
+                      "value": "Content is not a valid e-mail address"
+                    }
+                  ],
+                  "message": "Request invalid",
+                  "statusCode": 400
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Invalid credentials",
+                  "statusCode": 401
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request forbidden.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Access not permitted",
+                  "statusCode": 403
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "User already exists.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "A user with the e-mail 'homer.simpson@example.com' already exists",
+                  "statusCode": 409
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unable to process request.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Request processing failed",
+                  "statusCode": 500
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{email}": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "email",
+          "description": "E-mail address of the non-system user",
+          "example": "external@example.com",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "email"
+          }
+        }
+      ],
+      "get": {
+        "tags": [
+          "user",
+          "read-only",
+          "unimplemented"
+        ],
+        "summary": "Retrieves the specified user.",
+        "description": "Retrieves the detailed information for the user.",
+        "responses": {
+          "200": {
+            "description": "The data corresponding to the created user.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserViewData"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Invalid credentials",
+                  "statusCode": 401
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request forbidden.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Access not permitted",
+                  "statusCode": 403
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "details": [
+                    {
+                      "name": "Resource type",
+                      "value": "user"
+                    }
+                  ],
+                  "message": "Resource not found",
+                  "statusCode": 404
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unable to process request.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Request processing failed",
+                  "statusCode": 500
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "user",
+          "administration",
+          "unimplemented"
+        ],
+        "summary": "Modifies a user.",
+        "description": "Modifies the non-identifying information for the specified user.",
+        "requestBody": {
+          "description": "The user information to modify.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserContent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The data corresponding to the modified user.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserData"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Invalid credentials",
+                  "statusCode": 401
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request forbidden.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Access not permitted",
+                  "statusCode": 403
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "details": [
+                    {
+                      "name": "Resource type",
+                      "value": "user"
+                    }
+                  ],
+                  "message": "Resource not found",
+                  "statusCode": 404
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unable to process request.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Request processing failed",
+                  "statusCode": 500
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "user",
+          "administration",
+          "unimplemented"
+        ],
+        "summary": "Removes the specified user.",
+        "description": "Removes all information for the user.",
+        "responses": {
+          "204": {
+            "description": "The user was successfully deleted."
+          },
+          "401": {
+            "description": "Invalid credentials provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Invalid credentials",
+                  "statusCode": 401
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request forbidden.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Access not permitted",
+                  "statusCode": 403
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "details": [
+                    {
+                      "name": "Resource type",
+                      "value": "user"
+                    }
+                  ],
+                  "message": "Resource not found",
+                  "statusCode": 404
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Role is still granted.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Role grants still exist",
+                  "statusCode": 409
                 },
                 "schema": {
                   "$ref": "#/components/schemas/ErrorResponse"
@@ -3372,9 +3834,9 @@
           }
         }
       },
-      "RoleMetadata": {
+      "RoleDisplayData": {
         "type": "object",
-        "description": "Defines authorization role metadata.",
+        "description": "Defines authorization role display data.",
         "required": [
           "description"
         ],
@@ -3425,7 +3887,7 @@
             "$ref": "#/components/schemas/RoleId"
           },
           {
-            "$ref": "#/components/schemas/RoleMetadata"
+            "$ref": "#/components/schemas/RoleDisplayData"
           }
         ]
       },
@@ -3445,7 +3907,7 @@
         "description": "Data for an authorization role and all associated resources.",
         "allOf": [
           {
-            "$ref": "#/components/schemas/RoleMetadata"
+            "$ref": "#/components/schemas/RoleDisplayData"
           },
           {
             "type": "object",
@@ -3515,22 +3977,26 @@
           }
         }
       },
-      "UserData": {
+      "UserDisplayData": {
         "type": "object",
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/UserId"
-          },
-          {
-            "$ref": "#/components/schemas/AuditData"
-          }
-        ],
+        "description": "Defines user display data.",
         "properties": {
           "displayName": {
             "type": "string",
             "description": "The text to be displayed to represent the user",
             "example": "Homer Simpson"
-          },
+          }
+        }
+      },
+      "UserContent": {
+        "type": "object",
+        "description": "Defines the content that can be provided when modifying a user.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/UserDisplayData"
+          }
+        ],
+        "properties": {
           "phone": {
             "type": "string",
             "description": "The phone number",
@@ -3544,16 +4010,57 @@
               "properties": {
                 "name": {
                   "type": "string",
-                  "description": "The attribute name"
+                  "description": "The attribute name",
+                  "example":"Contact type"
                 },
                 "value": {
                   "type": "string",
-                  "description": "The attribute value"
+                  "description": "The attribute value",
+                  "example": "Primary Contact"
                 }
               }
             }
           }
         }
+      },
+      "UserData": {
+        "type": "object",
+        "description": "Defines the content that can be provided when creating a user.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/UserId"
+          },
+          {
+            "$ref": "#/components/schemas/UserContent"
+          }
+        ]
+      },
+      "UserBasicViewData": {
+        "type": "object",
+        "description": "Defines the minimal read-only content retrieved for a user.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/UserId"
+          },
+          {
+            "$ref": "#/components/schemas/UserDisplayData"
+          }
+        ]
+      },
+      "UserViewData": {
+        "type": "object",
+        "description": "Defines the read-only content retrieved for a user.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/UserId"
+          },
+          {
+            "$ref": "#/components/schemas/UserData"
+          },
+          {
+            "$ref": "#/components/schemas/AuditData"
+          }
+        ]
       },
       "UserItem": {
         "type": "object",
