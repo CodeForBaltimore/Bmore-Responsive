@@ -65,7 +65,7 @@
     },
     {
       "name": "csv",
-      "description": "Endpoints related to csv"
+      "description": "Endpoints related to CSV data extraction"
     }
   ],
   "security": [
@@ -126,6 +126,166 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/HealthCheckResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/security/authenticate": {
+      "post": {
+        "security": [],
+        "tags": [
+          "authentication",
+          "unimplemented"
+        ],
+        "summary": "Authenticates a user.",
+        "description": "The system authentication endpoint (NOTE - We should consider switching this to Basic auth, Base64-encoding the email/password).",
+        "requestBody": {
+          "description": "The provided credentials.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The successful authentication response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Invalid credentials",
+                  "statusCode": 401
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unable to process request.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Request processing failed",
+                  "statusCode": 500
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/security/token/{email}": {
+      "post": {
+        "tags": [
+          "authentication",
+          "administration",
+          "unimplemented"
+        ],
+        "summary": "Generates a token for a non-system user.",
+        "description": "Used for providing focused access to contacts who are not users of the overall system, and who do not have credentials",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "email",
+            "description": "E-mail address of the non-system user",
+            "example": "external@example.com",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "email"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The successful authentication response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid content provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "details": [
+                    {
+                      "name": "email",
+                      "value": "Address provided is invalid"
+                    }
+                  ],
+                  "message": "Request invalid",
+                  "statusCode": 400
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Invalid credentials",
+                  "statusCode": 401
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request forbidden.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Access not permitted",
+                  "statusCode": 403
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unable to process request.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Request processing failed",
+                  "statusCode": 500
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -1916,6 +2076,85 @@
             "items": {
               "$ref": "#/components/schemas/HealthCheckData"
             }
+          }
+        }
+      },
+      "LoginRequest": {
+        "type": "object",
+        "description": "The request used to authenticate.",
+        "required": [
+          "email",
+          "password"
+        ],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "The user's e-mail address.",
+            "format": "email",
+            "example": "example@example.com"
+          },
+          "password": {
+            "type": "string",
+            "description": "The user's authentication credentials.",
+            "example": "somePassword"
+          }
+        }
+      },
+      "LoginResponse": {
+        "type": "object",
+        "description": "The result of an authentication request.",
+        "required": [
+          "token",
+          "expiresAt"
+        ],
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "The JWT content for subsequent authorization.",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "description": "Content format for error responses",
+        "required": [
+          "message",
+          "statusCode"
+        ],
+        "properties": {
+          "details": {
+            "type": "array",
+            "description": "Arbitrary name-value pairs associated with the error",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "The property name"
+                },
+                "value": {
+                  "type": "string",
+                  "description": "The property value"
+                }
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "description": "The error message"
+          },
+          "statusCode": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 100,
+            "maximum": 600,
+            "exclusiveMaximum": true,
+            "description": "The HTTP status code associated with the error"
           }
         }
       },
