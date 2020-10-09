@@ -55,6 +55,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="https://github.com/mpiroc"><img src="https://avatars2.githubusercontent.com/u/1623344?v=4" width="100px;" alt=""/><br /><sub><b>Matthew Pirocchi</b></sub></a><br /><a href="#infra-mpiroc" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
     <td align="center"><a href="https://bellese.io/"><img src="https://avatars3.githubusercontent.com/u/61873300?v=4" width="100px;" alt=""/><br /><sub><b>Michael Schechter</b></sub></a><br /><a href="https://github.com/CodeForBaltimore/Bmore-Responsive/commits?author=mschechter-bellese" title="Code">💻</a></td>
+    <td align="center"><a href="http://ianjadams.com"><img src="https://avatars1.githubusercontent.com/u/7966226?v=4" width="100px;" alt=""/><br /><sub><b>Ian Adams</b></sub></a><br /><a href="https://github.com/CodeForBaltimore/Bmore-Responsive/commits?author=ijadams" title="Code">💻</a></td>
   </tr>
 </table>
 
