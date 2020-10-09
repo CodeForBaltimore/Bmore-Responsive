@@ -21,7 +21,7 @@ const transporter = nodemailer.createTransport({
 const sendMail = async (to, subject, html, text) => {
   try {
     await transporter.sendMail({
-      from: `"Healthcare Roll Call" <${process.env.SMTP_USER}>`, // sender address
+      from: '"Healthcare Roll Call" <no-reply@healthcarerollcall.org>', // sender address
       to, // list of receivers
       subject, // Subject line
       text, // plain text body
