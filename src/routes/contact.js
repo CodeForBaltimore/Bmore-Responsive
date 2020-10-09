@@ -232,7 +232,6 @@ router.post('/send/:type/:id', async (req, res) => {
         entityId: entity.id,
         token: temporaryToken
       }
-      console.log('help', e)
       email.sendContactCheckInEmail(e).then(() => {
         response.setMessage(`${entity.name} emailed sent.`)
         response.setCode(200)
