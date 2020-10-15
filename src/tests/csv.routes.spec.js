@@ -1,19 +1,20 @@
+/* eslint-disable no-unused-vars */
 import request from 'supertest'
 import { Login } from '../utils/login'
 import app from '..'
 
-describe('CSV Dump Negative Tests', () => {
+describe('CSV Dump Negative Tests', function() {
   const authed = new Login()
   let token
 
-  before(async () => {
+  before(async function() {
     await authed.setToken()
     token = await authed.getToken()
   })
-  after(async () => {
+  after(async function() {
     await authed.destroyToken()
   })
-  it('Negative Test (400) for CSV Dump on Contact', (done) => {
+  it('Negative Test (400) for CSV Dump on Contact', function(done) {
     request(app)
       .get('/csv/contact')
       .set('Accept', 'application/json')
@@ -26,7 +27,7 @@ describe('CSV Dump Negative Tests', () => {
       })
   })
 
-  it('Negative Test (400) for CSV Dump on Entity', (done) => {
+  it('Negative Test (400) for CSV Dump on Entity', function(done) {
     request(app)
       .get('/csv/entity')
       .set('Accept', 'application/json')
@@ -39,7 +40,7 @@ describe('CSV Dump Negative Tests', () => {
       })
   })
 
-  it('Negative Test (400) for CSV Dump on User', (done) => {
+  it('Negative Test (400) for CSV Dump on User', function(done) {
     request(app)
       .get('/csv/user')
       .set('Accept', 'application/json')
@@ -52,7 +53,7 @@ describe('CSV Dump Negative Tests', () => {
       })
   })
 
-  it('Negative Test (400) for CSV Dump on UserRole', (done) => {
+  it('Negative Test (400) for CSV Dump on UserRole', function(done) {
     request(app)
       .get('/csv/userRole')
       .set('Accept', 'application/json')
@@ -65,7 +66,7 @@ describe('CSV Dump Negative Tests', () => {
       })
   })
 
-  it('Negative Test (404) for CSV Dump endpoint', (done) => {
+  it('Negative Test (404) for CSV Dump endpoint', function(done) {
     request(app)
       .get('/csv/')
       .set('Accept', 'application/json')

@@ -68,7 +68,7 @@ const loadCasbin = async () => {
       logging: process.env.NODE_ENV === 'production',
       dialect: 'postgres',
       dialectOptions
-    });
+    })
   }
 
   return await newEnforcer(casbinConf, adapter)
@@ -145,7 +145,7 @@ const authMiddleware = async (req, res, next) => {
   if (authed) {
     next()
   } else {
-    res.status(401).send("Unauthorized")
+    res.status(401).send('Unauthorized')
   }
 }
 
@@ -225,19 +225,19 @@ const validatePassword = pass => {
  * @return {processedResults}
  */
 const processResults = async (results, modelType) => {
+  let processedResults = []
   switch (modelType) {
-    case "Entity":
-      let processedResults = []
-      for (let result of results) {
-        /** @todo expand conditional checking as checkin object becomes more mature */
-        if (result["checkIn"] !== null) {
-          result["checkIn"] = result["checkIn"].checkIns[0]
-        }
-        processedResults = [...processedResults, result]
+  case 'Entity':
+    for (let result of results) {
+      /** @todo expand conditional checking as checkin object becomes more mature */
+      if (result['checkIn'] !== null) {
+        result['checkIn'] = result['checkIn'].checkIns[0]
       }
-      return processedResults
-    default:
-      return results
+      processedResults = [...processedResults, result]
+    }
+    return processedResults
+  default:
+    return results
   }
 }
 

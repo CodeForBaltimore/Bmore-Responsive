@@ -20,7 +20,7 @@ class Response {
    * 
    * @param {number} code 
    */
-   setCode(code) {
+  setCode(code) {
     this.code = code
     this.message = this.codes[code]
   }
@@ -30,7 +30,7 @@ class Response {
    * 
    * @param {String} message 
    */
-   setMessage(message = null) {
+  setMessage(message = null) {
     if (message === null) {
       this.message = this.codes[this.code]
     } else {
@@ -43,7 +43,7 @@ class Response {
    * 
    * @param {Object} headers 
    */
-   setHeaders(headers) {
+  setHeaders(headers) {
     this.headers = headers
   }
 
@@ -52,7 +52,7 @@ class Response {
    * 
    * @returns {number}
    */
-   getCode() {
+  getCode() {
     return this.code
   }
 
@@ -61,7 +61,7 @@ class Response {
    * 
    * @returns {Array}
    */
-   getCodes() {
+  getCodes() {
     return this.codes
   }
 
@@ -70,11 +70,11 @@ class Response {
    * 
    * @returns {String}
    */
-   getMessage() {
+  getMessage() {
     return this.message
   }
 
-   getHeaders() {
+  getHeaders() {
     return this.headers
   }
 }

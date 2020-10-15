@@ -38,7 +38,6 @@ router.get('/', async (req, res) => {
     // Temp fix for JSON types and Sequelize.
     let results = []
     if (req.query.type === 'email') {
-      console.log(req.query.value)
       for (const contact of contacts) {
         for (const email of contact.email) {
           if (email.address === req.query.value) {
