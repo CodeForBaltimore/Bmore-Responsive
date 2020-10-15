@@ -25,12 +25,12 @@ const entity = {
   type: 'Test'
 }
 
-describe('Contact tests', () => {
+describe('Contact tests', function() {
   const authed = new Login()
   let token
   let authHeader
 
-  before(async () => {
+  before(async function() {
     await authed.setToken()
     token = await authed.getToken()
     authHeader =  'Bearer ' + token
@@ -46,7 +46,7 @@ describe('Contact tests', () => {
     entity.id = entityResponse.text.replace(' created', '')
     contact.entities.push({ id: entity.id, title: 'test' })
   })
-  after(async () => {
+  after(async function() {
     await request(app)
       .delete(`/entity/${entity.id}`)
       .set('Accept', 'application/json')
@@ -56,9 +56,9 @@ describe('Contact tests', () => {
     await authed.destroyToken()
   })
 
-  it('should create a contact', async () => {
+  it('should create a contact', async function() {
     const response = await request(app)
-    .post('/contact')
+      .post('/contact')
       .set('Accept', 'application/json')
       .set('authorization', authHeader)
       .send(contact)
@@ -67,9 +67,9 @@ describe('Contact tests', () => {
 
     contact.id = response.text.replace(' created', '')
   })
-  it('should get all contacts', done => {
+  it('should get all contacts', function(done) {
     request(app)
-      .get(`/contact`)
+      .get('/contact')
       .set('Accept', 'application/json')
       .set('token', token)
       .expect('Content-Type', 'application/json; charset=utf-8')
@@ -80,7 +80,7 @@ describe('Contact tests', () => {
         done()
       })
   })
-  it('should search on all contacts by name', done => {
+  it('should search on all contacts by name', function(done) {
     request(app)
       .get(`/contact?type=name&value=${contact.name}`)
       .set('Accept', 'application/json')
@@ -93,7 +93,7 @@ describe('Contact tests', () => {
         done()
       })
   })
-  it('should search on all contacts by email', done => {
+  it('should search on all contacts by email', function(done) {
     request(app)
       .get(`/contact?type=email&value=${contact.email[0].address}`)
       .set('Accept', 'application/json')
@@ -106,7 +106,7 @@ describe('Contact tests', () => {
         done()
       })
   })
-  it('should search on all contacts by phone', done => {
+  it('should search on all contacts by phone', function(done) {
     request(app)
       .get(`/contact?type=phone&value=${contact.phone[0].number}`)
       .set('Accept', 'application/json')
@@ -119,7 +119,7 @@ describe('Contact tests', () => {
         done()
       })
   })
-  it('should get a single contact', done => {
+  it('should get a single contact', function(done) {
     request(app)
       .get(`/contact/${contact.id}`)
       .set('Accept', 'application/json')
@@ -132,7 +132,7 @@ describe('Contact tests', () => {
         done()
       })
   })
-  it('Sending email to entity contacts', done => {
+  it('Sending email to entity contacts', function(done) {
     try {
       request(app)
         .post('/contact/send')
@@ -145,11 +145,11 @@ describe('Contact tests', () => {
           expect(res.text).to.equal('Contacts emailed')
           done()
         })
-      } catch(e) {
-        console.error(e)
-      }
+    } catch(e) {
+      console.error(e)
+    }
   })
-  it('should not update a contact with invalid email', done => {
+  it('should not update a contact with invalid email', function(done) {
     contact.email[0].address = randomWords()
     request(app)
       .put('/contact')
@@ -164,10 +164,10 @@ describe('Contact tests', () => {
         done()
       })
   })
-  it('should update a contact', done => {
+  it('should update a contact', function(done) {
     contact.email[0].address = `${randomWords()}@test.test`
     request(app)
-      .put(`/contact`)
+      .put('/contact')
       .set('Accept', 'application/json')
       .set('authorization', authHeader)
       .send(contact)
@@ -179,7 +179,7 @@ describe('Contact tests', () => {
         done()
       })
   })
-  it('should add an entity to a contact', done => {
+  it('should add an entity to a contact', function(done) {
     const entityIds = { entities: [{ id: entity.id, title: 'test' }] }
     request(app)
       .post(`/contact/link/${contact.id}`)
@@ -194,7 +194,7 @@ describe('Contact tests', () => {
         done()
       })
   })
-  it('should not add an entity to a contact with invalid entity id', done => {
+  it('should not add an entity to a contact with invalid entity id', function(done) {
     const entityIds = { entities: [{ id: uuid() }] }
     request(app)
       .post(`/contact/link/${contact.id}`)
@@ -205,14 +205,14 @@ describe('Contact tests', () => {
       .expect(400)
       .end((err, res) => {
         if (err) return done(err)
-        expect(res.text).to.equal(`Bad entities or contact id`)
+        expect(res.text).to.equal('Bad entities or contact id')
         done()
       })
   })
-  it('should not add an entity to a contact with invalid contact id', done => {
+  it('should not add an entity to a contact with invalid contact id', function(done) {
     const entityIds = { entities: [{ id: uuid() }] }
     request(app)
-      .post(`/contact/link/abc123`)
+      .post('/contact/link/abc123')
       .set('Accept', 'application/json')
       .set('authorization', authHeader)
       .send(entityIds)
@@ -220,11 +220,11 @@ describe('Contact tests', () => {
       .expect(400)
       .end((err, res) => {
         if (err) return done(err)
-        expect(res.text).to.equal(`Bad Request`)
+        expect(res.text).to.equal('Bad Request')
         done()
       })
   })
-  it('should not remove an entity to a contact with invalid entity id', done => {
+  it('should not remove an entity to a contact with invalid entity id', function(done) {
     const entityIds = { entities: [{ id: uuid() }] }
     request(app)
       .post(`/contact/unlink/${contact.id}`)
@@ -235,26 +235,11 @@ describe('Contact tests', () => {
       .expect(400)
       .end((err, res) => {
         if (err) return done(err)
-        expect(res.text).to.equal(`Bad link sent`)
+        expect(res.text).to.equal('Bad link sent')
         done()
       })
   })
-  it('should not add an entity to a contact with invalid contact id', done => {
-    const entityIds = { entities: [{ id: uuid() }] }
-    request(app)
-      .post(`/contact/unlink/abc123`)
-      .set('Accept', 'application/json')
-      .set('authorization', authHeader)
-      .send(entityIds)
-      .expect('Content-Type', 'text/html; charset=utf-8')
-      .expect(400)
-      .end((err, res) => {
-        if (err) return done(err)
-        expect(res.text).to.equal(`Bad Request`)
-        done()
-      })
-  })
-  it('should unlink the entity and contact', done => {
+  it('should unlink the entity and contact', function(done) {
     const entityIds = { entities: [{ id: entity.id }] }
     request(app)
       .post(`/contact/unlink/${contact.id}`)
@@ -269,19 +254,20 @@ describe('Contact tests', () => {
         done()
       })
   })
-  it('Positive Test for CSV Dump on Contact', (done) => {
+  it('Positive Test for CSV Dump on Contact', function(done) {
     request(app)
       .get('/csv/Contact')
       .set('Accept', 'application/json')
       .set('authorization', authHeader)
       .expect('Content-Type', 'text/html; charset=utf-8')
       .expect(200)
+      // eslint-disable-next-line no-unused-vars
       .end((err, res) => {
         if (err) return done(err)
         done()
       })
   })
-  it('should delete a contact', done => {
+  it('should delete a contact', function(done) {
     request(app)
       .delete(`/contact/${contact.id}`)
       .set('Accept', 'application/json')
@@ -295,7 +281,7 @@ describe('Contact tests', () => {
       })
   })
 
-  it('should not create a contact with null name', done => {
+  it('should not create a contact with null name', function(done) {
     request(app)
       .post('/contact')
       .set('Accept', 'application/json')
@@ -309,7 +295,7 @@ describe('Contact tests', () => {
         done()
       })
   })
-  it('should not create a contact with invalid email', done => {
+  it('should not create a contact with invalid email', function(done) {
     request(app)
       .post('/contact')
       .set('Accept', 'application/json')
@@ -323,9 +309,9 @@ describe('Contact tests', () => {
         done()
       })
   })
-  it('should not search for contacts with bad param types', done => {
+  it('should not search for contacts with bad param types', function(done) {
     request(app)
-      .get(`/contact?test=test`)
+      .get('/contact?test=test')
       .set('Accept', 'application/json')
       .set('authorization', authHeader)
       .expect('Content-Type', 'text/html; charset=utf-8')
@@ -336,9 +322,9 @@ describe('Contact tests', () => {
         done()
       })
   })
-  it('should not search for contacts with bad param values', done => {
+  it('should not search for contacts with bad param values', function(done) {
     request(app)
-      .get(`/contact?type=test&value=test`)
+      .get('/contact?type=test&value=test')
       .set('Accept', 'application/json')
       .set('authorization', authHeader)
       .expect('Content-Type', 'text/html; charset=utf-8')
@@ -349,7 +335,7 @@ describe('Contact tests', () => {
         done()
       })
   })
-  it('should not get a single contact with invalid UUID', done => {
+  it('should not get a single contact with invalid UUID', function(done) {
     request(app)
       .get(`/contact/${contact.email}`)
       .set('Accept', 'application/json')
@@ -361,7 +347,7 @@ describe('Contact tests', () => {
         done()
       })
   })
-  it('should not get a single contact with valid UUID', done => {
+  it('should not get a single contact with valid UUID', function(done) {
     request(app)
       .get(`/contact/${uuid()}`)
       .set('Accept', 'application/json')
@@ -373,7 +359,7 @@ describe('Contact tests', () => {
         done()
       })
   })
-  it('should not update a contact without valid UUID', done => {
+  it('should not update a contact without valid UUID', function(done) {
     contact.id = randomWords()
     request(app)
       .put('/contact')
@@ -384,14 +370,14 @@ describe('Contact tests', () => {
       .expect(400)
       .end((err, res) => {
         if (err) return done(err)
-        expect(res.text).to.equal(`Bad Request`)
+        expect(res.text).to.equal('Bad Request')
         done()
       })
   })
-  it('should not update a single contact with valid UUID', done => {
+  it('should not update a single contact with valid UUID', function(done) {
     contact.id = uuid()
     request(app)
-      .put(`/contact`)
+      .put('/contact')
       .set('Accept', 'application/json')
       .set('authorization', authHeader)
       .send(contact)
@@ -402,7 +388,7 @@ describe('Contact tests', () => {
         done()
       })
   })
-  it('should not delete a contact', done => {
+  it('should not delete a contact', function(done) {
     contact.email = randomWords()
     request(app)
       .delete(`/contact/${contact.email}`)
@@ -412,7 +398,7 @@ describe('Contact tests', () => {
       .expect(400)
       .end((err, res) => {
         if (err) return done(err)
-        expect(res.text).to.equal(`Bad Request`)
+        expect(res.text).to.equal('Bad Request')
         done()
       })
   })
