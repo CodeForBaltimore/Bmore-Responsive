@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/CodeForBaltimore/Bmore-Responsive.svg?branch=master)](https://travis-ci.org/CodeForBaltimore/Bmore-Responsive) [![codecov](https://codecov.io/gh/CodeForBaltimore/Bmore-Responsive/branch/master/graph/badge.svg)](https://codecov.io/gh/CodeForBaltimore/Bmore-Responsive) [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/CodeForBaltimore/Bmore-Responsive.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/CodeForBaltimore/Bmore-Responsive/context:javascript) [![Known Vulnerabilities](https://snyk.io/test/github/CodeForBaltimore/Bmore-Responsive/badge.svg)](https://snyk.io/test/github/CodeForBaltimore/Bmore-Responsive)
 
 # Bmore Responsive
-A simple, flexible API to support emergency response coordination.  Sample use cases include:
+A simple, flexible API to support emergency response coordination. Sample use cases include:
 
 - keeping track of local nursing home status and needs during a global pandemic
 - identifying hospitals lacking power during a natural disaster
