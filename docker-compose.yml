@@ -8,6 +8,8 @@ services:
       - ${PORT:-3001}:${PORT:-3001}
     expose:
       - ${PORT:-3001}
+    volumes:
+      - ./src:/usr/src/src
     command: >
       sh -c "npm run db-delete &&
              npm run db-create &&
