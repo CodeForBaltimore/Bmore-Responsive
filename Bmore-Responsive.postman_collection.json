@@ -408,12 +408,17 @@
 							{
 								"key": "token",
 								"value": "{{token}}",
-								"type": "json"
+								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"role\": \"test2\",\n  \"path\": \"/test\",\n  \"method\": \"GET\"\n}"
+							"raw": "{\n  \"role\": \"test2\",\n  \"path\": \"/test\",\n  \"method\": \"GET\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
 						},
 						"url": {
 							"raw": "{{baseUrl}}/userRole/delete",
