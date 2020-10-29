@@ -408,7 +408,7 @@
 							{
 								"key": "token",
 								"value": "{{token}}",
-								"type": "text"
+								"type": "json"
 							}
 						],
 						"body": {
