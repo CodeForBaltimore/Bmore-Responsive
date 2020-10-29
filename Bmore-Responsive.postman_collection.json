@@ -366,7 +366,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"role\": \"test4\",\n  \"path\": \"/test\",\n  \"method\": \"GET\"\n}",
+							"raw": "{\n  \"role\": \"test2\",\n  \"path\": \"/test\",\n  \"method\": \"GET\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
