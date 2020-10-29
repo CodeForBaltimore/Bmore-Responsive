@@ -3626,6 +3626,562 @@
           }
         }
       }
+    },
+    "/questions": {
+      "get": {
+        "tags": [
+          "questionnaires",
+          "read-only",
+          "unimplemented"
+        ],
+        "summary": "Retrieves all questions.",
+        "description": "Retrieves all defined questions in the application.",
+        "responses": {
+          "200": {
+            "description": "The data corresponding to the created questions.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/QuestionBasicViewData"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "questionnaires",
+          "administration",
+          "unimplemented"
+        ],
+        "summary": "Creates a new question.",
+        "description": "Creates a new question in the application that can subsequently be used for questionnaire creation.",
+        "requestBody": {
+          "description": "The question to create.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuestionData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The data corresponding to the created question.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuestionViewData"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid content provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "details": [
+                    {
+                      "name": "questionType",
+                      "value": "Content is not a valid question type"
+                    }
+                  ],
+                  "message": "Request invalid",
+                  "statusCode": 400
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "409": {
+            "description": "The resource already exists.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "The question 'Are you having a cow?' already exists",
+                  "statusCode": 409
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/questions/{questionId}": {
+      "parameters": [
+        {
+          "name": "questionId",
+          "description": "The identifier of the question.",
+          "example": "123e4567-e89b-12d3-a456-426614174000",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "pattern": "[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}"
+          }
+        }
+      ],
+      "get": {
+        "tags": [
+          "questionnaires",
+          "read-only",
+          "unimplemented"
+        ],
+        "summary": "Retrieves the specified question.",
+        "description": "Retrieves the detailed information for the question.",
+        "responses": {
+          "200": {
+            "description": "The data corresponding to the created question.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuestionViewData"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "description": "The requested resource was not found.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "details": [
+                    {
+                      "name": "resource_type",
+                      "value": "question"
+                    }
+                  ],
+                  "message": "The question 'Are you having a cow?' was not found",
+                  "statusCode": 404
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "questionnaires",
+          "administration",
+          "unimplemented"
+        ],
+        "summary": "Removes the specified question.",
+        "description": "Removes all information for the question.",
+        "responses": {
+          "204": {
+            "description": "The question was successfully deleted."
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "description": "The requested resource was not found.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "details": [
+                    {
+                      "name": "resource_type",
+                      "value": "question"
+                    }
+                  ],
+                  "message": "The question 'Are you having a cow?' was not found",
+                  "statusCode": 404
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "The resource is in use.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "The question 'Are you having a cow?' is in use",
+                  "statusCode": 409
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/questionnaires": {
+      "get": {
+        "tags": [
+          "questionnaires",
+          "read-only",
+          "unimplemented"
+        ],
+        "summary": "Retrieves all questionnaires.",
+        "description": "Retrieves all defined questionnaires in the application.",
+        "responses": {
+          "200": {
+            "description": "The data corresponding to the created questionnaires.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/QuestionnaireBasicViewData"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "questionnaires",
+          "administration",
+          "unimplemented"
+        ],
+        "summary": "Creates a new questionnaire.",
+        "description": "Creates a new questionnaire in the application.",
+        "requestBody": {
+          "description": "The questionnaire to create.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuestionnaireData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The data corresponding to the created question.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuestionnaireViewData"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid content provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "details": [
+                    {
+                      "name": "questionType",
+                      "value": "Content is not a valid question type"
+                    }
+                  ],
+                  "message": "Request invalid",
+                  "statusCode": 400
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "409": {
+            "description": "The resource already exists.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "The questionnaire 'Check-in questions for 2020 event' already exists",
+                  "statusCode": 409
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/questionnaires/{questionnaireId}": {
+      "parameters": [
+        {
+          "name": "questionnaireId",
+          "description": "The identifier of the question.",
+          "example": "123e4567-e89b-12d3-a456-426614174000",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "pattern": "[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}"
+          }
+        }
+      ],
+      "get": {
+        "tags": [
+          "questionnaires",
+          "read-only",
+          "unimplemented"
+        ],
+        "summary": "Retrieves the specified questionnaire.",
+        "description": "Retrieves the detailed information for the questionnaire.",
+        "responses": {
+          "200": {
+            "description": "The data corresponding to the created questionnaire.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuestionnaireViewData"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "description": "The requested resource was not found.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "details": [
+                    {
+                      "name": "resource_type",
+                      "value": "questionnaire"
+                    }
+                  ],
+                  "message": "The specified questionnaire was not found",
+                  "statusCode": 404
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "questionnaires",
+          "administration",
+          "unimplemented"
+        ],
+        "summary": "Modifies a questionnaire.",
+        "description": "Modifies the non-identifying information for the specified \nquestionnaire. The order of the questions can be changed in addition to\nadding/removing questions. All modifications create a new questionnaire \nrevision.",
+        "requestBody": {
+          "description": "The questionnaire information to modify.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuestionnaireData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The data corresponding to the created questionnaire.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuestionnaireViewData"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid content provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "details": [
+                    {
+                      "name": "description",
+                      "value": "Content is not a valid description"
+                    }
+                  ],
+                  "message": "Request invalid",
+                  "statusCode": 400
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "description": "The requested resource was not found.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "details": [
+                    {
+                      "name": "resource_type",
+                      "value": "questionnaire"
+                    }
+                  ],
+                  "message": "The specified questionnaire was not found",
+                  "statusCode": 404
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "The resource already exists.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "The question 'Are you having a cow?' already exists in this questionnaire",
+                  "statusCode": 409
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "questionnaires",
+          "administration",
+          "unimplemented"
+        ],
+        "summary": "Removes the specified questionnaire.",
+        "description": "Removes all information for the questionnaire.",
+        "responses": {
+          "204": {
+            "description": "The questionnaire was successfully deleted."
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "description": "The requested resource was not found.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "details": [
+                    {
+                      "name": "resource_type",
+                      "value": "questionnaire"
+                    }
+                  ],
+                  "message": "The specified questionnaire was not found",
+                  "statusCode": 404
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "The resource is in use.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "The question 'Are you having a cow?' is in use",
+                  "statusCode": 409
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -3996,6 +4552,7 @@
       "AuditData": {
         "type": "object",
         "description": "The audit information for data in the application.",
+        "readOnly": true,
         "required": [
           "createdAt",
           "updatedAt"
@@ -4671,6 +5228,225 @@
             "$ref": "#/components/schemas/AuditData"
           }
         ]
+      },
+      "QuestionIdData": {
+        "type": "object",
+        "description": "The identifier of a question for a questionnaire.",
+        "required": [
+          "questionId"
+        ],
+        "properties": {
+          "questionId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The system-generated identifier of the question",
+            "pattern": "[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          }
+        }
+      },
+      "QuestionBasicContent": {
+        "type": "object",
+        "description": "Defines the data used when creating a question for a questionnaire.",
+        "required": [
+          "questionText",
+          "questionType",
+          "required"
+        ],
+        "properties": {
+          "questionText": {
+            "type": "string",
+            "description": "Information that will be displayed to the questionnaire recipient",
+            "maxLength": 1024,
+            "minLength": 3,
+            "example": "Are you having a cow?"
+          },
+          "questionType": {
+            "type": "string",
+            "description": "Identifies the type of question; this is used for both validation and rendering.",
+            "example": "boolean",
+            "enum": [
+              "informational",
+              "boolean",
+              "short-text",
+              "long-text",
+              "single-select",
+              "multi-select"
+            ]
+          },
+          "required": {
+            "type": "boolean",
+            "description": "Indicates whether the question must be answered. This should always be false for an\ninformational question",
+            "default": false
+          }
+        }
+      },
+      "QuestionContent": {
+        "type": "object",
+        "description": "Defines the data used when creating a question for a questionnaire.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/QuestionBasicContent"
+          }
+        ],
+        "properties": {
+          "options": {
+            "type": "array",
+            "example": [
+              "Yes",
+              "No"
+            ],
+            "items": {
+              "description": "The values to display as potential answers for a question. Values can only be \nprovided for boolean, single-selct or multi-select question types.",
+              "uniqueItems": true,
+              "maxItems": 16,
+              "type": "string"
+            }
+          },
+          "allowOther": {
+            "type": "boolean",
+            "description": "Indicates whether an 'Other' choice should be presented as part of a \nsingle-select or multi-select option list. This must be false for all other \nquestion types.",
+            "default": false
+          }
+        }
+      },
+      "QuestionData": {
+        "type": "object",
+        "description": "Defines the content that can be provided when creating a question.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/QuestionContent"
+          }
+        ]
+      },
+      "QuestionBasicViewData": {
+        "type": "object",
+        "description": "Defines the read-only content retrieved for a question.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/QuestionIdData"
+          },
+          {
+            "$ref": "#/components/schemas/QuestionBasicContent"
+          }
+        ]
+      },
+      "QuestionViewData": {
+        "type": "object",
+        "description": "Defines the read-only content retrieved for a question.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/QuestionIdData"
+          },
+          {
+            "$ref": "#/components/schemas/QuestionContent"
+          },
+          {
+            "$ref": "#/components/schemas/AuditData"
+          }
+        ]
+      },
+      "QuestionnaireIdData": {
+        "type": "object",
+        "description": "The identifier of a questionnaire.",
+        "required": [
+          "questionnaireId"
+        ],
+        "properties": {
+          "questionnaireId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The system-generated identifier of the questionnaire",
+            "pattern": "[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          }
+        }
+      },
+      "QuestionnaireContent": {
+        "type": "object",
+        "description": "Defines the content to use when creating or modifying a questionnaire.",
+        "required": [
+          "description",
+          "questions"
+        ],
+        "properties": {
+          "description": {
+            "type": "string",
+            "example": "Check-in questions for 2020 event"
+          },
+          "questions": {
+            "type": "array",
+            "minLength": 1,
+            "maxLength": 32,
+            "uniqueItems": true,
+            "items": {
+              "$ref": "#/components/schemas/QuestionIdData"
+            }
+          }
+        }
+      },
+      "QuestionnaireData": {
+        "type": "object",
+        "description": "Defines the content that can be provided when creating a questionnaire.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/QuestionnaireContent"
+          }
+        ]
+      },
+      "QuestionnaireViewContent": {
+        "type": "object",
+        "description": "Defines the content to use when creating or modifying a questionnaire.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/QuestionnaireContent"
+          }
+        ]
+      },
+      "QuestionnaireBasicViewData": {
+        "type": "object",
+        "description": "Defines the basic read-only content retrieved for a questionnaire.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/QuestionnaireIdData"
+          },
+          {
+            "$ref": "#/components/schemas/QuestionnaireContent"
+          }
+        ],
+        "properties": {
+          "version": {
+            "type": "integer",
+            "description": "The version of the questionnaire.",
+            "readOnly": true,
+            "minimum": 1,
+            "example": 3
+          }
+        }
+      },
+      "QuestionnaireViewData": {
+        "type": "object",
+        "description": "Defines the read-only content retrieved for a questionnaire.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/QuestionnaireIdData"
+          },
+          {
+            "$ref": "#/components/schemas/QuestionnaireViewContent"
+          },
+          {
+            "$ref": "#/components/schemas/AuditData"
+          }
+        ],
+        "properties": {
+          "version": {
+            "type": "integer",
+            "description": "The version of the questionnaire.",
+            "readOnly": true,
+            "minimum": 1,
+            "example": 3
+          }
+        }
       }
     }
   }
