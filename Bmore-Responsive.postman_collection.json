@@ -189,7 +189,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"email\": \"marge.simpson@sfpp.com\",\n\t\"password\": \"donuts\"\n}",
+							"raw": "{\n\t\"email\": \"marge.simpson@sfpp.com\",\n\t\"password\": \"Donut$123\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
