@@ -179,6 +179,7 @@ router.post('/send', async (req, res) => {
             name: contact.name,
             entityName: entity.name,
             entityId: association.entityId,
+            entityType: entity.type,
             relationshipTitle: association.relationshipTitle,
             token: temporaryToken
           })
