@@ -237,6 +237,14 @@ const processResults = async (results, modelType) => {
       processedResults = [...processedResults, result]
     }
     return processedResults
+  case 'Contact':
+    for (let result of results) {
+      const phone = result.phone.find(number => number.isPrimary === true);
+      const email = result.email.find(address => address.isPrimary === true);
+      result.phone = phone.number;
+      result.email = email.address;
+      processedResults = [...processedResults, result]
+    }
   default:
     return results
   }
