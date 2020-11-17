@@ -26,19 +26,6 @@ services:
       - DATABASE_USERNAME=${DATABASE_USERNAME:-postgres}
       - JWT_KEY=${JWT_KEY:?JWT_KEY must be set}
       - DATABASE_PASSWORD=${DATABASE_PASSWORD:?DATABASE_PASSWORD must be set}
-  web:
-    build:
-      context: https://github.com/CodeForBaltimore/Healthcare-Rollcall.git#${WEB_TAG:-master}
-    depends_on:
-      - api
-    ports:
-      - ${WEB_PORT:-3000}:${WEB_PORT:-3000}
-    expose:
-      - ${WEB_PORT:-3000}
-    environment:
-      - PORT=${WEB_PORT:-3000}
-      - VUE_APP_BASE_API_URL=http://localhost:${PORT:-3001}
-      - DATABASE_PASSWORD=${DATABASE_PASSWORD:?DATABASE_PASSWORD must be set}
   db:
     image: postgres
     restart: always
