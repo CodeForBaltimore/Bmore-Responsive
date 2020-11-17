@@ -15,11 +15,10 @@ router.get('/:model_type', async (req, res) => {
     if (req.context.models.hasOwnProperty(modelType) && modelType !== 'User' && modelType !== 'UserRole') {
       /** @todo add filtering */
       const results = await req.context.models[modelType].findAll({ raw: true })
-
       const processedResults = await utils.processResults(results, modelType)
-
-      if (results.length !== 0) {
-        response.setMessage = await parseAsync(JSON.parse(JSON.stringify(processedResults)), Object.keys(results[0]), {})
+      if (processedResults.length !== 0) {
+        const resultsParsed = await parseAsync(JSON.parse(JSON.stringify(processedResults)), Object.keys(results[0]), {});
+        response.setMessage(resultsParsed);
       }
     } else {
       response.setCode(400)
