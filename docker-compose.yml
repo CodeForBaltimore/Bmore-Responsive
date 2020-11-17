@@ -1,27 +1,36 @@
-version: '3'
+version: "3"
 services:
   api:
-    image: 180104022864.dkr.ecr.us-east-2.amazonaws.com/bmore-responsive
-    depends_on: 
+    build: .
+    depends_on:
       - db
-    links:
-      - "db: database"
     ports:
-      - '8080:80'
-    command:  >
-      sh -c "npm run db-delete &&
-            npm run db-create && 
-            npm run db-seed &&
-            npm start"
+      - ${PORT:-3001}:${PORT:-3001}
+    expose:
+      - ${PORT:-3001}
     volumes:
-      - .:/app/
-      - /app/node_modules
-    env_file: .env
+      - ./src:/usr/src/src
+    command: >
+      sh -c "npm run db-delete &&
+             npm run db-create &&
+             npm run db-seed &&
+             npm start"
+    environment:
+      - PORT=${PORT:-3001}
+      - NODE_ENV=${NODE_ENV:-development}
+      - BYPASS_LOGIN=${BYPASS_LOGIN:-true}
+      - DATABASE_HOST=${DATABASE_HOST:-db}
+      - DATABASE_PORT=${DATABASE_PORT:-5432}
+      - DATABASE_NAME=${DATABASE_NAME:-postgres}
+      - DATABASE_SCHEMA=${DATABASE_SCHEMA:-public}
+      - DATABASE_USERNAME=${DATABASE_USERNAME:-postgres}
+      - JWT_KEY=${JWT_KEY:?JWT_KEY must be set}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD:?DATABASE_PASSWORD must be set}
   db:
     image: postgres
     restart: always
-    ports:
-      - '5432:5432'
+    expose:
+      - 5432
     environment:
-      - POSTGRES_USER=${DATABASE_USER}
-      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+      - POSTGRES_USER=${DATABASE_USERNAME:-postgres}
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD:?DATABASE_PASSWORD must be set}
