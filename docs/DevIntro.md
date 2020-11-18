@@ -21,7 +21,7 @@ We will use TravisCI, Docker, Netlify, and AWS to provide constant code deployme
 
 ### Data
 
-This product makes use of [PostgreSQL](https://www.postgresql.org/) for the data layer and [Sequelize](https://sequelize.org/) for database interactions. Our database documentation can be found in the [`/sequelize` directory](../sequelize/README.md). The schema is outlined below
+This product makes use of [PostgreSQL](https://www.postgresql.org/) for the data layer and [Sequelize](https://sequelize.org/) for database interactions. Our database documentation can be found in the `/sequelize` directory. The schema is outlined below
 ![Database Diagram](img/db-diagram.png)
 
 #### Migrations
