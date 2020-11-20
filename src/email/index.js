@@ -58,13 +58,14 @@ const sendForgotPassword = async (userEmail, resetPasswordToken) => {
 const sendContactCheckInEmail = async (info) => {
   try {
     const entityLink = `${process.env.URL}/checkin/${info.entityId}?token=${info.token}`
-    const emailTitle = `${info.entityName} Check In`
+    const emailTitle = `${info.entityName} Healthcare Rollcall Check In`
     const emailContents = `Hello ${info.name}! It is time to update the status of ${info.entityName}. Please click the link below to check in.`
+    const template = (info.entityType === 'Assisted Living Facility') ? 'assisted_living_checkin' : 'contact_check_in'
     await sendMail(
       info.email,
       emailTitle,
-      nunjucks.render('contact_check_in_html.njk', {emailTitle, emailContents, entityLink}),
-      nunjucks.render('contact_check_in_text.njk', {emailTitle, emailContents, entityLink})
+      nunjucks.render(`${template}_html.njk`, { emailTitle, emailContents, entityLink }),
+      nunjucks.render(`${template}_text.njk`, { emailTitle, emailContents, entityLink })
     )
 
     return true
