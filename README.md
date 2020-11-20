@@ -1,6 +1,7 @@
 [![Build Status](https://travis-ci.org/CodeForBaltimore/Bmore-Responsive.svg?branch=master)](https://travis-ci.org/CodeForBaltimore/Bmore-Responsive) [![codecov](https://codecov.io/gh/CodeForBaltimore/Bmore-Responsive/branch/master/graph/badge.svg)](https://codecov.io/gh/CodeForBaltimore/Bmore-Responsive) [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/CodeForBaltimore/Bmore-Responsive.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/CodeForBaltimore/Bmore-Responsive/context:javascript) [![Known Vulnerabilities](https://snyk.io/test/github/CodeForBaltimore/Bmore-Responsive/badge.svg)](https://snyk.io/test/github/CodeForBaltimore/Bmore-Responsive)
 
 # Bmore Responsive
+
 A simple, flexible API to support emergency response coordination. Sample use cases include:
 
 - keeping track of local nursing home status and needs during a global pandemic
@@ -18,10 +19,12 @@ Bmore-Responsive provides the following primary features via a secure REST API:
 ## Getting Started
 
 For information on how to get started using this product visit our documentation Wiki at https://codeforbaltimore.github.io/Bmore-Responsive/
+
 - [Quick Start](https://codeforbaltimore.github.io/Bmore-Responsive/QuickStart/)
 - [Slow Start](https://codeforbaltimore.github.io/Bmore-Responsive/SlowStart/)
 
 # Sources and Links
+
 We are also building a front-end application called [Healthcare Rollcall](https://github.com/CodeForBaltimore/Healthcare-Rollcall) to interact with this backend API. To view that project, or to contribute to it, please visit the repo here: https://github.com/CodeForBaltimore/Healthcare-Rollcall
 
 - Dockerhub: https://hub.docker.com/r/codeforbaltimore/bmore-responsive
@@ -61,6 +64,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
