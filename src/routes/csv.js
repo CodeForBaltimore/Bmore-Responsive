@@ -41,7 +41,7 @@ router.get('/:model_type', async (req, res) => {
           res.set('Content-Type', 'text/csv')
           return res.status(response.getCode()).send(response.getMessage())
         }, err => {
-          response.setCode(400)
+          response.setCode(500)
           response.setMessage('Not able to parse data: ' + err)
           return res.status(response.getCode()).send(response.getMessage())
         })
