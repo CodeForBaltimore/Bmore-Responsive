@@ -242,7 +242,7 @@ router.post('/send/:type/:id', async (req, res) => {
       })
     } else {
       response.setMessage('Email Address not found.')
-      response.setCode(500)
+      response.setCode(404)
     }
 
     response.setMessage({
