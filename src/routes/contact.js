@@ -190,14 +190,13 @@ router.post('/send', async (req, res) => {
           if (contact.email !== null) {
             // short-lived temporary token that only lasts one hour
             const temporaryToken = await utils.getToken(contact.id, contact.email[0].address, 'contact')
-
             emails.push({
               email: contact.email[0].address,
               name: contact.name,
               entityName: entity.name,
               entityId: entity.id,
               entityType: entity.type,
-              relationshipTitle: entity.entityContacts.relationshipTitle.relationshipTitle,
+              relationshipTitle: entity.entityContacts.dataValues.relationshipTitle,
               token: temporaryToken
             })
           }
