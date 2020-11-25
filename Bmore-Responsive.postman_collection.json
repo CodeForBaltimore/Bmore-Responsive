@@ -569,7 +569,7 @@
 					"response": []
 				},
 				{
-					"name": "Contact Send",
+					"name": "Contact Send Bulk",
 					"event": [
 						{
 							"listen": "test",
@@ -615,6 +615,60 @@
 							"path": [
 								"contact",
 								"send"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Contact Send Single",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b38d3eef-47f0-4f9e-a710-d82c4fef5492",
+								"exec": [
+									"//get the 36 character id of the new contact and save it to env variable",
+									"//this will allow deletion of this in the Delete transaction",
+									"pm.environment.set(\"newContactId\", pm.response.text().slice(0,36));",
+									"",
+									"//confirm that request returns a success code of 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/contact/send/{{modelType}}/{{id}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"contact",
+								"send",
+								"{{modelType}}",
+								"{{id}}"
 							]
 						}
 					},

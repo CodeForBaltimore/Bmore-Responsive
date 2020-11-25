@@ -36,7 +36,7 @@ const sendMail = async (to, subject, html, text) => {
  * Send a forgot password email.
  * @param {string} userEmail email address of the user we're sending to
  * @param {string} resetPasswordToken temporary token for the reset password link
- * 
+ *
  * @returns {Boolean}
  */
 const sendForgotPassword = async (userEmail, resetPasswordToken) => {
@@ -45,8 +45,8 @@ const sendForgotPassword = async (userEmail, resetPasswordToken) => {
     await sendMail(
       userEmail,
       'Password Reset - Healthcare Roll Call',
-      nunjucks.render('forgot_password_html.njk', { emailResetLink }),
-      nunjucks.render('forgot_password_text.njk', { emailResetLink })
+      nunjucks.render('forgot_password_html.njk', {emailResetLink}),
+      nunjucks.render('forgot_password_text.njk', {emailResetLink})
     )
     return true
   } catch (e) {
@@ -74,4 +74,4 @@ const sendContactCheckInEmail = async (info) => {
   }
 }
 
-export default { sendForgotPassword, sendContactCheckInEmail }
+export default {sendForgotPassword, sendContactCheckInEmail}
