@@ -11,8 +11,7 @@ services:
     volumes:
       - ./src:/usr/src/src
     command: >
-      sh -c "npm test &&
-             npm run db-delete &&
+      sh -c "npm run db-delete &&
              npm run db-create &&
              npm run db-seed &&
              npm start"
