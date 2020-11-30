@@ -233,6 +233,16 @@ const processResults = async (results, modelType) => {
       if (result['checkIn'] !== null) {
         result['checkIn'] = result['checkIn'].checkIns[0]
       }
+      result.address = result.address ? `${result.address.street} ${result.address.city} ${result.address.state} ${result.address.zip}` : ''
+      processedResults = [...processedResults, result]
+    }
+    return processedResults
+  case 'Contact':
+    for (let result of results) {
+      const phone = result.phone.find(number => number.isPrimary === true)
+      const email = result.email.find(address => address.isPrimary === true)
+      result.phone = phone ? phone.number : ''
+      result.email = email ? email.address : ''
       processedResults = [...processedResults, result]
     }
     return processedResults
