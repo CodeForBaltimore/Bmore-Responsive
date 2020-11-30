@@ -215,10 +215,14 @@ router.post('/send', async (req, res) => {
       email.sendContactCheckInEmail(e)
     })
 
+    const uniqueEntities = [...new Set(emails.map(email => email.entityId))]
+
+
     response.setMessage({
       results: {
         message: 'Contacts emailed',
-        total: emails.length
+        totalContacts: emails.length,
+        totalEntities: uniqueEntities.length,
       }
     })
   } catch (e) {

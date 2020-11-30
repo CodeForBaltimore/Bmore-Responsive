@@ -1553,7 +1553,11 @@
                     "results": {
                       "type": "object",
                       "properties": {
-                        "total": {
+                        "totalContacts": {
+                          "type": "number",
+                          "example": 1
+                        },
+                        "totalEntities": {
                           "type": "number",
                           "example": 1
                         },
