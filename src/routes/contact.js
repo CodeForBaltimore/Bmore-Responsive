@@ -156,50 +156,57 @@ router.post('/send', async (req, res) => {
     const emails = []
     const {entityIds, contactIds, relationshipTitle, entityType} = req.body
 
-    if (entityIds === undefined && contactIds === undefined) {
-      const whereClause = {
-        include: [{
-          model: models.Entity,
-          as: 'entities',
-          required: true,
-          through: {
-            model: models.EntityContact,
-            as: 'entityContacts',
-          }
-        }]
-      }
+    const whereClause = {
+      include: [{
+        model: models.Entity,
+        as: 'entities',
+        where: {},
+        required: true,
+        through: {
+          model: models.EntityContact,
+          as: 'entityContacts',
+        }
+      }]
+    }
 
-      if (relationshipTitle) {
-        whereClause.include[0].through.where = {relationshipTitle: relationshipTitle}
-      }
+    if (entityIds) {
+      whereClause.include[0].where.id = entityIds
+    }
 
-      if (entityType) {
-        whereClause.include[0].where = {type:  entityType}
-      }
+    if (contactIds) {
+      whereClause.where = {id: contactIds}
+    }
 
-      const contacts = await models.Contact.findAll(whereClause)
+    if (relationshipTitle) {
+      whereClause.include[0].through.where = {relationshipTitle: relationshipTitle}
+    }
 
-      if (contacts.length < 1) {
-        response.setCode(400)
-        response.setMessage('No contacts to email')
-        return res.status(response.getCode()).send(response.getMessage())
-      }
+    if (entityType) {
+      whereClause.include[0].where.type = entityType
+    }
 
-      for (const contact of contacts) {
-        for (const entity of contact.entities) {
-          if (contact.email !== null) {
-            // short-lived temporary token that only lasts one hour
-            const temporaryToken = await utils.getToken(contact.id, contact.email[0].address, 'contact')
-            emails.push({
-              email: contact.email[0].address,
-              name: contact.name,
-              entityName: entity.name,
-              entityId: entity.id,
-              entityType: entity.type,
-              relationshipTitle: entity.entityContacts.dataValues.relationshipTitle,
-              token: temporaryToken
-            })
-          }
+    const contacts = await models.Contact.findAll(whereClause)
+
+    if (contacts.length < 1) {
+      response.setCode(400)
+      response.setMessage('No contacts to email')
+      return res.status(response.getCode()).send(response.getMessage())
+    }
+
+    for (const contact of contacts) {
+      for (const entity of contact.entities) {
+        if (contact.email !== null) {
+          // short-lived temporary token that only lasts one hour
+          const temporaryToken = await utils.getToken(contact.id, contact.email[0].address, 'contact')
+          emails.push({
+            email: contact.email[0].address,
+            name: contact.name,
+            entityName: entity.name,
+            entityId: entity.id,
+            entityType: entity.type,
+            relationshipTitle: entity.entityContacts.dataValues.relationshipTitle,
+            token: temporaryToken
+          })
         }
       }
     }
@@ -208,10 +215,14 @@ router.post('/send', async (req, res) => {
       email.sendContactCheckInEmail(e)
     })
 
+    const uniqueEntities = [...new Set(emails.map(email => email.entityId))]
+
+
     response.setMessage({
       results: {
         message: 'Contacts emailed',
-        total: emails.length
+        totalContacts: emails.length,
+        totalEntities: uniqueEntities.length,
       }
     })
   } catch (e) {
