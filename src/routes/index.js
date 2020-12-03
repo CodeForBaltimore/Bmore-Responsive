@@ -4,6 +4,7 @@ import contact from './contact'
 import entity from './entity'
 import facilityType from './facility-types'
 import csv from './csv'
+import questionnaires from './questionnaire'
 // Exports object of routes we import above. Add to this if you're adding new routes.
 export default {
   user,
@@ -11,5 +12,6 @@ export default {
   contact,
   entity,
   facilityType,
-  csv
+  csv,
+  questionnaires,
 }

@@ -1903,6 +1903,154 @@
           }
         }
       }
+    },
+    "/questionnaires": {
+      "get": {
+        "tags": [
+          "questionnaires",
+          "read-only"
+        ],
+        "summary": "Retrieves all questionnaires.",
+        "description": "Retrieves all defined questionnaires in the application.",
+        "responses": {
+          "200": {
+            "description": "The data corresponding to the created questionnaires.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/QuestionnaireBasicViewData"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "questionnaires",
+          "administration"
+        ],
+        "summary": "Creates a new questionnaire.",
+        "description": "Creates a new questionnaire in the application.",
+        "requestBody": {
+          "description": "The questionnaire to create.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuestionnaireContent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The data corresponding to the created question.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuestionnaireViewData"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/questionnaires/{questionnaireId}": {
+      "parameters": [
+        {
+          "name": "questionnaireId",
+          "description": "The identifier of the question.",
+          "example": "123e4567-e89b-12d3-a456-426614174000",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "pattern": "[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}"
+          }
+        }
+      ],
+      "get": {
+        "tags": [
+          "questionnaires",
+          "read-only"
+        ],
+        "summary": "Retrieves the specified questionnaire.",
+        "description": "Retrieves the detailed information for the questionnaire.",
+        "responses": {
+          "200": {
+            "description": "The data corresponding to the created questionnaire.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuestionnaireViewData"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "The requested resource was not found."
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "questionnaires",
+          "administration"
+        ],
+        "summary": "Removes the specified questionnaire.",
+        "description": "Removes all information for the questionnaire.",
+        "responses": {
+          "204": {
+            "description": "The questionnaire was successfully deleted."
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "The requested resource was not found."
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -2159,6 +2307,208 @@
             "example": "2020-01-21T13:45:52.348Z"
           }
         }
+      },
+      "AuditData": {
+        "type": "object",
+        "description": "The audit information for data in the application.",
+        "readOnly": true,
+        "required": [
+          "createdAt",
+          "updatedAt"
+        ],
+        "properties": {
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The time the referenced object was created.",
+            "example": "2020-01-21T13:45:52.348Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The time the referenced object was last modified.",
+            "example": "2020-01-21T13:45:52.348Z"
+          }
+        }
+      },
+      "QuestionIdData": {
+        "type": "object",
+        "description": "The identifier of a question for a questionnaire.",
+        "required": [
+          "questionId"
+        ],
+        "properties": {
+          "questionId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The system-generated identifier of the question",
+            "pattern": "[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          }
+        }
+      },
+      "QuestionBasicContent": {
+        "type": "object",
+        "description": "Defines the data used when creating a question for a questionnaire.",
+        "required": [
+          "questionText",
+          "questionType",
+          "required"
+        ],
+        "properties": {
+          "questionText": {
+            "type": "string",
+            "description": "Information that will be displayed to the questionnaire recipient",
+            "maxLength": 1024,
+            "minLength": 3,
+            "example": "Are you having a cow?"
+          },
+          "questionType": {
+            "type": "string",
+            "description": "Identifies the type of question; this is used for both validation and rendering.",
+            "example": "boolean",
+            "enum": [
+              "informational",
+              "boolean",
+              "short-text",
+              "long-text",
+              "single-select",
+              "multi-select"
+            ]
+          },
+          "required": {
+            "type": "boolean",
+            "description": "Indicates whether the question must be answered. This should always be false for an\ninformational question",
+            "default": false
+          }
+        }
+      },
+      "QuestionContent": {
+        "type": "object",
+        "description": "Defines the data used when creating a question for a questionnaire.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/QuestionBasicContent"
+          }
+        ],
+        "properties": {
+          "options": {
+            "type": "array",
+            "example": [
+              "Yes",
+              "No"
+            ],
+            "items": {
+              "description": "The values to display as potential answers for a question. Values can only be \nprovided for boolean, single-selct or multi-select question types.",
+              "uniqueItems": true,
+              "maxItems": 16,
+              "type": "string"
+            }
+          },
+          "allowOther": {
+            "type": "boolean",
+            "description": "Indicates whether an 'Other' choice should be presented as part of a \nsingle-select or multi-select option list. This must be false for all other \nquestion types.",
+            "default": false
+          }
+        }
+      },
+      "QuestionBasicViewData": {
+        "type": "object",
+        "description": "Defines the read-only content retrieved for a question.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/QuestionIdData"
+          },
+          {
+            "$ref": "#/components/schemas/QuestionBasicContent"
+          }
+        ]
+      },
+      "QuestionViewData": {
+        "type": "object",
+        "description": "Defines the read-only content retrieved for a question.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/QuestionIdData"
+          },
+          {
+            "$ref": "#/components/schemas/QuestionContent"
+          },
+          {
+            "$ref": "#/components/schemas/AuditData"
+          }
+        ]
+      },
+      "QuestionnaireIdData": {
+        "type": "object",
+        "description": "The identifier of a questionnaire.",
+        "required": [
+          "questionnaireId"
+        ],
+        "properties": {
+          "questionnaireId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The system-generated identifier of the questionnaire",
+            "pattern": "[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          }
+        }
+      },
+      "QuestionnaireContent": {
+        "type": "object",
+        "description": "Defines the content to use when creating or modifying a questionnaire.",
+        "required": [
+          "description",
+          "questions"
+        ],
+        "properties": {
+          "description": {
+            "type": "string",
+            "example": "Check-in questions for 2020 event"
+          },
+          "questions": {
+            "type": "array",
+            "minLength": 1,
+            "maxLength": 32,
+            "items": {
+              "$ref": "#/components/schemas/QuestionBasicViewData"
+            }
+          }
+        }
+      },
+      "QuestionnaireBasicViewData": {
+        "type": "object",
+        "description": "Defines the basic read-only content retrieved for a questionnaire.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/QuestionnaireIdData"
+          },
+          {
+            "$ref": "#/components/schemas/QuestionnaireContent"
+          }
+        ],
+        "properties": {
+          "version": {
+            "type": "integer",
+            "description": "The version of the questionnaire.",
+            "readOnly": true,
+            "minimum": 1,
+            "example": 3
+          }
+        }
+      },
+      "QuestionnaireViewData": {
+        "type": "object",
+        "description": "Defines the read-only content retrieved for a questionnaire.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/QuestionnaireBasicViewData"
+          },
+          {
+            "$ref": "#/components/schemas/AuditData"
+          }
+        ]
       }
     }
   }
