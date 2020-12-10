@@ -55,9 +55,9 @@ const sendForgotPassword = async (userEmail, resetPasswordToken) => {
   }
 }
 
-const sendContactCheckInEmail = async (info) => {
+const sendContactCheckInEmail = async (info, origin) => {
   try {
-    const entityLink = `${process.env.URL}/checkin/${info.entityId}?token=${info.token}`
+    const entityLink = `${origin}/checkin/${info.entityId}?token=${info.token}`
     const emailTitle = `${info.entityName} Healthcare Rollcall Check In`
     const emailContents = `Hello ${info.name}! It is time to update the status of ${info.entityName}. Please click the link below to check in.`
     const template = (info.entityType === 'Assisted Living Facility') ? 'assisted_living_checkin' : 'contact_check_in'
