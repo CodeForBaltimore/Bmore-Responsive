@@ -26,7 +26,7 @@ JWT_KEY= # Custom value
 
 ## Step 4 - Run Development Stack
 
-To run the application run `docker-compose up -d`.
+To run the application run `docker-compose up -d --build`.
 
 ## Step 5 - Confirm Success
 
