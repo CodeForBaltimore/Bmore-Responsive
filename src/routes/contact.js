@@ -212,7 +212,7 @@ router.post('/send', async (req, res) => {
     }
 
     emails.forEach(async (e) => {
-      email.sendContactCheckInEmail(e)
+      email.sendContactCheckInEmail(e, req.headers.origin)
     })
 
     const uniqueEntities = [...new Set(emails.map(email => email.entityId))]
@@ -239,6 +239,7 @@ router.post('/send/:type/:id', async (req, res) => {
 
   try {
     let entity
+
     if (req.params.type.toLowerCase() === 'entity') {
       entity = await models.Entity.findById(req.params.id)
     } else if (req.params.type.toLowerCase() === 'contact') {
@@ -261,7 +262,7 @@ router.post('/send/:type/:id', async (req, res) => {
         entityId: entity.id,
         token: temporaryToken
       }
-      email.sendContactCheckInEmail(e).then(() => {
+      email.sendContactCheckInEmail(e, req.headers.origin).then(() => {
         response.setMessage(`${entity.name} emailed sent.`)
         response.setCode(200)
       }, err => {
