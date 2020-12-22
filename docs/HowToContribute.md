@@ -119,4 +119,4 @@ CodeForBaltimore welcomes anyone who is interested in helping with this project.
 Please note we have a [Code of Conduct](Code_of_Conduct.md), please follow it in all your interactions with the project.
 
 ## Sources and Links
-We are also building a front-end application called [Healthcare Rollcall](https://github.com/CodeForBaltimore/Healthcare-Rollcall) to interact with this backend API. To view that project, or to contribute to it, please visit the repo here: https://github.com/CodeForBaltimore/Healthcare-Rollcall
+We are also building a front-end application called [Healthcare Rollcall](https://github.com/CodeForBaltimore/Healthcare-Rollcall) to interact with this backend API.  We welcome interest and contributions to both repos.  
