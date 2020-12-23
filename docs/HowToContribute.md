@@ -58,9 +58,6 @@ technologies:
 
 Please see our [Developer Intro](DevIntro.md) for a full breakdown of the architecture of the projects and important scripts.
 
-Please see our [Best Practices](Best_Practices.md) for code standards, git standards, and other guidance for writing clean and well
-documented code.
-
 ## Contributing
 
 ### Git Workflow
