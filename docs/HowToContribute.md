@@ -33,9 +33,9 @@ Additionally, we have an [API Roadmap page](https://github.com/CodeForBaltimore/
 
 ## Current Work and Help Needed
 
-We use GitHub issues to define and manage our work.  The [list of open issues](https://github.com/CodeForBaltimore/Bmore-Responsive/issues) describes the work that is currently on our plate.  These issues inlcude work that is being doen as well as enhhancements and defect fixes that need help.  [GitHub milestones](https://github.com/CodeForBaltimore/Bmore-Responsive/milestones) are occasionally used to represent features from the story map.  Often several issues (user stories, bugs, tasks, etc) will be related to one feature.  By relating these issues to a milestone, it makes it easy to view/track progress toward features on the story map.
+We use GitHub issues to define and manage our work.  The [list of open issues](https://github.com/CodeForBaltimore/Bmore-Responsive/issues) describes the work that is currently on our plate.  These issues include work that is being done as well as enhancements and defect fixes that need help.  [GitHub milestones](https://github.com/CodeForBaltimore/Bmore-Responsive/milestones) are occasionally used to represent features from the story map.  Often several issues (user stories, bugs, tasks, etc) will be related to one feature.  By relating these issues to a milestone, it makes it easy to view/track progress toward features on the story map.
 
-If you are looking to help, we recommend that you review the issues listed to identify an opportunity to contribute. You are also free to create an issue to suggest a change. Keep an eye on the labels associated with each issue.  The labels will typically indicate the type and importantce of the work.  Some commonly used labels and their meanings are:
+If you are looking to help, we recommend that you review the issues listed to identify an opportunity to contribute. You are also free to create an issue to suggest a change. Keep an eye on the labels associated with each issue.  The labels will typically indicate the type and importance of the work.  Some commonly used labels and their meanings are:
 
 - `good first issue` is a relatively simple issue appropriate for someone new to the project
 - `P1`, `P2`, `P3` each describe priority with P1 being the most urgent
