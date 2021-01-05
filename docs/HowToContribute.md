@@ -1,14 +1,14 @@
 # Welcome
 
-The CodeForBaltimore team is thrilled that you might be interested in helping us help others. You do not need to be an expert, just willing to help.  This page will give you some background on this project with suggestion and advice on how to contribute.
+The CodeForBaltimore team is thrilled that you might be interested in helping us help others! You do not need to be an expert, just willing to help.  This page will give you some background on this project with suggestion and advice on how to contribute.
 
 ## What is Bmore Responsive?
 
 A simple, flexible API to support emergency response coordination.  Sample use cases include:
 
-- keeping track of local nursing home status and needs during a global pandemic
-- identifying hospitals lacking power during a natural disaster
-- assuring safety of hikers in a national park during a snow storm
+- Keeping track of local nursing home status and needs during a global pandemic
+- Identifying hospitals lacking power during a natural disaster
+- Assuring safety of hikers in a national park during a snow storm
 
 This system will make use of digital services and modern methodologies to automate and simplify parts of the check-in process
 to help the municipality prioritize its call/check-in list and response plan. Additionally, the system will validate contact
@@ -47,7 +47,7 @@ If you are looking to help, we recommend that you review the issues listed to id
 This project will make exclusive use of open-source software, packages, and contributions. The application is built with the following
 technologies:
 
-- Javascript (ES6)
+- [Javascript (ES6)](https://www.javascript.com/)
 - [Node.js](https://nodejs.org/en/)
 - [Express.js](https://expressjs.com/)
 - [Sequelize](https://sequelize.org/v3/)
