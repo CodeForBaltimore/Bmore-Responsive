@@ -7,10 +7,9 @@ nav:
     - 'Slow Start - Advanced Config': 'SlowStart.md'
     - 'Users Guide': 'HowToUse.md'
   - 'For Developers':
-    - 'Developer Overview': 'DevIntro.md'
-    - 'Best Practices': 'Best_Practices.md'
+    - 'Solution Overview': 'DevIntro.md'
   - 'For Everyone':
-    - 'About Bmore Responsive': 'about.md'
+    - 'How to Contribute': 'HowToContribute.md'
     - 'Code of Conduct': 'Code_of_Conduct.md'
 
 theme:
