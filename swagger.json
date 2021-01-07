@@ -1478,6 +1478,27 @@
                       "type": "string",
                       "example": "Primary Contact"
                     }
+                  },
+                  "contactIds": {
+                    "type": "array",
+                    "description": "A list of contact IDs to email",
+                    "items": {
+                      "type": "string",
+                      "example": "ba262fa3-38d9-4c88-b49b-ab306349124a"
+                    }
+                  },
+                  "entityIds": {
+                    "type": "array",
+                    "description": "A list of entity (facility) IDs, the associated contacts will receive emails.",
+                    "items": {
+                      "type": "string",
+                      "example": "ba262fa3-38d9-4c88-b49b-ab306349124a"
+                    }
+                  },
+                  "entityType": {
+                    "type": "string",
+                    "description": "A list of entity (facility) types, the associated contacts will receive emails.",
+                    "example": "Assisted Living Facility"
                   }
                 }
               }
@@ -1584,7 +1605,11 @@
                     "results": {
                       "type": "object",
                       "properties": {
-                        "total": {
+                        "totalContacts": {
+                          "type": "number",
+                          "example": 1
+                        },
+                        "totalEntities": {
                           "type": "number",
                           "example": 1
                         },
