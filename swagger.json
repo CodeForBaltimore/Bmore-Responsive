@@ -3,12 +3,12 @@
   "servers": [
     {
       "description": "localhost",
-      "url": "http://localhost:3000"
+      "url": "http://localhost:3000/"
     }
   ],
   "info": {
     "description": "An emergency response and contact management API.",
-    "version": "1.3.3",
+    "version": "1.3.4",
     "title": "Bmore Responsive",
     "contact": {
       "email": "hello@codeforbaltimore.org"
@@ -513,7 +513,7 @@
           "userRole"
         ],
         "summary": "deletes a single system user role",
-        "description": "By sending a valid payload you can delete a user role.",
+        "description": "By sending a valid payload you can delete a user role. Note that this is not an idempotent operation. You can't delete the same role twice. To create a role use POST /userRole.",
         "parameters": [
           {
             "in": "header",
@@ -539,11 +539,11 @@
                 "properties": {
                   "role": {
                     "type": "string",
-                    "example": "test"
+                    "example": "user"
                   },
                   "path": {
                     "type": "string",
-                    "example": "/test"
+                    "example": "/entity"
                   },
                   "method": {
                     "type": "string",
@@ -556,13 +556,16 @@
         },
         "responses": {
           "200": {
-            "description": "policy deleted"
+            "description": "Policy deleted"
           },
+	  "400": {
+            "description": "Request does not inclue required parameters"
+	  },
           "401": {
             "description": "Unauthorized"
           },
           "422": {
-            "description": "Invalid input"
+            "description": "All fields are present but they contain values which are inconsistent with the current casbin policy"
           },
           "500": {
             "description": "Server error"

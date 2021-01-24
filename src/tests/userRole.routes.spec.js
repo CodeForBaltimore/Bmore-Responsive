@@ -55,7 +55,7 @@ describe('User roles positive tests', function() {
       .expect(200)
       .end((err, res) => {
         if (err) return done(err)
-        expect(res.text).to.equal('policy deleted')
+        expect(res.text).to.equal('Policy deleted')
         done()
       })
   })
@@ -82,7 +82,7 @@ describe('User roles positive tests', function() {
       .expect(400)
       .end((err, res) => {
         if (err) return done(err)
-        expect(res.text).to.equal('Bad Request')
+        expect(res.text).to.equal('Request does not inclue required parameters')
         done()
       })
   })

@@ -82,12 +82,14 @@ router.post('/delete', async (req, res) => {
       removed = await e.removePolicy(...p)
 
       if (removed) {
-        response.setMessage('policy deleted')
+        response.setMessage('Policy deleted')
       } else {
-        response.setCode(400)
+	response.setCode(422)
+        response.setMessage('Request inconsistent with existing casbin policy')
       }
     } else {
       response.setCode(400)
+      response.setMessage('Request does not inclue required parameters')
     }
   } catch (e) {
     console.error(e)
