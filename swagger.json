@@ -147,12 +147,12 @@
                   "email": {
                     "type": "string",
                     "format": "email",
-                    "example": "homer.simpson@sfpp.com"
+                    "example": "homer2.simpson@sfpp.com"
                   },
                   "password": {
                     "type": "string",
                     "format": "password",
-                    "example": "donuts"
+                    "example": "donuts123@A"
                   },
                   "roles": {
                     "type": "array",
