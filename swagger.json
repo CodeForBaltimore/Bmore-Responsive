@@ -3,12 +3,12 @@
   "servers": [
     {
       "description": "localhost",
-      "url": "http://localhost:3000/"
+      "url": "http://localhost:3001"
     }
   ],
   "info": {
     "description": "An emergency response and contact management API.",
-    "version": "1.3.4",
+    "version": "1.3.5",
     "title": "Bmore Responsive",
     "contact": {
       "email": "hello@codeforbaltimore.org"
@@ -1444,33 +1444,10 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "relationshipTitle": {
-                    "type": "array",
-                    "items": {
-                      "type": "string",
-                      "example": "Primary Contact"
-                    }
-                  },
-                  "contactIds": {
-                    "type": "array",
-                    "description": "A list of contact IDs to email",
-                    "items": {
-                      "type": "string",
-                      "example": "ba262fa3-38d9-4c88-b49b-ab306349124a"
-                    }
-                  },
-                  "entityIds": {
-                    "type": "array",
-                    "description": "A list of entity (facility) IDs, the associated contacts will receive emails.",
-                    "items": {
-                      "type": "string",
-                      "example": "ba262fa3-38d9-4c88-b49b-ab306349124a"
-                    }
-                  },
                   "entityType": {
                     "type": "string",
                     "description": "A list of entity (facility) types, the associated contacts will receive emails.",
-                    "example": "Assisted Living Facility"
+                    "example": "Test"
                   }
                 }
               }
