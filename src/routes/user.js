@@ -141,29 +141,37 @@ router.get('/:email', utils.authMiddleware, async (req, res) => {
 router.post('/', utils.authMiddleware, async (req, res) => {
   const response = new utils.Response()
   try {
-    if (validator.isEmail(req.body.email) && utils.validatePassword(req.body.password)) {
-      const { email, password, roles } = req.body
-      const user = await req.context.models.User.create({ email: email.toLowerCase(), password })
+    if (validator.isEmail(req.body.email)) {
+      if (utils.validatePassword(req.body.password)) {
+        const { email, password, roles } = req.body
+        const user = await req.context.models.User.create({ email: email.toLowerCase(), password })
 
-      if (roles !== undefined) {
-        const e = await utils.loadCasbin()
-        for (const role of roles) {
-          await e.addRoleForUser(email.toLowerCase(), role)
-          // await req.context.models.UserRole.create({
-          //   ptype: 'g',
-          //   v0: email.toLowerCase(),
-          //   v1: role
-          // })
-        }
+        if (roles !== undefined) {
+          const e = await utils.loadCasbin()
+          for (const role of roles) {
+            await e.addRoleForUser(email.toLowerCase(), role)
+          }
+        }        
+        response.setMessage(user.email + ' created')
+
+      }else {
+        response.setCode(400)
+        response.setMessage("Password invalid. Must be at least 8 characters long and contain at least 1 of the following: uppercase letter, lowercase letter, special character, and decimal digit.")
       }
-			
-      response.setMessage(user.email + ' created')
     } else {
       response.setCode(400)
+      response.setMessage("Email not in valid format.")
     }
   } catch (e) {
-    console.error(e)
-    response.setCode(500)
+    if (e.name === "SequelizeUniqueConstraintError"){
+      console.error(e)    
+      response.setCode(500)
+      response.setMessage("Email already in dataset and cannot be created.")
+    }else{      
+      console.error(e)    
+      response.setCode(500)
+      response.setMessage(e.name + ': ' + e.detail)
+    }
   }
 
   return res.status(response.getCode()).send(response.getMessage())

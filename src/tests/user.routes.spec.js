@@ -179,7 +179,7 @@ describe('User tests', function() {
       .expect(400)
       .end((err, res) => {
         if (err) return done(err)
-        expect(res.text).to.equal('Bad Request')
+        expect(res.text).to.equal('Email not in valid format.')
         done()
       })
   })

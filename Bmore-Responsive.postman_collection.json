@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "2d7f836e-147c-4ffb-b786-c88db9b17836",
+		"_postman_id": "6438a0c3-53a4-473d-9797-3b095f0f22d1",
 		"name": "Bmore-Responsive",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -185,7 +185,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"email\": \"swans.ron@meparks.com\",\n  \"password\": \"superRocks!\",\n  \"roles\": \n    [\n    \"user\"\n    ],\n  \"displayName\": \"Swans Ron\",\n  \"phone\": \"1234567890\"\n}",
+							"raw": "{\n  \"email\": \"swanson.ron@meparks.com\",\n  \"password\": \"ItsNotAllSimpsons1!\",\n  \"roles\": \n    [\n    \"user\"\n    ],\n  \"displayName\": \"Swans Ron\",\n  \"phone\": \"1234567890\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
