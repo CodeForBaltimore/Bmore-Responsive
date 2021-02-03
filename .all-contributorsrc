@@ -180,6 +180,17 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "jameswgoddard",
+      "name": "Jim Goddard",
+      "avatar_url": "https://avatars.githubusercontent.com/u/44912384",
+      "profile": "https://github.com/jameswgoddard",
+      "contributions": [
+        "code",
+        "test",
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
