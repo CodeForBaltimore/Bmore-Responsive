@@ -1,7 +1,8 @@
 [![Build Status](https://travis-ci.org/CodeForBaltimore/Bmore-Responsive.svg?branch=master)](https://travis-ci.org/CodeForBaltimore/Bmore-Responsive) [![codecov](https://codecov.io/gh/CodeForBaltimore/Bmore-Responsive/branch/master/graph/badge.svg)](https://codecov.io/gh/CodeForBaltimore/Bmore-Responsive) [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/CodeForBaltimore/Bmore-Responsive.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/CodeForBaltimore/Bmore-Responsive/context:javascript) [![Known Vulnerabilities](https://snyk.io/test/github/CodeForBaltimore/Bmore-Responsive/badge.svg)](https://snyk.io/test/github/CodeForBaltimore/Bmore-Responsive)
 
 # Bmore Responsive
-A simple, flexible API to support emergency response coordination.  Sample use cases include:
+
+A simple, flexible API to support emergency response coordination. Sample use cases include:
 
 - keeping track of local nursing home status and needs during a global pandemic
 - identifying hospitals lacking power during a natural disaster
@@ -18,10 +19,12 @@ Bmore-Responsive provides the following primary features via a secure REST API:
 ## Getting Started
 
 For information on how to get started using this product visit our documentation Wiki at https://codeforbaltimore.github.io/Bmore-Responsive/
+
 - [Quick Start](https://codeforbaltimore.github.io/Bmore-Responsive/QuickStart/)
 - [Slow Start](https://codeforbaltimore.github.io/Bmore-Responsive/SlowStart/)
 
 # Sources and Links
+
 We are also building a front-end application called [Healthcare Rollcall](https://github.com/CodeForBaltimore/Healthcare-Rollcall) to interact with this backend API. To view that project, or to contribute to it, please visit the repo here: https://github.com/CodeForBaltimore/Healthcare-Rollcall
 
 - Dockerhub: https://hub.docker.com/r/codeforbaltimore/bmore-responsive
@@ -56,11 +59,13 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/mpiroc"><img src="https://avatars2.githubusercontent.com/u/1623344?v=4" width="100px;" alt=""/><br /><sub><b>Matthew Pirocchi</b></sub></a><br /><a href="#infra-mpiroc" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
     <td align="center"><a href="https://bellese.io/"><img src="https://avatars3.githubusercontent.com/u/61873300?v=4" width="100px;" alt=""/><br /><sub><b>Michael Schechter</b></sub></a><br /><a href="https://github.com/CodeForBaltimore/Bmore-Responsive/commits?author=mschechter-bellese" title="Code">💻</a></td>
     <td align="center"><a href="http://ianjadams.com"><img src="https://avatars1.githubusercontent.com/u/7966226?v=4" width="100px;" alt=""/><br /><sub><b>Ian Adams</b></sub></a><br /><a href="https://github.com/CodeForBaltimore/Bmore-Responsive/commits?author=ijadams" title="Code">💻</a></td>
+    <td align="center"><a href="https://www.joshglazer.com"><img src="https://avatars1.githubusercontent.com/u/5789311?v=4" width="100px;" alt=""/><br /><sub><b>Josh Glazer</b></sub></a><br /><a href="https://github.com/CodeForBaltimore/Bmore-Responsive/commits?author=joshglazer" title="Code">💻</a></td>
   </tr>
 </table>
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!

@@ -2,7 +2,7 @@ import email from '../email'
 import models from '../models'
 import utils from '../utils'
 import validator from 'validator'
-import { Router } from 'express'
+import {Router} from 'express'
 
 const router = new Router()
 router.use(utils.authMiddleware)
@@ -33,7 +33,7 @@ router.get('/', async (req, res) => {
       }
     }
 
-    const contacts = await models.Contact.findAll({ where })
+    const contacts = await models.Contact.findAll({where})
 
     // Temp fix for JSON types and Sequelize.
     let results = []
@@ -103,7 +103,7 @@ router.post('/', async (req, res) => {
   const response = new utils.Response()
   try {
     if (req.body.name !== undefined && req.body.name !== '') {
-      const { name, phone, email, UserId, entities, attributes } = req.body
+      const {name, phone, email, UserId, entities, attributes} = req.body
 
       // Validating emails 
       if (email) {
@@ -115,7 +115,7 @@ router.post('/', async (req, res) => {
         }
       }
 
-      const contact = await models.Contact.create({ name, email, phone, UserId, attributes })
+      const contact = await models.Contact.create({name, email, phone, UserId, attributes})
       let ec
 
       if (entities) {
@@ -154,32 +154,57 @@ router.post('/send', async (req, res) => {
   try {
     /** @todo allow for passing entity and contact arrays */
     const emails = []
-    const { entityIds, contactIds, relationshipTitle } = req.body
+    const {entityIds, contactIds, relationshipTitle, entityType} = req.body
 
-    if (entityIds === undefined && contactIds === undefined) {
-      const whereClause = (relationshipTitle !== undefined) ? { where: { relationshipTitle } } : {}
-      const associations = await models.EntityContact.findAll(whereClause)
+    const whereClause = {
+      include: [{
+        model: models.Entity,
+        as: 'entities',
+        where: {},
+        required: true,
+        through: {
+          model: models.EntityContact,
+          as: 'entityContacts',
+        }
+      }]
+    }
 
-      if (associations.length < 1) {
-        response.setCode(400)
-        response.setMessage('No contacts to email')
-        return res.status(response.getCode()).send(response.getMessage())
-      }
+    if (entityIds) {
+      whereClause.include[0].where.id = entityIds
+    }
 
-      for (const association of associations) {
-        const contact = await models.Contact.findById(association.contactId)
+    if (contactIds) {
+      whereClause.where = {id: contactIds}
+    }
 
+    if (relationshipTitle) {
+      whereClause.include[0].through.where = {relationshipTitle: relationshipTitle}
+    }
+
+    if (entityType) {
+      whereClause.include[0].where.type = entityType
+    }
+
+    const contacts = await models.Contact.findAll(whereClause)
+
+    if (contacts.length < 1) {
+      response.setCode(400)
+      response.setMessage('No contacts to email')
+      return res.status(response.getCode()).send(response.getMessage())
+    }
+
+    for (const contact of contacts) {
+      for (const entity of contact.entities) {
         if (contact.email !== null) {
-          const entity = await models.Entity.findById(association.entityId)
           // short-lived temporary token that only lasts one hour
           const temporaryToken = await utils.getToken(contact.id, contact.email[0].address, 'contact')
-
           emails.push({
             email: contact.email[0].address,
             name: contact.name,
             entityName: entity.name,
-            entityId: association.entityId,
-            relationshipTitle: association.relationshipTitle,
+            entityId: entity.id,
+            entityType: entity.type,
+            relationshipTitle: entity.entityContacts.dataValues.relationshipTitle,
             token: temporaryToken
           })
         }
@@ -187,14 +212,78 @@ router.post('/send', async (req, res) => {
     }
 
     emails.forEach(async (e) => {
-      email.sendContactCheckInEmail(e)
+      email.sendContactCheckInEmail(e, req.headers.origin)
     })
 
-    response.setMessage('Contacts emailed')
+    const uniqueEntities = [...new Set(emails.map(email => email.entityId))]
+
+
+    response.setMessage({
+      results: {
+        message: 'Contacts emailed',
+        totalContacts: emails.length,
+        totalEntities: uniqueEntities.length,
+      }
+    })
   } catch (e) {
     console.error(e)
     response.setCode(500)
   }
+
+  return res.status(response.getCode()).send(response.getMessage())
+})
+
+
+router.post('/send/:type/:id', async (req, res) => {
+  const response = new utils.Response()
+
+  try {
+    let entity
+
+    if (req.params.type.toLowerCase() === 'entity') {
+      entity = await models.Entity.findById(req.params.id)
+    } else if (req.params.type.toLowerCase() === 'contact') {
+      entity = await models.Contact.findOne({
+        where: {
+          id: req.params.id
+        }
+      })
+    }
+
+    if (entity.email !== null) {
+      const primary = entity.email.filter(e => e.isPrimary === 'true').length ? entity.email.filter(e => e.isPrimary === 'true')[0] : entity.email[0]
+      // short-lived temporary token that only lasts one hour
+      const temporaryToken = await utils.getToken(req.params.id, primary.address, 'Entity')
+
+      const e = {
+        email: primary.address,
+        name: entity.name,
+        entityName: entity.name,
+        entityId: entity.id,
+        token: temporaryToken
+      }
+      email.sendContactCheckInEmail(e, req.headers.origin).then(() => {
+        response.setMessage(`${entity.name} emailed sent.`)
+        response.setCode(200)
+      }, err => {
+        response.setMessage('There was an error: ' + err)
+        response.setCode(500)
+      })
+    } else {
+      response.setMessage('Email Address not found.')
+      response.setCode(404)
+    }
+
+    response.setMessage({
+      results: {
+        message: `${entity.name} emailed.`,
+      }
+    })
+  } catch (e) {
+    console.error(e)
+    response.setCode(500)
+  }
+
 
   return res.status(response.getCode()).send(response.getMessage())
 })
@@ -204,7 +293,7 @@ router.put('/', async (req, res) => {
   const response = new utils.Response()
   try {
     if (validator.isUUID(req.body.id)) {
-      const { id, name, phone, email, UserId, entities, attributes } = req.body
+      const {id, name, phone, email, UserId, entities, attributes} = req.body
 
       const contact = await models.Contact.findOne({
         where: {
@@ -298,7 +387,7 @@ router.post('/link/:contact_id', async (req, res) => {
         }
       })
 
-      let i=0
+      let i = 0
       for (const entity of req.body.entities) {
         const entityToLink = await models.Entity.findOne({
           where: {
@@ -311,11 +400,11 @@ router.post('/link/:contact_id', async (req, res) => {
             entityId: entityToLink.id,
             contactId: contact.id,
           }
-  
+
           if (entity.title) {
             ec.relationshipTitle = contact.title
           }
-  
+
           await models.EntityContact.createIfNew(ec)
           i++
         }
@@ -349,7 +438,7 @@ router.post('/unlink/:contact_id', async (req, res) => {
         }
       })
 
-      let i=0
+      let i = 0
       for (const entity of req.body.entities) {
         const entityToUnLink = await models.Entity.findOne({
           where: {
@@ -365,7 +454,7 @@ router.post('/unlink/:contact_id', async (req, res) => {
               contactId: contact.id
             }
           })
-  
+
           await ec.destroy()
           i++
         }

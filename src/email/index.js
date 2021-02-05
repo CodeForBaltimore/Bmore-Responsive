@@ -36,7 +36,7 @@ const sendMail = async (to, subject, html, text) => {
  * Send a forgot password email.
  * @param {string} userEmail email address of the user we're sending to
  * @param {string} resetPasswordToken temporary token for the reset password link
- * 
+ *
  * @returns {Boolean}
  */
 const sendForgotPassword = async (userEmail, resetPasswordToken) => {
@@ -45,8 +45,8 @@ const sendForgotPassword = async (userEmail, resetPasswordToken) => {
     await sendMail(
       userEmail,
       'Password Reset - Healthcare Roll Call',
-      nunjucks.render('forgot_password_html.njk', { emailResetLink }),
-      nunjucks.render('forgot_password_text.njk', { emailResetLink })
+      nunjucks.render('forgot_password_html.njk', {emailResetLink}),
+      nunjucks.render('forgot_password_text.njk', {emailResetLink})
     )
     return true
   } catch (e) {
@@ -55,16 +55,18 @@ const sendForgotPassword = async (userEmail, resetPasswordToken) => {
   }
 }
 
-const sendContactCheckInEmail = async (info) => {
+const sendContactCheckInEmail = async (info, origin) => {
+  const url = origin ? origin : process.env.VUE_APP_URL
   try {
-    const entityLink = `${process.env.URL}/checkin/${info.entityId}?token=${info.token}`
-    const emailTitle = `${info.entityName} Check In`
+    const entityLink = `${url}/checkin/${info.entityId}?token=${info.token}`
+    const emailTitle = `${info.entityName} Healthcare Rollcall Check In`
     const emailContents = `Hello ${info.name}! It is time to update the status of ${info.entityName}. Please click the link below to check in.`
+    const template = (info.entityType === 'Assisted Living Facility') ? 'assisted_living_checkin' : 'contact_check_in'
     await sendMail(
       info.email,
       emailTitle,
-      nunjucks.render('contact_check_in_html.njk', { emailTitle, emailContents, entityLink }),
-      nunjucks.render('contact_check_in_text.njk', { emailTitle, emailContents, entityLink })
+      nunjucks.render(`${template}_html.njk`, {emailTitle, emailContents, entityLink}),
+      nunjucks.render(`${template}_text.njk`, {emailTitle, emailContents, entityLink})
     )
 
     return true
@@ -73,4 +75,4 @@ const sendContactCheckInEmail = async (info) => {
   }
 }
 
-export default { sendForgotPassword, sendContactCheckInEmail }
+export default {sendForgotPassword, sendContactCheckInEmail, sendMail}

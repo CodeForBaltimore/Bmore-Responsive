@@ -133,3 +133,6 @@ docs/
 civic.json
 codecov.yml
 publiccode.yml
+
+.git
+.github
