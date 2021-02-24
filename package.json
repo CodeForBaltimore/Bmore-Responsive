@@ -45,7 +45,7 @@
     "express-rate-limit": "5.2.3",
     "express-request-id": "1.4.1",
     "helmet": "3.23.3",
-    "json2csv": "^5.0.5",
+    "json2csv": "^5.0.6",
     "jsonwebtoken": "8.5.1",
     "lodash": "^4.17.20",
     "mocha": "8.2.1",
