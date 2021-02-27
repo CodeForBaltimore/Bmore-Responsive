@@ -51,9 +51,9 @@ const entityContact = (sequelize, DataTypes) => {
 
     // Grant perms on checkins
     const contact = await models.Contact.findById(ec.contactId)
-    const e = await utils.loadCasbin()
 
     if (typeof contact.email !== 'undefined' && contact.email.length > 0) {
+      const e = await utils.loadCasbin()
       for (const email of contact.email) {
         const p = [email.address, `/entity/${ec.entityId}`, '(GET)|(POST)']
         await e.addPolicy(...p)
