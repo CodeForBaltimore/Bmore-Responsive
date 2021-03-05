@@ -3912,7 +3912,7 @@
         },
         "responses": {
           "200": {
-            "description": "The data corresponding to the created question.",
+            "description": "The data corresponding to the created questionnaire.",
             "content": {
               "application/json": {
                 "schema": {
@@ -4169,6 +4169,82 @@
               "application/json": {
                 "example": {
                   "message": "The question 'Are you having a cow?' is in use",
+                  "statusCode": 409
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/check-ins": {
+      "post": {
+        "tags": [
+          "check-ins",
+          "administration",
+          "unimplemented"
+        ],
+        "summary": "Generates a check-in response to a questionnare.",
+        "description": "Creates a check-in response in the application.",
+        "requestBody": {
+          "description": "The check-in information to store.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CheckInData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The data corresponding to the saved check-in.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CheckInViewData"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid content provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "details": [
+                    {
+                      "name": "questionnaireVersion",
+                      "value": "Content is not a valid number"
+                    }
+                  ],
+                  "message": "Request invalid",
+                  "statusCode": 400
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "409": {
+            "description": "The resource already exists.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "A check-ing for the questionnaire 'Check-in questions for 2020 event' already exists",
                   "statusCode": 409
                 },
                 "schema": {
@@ -5036,24 +5112,39 @@
       "EmailSpecification": {
         "type": "object",
         "description": "Defines the specification for sending an e-mail.",
-        "required": [
-          "template"
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/EmailTemplateId"
+          }
         ],
         "properties": {
-          "template": {
-            "$ref": "#/components/schemas/EmailTemplateId"
+          "entities": {
+            "type": "array",
+            "maxLength": 32,
+            "items": {
+              "$ref": "#/components/schemas/EntityId"
+            }
           },
-          "entity": {
-            "$ref": "#/components/schemas/EntityId"
+          "contacts": {
+            "type": "array",
+            "maxLength": 32,
+            "items": {
+              "$ref": "#/components/schemas/ContactId"
+            }
           },
-          "contact": {
-            "$ref": "#/components/schemas/ContactId"
+          "entityTypes": {
+            "type": "array",
+            "maxLength": 32,
+            "items": {
+              "$ref": "#/components/schemas/TypeReferenceId"
+            }
           },
-          "entityType": {
-            "$ref": "#/components/schemas/TypeReferenceId"
-          },
-          "associationType": {
-            "$ref": "#/components/schemas/TypeReferenceId"
+          "associationTypes": {
+            "type": "array",
+            "maxLength": 32,
+            "items": {
+              "$ref": "#/components/schemas/TypeReferenceId"
+            }
           }
         }
       },
@@ -5382,6 +5473,14 @@
             "items": {
               "$ref": "#/components/schemas/QuestionIdData"
             }
+          },
+          "associatedEvents": {
+            "type": "array",
+            "maxLength": 32,
+            "uniqueItems": true,
+            "items": {
+              "$ref": "#/components/schemas/EventId"
+            }
           }
         }
       },
@@ -5445,6 +5544,121 @@
             "readOnly": true,
             "minimum": 1,
             "example": 3
+          }
+        }
+      },
+      "CheckInIdData": {
+        "type": "object",
+        "description": "The identifier of a check-in.",
+        "required": [
+          "checkInId"
+        ],
+        "properties": {
+          "checkInId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The system-generated identifier of the questionnaire",
+            "pattern": "[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          }
+        }
+      },
+      "QuestionResponse": {
+        "type": "object",
+        "description": "The response to a question",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/QuestionIdData"
+          }
+        ],
+        "required": [
+          "responses"
+        ],
+        "properties": {
+          "additionalValue": {
+            "type": "boolean",
+            "description": "Indicates whether the answer provided was an additional (user-provided) value not in the original options.",
+            "default": false,
+            "example": true
+          },
+          "responses": {
+            "type": "array",
+            "maximum": 16,
+            "minimum": 1,
+            "example": [
+              "Things are going..."
+            ],
+            "items": {
+              "type": "string",
+              "maxLength": 1024,
+              "minLength": 1
+            }
+          }
+        }
+      },
+      "CheckInData": {
+        "type": "object",
+        "description": "Defines the content to use when creating a check-in.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/QuestionnaireIdData"
+          },
+          {
+            "$ref": "#/components/schemas/EntityId"
+          }
+        ],
+        "required": [
+          "questionnaireVersion",
+          "contact"
+        ],
+        "properties": {
+          "questionnaireVersion": {
+            "type": "integer",
+            "description": "The version of the questionnaire.",
+            "minimum": 1,
+            "example": 3
+          },
+          "events": {
+            "type": "array",
+            "maxLength": 32,
+            "uniqueItems": true,
+            "items": {
+              "$ref": "#/components/schemas/EventId"
+            }
+          },
+          "answeredQuestions": {
+            "type": "array",
+            "minLength": 1,
+            "maxLength": 32,
+            "uniqueItems": true,
+            "items": {
+              "$ref": "#/components/schemas/QuestionResponse"
+            }
+          }
+        }
+      },
+      "CheckInViewData": {
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/CheckInIdData"
+          },
+          {
+            "$ref": "#/components/schemas/AuditData"
+          },
+          {
+            "$ref": "#/components/schemas/CheckInData"
+          }
+        ],
+        "required": [
+          "creatorEmail"
+        ],
+        "properties": {
+          "creatorEmail": {
+            "type": "string",
+            "format": "email",
+            "description": "The e-mail address of the user who performed the check-in.",
+            "example": "ned.flanders@example.com"
           }
         }
       }
