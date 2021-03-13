@@ -42,7 +42,7 @@
     "crypto": "1.0.1",
     "dotenv": "8.2.0",
     "express": "4.17.1",
-    "express-rate-limit": "5.2.3",
+    "express-rate-limit": "5.2.6",
     "express-request-id": "1.4.1",
     "helmet": "3.23.3",
     "json2csv": "^5.0.6",
