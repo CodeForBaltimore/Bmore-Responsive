@@ -50,7 +50,7 @@
     "lodash": "^4.17.21",
     "mocha": "8.2.1",
     "morgan": "1.10.0",
-    "nodemailer": "^6.4.17",
+    "nodemailer": "^6.4.18",
     "nodemon": "2.0.7",
     "nunjucks": "^3.2.3",
     "pg": "7.18.2",
