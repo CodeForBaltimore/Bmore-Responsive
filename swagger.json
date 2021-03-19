@@ -1080,6 +1080,37 @@
         }
       }
     },
+    "/facilitytype": {
+      "get": {
+        "tags": ["facilityType"],
+        "summary": "returns all facility types",
+        "description": "Return all of the facility types defined for this system.",
+        "parameters": [{
+          "in": "header",
+          "name": "token",
+          "required": true,
+          "schema": {
+            "type" : "string",
+            "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1ODA3NTM0MDUsImV4cCI6MTU4MDgzOTgwNX0.Q6W7Vo6By35yjZBeLKkk96s8LyqIE2G39AG1H3LRD9M"
+          }
+        }],
+        "responses": {
+          "200": {
+            "description": "list of facility types",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/contact": {
       "post": {
         "security": [

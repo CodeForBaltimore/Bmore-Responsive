@@ -1,16 +1,16 @@
 const uuid = require('uuid4');
-const randomWords = require('random-words');
-const contacts = require('../data/contact.json');
-const entities = require('../data/entity.json')
+const faker = require('faker');
+
+import models from '../../src/models'
 
 module.exports = {
   up: async queryInterface => {
     let entityContacts = []
     let entityContact
-    let entitiesMutable = entities
+    let entitiesMutable = await models.Entity.findAll()
     let numberOfLinks
     let entityToLinkIndex
-    for (const contact of contacts) {
+    for (const contact of await models.Contact.findAll()) {
       // links between 1 and 4
       numberOfLinks = Math.floor(Math.random() * 4 + 1)
       for (let linkIndex = 0; linkIndex <= numberOfLinks; linkIndex++) {
@@ -20,7 +20,7 @@ module.exports = {
             id: uuid(),
             entityId: entitiesMutable[entityToLinkIndex].id,
             contactId: contact.id,
-            relationshipTitle: randomWords(),
+            relationshipTitle: faker.name.title(),
             createdAt: new Date(),
             updatedAt: new Date(),
           }
