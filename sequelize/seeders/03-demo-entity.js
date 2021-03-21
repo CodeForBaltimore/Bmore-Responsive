@@ -1,64 +1,32 @@
 const uuid = require('uuid4');
 const randomWords = require('random-words');
-const entities = require('../data/entity.json');
+const faker = require('faker');
+import _ from 'lodash'
+import { FACILITY_TYPES } from '../../src/constants/facilities.const'
 
 module.exports = {
 	up: async queryInterface => {
-
-		for (const element of entities) {
-			const id = uuid();
-
-			element.id = id;
-			element.createdAt = new Date();
-			element.updatedAt = new Date();
-			element.email = JSON.stringify(element.email);
-			element.phone = JSON.stringify(element.phone);
-			element.address = JSON.stringify(element.address);
-		}
+		let entities = []
+		const numberOfEntities = 25
 		
-		const entityNames = [
-			"Springfield Bowlorama",
-			"Springfield Nuclear Power Plant",
-			"Androids Dungeon",
-			"Kwik-E-Mart",
-			"Krusty Burger",
-			"Duff Brewery",
-			"Aztech Theater",
-			"The Copy Jalopy",
-			"99¢ Furniture Store",
-			"Little Lisa Recycling Plant",
-			"Acne Grease and Shovel",
-			"Buzz Cola",
-			"Classy Jos",
-			"Compu-Global-Hyper-Mega-Net",
-			"Springfield Gas Company",
-			"U-Break-It Van Rental",
-			"Uncle Homers Daycare Center",
-			"Ziffcorp",
-			"Burns Slant Drilling Co.",
-			"Springfield Gorge",
-			"Springfield Tire Yard",
-			"The Murderhorn",
-			"Nuclear Lake"
-		];
-
-		for (let name of entityNames) {
+		for (let i = 0; i < numberOfEntities; i++) {
+			const state = faker.address.stateAbbr()
 			entities.push({
 				id: uuid(),
 				createdAt: new Date(),
 				updatedAt: new Date(),
-				name: name,
-				type: "Test",
+				name: faker.company.companyName(),
+				type: _.sample(FACILITY_TYPES),
 				address: JSON.stringify({
 				  street: [
-					`123 ${randomWords()} St.`
+					faker.address.streetAddress()
 				  ],
-				  city: "Baltimore",
-				  state: "MD",
-				  zip: "12345",
+				  city: faker.address.city(),
+				  state: state,
+				  zip: faker.address.zipCodeByState(state),
 				  latlng: [
-					39.296399,
-					-76.607842
+					faker.address.latitude(),
+					faker.address.longitude(),
 				  ]
 				}),
 				description: randomWords(5)
