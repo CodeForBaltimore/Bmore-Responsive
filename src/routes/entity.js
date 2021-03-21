@@ -85,7 +85,7 @@ router.post('/', async (req, res) => {
 
       const entity = await req.context.models.Entity.create({ name, type, address, email, phone, checkIn })
       if (contacts) {
-        for(const contact of contacts) {
+        for (const contact of contacts) {
           const ec = {
             entityId: entity.id,
             contactId: contact.id
@@ -174,7 +174,7 @@ router.put('/', async (req, res) => {
       await entity.save()
 
       if (contacts) {
-        for(const contact of contacts) {
+        for (const contact of contacts) {
           const ec = {
             entityId: entity.id,
             contactId: contact.id
@@ -190,7 +190,7 @@ router.put('/', async (req, res) => {
     } else {
       response.setCode(400)
     }
-	
+
   } catch (e) {
     console.error(e)
     response.setCode(500)
@@ -211,7 +211,7 @@ router.delete('/:entity_id', async (req, res) => {
       })
       await entity.destroy()
 
-			
+
       response.setMessage(req.params.entity_id + ' deleted')
     } else {
       response.setCode(400)
@@ -234,7 +234,7 @@ router.post('/link/:entity_id', async (req, res) => {
           id: req.params.entity_id
         }
       })
-      for(const contact of req.body.contacts) {
+      for (const contact of req.body.contacts) {
         const contactToLink = await req.context.models.Contact.findOne({
           where: {
             id: contact.id
@@ -253,7 +253,7 @@ router.post('/link/:entity_id', async (req, res) => {
         await req.context.models.EntityContact.createIfNew(ec)
       }
       response.setMessage(`Linking successful/already exists for entity with ID ${entity.id}`)
-			
+
     } else {
       response.setCode(400)
     }
@@ -276,7 +276,8 @@ router.post('/unlink/:entity_id', async (req, res) => {
         }
       })
 
-      for(const contact of req.body.contacts) {
+      let i = 0
+      for (const contact of req.body.contacts) {
         const contactToUnLink = await req.context.models.Contact.findOne({
           where: {
             id: contact.id
@@ -291,10 +292,18 @@ router.post('/unlink/:entity_id', async (req, res) => {
           }
         })
 
-        await ec.destroy()
+        if (ec != null) {
+          await ec.destroy()
+          i++
+        }
       }
-      response.setMessage(`Unlinking successful for entity with ID ${entity.id}`)
-			
+
+      if (i > 0) {
+        response.setMessage(`Unlinking successful for entity with ID ${entity.id}`)
+      } else {
+        response.setCode(400)
+        response.setMessage('Bad link sent')
+      }
     } else {
       response.setCode(400)
     }
