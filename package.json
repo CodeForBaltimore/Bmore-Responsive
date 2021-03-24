@@ -36,7 +36,7 @@
     "@babel/node": "7.12.17",
     "casbin": "4.7.2",
     "casbin-sequelize-adapter": "2.1.0",
-    "chai": "4.3.0",
+    "chai": "4.3.3",
     "complexity": "0.0.6",
     "cors": "2.8.5",
     "crypto": "1.0.1",
