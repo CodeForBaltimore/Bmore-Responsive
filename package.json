@@ -32,7 +32,7 @@
   },
   "homepage": "https://github.com/CodeForBaltimore/Bmore-Responsive#readme",
   "dependencies": {
-    "@babel/core": "7.12.17",
+    "@babel/core": "7.13.8",
     "@babel/node": "7.12.17",
     "casbin": "4.7.2",
     "casbin-sequelize-adapter": "2.1.0",
