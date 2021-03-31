@@ -53,7 +53,7 @@
     "nodemailer": "^6.4.18",
     "nodemon": "2.0.7",
     "nunjucks": "^3.2.3",
-    "pg": "7.18.2",
+    "pg": "^8.5.1",
     "random-words": "1.1.1",
     "sequelize": "5.22.3",
     "snyk": "^1.459.0",

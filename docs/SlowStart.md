@@ -46,3 +46,7 @@ docker-compose up -d
 ### docker-compose
 
 To use the `docker-compose.yml` file included you will first need to set [environment variables](#environment-variables). It is not recommended to use `docker-compose` for any reason other than to test a solution for a separate front-end component.
+
+## Running within Gitpod
+
+You can build and run the application utilizing Gitpod if desired. You must have a Gitpod account, you can sign up for one here if desired: [Gitpod](https://gitpod.io/). Once you have created a Gitpod account, you can simply navigate to the [Bmore Responsive Github repository](https://github.com/CodeForBaltimore/Bmore-Responsive) and you will see a Gitpod button located at the top of the repo. Clicking on that button should open a Gitpod instance with a running Postgres Database. Once the pod has started, you will be able to run the commands needed to create and seed the Database and run the application.
