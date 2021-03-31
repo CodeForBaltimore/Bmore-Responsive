@@ -2,16 +2,19 @@ image:
   file: .gitpod.Dockerfile
 
 # List the start up tasks. You can start them in parallel in multiple terminals. See https://www.gitpod.io/docs/config-start-tasks/
+# The creation of the .env file is just to help facilitate getting up and running quickly, none of these values should be used
+# in a production instance
 tasks:
   - init: npm install
-  - init: cat > .env << EOF |
-          NODE_ENV=development
-          PORT=3000
-          JWT_KEY=test123
-          DATABASE_HOST=localhost
-          DATABASE_PORT=5432
-          DATABASE_USERNAME=gitpod
-          DATABASE_NAME=postgres
-          DATABASE_SCHEMA=public
-          BYPASS_LOGIN=true
-          EOF
+  - init: |
+        cat > .env << EOF
+        NODE_ENV=development
+        PORT=3000
+        JWT_KEY=test123
+        DATABASE_HOST=localhost
+        DATABASE_PORT=5432
+        DATABASE_USERNAME=gitpod
+        DATABASE_NAME=postgres
+        DATABASE_SCHEMA=public
+        BYPASS_LOGIN=true
+        EOF
