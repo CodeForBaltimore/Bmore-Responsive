@@ -1,4 +1,6 @@
 import { UUIDV4 } from 'sequelize'
+import utils from '../utils'
+import models from '../models'
 
 const entityContact = (sequelize, DataTypes) => {
   // Defining our EntityContact object.
@@ -45,6 +47,17 @@ const entityContact = (sequelize, DataTypes) => {
     })
     if (!ecObject) {
       await EntityContact.create(ec)
+    }
+
+    // Grant perms on checkins
+    const contact = await models.Contact.findById(ec.contactId)
+
+    if (contact.email !== undefined) {
+      const e = await utils.loadCasbin()
+      for (const email of contact.email) {
+        const p = [email.address, `/entity/${ec.entityId}`, '(GET)|(POST)']
+        await e.addPolicy(...p)
+      }
     }
   }
 
