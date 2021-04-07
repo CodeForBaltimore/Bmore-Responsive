@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Users Guide - Bmore-Responsive Wiki</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Users Guide";
+    var mkdocs_page_input_path = "HowToUse.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Bmore-Responsive Wiki</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">For Users</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../QuickStart/">Quick Start - Less than 10 min</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../SlowStart/">Slow Start - Advanced Config</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">Users Guide</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#api-spec">API Spec</a></li>
+    
+
+    <li class="toctree-l3"><a href="#postman-collection">Postman Collection</a></li>
+    
+
+    <li class="toctree-l3"><a href="#authentication">Authentication</a></li>
+    
+
+    <li class="toctree-l3"><a href="#seed-and-re-seed-the-database">Seed and re-seed the database</a></li>
+    
+
+    </ul>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">For Developers</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../DevIntro/">Solution Overview</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">For Everyone</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../HowToContribute/">How to Contribute</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Code_of_Conduct/">Code of Conduct</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Bmore-Responsive Wiki</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>For Users &raquo;</li>
+        
+      
+    
+    <li>Users Guide</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h2 id="api-spec">API Spec</h2>
+<p>The Bmore Responsive API is documented via a OAS 3.0 API specification in the file <code>swagger.json</code>. This API spec lists all the endpoints, supported REST actions, and the request and response data formats. While you can open the <code>swagger.json</code> file in any text editor, there are better ways to view it in a richer format, such as:</p>
+<ul>
+<li>View the <a href="https://app.swaggerhub.com/apis/codeforbaltimore/bmoreResponsive">API Spec on Swaggerhub</a></li>
+<li>If you are running Bmore Responsive, then you can just point your browser at the root URL of your server, often <code>http://localhost:3001/</code>, you'll be redirected to <code>http://localhost:3001/api-docs/</code></li>
+</ul>
+<h2 id="postman-collection">Postman Collection</h2>
+<p>For a library of sample API calls, please refer to the Postman collection <code>Bmore-Responsive.postman_collection.json</code>. Need Postman? Click <a href="https://www.postman.com/downloads/">here</a>.</p>
+<p><TODO: Add explanation of folder structure, tests, token mgmt and dependencies, environments/variables></p>
+<h2 id="authentication">Authentication</h2>
+<p>The Bmore Responsive API provides security by limiting use of nearly all features to authenticated users. If you have NOT disabled login, you'll need to pass a <a href="https://jwt.io/">JSON Web Token (JWT)</a> with every call to a secured endpoint. Only the login (<code>/user/login</code>) and health (<code>/health</code>) endpoints are unsecured. To get a JWT, you'll need to pass a valid username and password to <code>/user/login</code>; the encoded JWT is the response body. This JWT should be passed as the <code>Authorization</code> header using the <code>Bearer</code> <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication">authentication scheme</a>. This token will expire after a short period of time. If it expires, you can get a new token by making another call to <code>user/login</code>.</p>
+<p><em>Note: If you have used the db-seed script, you'll already have a user account created that will enable you to login. This default login is username <code>homer.simpson@sfpp.com</code> and password <code>donuts</code>.</em></p>
+<p><TODO: Add subsections to describe common tasks like adding user, adding role, setting/changing access, adding entity, relating contact to entity, etc...></p>
+<h2 id="seed-and-re-seed-the-database">Seed and re-seed the database</h2>
+<p>This repo has four scripts that simplifies the creation and loading of the database. These script commands are as follows:</p>
+<ul>
+<li><code>npm run db-create</code> will create the database and run all migrations.</li>
+<li><code>npm run db-delete</code> will delete all tables and revert all migrations.</li>
+<li><code>npm run db-seed</code> will run all seeders and populate database with random, Simpsons-like data.</li>
+<li><code>npm run db-unseed</code> will delete all data in all tables and revert all seeders.</li>
+</ul>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../DevIntro/" class="btn btn-neutral float-right" title="Solution Overview">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../SlowStart/" class="btn btn-neutral" title="Slow Start - Advanced Config"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../SlowStart/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../DevIntro/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+
+</body>
+</html>

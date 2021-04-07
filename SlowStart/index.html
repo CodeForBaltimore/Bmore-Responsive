@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Slow Start - Advanced Config - Bmore-Responsive Wiki</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Slow Start - Advanced Config";
+    var mkdocs_page_input_path = "SlowStart.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Bmore-Responsive Wiki</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">For Users</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../QuickStart/">Quick Start - Less than 10 min</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">Slow Start - Advanced Config</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#slow-start">Slow Start</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#configuring-via-environment-variables">Configuring via Environment variables</a></li>
+        
+            <li><a class="toctree-l4" href="#deploying-to-aws">Deploying to AWS</a></li>
+        
+            <li><a class="toctree-l4" href="#smtp">SMTP</a></li>
+        
+            <li><a class="toctree-l4" href="#running-in-docker">Running in Docker</a></li>
+        
+            <li><a class="toctree-l4" href="#running-within-gitpod">Running within Gitpod</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../HowToUse/">Users Guide</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">For Developers</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../DevIntro/">Solution Overview</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">For Everyone</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../HowToContribute/">How to Contribute</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Code_of_Conduct/">Code of Conduct</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Bmore-Responsive Wiki</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>For Users &raquo;</li>
+        
+      
+    
+    <li>Slow Start - Advanced Config</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="slow-start">Slow Start</h1>
+<p>If you want to tweak the installation of Bmore Responsive or have a different environment, then this page will provide additional detail on how to install/configure Bmore Responsive.</p>
+<h2 id="configuring-via-environment-variables">Configuring via Environment variables</h2>
+<p>Regardless of where you are running the system, environment variables to run this application. These variables are set in the <code>.env</code> file on the root directory of Bmore Responsive.</p>
+<h3 id="environment-variables">Environment Variables</h3>
+<ul>
+<li><code>NODE_ENV</code>: The label for your environment. It can be anything you want and will allow you to differentiate multiple instances. Default: <code>development</code>.</li>
+<li><code>PORT</code>: The local port you wish to run on. Default: <code>3001</code>.</li>
+<li><code>DATABASE_HOST</code>: The database host PostgreSQL is running on, which can be specified as a (sub)domain or IP address. Default: <code>db</code> (for <code>docker-compose</code> Postgres instance).</li>
+<li><code>DATABASE_PORT</code>: The database port PostgreSQL is running on. Default: <code>5432</code>.</li>
+<li><code>DATABASE_NAME</code>: The name of the PostgreSQL database to connect to. Default: <code>postgres</code>.</li>
+<li><code>DATABASE_SCHEMA</code>: Your local database schema. Default: <code>public</code>.</li>
+<li><code>DATABASE_USERNAME</code>: The username for connecting to PostgreSQL. Default: <code>postgres</code>.</li>
+<li><code>DATABASE_PASSWORD</code>: The password for connecting to PostgreSQL.</li>
+<li><code>JWT_KEY</code>: A secret value to generate JSON Web Tokens (JWTs) locally.</li>
+<li><code>SMTP_HOST</code>: <em>optional</em> Hostname for the SMTP server used to send notification emails</li>
+<li><code>SMTP_PORT</code>: <em>optional</em> Port number for the SMTP server used to send notification emails</li>
+<li><code>SMTP_USER</code>: <em>optional</em> Username for the SMTP server used to send notification emails</li>
+<li><code>SMTP_PASSWORD</code>: <em>optional</em> Password for the SMTP server used to send notification emails</li>
+<li><code>BYPASS_LOGIN</code>: <em>optional</em> Allows you to hit the endpoints locally without having to login. If you wish to bypass the login process during local dev, set this to <code>true</code>. Default: <code>true</code>. <em>Note: at the moment, login will be bypassed if this variable simply exists in the <code>.env</code> file. Even <code>BYPASS_LOGIN = false</code> will remove the need to login. To require login, simply remove mention of this variable from this file.</em></li>
+</ul>
+<p><em>We do not recommend using the default options for PostgreSQL. The above values are provided as examples. It is more secure to create your own credentials.</em></p>
+<h2 id="deploying-to-aws">Deploying to AWS</h2>
+<p>If you want to deploy to AWS, we have included a <code>terraform</code> option. For more information on how to use this feature, please see the README in <code>/terraform</code>.</p>
+<p><TODO: Consider migrating terraform docs to be here or do some sort of INCLUDE to reuse the content></p>
+<h2 id="smtp">SMTP</h2>
+<p>To send emails with the system you will need to setup your SMTP sever and set the relevant <code>SMTP_*</code> variables. For testing we recommend using <a href="https://ethereal.email/">Ethereal</a></p>
+<h2 id="running-in-docker">Running in Docker</h2>
+<p>You can build and run the application in Docker locally by running the following commands:</p>
+<pre><code class="shell">docker-compose up -d
+</code></pre>
+
+<h3 id="docker-compose">docker-compose</h3>
+<p>To use the <code>docker-compose.yml</code> file included you will first need to set <a href="#environment-variables">environment variables</a>. It is not recommended to use <code>docker-compose</code> for any reason other than to test a solution for a separate front-end component.</p>
+<h2 id="running-within-gitpod">Running within Gitpod</h2>
+<p>You can build and run the application utilizing Gitpod if desired. You must have a Gitpod account, you can sign up for one here if desired: <a href="https://gitpod.io/">Gitpod</a>. If desired, you can also install a browser extension to make creating your "pods" easier <a href="https://www.gitpod.io/docs/browser-extension/">here</a>. Once you have created a Gitpod account and installed the extension, you can simply navigate to the <a href="https://github.com/CodeForBaltimore/Bmore-Responsive">Bmore Responsive Github repository</a> and you will see a Gitpod button located at the top of the repo. Clicking on that button should open a Gitpod instance with a running Postgres Database. Once the pod has started, you will be able to run the commands needed to create and seed the Database and run the application. If you haven't installed the extension, then you can create a workspace by prefixing any GitHub URL with gitpod.io/#. For Bmore that would look like https://gitpod.io/#github.com/CodeForBaltimore/Bmore-Responsive</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../HowToUse/" class="btn btn-neutral float-right" title="Users Guide">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../QuickStart/" class="btn btn-neutral" title="Quick Start - Less than 10 min"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../QuickStart/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../HowToUse/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+
+</body>
+</html>
