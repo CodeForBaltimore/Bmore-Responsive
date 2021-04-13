@@ -5,7 +5,10 @@ image:
 # The creation of the .env file is just to help facilitate getting up and running quickly, none of these values should be used
 # in a production instance
 tasks:
+  - init: brew install terraform terraform-docs
+  - init: pip install pre-commit
   - init: npm install
+  - init: pre-commit install
   - init: |
         cat > .env << EOF
         NODE_ENV=development
