@@ -44,6 +44,7 @@
     "express": "4.17.1",
     "express-rate-limit": "5.2.6",
     "express-request-id": "1.4.1",
+    "faker": "^5.1.0",
     "helmet": "3.23.3",
     "json2csv": "^5.0.6",
     "jsonwebtoken": "8.5.1",
