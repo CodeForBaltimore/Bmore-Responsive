@@ -5,6 +5,7 @@ import uuid from 'uuid4'
 import { Login } from '../utils/login'
 import app from '..'
 
+const VERSION = '1';
 const { expect } = chai
 const contact = {
   name: randomWords(),
@@ -36,7 +37,7 @@ describe('Contact tests', function() {
     authHeader =  'Bearer ' + token
 
     const entityResponse = await request(app)
-      .post('/entity')
+      .post(`/v${VERSION}/entity`)
       .send(entity)
       .set('Accept', 'application/json')
       .set('token', token)
@@ -48,7 +49,7 @@ describe('Contact tests', function() {
   })
   after(async function() {
     await request(app)
-      .delete(`/entity/${entity.id}`)
+      .delete(`/v${VERSION}/entity/${entity.id}`)
       .set('Accept', 'application/json')
       .set('authorization', authHeader)
       .expect('Content-Type', 'text/html; charset=utf-8')
@@ -58,7 +59,7 @@ describe('Contact tests', function() {
 
   it('should create a contact', async function() {
     const response = await request(app)
-      .post('/contact')
+      .post(`/v${VERSION}/contact`)
       .set('Accept', 'application/json')
       .set('authorization', authHeader)
       .send(contact)
@@ -69,7 +70,7 @@ describe('Contact tests', function() {
   })
   it('should get all contacts', function(done) {
     request(app)
-      .get('/contact')
+      .get(`/v${VERSION}/contact`)
       .set('Accept', 'application/json')
       .set('token', token)
       .expect('Content-Type', 'application/json; charset=utf-8')
@@ -82,7 +83,7 @@ describe('Contact tests', function() {
   })
   it('should search on all contacts by name', function(done) {
     request(app)
-      .get(`/contact?type=name&value=${contact.name}`)
+      .get(`/v${VERSION}/contact?type=name&value=${contact.name}`)
       .set('Accept', 'application/json')
       .set('token', token)
       .expect('Content-Type', 'application/json; charset=utf-8')
@@ -95,7 +96,7 @@ describe('Contact tests', function() {
   })
   it('should search on all contacts by email', function(done) {
     request(app)
-      .get(`/contact?type=email&value=${contact.email[0].address}`)
+      .get(`/v${VERSION}/contact?type=email&value=${contact.email[0].address}`)
       .set('Accept', 'application/json')
       .set('authorization', authHeader)
       .expect('Content-Type', 'application/json; charset=utf-8')
@@ -108,7 +109,7 @@ describe('Contact tests', function() {
   })
   it('should search on all contacts by phone', function(done) {
     request(app)
-      .get(`/contact?type=phone&value=${contact.phone[0].number}`)
+      .get(`/v${VERSION}/contact?type=phone&value=${contact.phone[0].number}`)
       .set('Accept', 'application/json')
       .set('authorization', authHeader)
       .expect('Content-Type', 'application/json; charset=utf-8')
@@ -121,7 +122,7 @@ describe('Contact tests', function() {
   })
   it('should get a single contact', function(done) {
     request(app)
-      .get(`/contact/${contact.id}`)
+      .get(`/v${VERSION}/contact/${contact.id}`)
       .set('Accept', 'application/json')
       .set('authorization', authHeader)
       .expect('Content-Type', 'application/json; charset=utf-8')
@@ -135,7 +136,7 @@ describe('Contact tests', function() {
   it('Sending email to entity contacts', function(done) {
     try {
       request(app)
-        .post('/contact/send')
+        .post(`/v${VERSION}/contact/send`)
         .set('Accept', 'application/json')
         .set('authorization', authHeader)
         .expect('Content-Type', 'application/json; charset=utf-8')
@@ -152,7 +153,7 @@ describe('Contact tests', function() {
   it('should not update a contact with invalid email', function(done) {
     contact.email[0].address = randomWords()
     request(app)
-      .put('/contact')
+      .put(`/v${VERSION}/contact`)
       .set('Accept', 'application/json')
       .set('authorization', authHeader)
       .send(contact)
@@ -167,7 +168,7 @@ describe('Contact tests', function() {
   it('should update a contact', function(done) {
     contact.email[0].address = `${randomWords()}@test.test`
     request(app)
-      .put('/contact')
+      .put(`/v${VERSION}/contact`)
       .set('Accept', 'application/json')
       .set('authorization', authHeader)
       .send(contact)
@@ -182,7 +183,7 @@ describe('Contact tests', function() {
   it('should add an entity to a contact', function(done) {
     const entityIds = { entities: [{ id: entity.id, title: 'test' }] }
     request(app)
-      .post(`/contact/link/${contact.id}`)
+      .post(`/v${VERSION}/contact/link/${contact.id}`)
       .set('Accept', 'application/json')
       .set('authorization', authHeader)
       .send(entityIds)
@@ -197,7 +198,7 @@ describe('Contact tests', function() {
   it('should not add an entity to a contact with invalid entity id', function(done) {
     const entityIds = { entities: [{ id: uuid() }] }
     request(app)
-      .post(`/contact/link/${contact.id}`)
+      .post(`/v${VERSION}/contact/link/${contact.id}`)
       .set('Accept', 'application/json')
       .set('authorization', authHeader)
       .send(entityIds)
@@ -212,7 +213,7 @@ describe('Contact tests', function() {
   it('should not add an entity to a contact with invalid contact id', function(done) {
     const entityIds = { entities: [{ id: uuid() }] }
     request(app)
-      .post('/contact/link/abc123')
+      .post(`/v${VERSION}/contact/link/abc123`)
       .set('Accept', 'application/json')
       .set('authorization', authHeader)
       .send(entityIds)
@@ -227,7 +228,7 @@ describe('Contact tests', function() {
   it('should not remove an entity to a contact with invalid entity id', function(done) {
     const entityIds = { entities: [{ id: uuid() }] }
     request(app)
-      .post(`/contact/unlink/${contact.id}`)
+      .post(`/v${VERSION}/contact/unlink/${contact.id}`)
       .set('Accept', 'application/json')
       .set('authorization', authHeader)
       .send(entityIds)
@@ -242,7 +243,7 @@ describe('Contact tests', function() {
   it('should unlink the entity and contact', function(done) {
     const entityIds = { entities: [{ id: entity.id }] }
     request(app)
-      .post(`/contact/unlink/${contact.id}`)
+      .post(`/v${VERSION}/contact/unlink/${contact.id}`)
       .set('Accept', 'application/json')
       .set('token', token)
       .send(entityIds)
@@ -256,7 +257,7 @@ describe('Contact tests', function() {
   })
   it('Positive Test for CSV Dump on Contact', function(done) {
     request(app)
-      .get('/csv/Contact')
+      .get(`/v${VERSION}/csv/Contact`)
       .set('Accept', 'application/json')
       .set('authorization', authHeader)
       .expect('Content-Type', 'text/csv; charset=utf-8')
@@ -269,7 +270,7 @@ describe('Contact tests', function() {
   })
   it('should delete a contact', function(done) {
     request(app)
-      .delete(`/contact/${contact.id}`)
+      .delete(`/v${VERSION}/contact/${contact.id}`)
       .set('Accept', 'application/json')
       .set('authorization', authHeader)
       .expect('Content-Type', 'text/html; charset=utf-8')
@@ -283,7 +284,7 @@ describe('Contact tests', function() {
 
   it('should not create a contact with null name', function(done) {
     request(app)
-      .post('/contact')
+      .post(`/v${VERSION}/contact`)
       .set('Accept', 'application/json')
       .set('authorization', authHeader)
       .send({ name: '' })
@@ -297,7 +298,7 @@ describe('Contact tests', function() {
   })
   it('should not create a contact with invalid email', function(done) {
     request(app)
-      .post('/contact')
+      .post(`/v${VERSION}/contact`)
       .set('Accept', 'application/json')
       .set('authorization', authHeader)
       .send({ name: randomWords(), email: [{address: randomWords()}] })
@@ -311,7 +312,7 @@ describe('Contact tests', function() {
   })
   it('should not search for contacts with bad param types', function(done) {
     request(app)
-      .get('/contact?test=test')
+      .get(`/v${VERSION}/contact?test=test`)
       .set('Accept', 'application/json')
       .set('authorization', authHeader)
       .expect('Content-Type', 'text/html; charset=utf-8')
@@ -324,7 +325,7 @@ describe('Contact tests', function() {
   })
   it('should not search for contacts with bad param values', function(done) {
     request(app)
-      .get('/contact?type=test&value=test')
+      .get(`/v${VERSION}/contact?type=test&value=test`)
       .set('Accept', 'application/json')
       .set('authorization', authHeader)
       .expect('Content-Type', 'text/html; charset=utf-8')
@@ -362,7 +363,7 @@ describe('Contact tests', function() {
   it('should not update a contact without valid UUID', function(done) {
     contact.id = randomWords()
     request(app)
-      .put('/contact')
+      .put(`/v${VERSION}/contact`)
       .set('Accept', 'application/json')
       .set('authorization', authHeader)
       .send(contact)
@@ -377,7 +378,7 @@ describe('Contact tests', function() {
   it('should not update a single contact with valid UUID', function(done) {
     contact.id = uuid()
     request(app)
-      .put('/contact')
+      .put(`/v${VERSION}/contact`)
       .set('Accept', 'application/json')
       .set('authorization', authHeader)
       .send(contact)
@@ -391,7 +392,7 @@ describe('Contact tests', function() {
   it('should not delete a contact', function(done) {
     contact.email = randomWords()
     request(app)
-      .delete(`/contact/${contact.email}`)
+      .delete(`/v${VERSION}/contact/${contact.email}`)
       .set('Accept', 'application/json')
       .set('authorization', authHeader)
       .expect('Content-Type', 'text/html; charset=utf-8')

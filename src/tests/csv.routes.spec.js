@@ -3,6 +3,7 @@ import request from 'supertest'
 import { Login } from '../utils/login'
 import app from '..'
 
+const VERSION = '1';
 describe('CSV Dump Negative Tests', function() {
   const authed = new Login()
   let token
@@ -16,7 +17,7 @@ describe('CSV Dump Negative Tests', function() {
   })
   it('Negative Test (400) for CSV Dump on Contact', function(done) {
     request(app)
-      .get('/csv/contact')
+      .get(`/v${VERSION}/csv/contact`)
       .set('Accept', 'application/json')
       .set('token', token)
       .expect('Content-Type', 'text/html; charset=utf-8')
@@ -29,7 +30,7 @@ describe('CSV Dump Negative Tests', function() {
 
   it('Negative Test (400) for CSV Dump on Entity', function(done) {
     request(app)
-      .get('/csv/entity')
+      .get(`/v${VERSION}/csv/entity`)
       .set('Accept', 'application/json')
       .set('token', token)
       .expect('Content-Type', 'text/html; charset=utf-8')
@@ -42,7 +43,7 @@ describe('CSV Dump Negative Tests', function() {
 
   it('Negative Test (400) for CSV Dump on User', function(done) {
     request(app)
-      .get('/csv/user')
+      .get(`/v${VERSION}/csv/user`)
       .set('Accept', 'application/json')
       .set('token', token)
       .expect('Content-Type', 'text/html; charset=utf-8')
@@ -55,7 +56,7 @@ describe('CSV Dump Negative Tests', function() {
 
   it('Negative Test (400) for CSV Dump on UserRole', function(done) {
     request(app)
-      .get('/csv/userRole')
+      .get(`/v${VERSION}/csv/userRole`)
       .set('Accept', 'application/json')
       .set('token', token)
       .expect('Content-Type', 'text/html; charset=utf-8')
@@ -68,7 +69,7 @@ describe('CSV Dump Negative Tests', function() {
 
   it('Negative Test (404) for CSV Dump endpoint', function(done) {
     request(app)
-      .get('/csv/')
+      .get(`/v${VERSION}/csv/`)
       .set('Accept', 'application/json')
       .set('token', token)
       .expect('Content-Type', 'text/html; charset=utf-8')

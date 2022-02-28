@@ -3,11 +3,12 @@ import request from 'supertest'
 import app from '..'
 
 const {expect} = chai
+const VERSION = '1';
 
 describe('API Integration Tests', function() {
   it('should return uptime', function(done) {
     request(app)
-      .get('/health')
+      .get(`/v${VERSION}/health`)
       .end((err, res) => {
         if (err) {
           console.error(`IT uptime error: ${err}`)
@@ -33,7 +34,7 @@ describe('API Integration Tests', function() {
   })
   it('should return version number', function(done) {
     request(app)
-      .get('/health')
+      .get(`/v${VERSION}/health`)
       .end((err, res) => {
         if (err) {
           console.error(`IT version error: ${err}`)
@@ -46,7 +47,7 @@ describe('API Integration Tests', function() {
   })
   it('should return request id', function(done) {
     request(app)
-      .get('/health')
+      .get(`/v${VERSION}/health`)
       .end((err, res) => {
         if (err) {
           console.error(`IT version error: ${err}`)
@@ -81,7 +82,7 @@ describe('API Integration Tests', function() {
   })
   it('should return swagger', function(done) {
     request(app)
-      .get('/api-docs/')
+      .get(`/v${VERSION}/api-docs/`)
       .end((err, res) => {
         if (err) {
           console.error(`IT version error: ${err}`)
