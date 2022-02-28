@@ -1,5 +1,6 @@
 import 'dotenv/config'
 
+import fs from 'fs'
 import cors from 'cors'
 import express from 'express'
 import helmet from 'helmet'
@@ -7,12 +8,10 @@ import morgan from 'morgan'
 import nunjucks from 'nunjucks'
 import requestId from 'express-request-id'
 import rateLimit from 'express-rate-limit'
-import routes from './routes'
-import swaggerDocument from '../swagger.json'
 import swaggerUi from 'swagger-ui-express'
-import utils from './utils'
 import models, { sequelize } from './models'
 
+const DEFAULT_VERSION = '1'
 const app = express()
 const swaggerOptions = {
   customCss: '.swagger-ui .topbar { display: none }'
@@ -46,25 +45,30 @@ app.use(async (req, res, next) => {
 
 // Helper endpoints
 app.get('/', (req, res) => {
-  res.redirect('/api-docs')
+  res.redirect(`/v${DEFAULT_VERSION}/api-docs`)
 })
 app.get('/help', (req, res) => {
-  res.redirect('/api-docs')
-})
-app.use('/api-docs', apiLimiter, swaggerUi.serve, swaggerUi.setup(swaggerDocument, swaggerOptions))
-app.use('/health', (req, res) => {
-  res.status(200).json({
-    uptime: utils.formatTime(process.uptime()),
-    environment: process.env.NODE_ENV || 'n/a',
-    version: process.env.npm_package_version || 'n/a',
-    requestId: req.id
-  })
+  res.redirect(`/v${DEFAULT_VERSION}/api-docs`)
 })
 
+// Api Docs
+const apiVersions = fs.readdirSync(`${__dirname}/api-docs`)
+for (const version of apiVersions) {
+  const swaggerDocument = require(`./api-docs/${version}/swagger.json`)
+  app.use(`/${version}/api-docs`, apiLimiter, swaggerUi.serve, (req, res) => {
+    let html = swaggerUi.generateHTML(swaggerDocument);
+    res.send(html);
+  })
+}
+
 // Routes
-Object.entries(routes).forEach(([key, value]) => {
-  app.use(`/${key}`, value)
-})
+const routeVersions = fs.readdirSync(`${__dirname}/routes`)
+for (const version of routeVersions) {
+  const routers = require(`./routes/${version}`)
+  for (const [routeName, routeFunction] of Object.entries(routers)) {
+    app.use(`/${version}/${routeName}`, routeFunction)
+  }
+}
 
 // Handle 404
 app.use((req, res) => {
@@ -81,7 +85,7 @@ app.use((error, req, res, next) => {
 // Starting Express and connecting to PostgreSQL
 try {
   sequelize.sync().then(() => {
-    if(!module.parent){
+    if(require.main === module){
       app.listen(process.env.PORT || 3000, () => {
         console.log(`Bmore Responsive is available at http://localhost:${process.env.PORT || 3000}`)
       })
