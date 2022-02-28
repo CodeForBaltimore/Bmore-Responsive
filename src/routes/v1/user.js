@@ -1,8 +1,8 @@
 import { Router } from 'express'
 import rateLimit from 'express-rate-limit'
 import validator from 'validator'
-import utils from '../utils'
-import email from '../email'
+import utils from '../../utils'
+import email from '../../email'
 
 const router = new Router()
 const max = (process.env.NODE_ENV !== 'production') ? 50000 : 50
@@ -53,10 +53,10 @@ router.post('/reset/:email', loginLimiter, async(req, res) => {
         // send forgot password email
         await email.sendForgotPassword(user.email, temporaryToken)
 
-				
+
         response.setMessage('Password reset email sent')
       } else {
-				
+
         response.setMessage('Password reset email sent')
       }
     } else {
@@ -86,7 +86,7 @@ router.get('/', utils.authMiddleware, async (req, res) => {
       user.dataValues.roles = roles
     }
 
-		
+
     response.setMessage({
       _meta: {
         total: users.length
@@ -124,7 +124,7 @@ router.get('/:email', utils.authMiddleware, async (req, res) => {
         return utils.response(res, 422)
       }
 
-			
+
       response.setMessage(user)
     } else {
       response.setCode(400)
@@ -137,7 +137,7 @@ router.get('/:email', utils.authMiddleware, async (req, res) => {
   return res.status(response.getCode()).send(response.getMessage())
 })
 
-// Creates a new user. 
+// Creates a new user.
 router.post('/', utils.authMiddleware, async (req, res) => {
   const response = new utils.Response()
   try {
@@ -151,7 +151,7 @@ router.post('/', utils.authMiddleware, async (req, res) => {
           for (const role of roles) {
             await e.addRoleForUser(email.toLowerCase(), role)
           }
-        }        
+        }
         response.setMessage(user.email + ' created')
 
       }else {
@@ -164,11 +164,11 @@ router.post('/', utils.authMiddleware, async (req, res) => {
     }
   } catch (e) {
     if (e.name === "SequelizeUniqueConstraintError"){
-      console.error(e)    
+      console.error(e)
       response.setCode(500)
       response.setMessage("Email already in dataset and cannot be created.")
-    }else{      
-      console.error(e)    
+    }else{
+      console.error(e)
       response.setCode(500)
       response.setMessage(e.name + ': ' + e.detail)
     }
@@ -190,13 +190,13 @@ router.put('/', utils.authMiddleware, async (req, res) => {
         }
       })
       /** @todo add ability to change email */
-			
+
 
       /** @todo when roles are added make sure only admin or relevant user can change password */
       if (!process.env.BYPASS_LOGIN) {
         const e = await utils.loadCasbin()
         const roles = await e.getRolesForUser(req.context.me.email)
-	
+
         if (password) {
           if (req.context.me.email === email || roles.includes('admin') && utils.validatePassword(password)) {
             user.password = password
@@ -220,7 +220,7 @@ router.put('/', utils.authMiddleware, async (req, res) => {
 
       await user.save()
 
-			
+
       response.setMessage(user.email + ' updated')
     } else {
       response.setCode(400)
@@ -258,7 +258,7 @@ router.delete('/:email', utils.authMiddleware, async (req, res) => {
 
       await user.destroy()
 
-			
+
       response.setMessage(req.params.email + ' deleted')
     } else {
       response.setCode(400)
