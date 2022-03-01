@@ -86,7 +86,7 @@
     }
   ],
   "paths": {
-    "/health": {
+    "/v2/health": {
       "get": {
         "security": [],
         "tags": [
@@ -133,7 +133,7 @@
         }
       }
     },
-    "/security/authenticate": {
+    "/v2/security/authenticate": {
       "post": {
         "security": [],
         "tags": [
@@ -173,7 +173,7 @@
         }
       }
     },
-    "/security/token/{email}": {
+    "/v2/security/token/{email}": {
       "post": {
         "tags": [
           "authentication",
@@ -238,7 +238,7 @@
         }
       }
     },
-    "/roles": {
+    "/v2/roles": {
       "get": {
         "tags": [
           "authorization",
@@ -347,7 +347,7 @@
         }
       }
     },
-    "/roles/{roleName}": {
+    "/v2/roles/{roleName}": {
       "parameters": [
         {
           "name": "roleName",
@@ -534,7 +534,7 @@
         }
       }
     },
-    "/roles/{roleName}/addPermission": {
+    "/v2/roles/{roleName}/addPermission": {
       "parameters": [
         {
           "name": "roleName",
@@ -642,7 +642,7 @@
         }
       }
     },
-    "/roles/{roleName}/removePermission": {
+    "/v2/roles/{roleName}/removePermission": {
       "parameters": [
         {
           "name": "roleName",
@@ -736,7 +736,7 @@
         }
       }
     },
-    "/role-grants/": {
+    "/v2/role-grants/": {
       "post": {
         "tags": [
           "authorization",
@@ -831,7 +831,7 @@
         }
       }
     },
-    "/role-grants/contact/{email}": {
+    "/v2/role-grants/contact/{email}": {
       "post": {
         "tags": [
           "authorization",
@@ -965,7 +965,7 @@
         }
       }
     },
-    "/role-grants/contact/{email}/revoke": {
+    "/v2/role-grants/contact/{email}/revoke": {
       "post": {
         "tags": [
           "authorization",
@@ -1053,7 +1053,7 @@
         }
       }
     },
-    "/role-grants/{email}": {
+    "/v2/role-grants/{email}": {
       "get": {
         "tags": [
           "authorization",
@@ -1120,7 +1120,7 @@
         }
       }
     },
-    "/role-grants/{email}/revoke": {
+    "/v2/role-grants/{email}/revoke": {
       "post": {
         "tags": [
           "authorization",
@@ -1207,7 +1207,7 @@
         }
       }
     },
-    "/users": {
+    "/v2/users": {
       "get": {
         "tags": [
           "users",
@@ -1316,7 +1316,7 @@
         }
       }
     },
-    "/users/{email}": {
+    "/v2/users/{email}": {
       "parameters": [
         {
           "name": "email",
@@ -1489,7 +1489,7 @@
         }
       }
     },
-    "/contacts": {
+    "/v2/contacts": {
       "get": {
         "tags": [
           "contacts",
@@ -1598,7 +1598,7 @@
         }
       }
     },
-    "/contacts/{contactId}": {
+    "/v2/contacts/{contactId}": {
       "parameters": [
         {
           "name": "contactId",
@@ -1783,7 +1783,7 @@
         }
       }
     },
-    "/entity-types": {
+    "/v2/entity-types": {
       "get": {
         "tags": [
           "entities",
@@ -1892,7 +1892,7 @@
         }
       }
     },
-    "/entity-types/{typeId}": {
+    "/v2/entity-types/{typeId}": {
       "parameters": [
         {
           "name": "typeId",
@@ -2077,7 +2077,7 @@
         }
       }
     },
-    "/entities": {
+    "/v2/entities": {
       "get": {
         "tags": [
           "entities",
@@ -2206,7 +2206,7 @@
         }
       }
     },
-    "/entities/{entityId}": {
+    "/v2/entities/{entityId}": {
       "parameters": [
         {
           "name": "entityId",
@@ -2391,7 +2391,7 @@
         }
       }
     },
-    "/contact-associations": {
+    "/v2/contact-associations": {
       "get": {
         "tags": [
           "contacts",
@@ -2554,7 +2554,7 @@
         }
       }
     },
-    "/contact-associations/{contactId}/{entityId}/{typeId}": {
+    "/v2/contact-associations/{contactId}/{entityId}/{typeId}": {
       "parameters": [
         {
           "name": "contactId",
@@ -2706,7 +2706,7 @@
         }
       }
     },
-    "/contact-association-types": {
+    "/v2/contact-association-types": {
       "get": {
         "tags": [
           "contacts",
@@ -2817,7 +2817,7 @@
         }
       }
     },
-    "/contact-association-types/{typeId}": {
+    "/v2/contact-association-types/{typeId}": {
       "parameters": [
         {
           "name": "typeId",
@@ -3002,7 +3002,7 @@
         }
       }
     },
-    "/email": {
+    "/v2/email": {
       "post": {
         "tags": [
           "email",
@@ -3073,7 +3073,7 @@
         }
       }
     },
-    "/email-templates": {
+    "/v2/email-templates": {
       "get": {
         "tags": [
           "email",
@@ -3182,7 +3182,7 @@
         }
       }
     },
-    "/email-templates/{templateId}": {
+    "/v2/email-templates/{templateId}": {
       "parameters": [
         {
           "name": "templateId",
@@ -3350,7 +3350,7 @@
         }
       }
     },
-    "/events": {
+    "/v2/events": {
       "get": {
         "tags": [
           "events",
@@ -3459,7 +3459,7 @@
         }
       }
     },
-    "/events/{eventId}": {
+    "/v2/events/{eventId}": {
       "parameters": [
         {
           "name": "eventId",
@@ -3627,7 +3627,7 @@
         }
       }
     },
-    "/questions": {
+    "/v2/questions": {
       "get": {
         "tags": [
           "questionnaires",
@@ -3736,7 +3736,7 @@
         }
       }
     },
-    "/questions/{questionId}": {
+    "/v2/questions/{questionId}": {
       "parameters": [
         {
           "name": "questionId",
@@ -3858,7 +3858,7 @@
         }
       }
     },
-    "/questionnaires": {
+    "/v2/questionnaires": {
       "get": {
         "tags": [
           "questionnaires",
@@ -3967,7 +3967,7 @@
         }
       }
     },
-    "/questionnaires/{questionnaireId}": {
+    "/v2/questionnaires/{questionnaireId}": {
       "parameters": [
         {
           "name": "questionnaireId",
@@ -4183,7 +4183,7 @@
         }
       }
     },
-    "/check-ins": {
+    "/v2/check-ins": {
       "post": {
         "tags": [
           "check-ins",

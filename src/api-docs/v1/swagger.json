@@ -50,7 +50,7 @@
     }
   ],
   "paths": {
-    "/health": {
+    "/v1/health": {
       "get": {
         "security": [],
         "tags": [
@@ -75,7 +75,7 @@
         }
       }
     },
-    "/user/login": {
+    "/v1/user/login": {
       "post": {
         "security": [],
         "tags": [
@@ -125,7 +125,7 @@
         }
       }
     },
-    "/user": {
+    "/v1/user": {
       "post": {
         "tags": [
           "user"
@@ -319,7 +319,7 @@
         }
       }
     },
-    "/user/{email}": {
+    "/v1/user/{email}": {
       "get": {
         "tags": [
           "user"
@@ -414,7 +414,7 @@
         }
       }
     },
-    "/userRole": {
+    "/v1/userRole": {
       "post": {
         "tags": [
           "userRole"
@@ -507,7 +507,7 @@
         }
       }
     },
-    "/userRole/delete": {
+    "/v1/userRole/delete": {
       "post": {
         "tags": [
           "userRole"
@@ -573,7 +573,7 @@
         }
       }
     },
-    "/entity": {
+    "/v1/entity": {
       "post": {
         "tags": [
           "entity"
@@ -840,7 +840,7 @@
         }
       }
     },
-    "/entity/{entity_id}": {
+    "/v1/entity/{entity_id}": {
       "get": {
         "tags": [
           "entity"
@@ -935,7 +935,7 @@
         }
       }
     },
-    "/entity/link/{entity_id}": {
+    "/v1/entity/link/{entity_id}": {
       "post": {
         "tags": [
           "entity"
@@ -1008,7 +1008,7 @@
         }
       }
     },
-    "/entity/unlink/{entity_id}": {
+    "/v1/entity/unlink/{entity_id}": {
       "post": {
         "tags": [
           "entity"
@@ -1080,7 +1080,7 @@
         }
       }
     },
-    "/contact": {
+    "/v1/contact": {
       "post": {
         "security": [
           {
@@ -1417,7 +1417,7 @@
         }
       }
     },
-    "/contact/send": {
+    "/v1/contact/send": {
       "post": {
         "tags": [
           "contact"
@@ -1492,7 +1492,7 @@
         }
       }
     },
-    "/contact/send/{type}/{id}": {
+    "/v1/contact/send/{type}/{id}": {
       "post": {
         "tags": [
           "contact"
@@ -1585,7 +1585,7 @@
         }
       }
     },
-    "/contact/{contact_id}": {
+    "/v1/contact/{contact_id}": {
       "get": {
         "tags": [
           "contact"
@@ -1680,7 +1680,7 @@
         }
       }
     },
-    "/contact/link/{contact_id}": {
+    "/v1/contact/link/{contact_id}": {
       "post": {
         "tags": [
           "contact"
@@ -1753,7 +1753,7 @@
         }
       }
     },
-    "/contact/unlink/{contact_id}": {
+    "/v1/contact/unlink/{contact_id}": {
       "post": {
         "tags": [
           "contact"
@@ -1825,7 +1825,7 @@
         }
       }
     },
-    "/csv/{model_type}": {
+    "/v1/csv/{model_type}": {
       "get": {
         "tags": [
           "csv"
