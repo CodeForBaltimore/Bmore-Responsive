@@ -1,6 +1,6 @@
 import chai from 'chai'
 import request from 'supertest'
-import app from '..'
+import app from '../..'
 
 const VERSION = '1';
 const {expect} = chai

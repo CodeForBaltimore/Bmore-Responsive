@@ -1,7 +1,7 @@
 import chai from 'chai'
-import utils from '../utils'
-import { Login } from '../utils/login'
-import { Response } from '../utils/response'
+import utils from '../../utils'
+import { Login } from '../../utils/login'
+import { Response } from '../../utils/response'
 
 const VERSION = '1'
 const { assert, expect } = chai

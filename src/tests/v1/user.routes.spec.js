@@ -1,8 +1,8 @@
 import chai from 'chai'
 import request from 'supertest'
 import randomWords from 'random-words'
-import { Login } from '../utils/login'
-import app from '..'
+import { Login } from '../../utils/login'
+import app from '../..'
 
 const VERSION = '1';
 const { expect } = chai

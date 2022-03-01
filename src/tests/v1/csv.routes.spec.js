@@ -1,13 +1,10 @@
-import chai from 'chai'
+/* eslint-disable no-unused-vars */
 import request from 'supertest'
-import { Login } from '../utils/login'
-import app from '..'
+import { Login } from '../../utils/login'
+import app from '../..'
 
 const VERSION = '1';
-const { expect, assert } = chai
-const role = { role: 'test' + Date.now(), path: '/test', method: 'GET' }
-
-describe('User roles positive tests', function() {
+describe('CSV Dump Negative Tests', function() {
   const authed = new Login(VERSION)
   let token
 
@@ -18,73 +15,81 @@ describe('User roles positive tests', function() {
   after(async function() {
     await authed.destroyToken()
   })
-
-  it('should create a user role', function(done) {
+  it('Negative Test (400) for CSV Dump on Contact', function(done) {
     request(app)
-      .post(`/v${VERSION}/userRole`)
-      .send(role)
-      .set('Accept', 'application/json')
-      .set('token', token)
-      .expect('Content-Type', 'text/html; charset=utf-8')
-      .expect(200)
-      .end((err, res) => {
-        if (err) return done(err)
-        expect(res.text).to.equal('policy created')
-        done()
-      })
-  })
-  it('should get all user roles', function(done) {
-    request(app)
-      .get(`/v${VERSION}/userRole`)
-      .set('Accept', 'application/json')
-      .set('token', token)
-      .expect('Content-Type', 'application/json; charset=utf-8')
-      .expect(200)
-      .end((err, res) => {
-        if (err) return done(err)
-        assert.isObject(res.body, 'body is an object')
-        done()
-      })
-  })
-  it('should delete a user role', function(done) {
-    request(app)
-      .post(`/v${VERSION}/userRole/delete`)
-      .send(role)
-      .set('Accept', 'application/json')
-      .set('token', token)
-      .expect('Content-Type', 'text/html; charset=utf-8')
-      .expect(200)
-      .end((err, res) => {
-        if (err) return done(err)
-        expect(res.text).to.equal('Policy deleted')
-        done()
-      })
-  })
-
-  it('should not create a user role', function(done) {
-    request(app)
-      .post(`/v${VERSION}/userRole`)
+      .get(`/v${VERSION}/csv/contact`)
       .set('Accept', 'application/json')
       .set('token', token)
       .expect('Content-Type', 'text/html; charset=utf-8')
       .expect(400)
       .end((err, res) => {
         if (err) return done(err)
-        expect(res.text).to.equal('Bad Request')
         done()
       })
   })
-  it('should not delete a user', function(done) {
+
+  it('Negative Test (400) for CSV Dump on Entity', function(done) {
     request(app)
-      .post(`/v${VERSION}/userRole/delete`)
+      .get(`/v${VERSION}/csv/entity`)
       .set('Accept', 'application/json')
       .set('token', token)
       .expect('Content-Type', 'text/html; charset=utf-8')
       .expect(400)
       .end((err, res) => {
         if (err) return done(err)
-        expect(res.text).to.equal('Request does not inclue required parameters')
         done()
       })
   })
+
+  it('Negative Test (400) for CSV Dump on User', function(done) {
+    request(app)
+      .get(`/v${VERSION}/csv/user`)
+      .set('Accept', 'application/json')
+      .set('token', token)
+      .expect('Content-Type', 'text/html; charset=utf-8')
+      .expect(400)
+      .end((err, res) => {
+        if (err) return done(err)
+        done()
+      })
+  })
+
+  it('Negative Test (400) for CSV Dump on UserRole', function(done) {
+    request(app)
+      .get(`/v${VERSION}/csv/userRole`)
+      .set('Accept', 'application/json')
+      .set('token', token)
+      .expect('Content-Type', 'text/html; charset=utf-8')
+      .expect(400)
+      .end((err, res) => {
+        if (err) return done(err)
+        done()
+      })
+  })
+
+  it('Negative Test (404) for CSV Dump endpoint', function(done) {
+    request(app)
+      .get(`/v${VERSION}/csv/`)
+      .set('Accept', 'application/json')
+      .set('token', token)
+      .expect('Content-Type', 'text/html; charset=utf-8')
+      .expect(404)
+      .end((err, res) => {
+        if (err) return done(err)
+        done()
+      })
+  })
+
+  // it('Negative Test (503) for CSV Dump endpoint', (done) => {
+  //   request(app)
+  //     .get('/csv/%^&&!@&#)(@*&#()@*&)(*&)(*&(@&#)(!&*#)(*&!@#()*&()*!@&#()*&#&))*&(&()*&#!!@#!@#!@#)(&*)(*&)(*!&#')
+  //     .set('Accept', 'application/json')
+  //     .set('token', token)
+  //     .expect('Content-Type', 'text/html; charset=utf-8')
+  //     .expect(503)
+  //     .end((err, res) => {
+  //       if (err) return done(err)
+  //       done()
+  //     })
+  // })
 })
