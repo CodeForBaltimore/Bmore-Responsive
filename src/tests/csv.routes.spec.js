@@ -5,7 +5,7 @@ import app from '..'
 
 const VERSION = '1';
 describe('CSV Dump Negative Tests', function() {
-  const authed = new Login()
+  const authed = new Login(VERSION)
   let token
 
   before(async function() {

@@ -5,8 +5,8 @@ import uuid from 'uuid4'
 import { Login } from '../utils/login'
 import app from '..'
 
-const { expect } = chai
 const VERSION = '1';
+const { expect } = chai
 const entity = {
   name: randomWords(),
   type: 'Test',
@@ -30,7 +30,7 @@ const contact = {
 }
 
 describe('Entity tests', function() {
-  const authed = new Login()
+  const authed = new Login(VERSION)
   let token
 
   before(async function() {
@@ -188,7 +188,7 @@ describe('Entity tests', function() {
   it('should not remove a contact from an entity', function(done) {
     const contactIds = { contacts: [{ id: uuid() }] }
     request(app)
-      .post('/v${VERSION}/entity/unlink/abc123')
+      .post(`/v${VERSION}/entity/unlink/abc123`)
       .set('Accept', 'application/json')
       .set('token', token)
       .send(contactIds)

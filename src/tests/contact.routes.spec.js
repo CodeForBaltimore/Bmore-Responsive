@@ -27,7 +27,7 @@ const entity = {
 }
 
 describe('Contact tests', function() {
-  const authed = new Login()
+  const authed = new Login(VERSION)
   let token
   let authHeader
 
@@ -338,7 +338,7 @@ describe('Contact tests', function() {
   })
   it('should not get a single contact with invalid UUID', function(done) {
     request(app)
-      .get(`/contact/${contact.email}`)
+      .get(`/v${VERSION}/contact/${contact.email}`)
       .set('Accept', 'application/json')
       .set('authorization', authHeader)
       .expect(400)
@@ -350,7 +350,7 @@ describe('Contact tests', function() {
   })
   it('should not get a single contact with valid UUID', function(done) {
     request(app)
-      .get(`/contact/${uuid()}`)
+      .get(`/v${VERSION}/contact/${uuid()}`)
       .set('Accept', 'application/json')
       .set('token', token)
       .expect(404)

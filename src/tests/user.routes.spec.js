@@ -4,11 +4,12 @@ import randomWords from 'random-words'
 import { Login } from '../utils/login'
 import app from '..'
 
+const VERSION = '1';
 const { expect } = chai
 const user = { email: `${randomWords()}@test.test`, password: 'Abcdefg42!', roles: ['admin'] }
 
 describe('User tests', function() {
-  const authed = new Login()
+  const authed = new Login(VERSION)
   let token
 
   before(async function() {
@@ -21,7 +22,7 @@ describe('User tests', function() {
 
   it('should not login', function(done) {
     request(app)
-      .post('/user/login')
+      .post(`/v${VERSION}/user/login`)
       .send({ email: `${randomWords()}@test.test`, password: 'Abcdefg12!' })
       .set('Accept', 'application/json')
       .expect('Content-Type', 'text/html; charset=utf-8')
@@ -34,7 +35,7 @@ describe('User tests', function() {
   })
   it('should not login with invalid email', function(done) {
     request(app)
-      .post('/user/login')
+      .post(`/v${VERSION}/user/login`)
       .send({ email: randomWords(), password: 'Abcdefg12!' })
       .set('Accept', 'application/json')
       .expect('Content-Type', 'text/html; charset=utf-8')
@@ -47,7 +48,7 @@ describe('User tests', function() {
   })
   it('should get all users', function(done) {
     request(app)
-      .get('/user')
+      .get(`/v${VERSION}/user`)
       .set('Accept', 'application/json')
       .set('token', token)
       .send()
@@ -61,7 +62,7 @@ describe('User tests', function() {
   })
   it('should create a new user', function(done) {
     request(app)
-      .post('/user')
+      .post(`/v${VERSION}/user`)
       .set('token', token)
       .send(user)
       .set('Accept', 'application/json')
@@ -75,7 +76,7 @@ describe('User tests', function() {
   })
   it('should get a single user', function(done) {
     request(app)
-      .get(`/user/${user.email}`)
+      .get(`/v${VERSION}/user/${user.email}`)
       .set('Accept', 'application/json')
       .set('token', token)
       .send()
@@ -90,7 +91,7 @@ describe('User tests', function() {
   it('should update a user', function(done) {
     user.displayName = randomWords()
     request(app)
-      .put('/user')
+      .put(`/v${VERSION}/user`)
       .set('token', token)
       .send(user)
       .set('Accept', 'application/json')
@@ -104,7 +105,7 @@ describe('User tests', function() {
   })
   it('should request a reset of the password', function(done) {
     request(app)
-      .post(`/user/reset/${user.email}`)
+      .post(`/v${VERSION}/user/reset/${user.email}`)
       .send(user)
       .set('Accept', 'application/json')
       .expect('Content-Type', 'text/html; charset=utf-8')
@@ -117,7 +118,7 @@ describe('User tests', function() {
   })
   it('should request a reset of the password even with invalid email', function(done) {
     request(app)
-      .post(`/user/reset/${randomWords()}@test.test`)
+      .post(`/v${VERSION}/user/reset/${randomWords()}@test.test`)
       .send(user)
       .set('Accept', 'application/json')
       .expect('Content-Type', 'text/html; charset=utf-8')
@@ -130,7 +131,7 @@ describe('User tests', function() {
   })
   it('should not request a reset of the password with invalid email format', function(done) {
     request(app)
-      .post(`/user/reset/${randomWords()}`)
+      .post(`/v${VERSION}/user/reset/${randomWords()}`)
       .send(user)
       .set('Accept', 'application/json')
       .expect('Content-Type', 'text/html; charset=utf-8')
@@ -143,7 +144,7 @@ describe('User tests', function() {
   })
   it('should delete a user', function(done) {
     request(app)
-      .delete(`/user/${user.email}`)
+      .delete(`/v${VERSION}/user/${user.email}`)
       .set('Accept', 'application/json')
       .set('token', token)
       .send()
@@ -157,7 +158,7 @@ describe('User tests', function() {
   })
   it('should not login a user', function(done) {
     request(app)
-      .post('/user/login')
+      .post(`/v${VERSION}/user/login`)
       .send({ email: randomWords(), password: randomWords() })
       .set('Accept', 'application/json')
       .expect('Content-Type', 'text/html; charset=utf-8')
@@ -171,7 +172,7 @@ describe('User tests', function() {
   it('should not create a user', function(done) {
     user.email = randomWords()
     request(app)
-      .post('/user')
+      .post(`/v${VERSION}/user`)
       .send(user)
       .set('Accept', 'application/json')
       .set('token', token)
@@ -185,7 +186,7 @@ describe('User tests', function() {
   })
   it('should not get a single user', function(done) {
     request(app)
-      .get(`/user/${user.email}`)
+      .get(`/v${VERSION}/user/${user.email}`)
       .set('Accept', 'application/json')
       .set('token', token)
       .expect(400)
@@ -198,7 +199,7 @@ describe('User tests', function() {
   it('should not update a user', function(done) {
     user.password = randomWords()
     request(app)
-      .put('/user')
+      .put(`/v${VERSION}/user`)
       .send(user)
       .set('Accept', 'application/json')
       .set('token', token)
@@ -213,7 +214,7 @@ describe('User tests', function() {
   it('should not delete a user', function(done) {
     user.password = randomWords()
     request(app)
-      .delete(`/user/${user.username}`)
+      .delete(`/v${VERSION}/user/${user.username}`)
       .set('Accept', 'application/json')
       .set('token', token)
       .expect('Content-Type', 'text/html; charset=utf-8')

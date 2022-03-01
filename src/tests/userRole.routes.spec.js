@@ -3,11 +3,12 @@ import request from 'supertest'
 import { Login } from '../utils/login'
 import app from '..'
 
+const VERSION = '1';
 const { expect, assert } = chai
 const role = { role: 'test' + Date.now(), path: '/test', method: 'GET' }
 
 describe('User roles positive tests', function() {
-  const authed = new Login()
+  const authed = new Login(VERSION)
   let token
 
   before(async function() {
@@ -20,7 +21,7 @@ describe('User roles positive tests', function() {
 
   it('should create a user role', function(done) {
     request(app)
-      .post('/userRole')
+      .post(`/v${VERSION}/userRole`)
       .send(role)
       .set('Accept', 'application/json')
       .set('token', token)
@@ -34,7 +35,7 @@ describe('User roles positive tests', function() {
   })
   it('should get all user roles', function(done) {
     request(app)
-      .get('/userRole')
+      .get(`/v${VERSION}/userRole`)
       .set('Accept', 'application/json')
       .set('token', token)
       .expect('Content-Type', 'application/json; charset=utf-8')
@@ -47,7 +48,7 @@ describe('User roles positive tests', function() {
   })
   it('should delete a user role', function(done) {
     request(app)
-      .post('/userRole/delete')
+      .post(`/v${VERSION}/userRole/delete`)
       .send(role)
       .set('Accept', 'application/json')
       .set('token', token)
@@ -62,7 +63,7 @@ describe('User roles positive tests', function() {
 
   it('should not create a user role', function(done) {
     request(app)
-      .post('/userRole')
+      .post(`/v${VERSION}/userRole`)
       .set('Accept', 'application/json')
       .set('token', token)
       .expect('Content-Type', 'text/html; charset=utf-8')
@@ -75,7 +76,7 @@ describe('User roles positive tests', function() {
   })
   it('should not delete a user', function(done) {
     request(app)
-      .post('/userRole/delete')
+      .post(`/v${VERSION}/userRole/delete`)
       .set('Accept', 'application/json')
       .set('token', token)
       .expect('Content-Type', 'text/html; charset=utf-8')

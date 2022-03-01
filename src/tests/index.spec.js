@@ -2,8 +2,8 @@ import chai from 'chai'
 import request from 'supertest'
 import app from '..'
 
-const {expect} = chai
 const VERSION = '1';
+const {expect} = chai
 
 describe('API Integration Tests', function() {
   it('should return uptime', function(done) {
@@ -21,7 +21,7 @@ describe('API Integration Tests', function() {
   })
   it('should return environment', function(done) {
     request(app)
-      .get('/health')
+      .get(`/v${VERSION}/health`)
       .end((err, res) => {
         if (err) {
           console.error(`IT environment error: ${err}`)
