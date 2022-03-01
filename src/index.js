@@ -11,7 +11,7 @@ import rateLimit from 'express-rate-limit'
 import swaggerUi from 'swagger-ui-express'
 import models, { sequelize } from './models'
 
-const DEFAULT_VERSION = '1'
+const DEFAULT_API_VERSION = process.env.DEFAULT_API_VERSION || '1'
 const app = express()
 const swaggerOptions = {
   customCss: '.swagger-ui .topbar { display: none }'
@@ -45,10 +45,10 @@ app.use(async (req, res, next) => {
 
 // Helper endpoints
 app.get('/', (req, res) => {
-  res.redirect(`/v${DEFAULT_VERSION}/api-docs`)
+  res.redirect(`/v${DEFAULT_API_VERSION}/api-docs`)
 })
 app.get('/help', (req, res) => {
-  res.redirect(`/v${DEFAULT_VERSION}/api-docs`)
+  res.redirect(`/v${DEFAULT_API_VERSION}/api-docs`)
 })
 
 // Api Docs
