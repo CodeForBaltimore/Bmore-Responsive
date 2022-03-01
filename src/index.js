@@ -56,8 +56,8 @@ const apiVersions = fs.readdirSync(`${__dirname}/api-docs`)
 for (const version of apiVersions) {
   const swaggerDocument = require(`./api-docs/${version}/swagger.json`)
   app.use(`/${version}/api-docs`, apiLimiter, swaggerUi.serve, (req, res) => {
-    let html = swaggerUi.generateHTML(swaggerDocument);
-    res.send(html);
+    let html = swaggerUi.generateHTML(swaggerDocument, swaggerOptions)
+    res.send(html)
   })
 }
 

@@ -3,7 +3,7 @@ import request from 'supertest'
 import { Login } from '../../utils/login'
 import app from '../..'
 
-const VERSION = '1';
+const VERSION = '1'
 const { expect, assert } = chai
 const role = { role: 'test' + Date.now(), path: '/test', method: 'GET' }
 

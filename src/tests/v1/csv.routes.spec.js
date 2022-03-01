@@ -3,7 +3,7 @@ import request from 'supertest'
 import { Login } from '../../utils/login'
 import app from '../..'
 
-const VERSION = '1';
+const VERSION = '1'
 describe('CSV Dump Negative Tests', function() {
   const authed = new Login(VERSION)
   let token

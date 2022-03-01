@@ -84,7 +84,7 @@ router.post('/delete', async (req, res) => {
       if (removed) {
         response.setMessage('Policy deleted')
       } else {
-	response.setCode(422)
+        response.setCode(422)
         response.setMessage('Request inconsistent with existing casbin policy')
       }
     } else {

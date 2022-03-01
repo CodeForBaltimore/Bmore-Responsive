@@ -5,7 +5,7 @@ import uuid from 'uuid4'
 import { Login } from '../../utils/login'
 import app from '../..'
 
-const VERSION = '1';
+const VERSION = '1'
 const { expect } = chai
 const entity = {
   name: randomWords(),

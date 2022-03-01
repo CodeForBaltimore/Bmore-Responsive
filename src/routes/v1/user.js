@@ -156,17 +156,17 @@ router.post('/', utils.authMiddleware, async (req, res) => {
 
       }else {
         response.setCode(400)
-        response.setMessage("Password invalid. Must be at least 8 characters long and contain at least 1 of the following: uppercase letter, lowercase letter, special character, and decimal digit.")
+        response.setMessage('Password invalid. Must be at least 8 characters long and contain at least 1 of the following: uppercase letter, lowercase letter, special character, and decimal digit.')
       }
     } else {
       response.setCode(400)
-      response.setMessage("Email not in valid format.")
+      response.setMessage('Email not in valid format.')
     }
   } catch (e) {
-    if (e.name === "SequelizeUniqueConstraintError"){
+    if (e.name === 'SequelizeUniqueConstraintError'){
       console.error(e)
       response.setCode(500)
-      response.setMessage("Email already in dataset and cannot be created.")
+      response.setMessage('Email already in dataset and cannot be created.')
     }else{
       console.error(e)
       response.setCode(500)

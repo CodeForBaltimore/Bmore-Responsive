@@ -2,7 +2,7 @@ import chai from 'chai'
 import request from 'supertest'
 import app from '../..'
 
-const VERSION = '1';
+const VERSION = '1'
 const {expect} = chai
 
 describe('API Integration Tests', function() {
