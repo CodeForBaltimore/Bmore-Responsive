@@ -34,6 +34,6 @@ jobs:
 
       - name: Test
         run: |
-          docker exec bmore-responsive-api-1 npm test
+          docker exec bmore-responsive_api_1 npm test
 
 
