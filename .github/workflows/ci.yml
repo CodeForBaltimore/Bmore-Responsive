@@ -61,6 +61,9 @@ jobs:
       - name: Build docker stack
         run: docker-compose build
 
+      - name: List docker images
+        run: docker images ls
+
       - name: Export docker images
         run: |
           docker export -o /tmp/bmore-responsive_api.tar bmore-responsive_api:latest
