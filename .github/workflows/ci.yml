@@ -3,6 +3,10 @@ on: push
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      NODE_ENV: development
+      DATABASE_PASSWORD: password
+      JWT_KEY: fortestsonly
     steps:
       - uses: actions/checkout@v2
 
@@ -19,8 +23,8 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-
 
-      - name: Install Dependencies
-        run: npm install
+      - name: Build docker stack
+        run: docker-compose up -d --build
 
       - name: Lint
         run: npm run lint
