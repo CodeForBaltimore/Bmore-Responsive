@@ -1,12 +1,16 @@
 name: Bmore Responsive CI
+
 on: push
+
+env:
+  NODE_ENV: development
+  DATABASE_PASSWORD: password
+  JWT_KEY: fortestsonly
+
 jobs:
-  build:
+  npm_install:
     runs-on: ubuntu-latest
-    env:
-      NODE_ENV: development
-      DATABASE_PASSWORD: password
-      JWT_KEY: fortestsonly
+
     steps:
       - uses: actions/checkout@v2
 
@@ -26,11 +30,80 @@ jobs:
       - name: Install npm packages
         run: npm install
 
-      - name: Build docker stack
-        run: docker-compose up -d --build
+      # - name: Audit npm packages
+      #   run: npm audit
 
-      - name: Lint
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Cache node modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Lint JS
         run: npm run lint
+
+      - name: Lint Dockerfile
+        run: |
+          docker pull hadolint/hadolint
+          docker run --rm -i hadolint/hadolint < Dockerfile
+
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build docker stack
+        run: docker-compose build
+
+      - name: Export docker images
+        run: |
+          docker export bmore-responsive_api > /tmp/bmore-responsive_api.tar
+          docker export bmore-responsive_db > /tmp/bmore-responsive_db.tar
+
+      - name: Cache API docker image
+        uses: actions/upload-artifact@v2
+        with:
+          name: bmore-responsive_api
+          path: /tmp/bmore-responsive_api.tar
+
+      - name: Cache DB docker image
+        uses: actions/upload-artifact@v2
+        with:
+          name: bmore-responsive_db
+          path: /tmp/bmore-responsive_db.tar
+
+  test:
+    runs-on: ubuntu-latest
+    container: ${{ env.docker_name }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Download docker images
+        uses: actions/download-artifact@v3
+        with:
+          path: /tmp
+
+      - name: Extract docker images
+        run: |
+          docker load --input /tmp/bmore-responsive_api.tar
+          docker load --input /tmp/bmore-responsive_db.tar
+
+      - name: Compose docker images
+        run: docker compose up -d
 
       - name: Test
         run: |
