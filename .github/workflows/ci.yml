@@ -23,6 +23,9 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-
 
+      - name: Install npm packages
+        run: npm install
+
       - name: Build docker stack
         run: docker-compose up -d --build
 
@@ -30,6 +33,7 @@ jobs:
         run: npm run lint
 
       - name: Test
-        run: npm test
+        run: |
+          docker exec bmore-responsive-api-1 npm test
 
 
