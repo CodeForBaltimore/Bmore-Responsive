@@ -88,7 +88,6 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
-    container: ${{ env.docker_name }}
     steps:
       - uses: actions/checkout@v2
 
