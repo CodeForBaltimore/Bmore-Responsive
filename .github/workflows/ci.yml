@@ -35,23 +35,9 @@ jobs:
 
   lint:
     runs-on: ubuntu-latest
-    needs: audit
 
     steps:
       - uses: actions/checkout@v2
-
-      - name: Cache node modules
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-node-modules
-        with:
-          # npm cache files are stored in `~/.npm` on Linux/macOS
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
 
       - name: install eslint
         run: npm install eslint
@@ -68,16 +54,15 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
-    needs: lint
+    needs:
+      - audit
+      - lint
 
     steps:
       - uses: actions/checkout@v2
 
       - name: Build docker stack
         run: docker-compose up -d --build
-
-      - name: Show running images
-        run: docker images
 
       - name: Save docker images
         run: |
@@ -110,6 +95,7 @@ jobs:
 
       - name: Test
         run: |
+          sleep 15 # wait for containers to set up
           docker exec bmore-responsive-api-1 npm test
 
 
