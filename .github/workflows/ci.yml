@@ -99,7 +99,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: containers
-          path: /tmp/containers.tar
+          path: /tmp
 
       - name: Extract docker images
         run: |
