@@ -62,7 +62,7 @@ jobs:
         run: docker-compose build
 
       - name: List docker images
-        run: docker images ls
+        run: docker images
 
       - name: Export docker images
         run: |
