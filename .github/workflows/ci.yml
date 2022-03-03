@@ -95,7 +95,7 @@ jobs:
 
       - name: Test
         run: |
-          sleep 15 # wait for containers to set up
+          sleep 10 # wait for containers to set up
           docker exec bmore-responsive-api-1 npm test
 
 
