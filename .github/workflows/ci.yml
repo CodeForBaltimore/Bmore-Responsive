@@ -77,24 +77,17 @@ jobs:
         run: docker-compose up -d --build
 
       - name: Show running images
-        run: docker ps
+        run: docker images
 
       - name: Save docker images
         run: |
-          docker export -o /tmp/bmore-responsive_api.tar bmore-responsive_api-1:latest
-          docker export -o /tmp/bmore-responsive_db.tar bmore-responsive_db-1:latest
+          docker save -o /tmp/containers.tar bmore-responsive_api:latest postgres:latest
 
       - name: Cache API docker image
         uses: actions/upload-artifact@v2
         with:
-          name: bmore-responsive_api
-          path: /tmp/bmore-responsive_api.tar
-
-      - name: Cache DB docker image
-        uses: actions/upload-artifact@v2
-        with:
-          name: bmore-responsive_db
-          path: /tmp/bmore-responsive_db.tar
+          name: containers
+          path: /tmp/containers.tar
 
   test:
     runs-on: ubuntu-latest
@@ -105,12 +98,12 @@ jobs:
       - name: Download docker images
         uses: actions/download-artifact@v3
         with:
-          path: /tmp
+          name: containers
+          path: /tmp/containers.tar
 
       - name: Extract docker images
         run: |
-          docker load -i /tmp/bmore-responsive_api.tar
-          docker load -i /tmp/bmore-responsive_db.tar
+          docker load -i /tmp/containers.tar
 
       - name: Compose docker images
         run: docker compose up -d
