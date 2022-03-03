@@ -76,10 +76,13 @@ jobs:
       - name: Build docker stack
         run: docker-compose up -d --build
 
+      - name: Show running images
+        run: docker ps
+
       - name: Save docker images
         run: |
-          docker save -o /tmp/bmore-responsive_api.tar bmore-responsive_api:latest
-          docker save -o /tmp/bmore-responsive_db.tar bmore-responsive_db:latest
+          docker export -o /tmp/bmore-responsive_api.tar bmore-responsive_api-1:latest
+          docker export -o /tmp/bmore-responsive_db.tar bmore-responsive_db-1:latest
 
       - name: Cache API docker image
         uses: actions/upload-artifact@v2
