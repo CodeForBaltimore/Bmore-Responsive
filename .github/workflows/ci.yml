@@ -63,8 +63,8 @@ jobs:
 
       - name: Export docker images
         run: |
-          docker export bmore-responsive_api > /tmp/bmore-responsive_api.tar
-          docker export bmore-responsive_db > /tmp/bmore-responsive_db.tar
+          docker export bmore-responsive_api:latest -o /tmp/bmore-responsive_api.tar bmore-responsive_api:latest
+          docker export bmore-responsive_db:latest -o /tmp/bmore-responsive_db.tar bmore-responsive_db:latest
 
       - name: Cache API docker image
         uses: actions/upload-artifact@v2
@@ -91,8 +91,8 @@ jobs:
 
       - name: Extract docker images
         run: |
-          docker load --input /tmp/bmore-responsive_api.tar
-          docker load --input /tmp/bmore-responsive_db.tar
+          docker load -i /tmp/bmore-responsive_api.tar
+          docker load -i /tmp/bmore-responsive_db.tar
 
       - name: Compose docker images
         run: docker compose up -d
