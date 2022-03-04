@@ -36,4 +36,4 @@ const userRole = (sequelize, DataTypes) => {
   return UserRole
 }
 
-export default userRole
+module.exports = userRole
