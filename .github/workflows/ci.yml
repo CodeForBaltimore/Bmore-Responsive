@@ -31,7 +31,7 @@ jobs:
         run: npm install
 
       - name: Audit npm packages
-        run: npm audit --audit-level=high
+        run: npm audit
 
   lint:
     runs-on: ubuntu-latest
