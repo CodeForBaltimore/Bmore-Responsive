@@ -36,6 +36,7 @@
     "@babel/node": "7.12.17",
     "@types/bluebird": "^3.5.36",
     "ansi-regex": "^6.0.1",
+    "browserslist": "^4.19.3",
     "casbin": "4.7.2",
     "casbin-sequelize-adapter": "2.1.0",
     "chai": "^4.3.6",
