@@ -57,7 +57,7 @@ fs
     return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js')
   })
   .forEach(file => {
-    models[_.upperFirst(_.camelCase(file.replace('.js', '')))] = sequelize.import(`./${file.replace('.js', '')}`)
+    models[_.upperFirst(_.camelCase(file.replace('.js', '')))] = require(`./${file.replace('.js', '')}`)(sequelize, Sequelize.DataTypes)
   })
 
 // Bringing it all together easily for use.
