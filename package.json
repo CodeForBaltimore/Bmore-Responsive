@@ -34,9 +34,10 @@
   "dependencies": {
     "@babel/core": "7.12.17",
     "@babel/node": "7.12.17",
+    "@types/bluebird": "^3.5.36",
     "casbin": "4.7.2",
     "casbin-sequelize-adapter": "2.1.0",
-    "chai": "4.3.0",
+    "chai": "^4.3.6",
     "complexity": "0.0.6",
     "cors": "2.8.5",
     "crypto": "1.0.1",
@@ -62,7 +63,8 @@
     "swagger-ui-express": "^4.3.0",
     "tls": "0.0.1",
     "uuid4": "1.1.4",
-    "validator": "^13.7.0"
+    "validator": "^13.7.0",
+    "webpack": "^5.70.0"
   },
   "devDependencies": {
     "@babel/compat-data": "7.8.6",
