@@ -1,6 +1,6 @@
-import email from '../email'
-import models from '../models'
-import utils from '../utils'
+import email from '../../email'
+import models from '../../models'
+import utils from '../../utils'
 import validator from 'validator'
 import { Router } from 'express'
 
@@ -105,7 +105,7 @@ router.post('/', async (req, res) => {
     if (req.body.name !== undefined && req.body.name !== '') {
       const { name, phone, email, UserId, entities, attributes } = req.body
 
-      // Validating emails 
+      // Validating emails
       if (email) {
         const goodEmail = await utils.validateEmails(email)
         if (!goodEmail) {
@@ -306,7 +306,7 @@ router.put('/', async (req, res) => {
         return res.status(response.getCode()).send(response.getMessage())
       }
 
-      // Validating emails 
+      // Validating emails
       if (email) {
         const goodEmail = await utils.validateEmails(email)
         if (!goodEmail) {

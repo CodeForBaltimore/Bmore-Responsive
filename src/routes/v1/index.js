@@ -3,11 +3,17 @@ import userRole from './user-role'
 import contact from './contact'
 import entity from './entity'
 import csv from './csv'
+import health from './health'
 // Exports object of routes we import above. Add to this if you're adding new routes.
-export default {
+
+const routeExports = {
   user,
   userRole,
   contact,
   entity,
-  csv
+  csv,
+  health
 }
+
+export default routeExports
+module.exports = routeExports

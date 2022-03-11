@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import validator from 'validator'
-import utils from '../utils'
+import utils from '../../utils'
 
 const router = new Router()
 router.use(utils.authMiddleware)
@@ -122,7 +122,7 @@ router.put('/', async (req, res) => {
       let { id, name, type, address, phone, email, checkIn, contacts, attributes } = req.body
 
       /** @todo validate emails */
-      // Validating emails 
+      // Validating emails
       // if (await !utils.validateEmails(email)) res.status(500).send('Server error')
 
       let entity = await req.context.models.Entity.findOne({

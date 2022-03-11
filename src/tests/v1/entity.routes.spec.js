@@ -2,9 +2,10 @@ import chai from 'chai'
 import request from 'supertest'
 import randomWords from 'random-words'
 import uuid from 'uuid4'
-import { Login } from '../utils/login'
-import app from '..'
+import { Login } from '../../utils/login'
+import app from '../..'
 
+const VERSION = '1'
 const { expect } = chai
 const entity = {
   name: randomWords(),
@@ -29,7 +30,7 @@ const contact = {
 }
 
 describe('Entity tests', function() {
-  const authed = new Login()
+  const authed = new Login(VERSION)
   let token
 
   before(async function() {
@@ -37,7 +38,7 @@ describe('Entity tests', function() {
     token = await authed.getToken()
 
     const contactResponse = await request(app)
-      .post('/contact')
+      .post(`/v${VERSION}/contact`)
       .set('Accept', 'application/json')
       .set('token', token)
       .send(contact)
@@ -49,7 +50,7 @@ describe('Entity tests', function() {
   })
   after(async function() {
     await request(app)
-      .delete(`/contact/${contact.id}`)
+      .delete(`/v${VERSION}/contact/${contact.id}`)
       .set('Accept', 'application/json')
       .set('token', token)
       .expect('Content-Type', 'text/html; charset=utf-8')
@@ -59,7 +60,7 @@ describe('Entity tests', function() {
 
   it('should create a entity', async function() {
     const response = await request(app)
-      .post('/entity')
+      .post(`/v${VERSION}/entity`)
       .send(entity)
       .set('Accept', 'application/json')
       .set('token', token)
@@ -70,7 +71,7 @@ describe('Entity tests', function() {
   })
   it('should get all entities', function(done) {
     request(app)
-      .get('/entity')
+      .get(`/v${VERSION}/entity`)
       .set('Accept', 'application/json')
       .set('token', token)
       .expect('Content-Type', 'application/json; charset=utf-8')
@@ -83,7 +84,7 @@ describe('Entity tests', function() {
   })
   it('should search on all entities by name', function(done) {
     request(app)
-      .get(`/entity?type=name&value=${entity.name}`)
+      .get(`/v${VERSION}/entity?type=name&value=${entity.name}`)
       .set('Accept', 'application/json')
       .set('token', token)
       .expect('Content-Type', 'application/json; charset=utf-8')
@@ -96,7 +97,7 @@ describe('Entity tests', function() {
   })
   it('should search on all entities by type', function(done) {
     request(app)
-      .get('/entity?type=type&value=Test')
+      .get(`/v${VERSION}/entity?type=type&value=Test`)
       .set('Accept', 'application/json')
       .set('token', token)
       .expect('Content-Type', 'application/json; charset=utf-8')
@@ -109,7 +110,7 @@ describe('Entity tests', function() {
   })
   it('should get a single entity', function(done) {
     request(app)
-      .get(`/entity/${entity.id}`)
+      .get(`/v${VERSION}/entity/${entity.id}`)
       .set('Accept', 'application/json')
       .set('token', token)
       .expect('Content-Type', 'application/json; charset=utf-8')
@@ -124,7 +125,7 @@ describe('Entity tests', function() {
     entity.name = randomWords()
     entity.checkIn = { test: 'test' }
     request(app)
-      .put('/entity')
+      .put(`/v${VERSION}/entity`)
       .set('Accept', 'application/json')
       .set('token', token)
       .send(entity)
@@ -139,7 +140,7 @@ describe('Entity tests', function() {
   it('should add an contact to an entity', function(done) {
     const contactIds = { contacts: [{ id: contact.id, title: 'test' }] }
     request(app)
-      .post(`/entity/link/${entity.id}`)
+      .post(`/v${VERSION}/entity/link/${entity.id}`)
       .set('Accept', 'application/json')
       .set('token', token)
       .send(contactIds)
@@ -154,7 +155,7 @@ describe('Entity tests', function() {
   it('should not add an contact to an entity', function(done) {
     const contactIds = { contacts: [{ id: uuid() }] }
     request(app)
-      .post('/entity/link/abc123')
+      .post(`/v${VERSION}/entity/link/abc123`)
       .set('Accept', 'application/json')
       .set('token', token)
       .send(contactIds)
@@ -172,7 +173,7 @@ describe('Entity tests', function() {
   it('should remove a contact from an entity', function(done) {
     const contactIds = { contacts: [{ id: contact.id, title: 'test' }] }
     request(app)
-      .post(`/entity/unlink/${entity.id}`)
+      .post(`/v${VERSION}/entity/unlink/${entity.id}`)
       .set('Accept', 'application/json')
       .set('token', token)
       .send(contactIds)
@@ -187,7 +188,7 @@ describe('Entity tests', function() {
   it('should not remove a contact from an entity', function(done) {
     const contactIds = { contacts: [{ id: uuid() }] }
     request(app)
-      .post('/entity/unlink/abc123')
+      .post(`/v${VERSION}/entity/unlink/abc123`)
       .set('Accept', 'application/json')
       .set('token', token)
       .send(contactIds)
@@ -201,7 +202,7 @@ describe('Entity tests', function() {
   })
   it('Positive Test for CSV Dump on Entity', function(done) {
     request(app)
-      .get('/csv/Entity')
+      .get(`/v${VERSION}/csv/Entity`)
       .set('Accept', 'application/json')
       .set('token', token)
       .expect(200)
@@ -213,7 +214,7 @@ describe('Entity tests', function() {
   })
   it('should delete an entity', function(done) {
     request(app)
-      .delete(`/entity/${entity.id}`)
+      .delete(`/v${VERSION}/entity/${entity.id}`)
       .set('Accept', 'application/json')
       .set('token', token)
       .expect('Content-Type', 'text/html; charset=utf-8')
@@ -226,7 +227,7 @@ describe('Entity tests', function() {
   })
   it('should not create a entity', function(done) {
     request(app)
-      .post('/entity')
+      .post(`/v${VERSION}/entity`)
       .send({ name: '' })
       .set('Accept', 'application/json')
       .set('token', token)
@@ -240,7 +241,7 @@ describe('Entity tests', function() {
   })
   it('should not search for entities with bad param types', function(done) {
     request(app)
-      .get('/entity?test=test')
+      .get(`/v${VERSION}/entity?test=test`)
       .set('Accept', 'application/json')
       .set('token', token)
       .expect('Content-Type', 'text/html; charset=utf-8')
@@ -253,7 +254,7 @@ describe('Entity tests', function() {
   })
   it('should not search for entities with bad param values', function(done) {
     request(app)
-      .get('/entity?type=test&value=test')
+      .get(`/v${VERSION}/entity?type=test&value=test`)
       .set('Accept', 'application/json')
       .set('token', token)
       .expect('Content-Type', 'text/html; charset=utf-8')
@@ -266,7 +267,7 @@ describe('Entity tests', function() {
   })
   it('should not get a single entity with invalid UUID', function(done) {
     request(app)
-      .get(`/entity/${entity.email}`)
+      .get(`/v${VERSION}/entity/${entity.email}`)
       .set('Accept', 'application/json')
       .set('token', token)
       .expect(400)
@@ -278,7 +279,7 @@ describe('Entity tests', function() {
   })
   it('should not get a single entity with valid UUID', function(done) {
     request(app)
-      .get(`/entity/${uuid()}`)
+      .get(`/v${VERSION}/entity/${uuid()}`)
       .set('Accept', 'application/json')
       .set('token', token)
       .expect(404)
@@ -291,7 +292,7 @@ describe('Entity tests', function() {
   it('should not update a entity without valid UUID', function(done) {
     entity.id = randomWords()
     request(app)
-      .put('/entity')
+      .put(`/v${VERSION}/entity`)
       .send(entity)
       .set('Accept', 'application/json')
       .set('token', token)
@@ -306,7 +307,7 @@ describe('Entity tests', function() {
   it('should not update a entity with a valid UUID', function(done) {
     entity.id = uuid()
     request(app)
-      .put('/entity')
+      .put(`/v${VERSION}/entity`)
       .send(entity)
       .set('Accept', 'application/json')
       .set('token', token)
@@ -321,7 +322,7 @@ describe('Entity tests', function() {
   it('should not delete a entity', function(done) {
     entity.email = randomWords()
     request(app)
-      .delete(`/entity/${entity.email}`)
+      .delete(`/v${VERSION}/entity/${entity.email}`)
       .set('Accept', 'application/json')
       .set('token', token)
       .expect('Content-Type', 'text/html; charset=utf-8')

@@ -1,8 +1,9 @@
 import chai from 'chai'
-import utils from '../utils'
-import { Login } from '../utils/login'
-import { Response } from '../utils/response'
+import utils from '../../utils'
+import { Login } from '../../utils/login'
+import { Response } from '../../utils/response'
 
+const VERSION = '1'
 const { assert, expect } = chai
 
 describe('Utils Tests', function() {
@@ -20,7 +21,7 @@ describe('Utils Tests', function() {
 
   describe('Class Tests', function() {
     it('should be an instance of Login', function(done) {
-      expect(new Login()).to.be.an.instanceof(Login)
+      expect(new Login(VERSION)).to.be.an.instanceof(Login)
       done()
     })
     it('should be an instance of Response', function(done) {

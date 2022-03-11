@@ -5,7 +5,8 @@ import request from 'supertest'
 import utils from '.'
 
 class Login {
-  constructor() {
+  constructor(version=(process.env.DEFAULT_API_VERSION || '1')) {
+    this.DEFAULT_API_VERSION = version
     this.role = randomWords()
     this.user = { email: `${randomWords()}@test.test`, password: 'Abcdefg12!', roles: [this.role] }
     this.methods = [
@@ -72,7 +73,7 @@ class Login {
   async _createUser() {
     const user = await models.User.create({ email: this.user.email.toLowerCase(), password: this.user.password })
     this.user.id = user.id
-    
+
     const e = await utils.loadCasbin()
     await e.addRoleForUser(this.user.email.toLowerCase(), this.role)
     // await models.UserRole.create({
@@ -112,7 +113,7 @@ class Login {
    */
   async _login() {
     const response = await request(app)
-      .post('/user/login')
+      .post(`/v${this.DEFAULT_API_VERSION}/user/login`)
       .send(this.user)
       .set('Accept', 'application/json')
       .expect('Content-Type', 'text/html; charset=utf-8')

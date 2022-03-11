@@ -1,5 +1,5 @@
 import {Router} from 'express'
-import utils from '../utils'
+import utils from '../../utils'
 import {parseAsync} from 'json2csv'
 import {Op} from 'sequelize'
 

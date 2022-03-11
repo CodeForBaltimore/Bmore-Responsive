@@ -1,13 +1,14 @@
 import chai from 'chai'
 import request from 'supertest'
-import app from '..'
+import app from '../..'
 
+const VERSION = '1'
 const {expect} = chai
 
 describe('API Integration Tests', function() {
   it('should return uptime', function(done) {
     request(app)
-      .get('/health')
+      .get(`/v${VERSION}/health`)
       .end((err, res) => {
         if (err) {
           console.error(`IT uptime error: ${err}`)
@@ -20,7 +21,7 @@ describe('API Integration Tests', function() {
   })
   it('should return environment', function(done) {
     request(app)
-      .get('/health')
+      .get(`/v${VERSION}/health`)
       .end((err, res) => {
         if (err) {
           console.error(`IT environment error: ${err}`)
@@ -33,7 +34,7 @@ describe('API Integration Tests', function() {
   })
   it('should return version number', function(done) {
     request(app)
-      .get('/health')
+      .get(`/v${VERSION}/health`)
       .end((err, res) => {
         if (err) {
           console.error(`IT version error: ${err}`)
@@ -46,7 +47,7 @@ describe('API Integration Tests', function() {
   })
   it('should return request id', function(done) {
     request(app)
-      .get('/health')
+      .get(`/v${VERSION}/health`)
       .end((err, res) => {
         if (err) {
           console.error(`IT version error: ${err}`)
@@ -81,7 +82,7 @@ describe('API Integration Tests', function() {
   })
   it('should return swagger', function(done) {
     request(app)
-      .get('/api-docs/')
+      .get(`/v${VERSION}/api-docs/`)
       .end((err, res) => {
         if (err) {
           console.error(`IT version error: ${err}`)
