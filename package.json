@@ -9,7 +9,7 @@
   "scripts": {
     "start": "nodemon --exec babel-node src/index.js",
     "test": "nyc mocha --require @babel/register --require @babel/polyfill \"src/tests/**/*.spec.js\" --exit",
-    "lint": "eslint --fix src/",
+    "lint": "eslint src/",
     "db-create": "sequelize db:migrate",
     "db-delete": "sequelize db:migrate:undo:all",
     "db-seed": "sequelize db:seed:all",
