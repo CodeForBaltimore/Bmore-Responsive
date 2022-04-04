@@ -9,7 +9,7 @@
   "scripts": {
     "start": "nodemon --exec babel-node src/index.js",
     "test": "nyc mocha --require @babel/register --require @babel/polyfill \"src/tests/**/*.spec.js\" --exit",
-    "lint": "eslint src/",
+    "lint": "eslint --fix src/",
     "db-create": "sequelize db:migrate",
     "db-delete": "sequelize db:migrate:undo:all",
     "db-seed": "sequelize db:seed:all",
@@ -78,8 +78,8 @@
     "babel-loader": "^8.2.3",
     "chakram": "^1.5.0",
     "codecov": "3.7.2",
-    "eslint": "^8.10.0",
-    "eslint-plugin-mocha": "8.0.0",
+    "eslint": "^8.12.0",
+    "eslint-plugin-mocha": "^10.0.3",
     "nyc": "15.0.0",
     "sequelize-cli": "^6.4.1"
   },
