@@ -4,11 +4,11 @@ import { sequelize } from '../../models'
 
 const router = new Router()
 
-const checkDatabase = async (req, res) => {
+const checkDatabase = async () => {
   const databaseCheckResult = {
-    "name": "database",
-    "status": "healthy",
-    "message": "N/A"
+    'name': 'database',
+    'status': 'healthy',
+    'message': 'N/A'
   }
   try {
     // https://sequelize.org/docs/v6/getting-started/#testing-the-connection
@@ -16,7 +16,7 @@ const checkDatabase = async (req, res) => {
   }
   catch (error) {
     console.error(`Database seems to be down: '${error}'`)
-    databaseCheckResult.status = "down"
+    databaseCheckResult.status = 'down'
     databaseCheckResult.message = error.message
   }
   return databaseCheckResult
