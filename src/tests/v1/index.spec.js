@@ -5,7 +5,7 @@ import app from '../..'
 const VERSION = '1'
 const {expect} = chai
 
-describe('API Integration Tests', function() {
+describe(`API Integration Tests (v${VERSION})`, function() {
   it('should return uptime', function(done) {
     request(app)
       .get(`/v${VERSION}/health`)

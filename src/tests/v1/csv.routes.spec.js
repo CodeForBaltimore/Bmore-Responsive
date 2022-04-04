@@ -4,7 +4,7 @@ import { Login } from '../../utils/login'
 import app from '../..'
 
 const VERSION = '1'
-describe('CSV Dump Negative Tests', function() {
+describe(`CSV Dump Negative Tests (v${VERSION})`, function() {
   const authed = new Login(VERSION)
   let token
 

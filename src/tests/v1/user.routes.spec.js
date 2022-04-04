@@ -8,7 +8,7 @@ const VERSION = '1'
 const { expect } = chai
 const user = { email: `${randomWords()}@test.test`, password: 'Abcdefg42!', roles: ['admin'] }
 
-describe('User tests', function() {
+describe(`User tests (v${VERSION})`, function() {
   const authed = new Login(VERSION)
   let token
 

@@ -29,7 +29,7 @@ const contact = {
   ]
 }
 
-describe('Entity tests', function() {
+describe(`Entity tests (v${VERSION})`, function() {
   const authed = new Login(VERSION)
   let token
 
