@@ -69,13 +69,13 @@ describe(`API Integration Tests (v${VERSION})`, function() {
         expect(res.body.checks).to.be.ok
         expect(res.body.checks.length).to.equal(1)
         expect(res.body.checks[0].name).to.equal('database')
-        expect(res.body.checks[0].status).to.be.ok
-        expect(res.body.checks[0].message).to.be.ok
+        expect(res.body.checks[0].status).to.equal('healthy')
+        expect(res.body.checks[0].message).to.equal('N/A')
         expect(res.statusCode).to.equal(200)
         done()
       })
   })
-  it('should serve home request', function(done) {
+  it('should redirect home request', function(done) {
     request(app)
       .get('/')
       .end((err, res) => {
