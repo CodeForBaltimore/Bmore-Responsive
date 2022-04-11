@@ -92,4 +92,4 @@ const contact = (sequelize, DataTypes) => {
   return Contact
 }
 
-export default contact
+module.exports = contact

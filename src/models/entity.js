@@ -53,7 +53,7 @@ const entity = (sequelize, DataTypes) => {
     const entity = await Entity.findOne({
       where: { id }
     })
-        
+
     return entity
   }
 
@@ -61,7 +61,7 @@ const entity = (sequelize, DataTypes) => {
     const entity = await Entity.findOne({
       where: { name }
     })
-        
+
     return entity
   }
 
@@ -87,4 +87,4 @@ const entity = (sequelize, DataTypes) => {
   return Entity
 }
 
-export default entity
+module.exports = entity

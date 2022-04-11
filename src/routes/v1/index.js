@@ -15,5 +15,4 @@ const routeExports = {
   health
 }
 
-export default routeExports
 module.exports = routeExports

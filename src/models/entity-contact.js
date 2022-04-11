@@ -33,7 +33,7 @@ const entityContact = (sequelize, DataTypes) => {
   })
 
   EntityContact.createIfNew = async (ec) => {
-    let whereQuery = { 
+    let whereQuery = {
       entityId: ec.entityId,
       contactId: ec.contactId,
     }
@@ -59,4 +59,4 @@ const entityContact = (sequelize, DataTypes) => {
   return EntityContact
 }
 
-export default entityContact
+module.exports = entityContact
