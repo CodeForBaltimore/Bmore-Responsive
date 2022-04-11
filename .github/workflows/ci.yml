@@ -1,7 +1,8 @@
 name: Bmore-Responsive
 
-on: push
-
+on:
+  - push
+  - pull_request
 env:
   NODE_ENV: development
   DATABASE_PASSWORD: password
