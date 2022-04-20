@@ -6,7 +6,7 @@ import { Response } from '../../utils/response'
 const VERSION = '1'
 const { assert, expect } = chai
 
-describe('Utils Tests', function() {
+describe(`Utils Tests (v${VERSION})`, function() {
   it('should return 00:00:01', function(done) {
     expect(utils.formatTime(1)).to.equal('00:00:01')
     done()

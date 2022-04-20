@@ -26,7 +26,7 @@ const entity = {
   type: 'Test'
 }
 
-describe('Contact tests', function() {
+describe(`Contact tests (v${VERSION})`, function() {
   const authed = new Login(VERSION)
   let token
   let authHeader

@@ -36,7 +36,7 @@ var adapter
 
 /**
  * Loads Casbin for role validation
- * 
+ *
  * @returns {Object}
  */
 const loadCasbin = async () => {
@@ -71,7 +71,7 @@ const loadCasbin = async () => {
     })
   }
 
-  return await newEnforcer(casbinConf, adapter)
+  return newEnforcer(casbinConf, adapter)
 }
 
 /**
@@ -108,9 +108,9 @@ const validateToken = async req => {
 
 /**
  * Validates a user role.
- * 
+ *
  * @param {*} req The request object
- * 
+ *
  * @return {Boolean}
  */
 const validateRoles = async (req) => {
@@ -119,13 +119,13 @@ const validateRoles = async (req) => {
 
   /** @todo refactor this... */
   const email = (req.context.me.email[0].address !== undefined) ? req.context.me.email[0].address : req.context.me.email
-  const isAllowed = await e.enforce(email, path, method)
-  return isAllowed
+  return e.enforce(email, path, method)
+
 }
 
 /**
  * Middleware function used to validate a user token
- * 
+ *
  * @param {*} req the request object
  * @param {*} res the response object
  * @param {*} next the next handler in the chain
@@ -167,27 +167,26 @@ const encryptPassword = (password, salt) => {
 
 /**
  * Generates a JWT
- * 
- * @param {int} userId 
- * @param {String} email 
- * @param {String} expiresIn 
- * 
+ *
+ * @param {int} userId
+ * @param {String} email
+ * @param {String} expiresIn
+ *
  * @returns {String}
  */
 const getToken = async (userId, email, type, expiresIn = '1d') => {
-  const token = jwt.sign(
+  return jwt.sign(
     { userId, email, type },
     process.env.JWT_KEY,
     { expiresIn }
   )
-  return token
 }
 
 /**
  * Checks array of emails for validitiy
- * 
+ *
  * @param {Array} emails
- * 
+ *
  * @return {Boolean}
  */
 const validateEmails = async emails => {
@@ -200,9 +199,9 @@ const validateEmails = async emails => {
 
 /**
  * Checks the user's new password for complexity
- * 
- * @param {String} pass 
- * 
+ *
+ * @param {String} pass
+ *
  * @return {Boolean}
  */
 const validatePassword = pass => {

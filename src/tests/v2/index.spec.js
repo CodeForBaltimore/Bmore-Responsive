@@ -2,7 +2,7 @@ import chai from 'chai'
 import request from 'supertest'
 import app from '../..'
 
-const VERSION = '1'
+const VERSION = '2'
 const {expect} = chai
 
 describe(`API Integration Tests (v${VERSION})`, function() {
@@ -58,7 +58,24 @@ describe(`API Integration Tests (v${VERSION})`, function() {
         done()
       })
   })
-  it('should serve home request', function(done) {
+  it('should return checks', function(done) {
+    request(app)
+      .get(`/v${VERSION}/health`)
+      .end((err, res) => {
+        if (err) {
+          console.error(`IT version error: ${err}`)
+        }
+
+        expect(res.body.checks).to.be.ok
+        expect(res.body.checks.length).to.equal(1)
+        expect(res.body.checks[0].name).to.equal('database')
+        expect(res.body.checks[0].status).to.equal('healthy')
+        expect(res.body.checks[0].message).to.equal('N/A')
+        expect(res.statusCode).to.equal(200)
+        done()
+      })
+  })
+  it('should redirect home request', function(done) {
     request(app)
       .get('/')
       .end((err, res) => {

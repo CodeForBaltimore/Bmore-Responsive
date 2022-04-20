@@ -7,7 +7,7 @@ const VERSION = '1'
 const { expect, assert } = chai
 const role = { role: 'test' + Date.now(), path: '/test', method: 'GET' }
 
-describe('User roles positive tests', function() {
+describe(`User roles positive tests (v${VERSION})`, function() {
   const authed = new Login(VERSION)
   let token
 
