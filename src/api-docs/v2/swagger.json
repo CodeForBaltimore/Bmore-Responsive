@@ -91,8 +91,7 @@
         "security": [],
         "tags": [
           "operations",
-          "read-only",
-          "unimplemented"
+          "read-only"
         ],
         "summary": "Checks the health of the application; will be renamed to '/health'.",
         "description": "The health of individual application components is verified.",
