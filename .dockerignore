@@ -129,7 +129,6 @@ docs/
 .all-contributorsrc
 .eslintrc.yml
 .pre-commit-config.yaml
-.travis.yml
 civic.json
 codecov.yml
 publiccode.yml

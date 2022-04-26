@@ -16,7 +16,7 @@ The API is the application for all intents and purposes. Use of the API and poss
 
 ### CI/CD
 
-We will use TravisCI, Docker, Netlify, and AWS to provide constant code deployments and test coverage.
+We will use Github Actions, Docker, Netlify, and AWS to provide constant code deployments and test coverage.
 ![CI/CD Pipeline](img/cicd-pipeline.png)
 
 ### Data
