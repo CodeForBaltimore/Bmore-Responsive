@@ -164,7 +164,24 @@
             }
           },
           "400": {
-            "$ref": "#/components/responses/BadRequest"
+            "description": "Invalid content provided.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "details": [
+                    {
+                      "name": "email",
+                      "value": "Address provided is invalid"
+                    }
+                  ],
+                  "message": "Request invalid",
+                  "statusCode": 400
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "401": {
             "$ref": "#/components/responses/Unauthorized"
@@ -4271,20 +4288,6 @@
       }
     },
     "responses": {
-      "BadRequest": {
-        "description": "The provided input was invalid.",
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/ErrorResponse"
-            },
-            "example": {
-              "message": "Invalid input",
-              "statusCode": 400
-            }
-          }
-        }
-      },
       "Unauthorized": {
         "description": "The provided credentials were invalid.",
         "content": {
