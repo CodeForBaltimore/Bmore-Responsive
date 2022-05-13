@@ -112,14 +112,24 @@ class Login {
    * Login to the API to get a JWT token.
    */
   async _login() {
-    const response = await request(app)
-      .post(`/v${this.DEFAULT_API_VERSION}/user/login`)
-      .send(this.user)
-      .set('Accept', 'application/json')
-      .expect('Content-Type', 'text/html; charset=utf-8')
-      .expect(200)
-
-    return response.text
+    let response;
+    switch(this.DEFAULT_API_VERSION) {
+      case '1':
+        response = await request(app)
+          .post('/v1/user/login')
+          .send(this.user)
+          .set('Accept', 'application/json')
+          .expect('Content-Type', 'text/html; charset=utf-8')
+          .expect(200)
+        return response.text
+      case '2':
+        response = await request(app)
+          .post(`/v2/security/authenticate`)
+          .send(this.user)
+          .set('Accept', 'application/json')
+          .expect(200)
+        return response.token
+    }
   }
 }
 
