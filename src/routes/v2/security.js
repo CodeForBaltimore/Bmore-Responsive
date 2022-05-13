@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import validator from 'validator'
 import utils from '../../utils'
+import User from '../../models/user'
 
 const router = new Router()
 
@@ -11,7 +12,10 @@ router.get('/authenticate', async (req, res) => {
     if (validator.isEmail(email)) {
       const token = await req.context.models.User.findByLogin(email.toLowerCase(), password)
       if (token) {
-        response.setMessage(token)
+        console.log(token)
+        response.setMessage({
+          "token": token,
+        })
       } else {
         response.setCode(403)
       }
@@ -23,7 +27,7 @@ router.get('/authenticate', async (req, res) => {
     response.setCode(500)
   }
 
-  return res.status(response.getCode()).send(response.getMessage())
+  return res.status(response.getCode()).json(response.getMessage())
 })
 
 export default router

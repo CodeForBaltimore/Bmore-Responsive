@@ -2,10 +2,10 @@ import app from '..'
 import models from '../models'
 import randomWords from 'random-words'
 import request from 'supertest'
-import utils from '.'
+import utils from './v1'
 
 class Login {
-  constructor(version=(process.env.DEFAULT_API_VERSION || '1')) {
+  constructor(version = (process.env.DEFAULT_API_VERSION || '1')) {
     this.DEFAULT_API_VERSION = version
     this.role = randomWords()
     this.user = { email: `${randomWords()}@test.test`, password: 'Abcdefg12!', roles: [this.role] }
@@ -113,7 +113,7 @@ class Login {
    */
   async _login() {
     let response;
-    switch(this.DEFAULT_API_VERSION) {
+    switch (this.DEFAULT_API_VERSION) {
       case '1':
         response = await request(app)
           .post('/v1/user/login')
