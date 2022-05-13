@@ -163,6 +163,9 @@
               }
             }
           },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
           "401": {
             "$ref": "#/components/responses/Unauthorized"
           },
@@ -4268,6 +4271,20 @@
       }
     },
     "responses": {
+      "BadRequest": {
+        "description": "The provided input was invalid.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            },
+            "example": {
+              "message": "Invalid input",
+              "statusCode": 400
+            }
+          }
+        }
+      },
       "Unauthorized": {
         "description": "The provided credentials were invalid.",
         "content": {
