@@ -134,24 +134,17 @@
     },
     "/v2/security/authenticate": {
       "post": {
-        "security": [],
+        "security": [
+          {
+            "basicAuth": []
+          }
+        ],
         "tags": [
           "authentication",
           "unimplemented"
         ],
         "summary": "Authenticates a user.",
-        "description": "The system authentication endpoint (NOTE - We should consider switching this to Basic auth, Base64-encoding the email/password).",
-        "requestBody": {
-          "description": "The provided credentials.",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/LoginRequest"
-              }
-            }
-          }
-        },
+        "description": "The system authentication endpoint (NOTE - The email and password is passed via Basic Authorization in the HTTP Header).",
         "responses": {
           "200": {
             "description": "The successful authentication response.",
@@ -4265,6 +4258,10 @@
         "type": "http",
         "scheme": "bearer",
         "bearerFormat": "JWT"
+      },
+      "basicAuth": {
+        "type": "http",
+        "scheme": "basic"
       }
     },
     "responses": {
