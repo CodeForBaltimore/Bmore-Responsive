@@ -1,15 +1,15 @@
 import email from '../../email'
 import models from '../../models'
-import utils from '../../utils'
+import { authMiddleware, Response, getToken, validateEmails } from '../../utils/v1'
 import validator from 'validator'
 import { Router } from 'express'
 
 const router = new Router()
-router.use(utils.authMiddleware)
+router.use(authMiddleware)
 
 // Gets all or searches on all contacts.
 router.get('/', async (req, res) => {
-  const response = new utils.Response()
+  const response = new Response()
   try {
     const where = {}
     const types = ['email', 'name', 'phone']
@@ -76,7 +76,7 @@ router.get('/', async (req, res) => {
 
 // Gets a specific contact.
 router.get('/:contact_id', async (req, res) => {
-  const response = new utils.Response()
+  const response = new Response()
   try {
     if (validator.isUUID(req.params.contact_id)) {
       const contact = await models.Contact.findContactWithAssociatedEntities(req.params.contact_id)
@@ -100,14 +100,14 @@ router.get('/:contact_id', async (req, res) => {
 
 // Creates a new contact.
 router.post('/', async (req, res) => {
-  const response = new utils.Response()
+  const response = new Response()
   try {
     if (req.body.name !== undefined && req.body.name !== '') {
       const { name, phone, email, UserId, entities, attributes } = req.body
 
       // Validating emails
       if (email) {
-        const goodEmail = await utils.validateEmails(email)
+        const goodEmail = await validateEmails(email)
         if (!goodEmail) {
           response.setCode(400)
           response.setMessage('Bad email')
@@ -150,7 +150,7 @@ router.post('/', async (req, res) => {
 
 // Sends emails to contacts based on body
 router.post('/send', async (req, res) => {
-  const response = new utils.Response()
+  const response = new Response()
   try {
     /** @todo allow for passing entity and contact arrays */
     const emails = []
@@ -197,7 +197,7 @@ router.post('/send', async (req, res) => {
       for (const entity of contact.entities) {
         if (contact.email !== null) {
           // short-lived temporary token that only lasts one hour
-          const temporaryToken = await utils.getToken(contact.id, contact.email[0].address, 'contact')
+          const temporaryToken = await getToken(contact.id, contact.email[0].address, 'contact')
           emails.push({
             email: contact.email[0].address,
             name: contact.name,
@@ -235,7 +235,7 @@ router.post('/send', async (req, res) => {
 
 
 router.post('/send/:type/:id', async (req, res) => {
-  const response = new utils.Response()
+  const response = new Response()
 
   try {
     let entity
@@ -253,7 +253,7 @@ router.post('/send/:type/:id', async (req, res) => {
     if (entity.email !== null) {
       const primary = entity.email.filter(e => e.isPrimary === 'true').length ? entity.email.filter(e => e.isPrimary === 'true')[0] : entity.email[0]
       // short-lived temporary token that only lasts one hour
-      const temporaryToken = await utils.getToken(req.params.id, primary.address, 'Entity')
+      const temporaryToken = await getToken(req.params.id, primary.address, 'Entity')
 
       const e = {
         email: primary.address,
@@ -290,7 +290,7 @@ router.post('/send/:type/:id', async (req, res) => {
 
 // Updates any contact.
 router.put('/', async (req, res) => {
-  const response = new utils.Response()
+  const response = new Response()
   try {
     if (validator.isUUID(req.body.id)) {
       const { id, name, phone, email, UserId, entities, attributes } = req.body
@@ -308,7 +308,7 @@ router.put('/', async (req, res) => {
 
       // Validating emails
       if (email) {
-        const goodEmail = await utils.validateEmails(email)
+        const goodEmail = await validateEmails(email)
         if (!goodEmail) {
           response.setCode(400)
           response.setMessage('Bad email')
@@ -354,7 +354,7 @@ router.put('/', async (req, res) => {
 
 // Deletes a contact.
 router.delete('/:contact_id', async (req, res) => {
-  const response = new utils.Response()
+  const response = new Response()
   try {
     if (validator.isUUID(req.params.contact_id)) {
       const contact = await models.Contact.findOne({
@@ -378,7 +378,7 @@ router.delete('/:contact_id', async (req, res) => {
 
 // links contact with list of entities
 router.post('/link/:contact_id', async (req, res) => {
-  const response = new utils.Response()
+  const response = new Response()
   try {
     if (validator.isUUID(req.params.contact_id)) {
       const contact = await models.Contact.findOne({
@@ -429,7 +429,7 @@ router.post('/link/:contact_id', async (req, res) => {
 
 // unlinks contact with list of entities
 router.post('/unlink/:contact_id', async (req, res) => {
-  const response = new utils.Response()
+  const response = new Response()
   try {
     if (validator.isUUID(req.params.contact_id)) {
       const contact = await models.Contact.findOne({

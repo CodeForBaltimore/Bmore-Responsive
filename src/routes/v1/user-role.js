@@ -1,14 +1,14 @@
 import { Router } from 'express'
-import utils from '../../utils'
+import { authMiddleware, loadCasbin, Response } from '../../utils/v1'
 
 const router = new Router()
-router.use(utils.authMiddleware)
+router.use(authMiddleware)
 
 // Gets all roles.
 router.get('/', async (req, res) => {
-  const response = new utils.Response()
+  const response = new Response()
   try {
-    const e = await utils.loadCasbin()
+    const e = await loadCasbin()
     const rolesRaw = await e.getNamedPolicy('p')
     const roles = {}
 
@@ -39,14 +39,14 @@ router.get('/', async (req, res) => {
 
 // Creates a new role.
 router.post('/', async (req, res) => {
-  const response = new utils.Response()
+  const response = new Response()
   try {
     const { role, path, method } = req.body
 
     if (role && path && method) {
       let added = false
 
-      const e = await utils.loadCasbin()
+      const e = await loadCasbin()
       const p = [role, path, method]
       added = await e.addPolicy(...p)
 
@@ -70,14 +70,14 @@ router.post('/', async (req, res) => {
 
 // Deletes a role.
 router.post('/delete', async (req, res) => {
-  const response = new utils.Response()
+  const response = new Response()
   try {
     const { role, path, method } = req.body
 
     if (role && path && method) {
       let removed = false
 
-      const e = await utils.loadCasbin()
+      const e = await loadCasbin()
       const p = [role, path, method]
       removed = await e.removePolicy(...p)
 

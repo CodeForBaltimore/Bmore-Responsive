@@ -1,12 +1,11 @@
 import { Router } from 'express'
 import validator from 'validator'
-import utils from '../../utils'
-import User from '../../models/user'
+import { Response } from '../../utils/v1'
 
 const router = new Router()
 
 router.get('/authenticate', async (req, res) => {
-  const response = new utils.Response()
+  const response = new Response()
   try {
     const { email, password } = req.body
     if (validator.isEmail(email)) {
