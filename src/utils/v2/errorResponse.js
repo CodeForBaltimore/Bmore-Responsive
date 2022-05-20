@@ -1,5 +1,6 @@
 class ErrorResponse {
-  constructor(code, message = null) {
+
+  constructor(code = 404, message = null) {
     this.statusCode = code
     this.defaultCodeMessages = {
       400: 'Request invalid',
@@ -8,20 +9,8 @@ class ErrorResponse {
       404: 'Not Found',
       500: 'Request processing failed'
     }
-    if (message === null) {
-      this.message = code in this.defaultCodeMessages ? this.defaultCodeMessages[code] : '',
-    }
+    this.setMessage(message)
     this.details = []
-  }
-
-  /**
-     * code setter
-     *
-     * @param {number} code
-     */
-  setCode(code) {
-    this.body.statusCode = code
-    this.body.message = this.defaultCodeMessages[code]
   }
 
   /**
@@ -30,7 +19,12 @@ class ErrorResponse {
      * @param {String} message
      */
   setMessage(message = null) {
-    this.body.message = message === null ? this.defaultCodeMessages[this.body.statusCode] : message
+    if (message !== null) {
+      this.message = message
+    }
+    else {
+      this.message = this.statusCode in this.defaultCodeMessages ? this.defaultCodeMessages[this.statusCode] : ''
+    }
   }
 
   /**
@@ -39,7 +33,7 @@ class ErrorResponse {
      * @returns {number}
      */
   getCode() {
-    return this.body.statusCode
+    return this.statusCode
   }
 
   /**
@@ -61,12 +55,12 @@ class ErrorResponse {
      * @returns {Object}
      */
   getBody() {
-    let body = this.body
+    const body = {
+      'message': this.message,
+      'statusCode': this.statusCode
+    }
     if (this.details.length > 0) {
-      body = {
-        ...body,
-        'details': this.details
-      }
+      body.details = this.details
     }
     return body
   }
