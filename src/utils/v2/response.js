@@ -1,7 +1,6 @@
 class Response {
   constructor() {
-    this.code = 200
-    this.codes = {
+    this.defaultCodeMessages = {
       200: 'OK',
       201: 'Created',
       400: 'Request invalid',
@@ -11,7 +10,11 @@ class Response {
       429: 'Too many requests',
       500: 'Request processing failed'
     }
-    this.message = this.codes[this.code]
+    this.body = {
+      'message': this.defaultCodeMessages[200],
+      'statusCode': 200
+    }
+    this.details = []
     this.headers
   }
 
@@ -21,8 +24,8 @@ class Response {
      * @param {number} code
      */
   setCode(code) {
-    this.code = code
-    this.message = this.codes[code]
+    this.body.statusCode = code
+    this.body.message = this.defaultCodeMessages[code]
   }
 
   /**
@@ -31,11 +34,7 @@ class Response {
      * @param {String} message
      */
   setMessage(message = null) {
-    if (message === null) {
-      this.message = this.codes[this.code]
-    } else {
-      this.message = message
-    }
+    this.body.message = message === null ? this.defaultCodeMessages[this.body.statusCode] : message
   }
 
   /**
@@ -53,7 +52,7 @@ class Response {
      * @returns {number}
      */
   getCode() {
-    return this.code
+    return this.body.statusCode
   }
 
   /**
@@ -61,8 +60,12 @@ class Response {
      *
      * @returns {Array}
      */
-  getCodes() {
-    return this.codes
+  getDefaultCodeMessages() {
+    return this.defaultCodeMessages
+  }
+
+  addDetail(name, value) {
+    this.details.push({'name': name, 'value': value})
   }
 
   /**
@@ -70,10 +73,22 @@ class Response {
      *
      * @returns {String}
      */
-  getMessage() {
-    return this.message
+  getBody() {
+    let body = this.body
+    if (this.details.length > 0) {
+      body = {
+        ...body,
+        'details': this.details
+      }
+    }
+    return body
   }
 
+  /**
+     * header getter
+     *
+     * @returns {Object}
+     */
   getHeaders() {
     return this.headers
   }
