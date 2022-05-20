@@ -4,14 +4,14 @@ class Response {
     this.codes = {
       200: 'OK',
       201: 'Created',
-      400: 'Bad Request',
-      401: 'Unauthorized',
-      403: 'Forbidden',
+      400: 'Request invalid',
+      401: 'Invalid credentials',
+      403: 'Access not permitted',
       404: 'Not Found',
       429: 'Too many requests',
-      500: 'Request'
+      500: 'Request processing failed'
     }
-    this.message = 'OK'
+    this.message = this.codes[this.code]
     this.headers
   }
 
