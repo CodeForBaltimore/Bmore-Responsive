@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import validator from 'validator'
-import { Response } from '../../utils/v1'
+import { Response } from '../../utils/v2'
 
 const router = new Router()
 
