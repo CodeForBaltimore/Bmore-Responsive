@@ -13,7 +13,7 @@ router.get('/authenticate', async (req, res) => {
       if (token) {
         console.log(token)
         response.setMessage({
-          "token": token,
+          'token': token,
         })
       } else {
         response.setCode(403)

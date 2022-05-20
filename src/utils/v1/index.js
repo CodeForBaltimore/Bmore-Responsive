@@ -21,14 +21,14 @@ const rdsCa = fs.readFileSync('./rds-combined-ca-bundle.pem')
  * @return {String}
  */
 const formatTime = seconds => {
-    function pad(s) {
-        return (s < 10 ? '0' : '') + s
-    }
+  function pad(s) {
+    return (s < 10 ? '0' : '') + s
+  }
 
-    const hours = Math.floor(seconds / (60 * 60))
-    const minutes = Math.floor(seconds % (60 * 60) / 60)
-    const secs = Math.floor(seconds % 60)
-    return pad(hours) + ':' + pad(minutes) + ':' + pad(secs)
+  const hours = Math.floor(seconds / (60 * 60))
+  const minutes = Math.floor(seconds % (60 * 60) / 60)
+  const secs = Math.floor(seconds % 60)
+  return pad(hours) + ':' + pad(minutes) + ':' + pad(secs)
 }
 
 // Reusable adapter for minimizing database connection usage
@@ -40,38 +40,38 @@ var adapter
  * @returns {Object}
  */
 const loadCasbin = async () => {
-    if (!adapter) {
+  if (!adapter) {
 
-        let dialectOptions
-        if (process.env.NODE_ENV === 'production') {
-            dialectOptions = {
-                logging: false,
-                ssl: {
-                    rejectUnauthorized: true,
-                    ca: [rdsCa],
-                    checkServerIdentity: (host, cert) => {
-                        const error = tls.checkServerIdentity(host, cert)
-                        if (error && !cert.subject.CN.endsWith('.rds.amazonaws.com')) {
-                            return error
-                        }
-                    }
-                }
+    let dialectOptions
+    if (process.env.NODE_ENV === 'production') {
+      dialectOptions = {
+        logging: false,
+        ssl: {
+          rejectUnauthorized: true,
+          ca: [rdsCa],
+          checkServerIdentity: (host, cert) => {
+            const error = tls.checkServerIdentity(host, cert)
+            if (error && !cert.subject.CN.endsWith('.rds.amazonaws.com')) {
+              return error
             }
+          }
         }
-
-        adapter = await SequelizeAdapter.newAdapter({
-            database: process.env.DATABASE_NAME,
-            username: process.env.DATABASE_USERNAME,
-            password: process.env.DATABASE_PASSWORD,
-            port: process.env.DATABASE_PORT,
-            host: process.env.DATABASE_HOST,
-            logging: process.env.NODE_ENV === 'production',
-            dialect: 'postgres',
-            dialectOptions
-        })
+      }
     }
 
-    return newEnforcer(casbinConf, adapter)
+    adapter = await SequelizeAdapter.newAdapter({
+      database: process.env.DATABASE_NAME,
+      username: process.env.DATABASE_USERNAME,
+      password: process.env.DATABASE_PASSWORD,
+      port: process.env.DATABASE_PORT,
+      host: process.env.DATABASE_HOST,
+      logging: process.env.NODE_ENV === 'production',
+      dialect: 'postgres',
+      dialectOptions
+    })
+  }
+
+  return newEnforcer(casbinConf, adapter)
 }
 
 /**
@@ -85,25 +85,25 @@ const loadCasbin = async () => {
  * @return {Boolean}
  */
 const validateToken = async req => {
-    /** @todo check if it is a token at all */
-    var authHeader = req.headers['authorization'] || ''
-    var authToken = authHeader.split(/\s+/).pop() || req.headers.token
-    if (authToken) {
-        try {
-            const decoded = jwt.verify(authToken, process.env.JWT_KEY)
-            const now = new Date()
-            if (now.getTime() < decoded.exp * 1000) {
-                const user = (decoded.type === 'contact') ? await req.context.models.Contact.findById(decoded.userId) : await req.context.models.User.findByPk(decoded.userId)
-                if (user) {
-                    req.context.me = user
-                    return true
-                }
-            }
-        } catch (e) {
-            console.error(e)
+  /** @todo check if it is a token at all */
+  var authHeader = req.headers['authorization'] || ''
+  var authToken = authHeader.split(/\s+/).pop() || req.headers.token
+  if (authToken) {
+    try {
+      const decoded = jwt.verify(authToken, process.env.JWT_KEY)
+      const now = new Date()
+      if (now.getTime() < decoded.exp * 1000) {
+        const user = (decoded.type === 'contact') ? await req.context.models.Contact.findById(decoded.userId) : await req.context.models.User.findByPk(decoded.userId)
+        if (user) {
+          req.context.me = user
+          return true
         }
+      }
+    } catch (e) {
+      console.error(e)
     }
-    return false
+  }
+  return false
 }
 
 /**
@@ -114,12 +114,12 @@ const validateToken = async req => {
  * @return {Boolean}
  */
 const validateRoles = async (req) => {
-    const e = await loadCasbin()
-    const { originalUrl: path, method } = req
+  const e = await loadCasbin()
+  const { originalUrl: path, method } = req
 
-    /** @todo refactor this... */
-    const email = (req.context.me.email[0].address !== undefined) ? req.context.me.email[0].address : req.context.me.email
-    return e.enforce(email, path, method)
+  /** @todo refactor this... */
+  const email = (req.context.me.email[0].address !== undefined) ? req.context.me.email[0].address : req.context.me.email
+  return e.enforce(email, path, method)
 
 }
 
@@ -131,22 +131,22 @@ const validateRoles = async (req) => {
  * @param {*} next the next handler in the chain
  */
 const authMiddleware = async (req, res, next) => {
-    let authed = false
+  let authed = false
 
-    if (process.env.BYPASS_LOGIN) {
-        authed = process.env.BYPASS_LOGIN
-    } else {
-        authed = await validateToken(req)
-        if (authed) {
-            authed = await validateRoles(req)
-        }
-    }
-
+  if (process.env.BYPASS_LOGIN) {
+    authed = process.env.BYPASS_LOGIN
+  } else {
+    authed = await validateToken(req)
     if (authed) {
-        next()
-    } else {
-        res.status(401).send('Unauthorized')
+      authed = await validateRoles(req)
     }
+  }
+
+  if (authed) {
+    next()
+  } else {
+    res.status(401).send('Unauthorized')
+  }
 }
 
 /**
@@ -158,11 +158,11 @@ const authMiddleware = async (req, res, next) => {
    * @return {String} The secured password.
    */
 const encryptPassword = (password, salt) => {
-    return crypto
-        .createHash('RSA-SHA256')
-        .update(password)
-        .update(salt)
-        .digestfF('hex')
+  return crypto
+    .createHash('RSA-SHA256')
+    .update(password)
+    .update(salt)
+    .digestfF('hex')
 }
 
 /**
@@ -175,11 +175,11 @@ const encryptPassword = (password, salt) => {
  * @returns {String}
  */
 const getToken = async (userId, email, type, expiresIn = '1d') => {
-    return jwt.sign(
-        { userId, email, type },
-        process.env.JWT_KEY,
-        { expiresIn }
-    )
+  return jwt.sign(
+    { userId, email, type },
+    process.env.JWT_KEY,
+    { expiresIn }
+  )
 }
 
 /**
@@ -190,11 +190,11 @@ const getToken = async (userId, email, type, expiresIn = '1d') => {
  * @return {Boolean}
  */
 const validateEmails = async emails => {
-    for (let email of emails) {
-        if (!validator.isEmail(email.address)) return false
-    }
+  for (let email of emails) {
+    if (!validator.isEmail(email.address)) return false
+  }
 
-    return true
+  return true
 }
 
 /**
@@ -205,14 +205,14 @@ const validateEmails = async emails => {
  * @return {Boolean}
  */
 const validatePassword = pass => {
-    const options = {
-        uppercase: 1,  // A through Z
-        lowercase: 1,  // a through z
-        special: 1,  // ! @ # $ & *
-        digit: 1,  // 0 through 9
-        min: 8,  // minumum number of characters
-    }
-    return complexity.check(pass, options)
+  const options = {
+    uppercase: 1,  // A through Z
+    lowercase: 1,  // a through z
+    special: 1,  // ! @ # $ & *
+    digit: 1,  // 0 through 9
+    min: 8,  // minumum number of characters
+  }
+  return complexity.check(pass, options)
 }
 
 /**
@@ -224,40 +224,40 @@ const validatePassword = pass => {
  * @return {processedResults}
  */
 const processResults = async (results, modelType) => {
-    let processedResults = []
-    switch (modelType) {
-        case 'Entity':
-            for (let result of results) {
-                /** @todo expand conditional checking as checkin object becomes more mature */
-                if (result['checkIn'] !== null) {
-                    result['checkIn'] = result['checkIn'].checkIns[0]
-                }
-                result.address = result.address ? `${result.address.street} ${result.address.city} ${result.address.state} ${result.address.zip}` : ''
-                processedResults = [...processedResults, result]
-            }
-            return processedResults
-        case 'Contact':
-            for (let result of results) {
-                const phone = result.phone.find(number => number.isPrimary === true)
-                const email = result.email.find(address => address.isPrimary === true)
-                result.phone = phone ? phone.number : ''
-                result.email = email ? email.address : ''
-                processedResults = [...processedResults, result]
-            }
-            return processedResults
-        default:
-            return results
+  let processedResults = []
+  switch (modelType) {
+  case 'Entity':
+    for (let result of results) {
+      /** @todo expand conditional checking as checkin object becomes more mature */
+      if (result['checkIn'] !== null) {
+        result['checkIn'] = result['checkIn'].checkIns[0]
+      }
+      result.address = result.address ? `${result.address.street} ${result.address.city} ${result.address.state} ${result.address.zip}` : ''
+      processedResults = [...processedResults, result]
     }
+    return processedResults
+  case 'Contact':
+    for (let result of results) {
+      const phone = result.phone.find(number => number.isPrimary === true)
+      const email = result.email.find(address => address.isPrimary === true)
+      result.phone = phone ? phone.number : ''
+      result.email = email ? email.address : ''
+      processedResults = [...processedResults, result]
+    }
+    return processedResults
+  default:
+    return results
+  }
 }
 
 export {
-    authMiddleware,
-    encryptPassword,
-    formatTime,
-    getToken,
-    loadCasbin,
-    processResults,
-    Response,
-    validateEmails,
-    validatePassword
+  authMiddleware,
+  encryptPassword,
+  formatTime,
+  getToken,
+  loadCasbin,
+  processResults,
+  Response,
+  validateEmails,
+  validatePassword
 }

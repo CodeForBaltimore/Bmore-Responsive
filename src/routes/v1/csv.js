@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { authMiddleware, Response } from '../../utils/v1'
+import { authMiddleware, Response, processResults } from '../../utils/v1'
 import { parseAsync } from 'json2csv'
 import { Op } from 'sequelize'
 
