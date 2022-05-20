@@ -4263,7 +4263,7 @@
             "content": {
               "application/json": {
                 "example": {
-                  "message": "A check-ing for the questionnaire 'Check-in questions for 2020 event' already exists",
+                  "message": "A check-in for the questionnaire 'Check-in questions for 2020 event' already exists",
                   "statusCode": 409
                 },
                 "schema": {
