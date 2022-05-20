@@ -34,9 +34,9 @@ const user = (sequelize, DataTypes) => {
       type: DataTypes.JSON,
     }
   },
-  {
-    schema: process.env.DATABASE_SCHEMA
-  })
+    {
+      schema: process.env.DATABASE_SCHEMA
+    })
 
   /**
    * Looks up and validates a user by email and password.
