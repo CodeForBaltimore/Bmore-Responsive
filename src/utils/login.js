@@ -2,7 +2,7 @@ import app from '..'
 import models from '../models'
 import randomWords from 'random-words'
 import request from 'supertest'
-import utils from './v1'
+import { loadCasbin } from './v1'
 
 class Login {
   constructor(version = (process.env.DEFAULT_API_VERSION || '1')) {
@@ -47,7 +47,7 @@ class Login {
    * Creates a temp role for testing.
    */
   async _createRole() {
-    const e = await utils.loadCasbin()
+    const e = await loadCasbin()
 
     for (const method of this.methods) {
       const p = [this.role, '/*', method]
@@ -59,7 +59,7 @@ class Login {
    * Destroys the temp testing role.
    */
   async _destroyRole() {
-    const e = await utils.loadCasbin()
+    const e = await loadCasbin()
 
     for (const method of this.methods) {
       const p = [this.role, '/*', method]
@@ -74,7 +74,7 @@ class Login {
     const user = await models.User.create({ email: this.user.email.toLowerCase(), password: this.user.password })
     this.user.id = user.id
 
-    const e = await utils.loadCasbin()
+    const e = await loadCasbin()
     await e.addRoleForUser(this.user.email.toLowerCase(), this.role)
     // await models.UserRole.create({
     //   ptype: 'g',
@@ -93,7 +93,7 @@ class Login {
       }
     })
 
-    const e = await utils.loadCasbin()
+    const e = await loadCasbin()
     await e.deleteRolesForUser(this.user.email.toLowerCase())
     // const roles = await models.UserRole.findAll({
     //   where: {

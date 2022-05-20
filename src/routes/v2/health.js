@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import utils from '../../utils'
+import { formatTime } from '../../utils/v2'
 import { sequelize } from '../../models'
 
 const router = new Router()
@@ -24,7 +24,7 @@ const checkDatabase = async () => {
 
 router.get('/', async (req, res) => {
   res.status(200).json({
-    uptime: utils.formatTime(process.uptime()),
+    uptime: formatTime(process.uptime()),
     environment: process.env.NODE_ENV || 'n/a',
     version: process.env.npm_package_version || 'n/a',
     requestId: req.id,

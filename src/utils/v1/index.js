@@ -250,7 +250,7 @@ const processResults = async (results, modelType) => {
     }
 }
 
-export default {
+export {
     authMiddleware,
     encryptPassword,
     formatTime,
