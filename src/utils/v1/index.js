@@ -6,11 +6,12 @@ import validator from 'validator'
 import fs from 'fs'
 import jwt from 'jsonwebtoken'
 import tls from 'tls'
+import { dirname } from 'path'
 import { newEnforcer } from 'casbin'
 import { Response } from './response'
 import { SequelizeAdapter } from 'casbin-sequelize-adapter'
 
-const casbinConf = `${__dirname}/casbin.conf`
+const casbinConf = `${dirname(__dirname) }/casbin.conf`
 const rdsCa = fs.readFileSync('./rds-combined-ca-bundle.pem')
 
 /**
@@ -162,7 +163,7 @@ const encryptPassword = (password, salt) => {
     .createHash('RSA-SHA256')
     .update(password)
     .update(salt)
-    .digestfF('hex')
+    .digest('hex')
 }
 
 /**
