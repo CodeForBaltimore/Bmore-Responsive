@@ -191,6 +191,16 @@
         "test",
         "doc"
       ]
+    },
+    {
+      "login": "nmarklund10",
+      "name": "Neil Marklund",
+      "avatar_url": "https://avatars.githubusercontent.com/u/14162944",
+      "profile": "https://github.com/nmarklund10",
+      "contributions": [
+        "code",
+        "test"
+      ]
     }
   ],
   "contributorsPerLine": 7,
