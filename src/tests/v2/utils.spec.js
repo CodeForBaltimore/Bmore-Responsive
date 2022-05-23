@@ -1,8 +1,6 @@
 import chai from 'chai'
-import randomWords from 'random-words'
 import { Login } from '../../utils/login'
-import { ErrorResponse, formatTime, validateToken } from '../../utils/v2'
-import { Login } from '../../utils/login'
+import { ErrorResponse, formatTime } from '../../utils/v2'
 
 const VERSION = '2'
 const { assert, expect } = chai
