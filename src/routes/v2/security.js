@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import validator from 'validator'
+import jwt from 'jsonwebtoken'
 import { ErrorResponse } from '../../utils/v2'
 
 const router = new Router()
@@ -11,9 +12,10 @@ router.post('/authenticate', async (req, res) => {
     if (validator.isEmail(email)) {
       const token = await req.context.models.User.findByLogin(email.toLowerCase(), password)
       if (token) {
-        console.log(token)
+        const { exp } = jwt.decode(token)
         return res.status(200).json({
-          'token': token
+          'token': token,
+          'expiresAt': exp
         })
       } else {
         response = new ErrorResponse(401)
