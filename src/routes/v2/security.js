@@ -4,7 +4,7 @@ import { ErrorResponse } from '../../utils/v2'
 
 const router = new Router()
 
-router.get('/authenticate', async (req, res) => {
+router.post('/authenticate', async (req, res) => {
   let response
   try {
     const { email, password } = req.body
