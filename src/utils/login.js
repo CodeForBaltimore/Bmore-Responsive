@@ -128,7 +128,7 @@ class Login {
         .send(this.user)
         .set('Accept', 'application/json')
         .expect(200)
-      return response.token
+      return response.body.token
     }
   }
 }
