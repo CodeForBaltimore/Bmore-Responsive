@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import rateLimit from 'express-rate-limit'
 import validator from 'validator'
-import utils from '../../utils'
+import { Response, loadCasbin, validatePassword, authMiddleware } from '../../utils/v1'
 import email from '../../email'
 
 const router = new Router()
@@ -14,7 +14,7 @@ const loginLimiter = rateLimit({
 
 // User login.
 router.post('/login', loginLimiter, async (req, res) => {
-  const response = new utils.Response()
+  const response = new Response()
   try {
     const { email, password } = req.body
     if (validator.isEmail(email)) {
@@ -36,8 +36,8 @@ router.post('/login', loginLimiter, async (req, res) => {
 })
 
 // Password reset
-router.post('/reset/:email', loginLimiter, async(req, res) => {
-  const response = new utils.Response()
+router.post('/reset/:email', loginLimiter, async (req, res) => {
+  const response = new Response()
   try {
     if (validator.isEmail(req.params.email)) {
       const user = await req.context.models.User.findOne({
@@ -71,14 +71,14 @@ router.post('/reset/:email', loginLimiter, async(req, res) => {
 })
 
 // Gets all users.
-router.get('/', utils.authMiddleware, async (req, res) => {
-  const response = new utils.Response()
+router.get('/', authMiddleware, async (req, res) => {
+  const response = new Response()
   try {
     const users = await req.context.models.User.findAll({
       attributes: ['id', 'email', 'displayName', 'phone', 'attributes', 'createdAt', 'updatedAt']
     })
 
-    const e = await utils.loadCasbin()
+    const e = await loadCasbin()
 
     for (const user of users) {
       const roles = await e.getRolesForUser(user.email)
@@ -102,8 +102,8 @@ router.get('/', utils.authMiddleware, async (req, res) => {
 })
 
 // Gets a specific user.
-router.get('/:email', utils.authMiddleware, async (req, res) => {
-  const response = new utils.Response()
+router.get('/:email', authMiddleware, async (req, res) => {
+  const response = new Response()
   try {
     if (validator.isEmail(req.params.email)) {
       const user = await req.context.models.User.findOne({
@@ -113,7 +113,7 @@ router.get('/:email', utils.authMiddleware, async (req, res) => {
         attributes: ['id', 'email', 'displayName', 'phone', 'createdAt', 'updatedAt']
       })
       if (user) {
-        const e = await utils.loadCasbin()
+        const e = await loadCasbin()
         const roles = await e.getRolesForUser(user.email)
 
         user.dataValues.roles = roles
@@ -121,7 +121,7 @@ router.get('/:email', utils.authMiddleware, async (req, res) => {
         /** @todo add contact info for users */
         // user.dataValues.contact = await req.context.models.Contact.findByUserId(user.id)
       } else {
-        return utils.response(res, 422)
+        return Response(res, 422)
       }
 
 
@@ -138,23 +138,23 @@ router.get('/:email', utils.authMiddleware, async (req, res) => {
 })
 
 // Creates a new user.
-router.post('/', utils.authMiddleware, async (req, res) => {
-  const response = new utils.Response()
+router.post('/', authMiddleware, async (req, res) => {
+  const response = new Response()
   try {
     if (validator.isEmail(req.body.email)) {
-      if (utils.validatePassword(req.body.password)) {
+      if (validatePassword(req.body.password)) {
         const { email, password, roles } = req.body
         const user = await req.context.models.User.create({ email: email.toLowerCase(), password })
 
         if (roles !== undefined) {
-          const e = await utils.loadCasbin()
+          const e = await loadCasbin()
           for (const role of roles) {
             await e.addRoleForUser(email.toLowerCase(), role)
           }
         }
         response.setMessage(user.email + ' created')
 
-      }else {
+      } else {
         response.setCode(400)
         response.setMessage('Password invalid. Must be at least 8 characters long and contain at least 1 of the following: uppercase letter, lowercase letter, special character, and decimal digit.')
       }
@@ -163,11 +163,11 @@ router.post('/', utils.authMiddleware, async (req, res) => {
       response.setMessage('Email not in valid format.')
     }
   } catch (e) {
-    if (e.name === 'SequelizeUniqueConstraintError'){
+    if (e.name === 'SequelizeUniqueConstraintError') {
       console.error(e)
       response.setCode(500)
       response.setMessage('Email already in dataset and cannot be created.')
-    }else{
+    } else {
       console.error(e)
       response.setCode(500)
       response.setMessage(e.name + ': ' + e.detail)
@@ -178,8 +178,8 @@ router.post('/', utils.authMiddleware, async (req, res) => {
 })
 
 // Updates any user.
-router.put('/', utils.authMiddleware, async (req, res) => {
-  const response = new utils.Response()
+router.put('/', authMiddleware, async (req, res) => {
+  const response = new Response()
   try {
     if (validator.isEmail(req.body.email)) {
       /** @todo add email and phone update options */
@@ -194,18 +194,18 @@ router.put('/', utils.authMiddleware, async (req, res) => {
 
       /** @todo when roles are added make sure only admin or relevant user can change password */
       if (!process.env.BYPASS_LOGIN) {
-        const e = await utils.loadCasbin()
+        const e = await loadCasbin()
         const roles = await e.getRolesForUser(req.context.me.email)
 
         if (password) {
-          if (req.context.me.email === email || roles.includes('admin') && utils.validatePassword(password)) {
+          if (req.context.me.email === email || roles.includes('admin') && validatePassword(password)) {
             user.password = password
           }
         }
 
         /** @todo this is half-baked. Once updating users is available through the front-end this should be revisited. */
         if (roles !== undefined) {
-          const e = await utils.loadCasbin()
+          const e = await loadCasbin()
           for (const role of roles) {
             await e.addRoleForUser(email.toLowerCase(), role)
           }
@@ -234,8 +234,8 @@ router.put('/', utils.authMiddleware, async (req, res) => {
 })
 
 // Deletes a user.
-router.delete('/:email', utils.authMiddleware, async (req, res) => {
-  const response = new utils.Response()
+router.delete('/:email', authMiddleware, async (req, res) => {
+  const response = new Response()
   try {
     if (validator.isEmail(req.params.email)) {
       const user = await req.context.models.User.findOne({
@@ -244,7 +244,7 @@ router.delete('/:email', utils.authMiddleware, async (req, res) => {
         }
       })
 
-      const e = await utils.loadCasbin()
+      const e = await loadCasbin()
       await e.deleteRolesForUser(req.params.email.toLowerCase())
       // const roles = await req.context.models.UserRole.findAll({
       //   where: {

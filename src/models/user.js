@@ -1,6 +1,6 @@
 import crypto from 'crypto'
 import jwt from 'jsonwebtoken'
-import utils from '../utils'
+import { loadCasbin, encryptPassword } from '../utils/v1'
 
 const user = (sequelize, DataTypes) => {
   // Defining our user table and setting User object.
@@ -39,13 +39,13 @@ const user = (sequelize, DataTypes) => {
   })
 
   /**
-	 * Looks up and validates a user by email and password.
-	 *
-	 * @param {String} login The email or email of the user.
-	 * @param {String} password The password of the user.
-	 *
-	 * @return {String} returns either the valid login token or an error message.
-	 */
+   * Looks up and validates a user by email and password.
+   *
+   * @param {String} login The email or email of the user.
+   * @param {String} password The password of the user.
+   *
+   * @return {String} returns either the valid login token or an error message.
+   */
   User.findByLogin = async (email, password) => {
     const user = await User.findOne({
       where: { email }
@@ -54,7 +54,7 @@ const user = (sequelize, DataTypes) => {
       const pw = User.encryptPassword(password, user.salt)
       if (pw === user.password) {
 
-        const e = await utils.loadCasbin()
+        const e = await loadCasbin()
         const roles = await e.getRolesForUser(user.email)
 
         return await User.getToken(user.id, user.email, roles[0])
@@ -77,22 +77,22 @@ const user = (sequelize, DataTypes) => {
   }
 
   /**
-	 * Generates a random salt for password security.
-	 *
-	 * @return {String} The password salt.
-	 */
+   * Generates a random salt for password security.
+   *
+   * @return {String} The password salt.
+   */
   User.generateSalt = () => {
     return crypto.randomBytes(16).toString('base64')
   }
 
   /**
-	 * Salts and hashes a password.
-	 *
-	 * @param {String} plainText The unhashed or salted password.
-	 * @param {String} salt The password salt for this user.
-	 *
-	 * @return {String} The secured password.
-	 */
+   * Salts and hashes a password.
+   *
+   * @param {String} plainText The unhashed or salted password.
+   * @param {String} salt The password salt for this user.
+   *
+   * @return {String} The secured password.
+   */
   User.encryptPassword = (plainText, salt) => {
     return crypto
       .createHash('RSA-SHA256')
@@ -106,7 +106,7 @@ const user = (sequelize, DataTypes) => {
     if (user.changed('password')) {
       user.salt = User.generateSalt()
       // User.password = User.encryptPassword(user.password, user.salt)
-      user.password = utils.encryptPassword(user.password, user.salt)
+      user.password = encryptPassword(user.password, user.salt)
     }
   }
 

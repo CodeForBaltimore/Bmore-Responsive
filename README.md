@@ -60,6 +60,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://bellese.io/"><img src="https://avatars3.githubusercontent.com/u/61873300?v=4" width="100px;" alt=""/><br /><sub><b>Michael Schechter</b></sub></a><br /><a href="https://github.com/CodeForBaltimore/Bmore-Responsive/commits?author=mschechter-bellese" title="Code">💻</a></td>
     <td align="center"><a href="http://ianjadams.com"><img src="https://avatars1.githubusercontent.com/u/7966226?v=4" width="100px;" alt=""/><br /><sub><b>Ian Adams</b></sub></a><br /><a href="https://github.com/CodeForBaltimore/Bmore-Responsive/commits?author=ijadams" title="Code">💻</a></td>
     <td align="center"><a href="https://www.joshglazer.com"><img src="https://avatars1.githubusercontent.com/u/5789311?v=4" width="100px;" alt=""/><br /><sub><b>Josh Glazer</b></sub></a><br /><a href="https://github.com/CodeForBaltimore/Bmore-Responsive/commits?author=joshglazer" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/nmarklund10"><img src="https://avatars.githubusercontent.com/u/14162944" width="100px;" alt=""/><br /><sub><b>Neil Marklund</b></sub></a><br /><a href="https://github.com/CodeForBaltimore/Bmore-Responsive/commits?author=nmarklund10" title="Code">💻</a></td>
   </tr>
 </table>
 

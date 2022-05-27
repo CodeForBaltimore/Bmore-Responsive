@@ -1,13 +1,13 @@
 import { Router } from 'express'
 import validator from 'validator'
-import utils from '../../utils'
+import { authMiddleware, Response } from '../../utils/v1'
 
 const router = new Router()
-router.use(utils.authMiddleware)
+router.use(authMiddleware)
 
 // Gets all or searches on all entities.
 router.get('/', async (req, res) => {
-  const response = new utils.Response()
+  const response = new Response()
   try {
     const where = {}
     const types = ['name', 'type']
@@ -45,7 +45,7 @@ router.get('/', async (req, res) => {
 
 // Gets a specific entity.
 router.get('/:entity_id', async (req, res) => {
-  const response = new utils.Response()
+  const response = new Response()
   try {
     if (validator.isUUID(req.params.entity_id)) {
       const entity = await req.context.models.Entity.findEntityWithAssociatedContacts(req.params.entity_id)
@@ -69,7 +69,7 @@ router.get('/:entity_id', async (req, res) => {
 
 // Creates a new entity.
 router.post('/', async (req, res) => {
-  const response = new utils.Response()
+  const response = new Response()
   try {
     if (req.body.name !== undefined && req.body.name !== '' && req.body.type !== undefined && req.body.type !== '') {
       let { name, type, address, phone, email, checkIn, contacts } = req.body
@@ -116,14 +116,14 @@ router.post('/', async (req, res) => {
 
 // Updates any entity.
 router.put('/', async (req, res) => {
-  const response = new utils.Response()
+  const response = new Response()
   try {
     if (validator.isUUID(req.body.id)) {
       let { id, name, type, address, phone, email, checkIn, contacts, attributes } = req.body
 
       /** @todo validate emails */
       // Validating emails
-      // if (await !utils.validateEmails(email)) res.status(500).send('Server error')
+      // if (await !validateEmails(email)) res.status(500).send('Server error')
 
       let entity = await req.context.models.Entity.findOne({
         where: {
@@ -201,7 +201,7 @@ router.put('/', async (req, res) => {
 
 // Deletes a entity.
 router.delete('/:entity_id', async (req, res) => {
-  const response = new utils.Response()
+  const response = new Response()
   try {
     if (validator.isUUID(req.params.entity_id)) {
       const entity = await req.context.models.Entity.findOne({
@@ -226,7 +226,7 @@ router.delete('/:entity_id', async (req, res) => {
 
 // links entity with list of contacts
 router.post('/link/:entity_id', async (req, res) => {
-  const response = new utils.Response()
+  const response = new Response()
   try {
     if (validator.isUUID(req.params.entity_id)) {
       const entity = await req.context.models.Entity.findOne({
@@ -267,7 +267,7 @@ router.post('/link/:entity_id', async (req, res) => {
 
 // unlinks entity with list of contacts
 router.post('/unlink/:entity_id', async (req, res) => {
-  const response = new utils.Response()
+  const response = new Response()
   try {
     if (validator.isUUID(req.params.entity_id)) {
       const entity = await req.context.models.Entity.findOne({

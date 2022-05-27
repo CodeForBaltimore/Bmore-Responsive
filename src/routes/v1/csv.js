@@ -1,15 +1,15 @@
-import {Router} from 'express'
-import utils from '../../utils'
-import {parseAsync} from 'json2csv'
-import {Op} from 'sequelize'
+import { Router } from 'express'
+import { authMiddleware, Response, processResults } from '../../utils/v1'
+import { parseAsync } from 'json2csv'
+import { Op } from 'sequelize'
 
 const router = new Router()
-router.use(utils.authMiddleware)
+router.use(authMiddleware)
 
 // Gets a data dump from the passed in model (if it exists).
 router.get('/:model_type', async (req, res) => {
 
-  const response = new utils.Response()
+  const response = new Response()
   const modelType = req.params.model_type
 
   try {
@@ -17,7 +17,7 @@ router.get('/:model_type', async (req, res) => {
     /** @todo refactor this when we change how CSV's are delivered. */
     // eslint-disable-next-line no-prototype-builtins
     if (req.context.models.hasOwnProperty(modelType) && modelType !== 'User' && modelType !== 'UserRole') {
-      let options = {raw: true}
+      let options = { raw: true }
       // search by name if filter query param is included
       if (req.query && req.query.filter && req.query.filter.length) {
         options.where = {
@@ -31,9 +31,9 @@ router.get('/:model_type', async (req, res) => {
       let results = await req.context.models[modelType].findAll(options)
 
       if (results.length !== 0) {
-        const processedResults = await utils.processResults(results, modelType)
+        const processedResults = await processResults(results, modelType)
         const fields = Object.keys(results[0])
-        parseAsync(processedResults, {fields}).then(csv => {
+        parseAsync(processedResults, { fields }).then(csv => {
           response.setMessage(csv)
           const dateObj = new Date()
           const dateStr = `${dateObj.getUTCMonth() + 1}_${dateObj.getUTCDate()}_${dateObj.getUTCFullYear()}`

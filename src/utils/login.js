@@ -2,10 +2,10 @@ import app from '..'
 import models from '../models'
 import randomWords from 'random-words'
 import request from 'supertest'
-import utils from '.'
+import { loadCasbin } from './v1'
 
 class Login {
-  constructor(version=(process.env.DEFAULT_API_VERSION || '1')) {
+  constructor(version = (process.env.DEFAULT_API_VERSION || '1')) {
     this.DEFAULT_API_VERSION = version
     this.role = randomWords()
     this.user = { email: `${randomWords()}@test.test`, password: 'Abcdefg12!', roles: [this.role] }
@@ -47,7 +47,7 @@ class Login {
    * Creates a temp role for testing.
    */
   async _createRole() {
-    const e = await utils.loadCasbin()
+    const e = await loadCasbin()
 
     for (const method of this.methods) {
       const p = [this.role, '/*', method]
@@ -59,7 +59,7 @@ class Login {
    * Destroys the temp testing role.
    */
   async _destroyRole() {
-    const e = await utils.loadCasbin()
+    const e = await loadCasbin()
 
     for (const method of this.methods) {
       const p = [this.role, '/*', method]
@@ -74,7 +74,7 @@ class Login {
     const user = await models.User.create({ email: this.user.email.toLowerCase(), password: this.user.password })
     this.user.id = user.id
 
-    const e = await utils.loadCasbin()
+    const e = await loadCasbin()
     await e.addRoleForUser(this.user.email.toLowerCase(), this.role)
     // await models.UserRole.create({
     //   ptype: 'g',
@@ -93,7 +93,7 @@ class Login {
       }
     })
 
-    const e = await utils.loadCasbin()
+    const e = await loadCasbin()
     await e.deleteRolesForUser(this.user.email.toLowerCase())
     // const roles = await models.UserRole.findAll({
     //   where: {
@@ -112,14 +112,24 @@ class Login {
    * Login to the API to get a JWT token.
    */
   async _login() {
-    const response = await request(app)
-      .post(`/v${this.DEFAULT_API_VERSION}/user/login`)
-      .send(this.user)
-      .set('Accept', 'application/json')
-      .expect('Content-Type', 'text/html; charset=utf-8')
-      .expect(200)
-
-    return response.text
+    let response
+    switch (this.DEFAULT_API_VERSION) {
+    case '1':
+      response = await request(app)
+        .post('/v1/user/login')
+        .send(this.user)
+        .set('Accept', 'application/json')
+        .expect('Content-Type', 'text/html; charset=utf-8')
+        .expect(200)
+      return response.text
+    case '2':
+      response = await request(app)
+        .post('/v2/security/authenticate')
+        .send(this.user)
+        .set('Accept', 'application/json')
+        .expect(200)
+      return response.body.token
+    }
   }
 }
 

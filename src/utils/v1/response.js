@@ -17,8 +17,8 @@ class Response {
 
   /**
    * code setter
-   * 
-   * @param {number} code 
+   *
+   * @param {number} code
    */
   setCode(code) {
     this.code = code
@@ -27,8 +27,8 @@ class Response {
 
   /**
    * message setter
-   * 
-   * @param {String} message 
+   *
+   * @param {String} message
    */
   setMessage(message = null) {
     if (message === null) {
@@ -40,8 +40,8 @@ class Response {
 
   /**
    * headers setter
-   * 
-   * @param {Object} headers 
+   *
+   * @param {Object} headers
    */
   setHeaders(headers) {
     this.headers = headers
@@ -49,7 +49,7 @@ class Response {
 
   /**
    * code getter
-   * 
+   *
    * @returns {number}
    */
   getCode() {
@@ -58,7 +58,7 @@ class Response {
 
   /**
    * codes getter
-   * 
+   *
    * @returns {Array}
    */
   getCodes() {
@@ -67,7 +67,7 @@ class Response {
 
   /**
    * message getter
-   * 
+   *
    * @returns {String}
    */
   getMessage() {
