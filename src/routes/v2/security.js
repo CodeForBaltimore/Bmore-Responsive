@@ -1,11 +1,18 @@
 import { Router } from 'express'
+import rateLimit from 'express-rate-limit'
 import validator from 'validator'
 import jwt from 'jsonwebtoken'
 import { ErrorResponse } from '../../utils/v2'
 
 const router = new Router()
+const max = (process.env.NODE_ENV !== 'production') ? 50000 : 50
+const loginLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000,
+  max,
+  message: 'Too many login attempts for this IP. Please try again later.'
+})
 
-router.post('/authenticate', async (req, res) => {
+router.post('/authenticate', loginLimiter, async (req, res) => {
   let response
   try {
     const { email, password } = req.body
