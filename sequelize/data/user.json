@@ -1,12 +1,18 @@
 [
     {
         "email": "homer.simpson@sfpp.com",
+        "displayName": "Homer Simpson",
         "password": "donuts",
-        "roles": ["admin"]
+        "roles": [
+            "admin"
+        ]
     },
     {
         "email": "test@test.test",
+        "displayName": "Test User",
         "password": "test",
-        "roles": ["user"]
+        "roles": [
+            "user"
+        ]
     }
 ]
