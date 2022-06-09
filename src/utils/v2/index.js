@@ -37,7 +37,7 @@ var adapter
  *
  * @returns {Object}
  */
-const loadCasbin = async () => {
+const getRoleEnforcer = async () => {
   if (!adapter) {
 
     let dialectOptions
@@ -112,12 +112,12 @@ const validateToken = async req => {
  * @return {Boolean}
  */
 const validateRoles = async (req) => {
-  const e = await loadCasbin()
+  const roleEnforcer = await getRoleEnforcer()
   const { originalUrl: path, method } = req
 
   /** @todo refactor this... */
   const email = (req.context.me.email[0].address !== undefined) ? req.context.me.email[0].address : req.context.me.email
-  return e.enforce(email, path, method)
+  return roleEnforcer.enforce(email, path, method)
 
 }
 
@@ -143,7 +143,7 @@ const authMiddleware = async (req, res, next) => {
   if (authed) {
     next()
   } else {
-    let response = new ErrorResponse(401)
+    let response = new ErrorResponse(403)
     res.status(response.getCode()).json(response.getBody())
   }
 }
@@ -152,6 +152,6 @@ export {
   formatTime,
   ErrorResponse,
   authMiddleware,
-  loadCasbin,
+  getRoleEnforcer,
   validateRoles
 }
