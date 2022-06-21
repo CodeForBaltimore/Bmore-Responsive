@@ -1229,8 +1229,7 @@
       "get": {
         "tags": [
           "users",
-          "read-only",
-          "unimplemented"
+          "read-only"
         ],
         "summary": "Retrieves all users.",
         "description": "Retrieves all defined users in the application.",
