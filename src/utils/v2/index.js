@@ -132,7 +132,8 @@ const authMiddleware = async (req, res, next) => {
   let authed = false
 
   if (process.env.BYPASS_LOGIN) {
-    authed = process.env.BYPASS_LOGIN
+    // values in .env file are interpreted as strings, so you have to check
+    authed = process.env.BYPASS_LOGIN === 'true'
   } else {
     authed = await validateToken(req)
     if (authed) {
