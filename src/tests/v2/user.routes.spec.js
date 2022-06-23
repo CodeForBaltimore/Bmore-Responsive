@@ -18,6 +18,7 @@ describe(`User tests (v${VERSION})`, function() {
   })
   after(async function() {
     await testUser.destroyToken()
+    process.env.BYPASS_LOGIN = true
   })
 
   it('should login', function (done) {
@@ -61,6 +62,36 @@ describe(`User tests (v${VERSION})`, function() {
         expect(res.body.message).to.equal('Request invalid')
         expect(res.body.statusCode).to.equal(400)
         expect(res.body.details).to.eql([{'name': 'email', 'value': 'Address provided is invalid'}])
+        done()
+      })
+  })
+  it('should get all users', function(done) {
+    request(app)
+      .get(`/v${VERSION}/users`)
+      .set('Accept', 'application/json')
+      .set('token', token)
+      .send()
+      .expect('Content-Type', 'application/json; charset=utf-8')
+      .expect(200)
+      .end((err, res) => {
+        if (err) return done(err)
+        expect(res.body).to.deep.include.members([{email: testUser.user.email, displayName: testUser.user.displayName}])
+        done()
+      })
+  })
+  it('should not get all users', function(done) {
+    process.env.BYPASS_LOGIN = false
+    request(app)
+      .get(`/v${VERSION}/users`)
+      .set('Accept', 'application/json')
+      .set('token', randomWords())
+      .send()
+      .expect('Content-Type', 'application/json; charset=utf-8')
+      .expect(403)
+      .end((err, res) => {
+        if (err) return done(err)
+        expect(res.body.statusCode).to.equal(403)
+        expect(res.body.message).to.equal('Access not permitted')
         done()
       })
   })

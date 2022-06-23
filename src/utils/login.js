@@ -8,7 +8,7 @@ class Login {
   constructor(version = (process.env.DEFAULT_API_VERSION || '1')) {
     this.DEFAULT_API_VERSION = version
     this.role = randomWords()
-    this.user = { email: `${randomWords()}@test.test`, password: 'Abcdefg12!', roles: [this.role] }
+    this.user = { email: `${randomWords()}@test.test`.toLowerCase(), password: 'Abcdefg12!', displayName: randomWords(), roles: [this.role] }
     this.methods = [
       'GET',
       'POST',
@@ -71,11 +71,11 @@ class Login {
    * Creates a temp user for testing.
    */
   async _createUser() {
-    const user = await models.User.create({ email: this.user.email.toLowerCase(), password: this.user.password })
+    const user = await models.User.create({ email: this.user.email, password: this.user.password, displayName: this.user.displayName })
     this.user.id = user.id
 
     const e = await loadCasbin()
-    await e.addRoleForUser(this.user.email.toLowerCase(), this.role)
+    await e.addRoleForUser(this.user.email, this.role)
     // await models.UserRole.create({
     //   ptype: 'g',
     //   v0: this.email.toLowerCase(),
