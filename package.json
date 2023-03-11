@@ -58,7 +58,7 @@
     "nunjucks": "^3.2.3",
     "pg": "^8.7.3",
     "random-words": "^1.1.2",
-    "sequelize": "^6.17.0",
+    "sequelize": "^6.19.1",
     "sequelize-typescript": "^2.0.0",
     "snyk": "^1.920.0",
     "supertest": "4.0.2",
